@@ -25,6 +25,7 @@ import os
 from pathlib import Path
 import sys
 import threading
+import time
 import urllib.parse
 import uuid
 import zipfile
@@ -94,9 +95,9 @@ CROSSDOMAIN_XML = b"""<?xml version="1.0"?>
 CLOSE_POPUP_CONFIG_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
 <content transactionDate="12/31/2099 16:00:00 UTC-0700" closeDate="08/31/2016 16:00:00 UTC-0700">
 	<en><![CDATA[Yu-Gi-Oh! BAM Pocket private preservation server.<br><br>
-The official service was retired by Konami on %close_date%. This private server provides the game's asset packages so the game can run. Play Offline is supported. BAM Pro and all currency bundles are free: no real money can be charged. Facebook login and online PvP are not available.]]></en>
+The official service was retired by Konami on %close_date%. This private server keeps the game running. LOG IN uses a private-server account (no Facebook) and saves your game online; Play Offline also works. BAM Pro and all currency bundles are free: no real money can be charged. Friends, Arena, Tournaments and online PvP are not available yet.]]></en>
 	<fr><![CDATA[Serveur priv\xc3\xa9 de pr\xc3\xa9servation de Yu-Gi-Oh! BAM Pocket.<br><br>
-Le service officiel a \xc3\xa9t\xc3\xa9 ferm\xc3\xa9 par Konami le %close_date%. Ce serveur priv\xc3\xa9 fournit les paquets d'assets du jeu. Le mode hors ligne est support\xc3\xa9. BAM Pro et tous les paquets de monnaie sont gratuits : aucun argent r\xc3\xa9el ne peut \xc3\xaatre d\xc3\xa9bit\xc3\xa9. La connexion Facebook et le JcJ en ligne ne sont pas disponibles.]]></fr>
+Le service officiel a \xc3\xa9t\xc3\xa9 ferm\xc3\xa9 par Konami le %close_date%. Ce serveur priv\xc3\xa9 fait fonctionner le jeu. Le bouton de connexion utilise un compte du serveur priv\xc3\xa9 (pas Facebook) et sauvegarde la partie en ligne ; le mode hors ligne fonctionne aussi. BAM Pro et tous les paquets de monnaie sont gratuits : aucun argent r\xc3\xa9el ne peut \xc3\xaatre d\xc3\xa9bit\xc3\xa9. Les amis, l'ar\xc3\xa8ne, les tournois et le JcJ en ligne ne sont pas encore disponibles.]]></fr>
 </content>
 """
 
@@ -631,6 +632,39 @@ def prebuild_all_packages(config: dict) -> bool:
     return True
 
 
+def watch_and_reload(interval: float = 3.0, settle: float = 2.0):
+    """Deploy = copy server/*.py. When they change, wait until they stop changing, compile them,
+    and re-exec this process (same PID, so systemd keeps tracking it). A file that does not compile
+    (e.g. a copy still in progress) is retried on the next round instead of crashing the server.
+    In-memory login sessions are lost on reload; clients log in again."""
+    import py_compile
+    src_dir = Path(__file__).resolve().parent
+
+    def snapshot():
+        return {p: p.stat().st_mtime for p in src_dir.glob("*.py")}
+
+    known = snapshot()
+    while True:
+        time.sleep(interval)
+        current = snapshot()
+        if current == known:
+            continue
+        time.sleep(settle)
+        if snapshot() != current:
+            continue
+        try:
+            for p in current:
+                py_compile.compile(str(p), doraise=True)
+        except py_compile.PyCompileError as e:
+            logger.warning("Auto-reload skipped, compile error: %s", e.msg.strip().splitlines()[-1])
+            known = current
+            continue
+        changed = sorted(p.name for p in current if known.get(p) != current[p])
+        logger.info("Auto-reload: %s changed, restarting in place", ", ".join(changed))
+        logging.shutdown()
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
+
 def main():
     setup_logging(PROJECT_ROOT)
 
@@ -652,6 +686,8 @@ def main():
                         help="Accounts, tokens, saves and rsa_private.json (default: server/data)")
     parser.add_argument("--prebuild", action="store_true",
                         help="Prebuild all 26 package zips into cache directory and exit immediately")
+    parser.add_argument("--no-auto-reload", action="store_true",
+                        help="Do not restart when server/*.py change (default: restart in place after a deploy)")
 
     args = parser.parse_args()
 
@@ -682,6 +718,9 @@ def main():
     logger.info("Version string:     %s", config["version_string"])
     logger.info("=" * 60)
     logger.info("Ready for client connections. Press Ctrl+C to stop.")
+
+    if not args.no_auto_reload:
+        threading.Thread(target=watch_and_reload, daemon=True).start()
 
     try:
         httpd.serve_forever()
