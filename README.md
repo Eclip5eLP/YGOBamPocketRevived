@@ -1,7 +1,7 @@
 # Yugioh BAM Pocket Revived
 
 A free, fan-run revival of **Yu-Gi-Oh! BAM Pocket**, the Android card game by Konami and Frima Studio that
-was shut down on August 31, 2016. The original game is repackaged for modern Android phones and talks to a
+was shut down on September 9 2016. The original game is repackaged for modern Android phones and talks to a
 new community server instead of Konami's servers and Facebook. Not affiliated with Konami.
 
 ## How to play
