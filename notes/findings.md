@@ -1012,3 +1012,37 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - Free Pro → ARENA shows 5 opponents with scores and the Next Win ladder 50..800.
   - FIGHT starts the duel with the opponent's deck (friend help offered). Surrender → loss reported.
   - STATISTICS shows 0-1 and deck 1-0.
+
+### 6.28 Phase 3b: Teams, tournament registration and leaderboards
+
+- **Teams** [VERIFIED code: `project/guild/GuildManager.as`, see `server/teams.py` docstring]:
+  - JoinTeam (the server picks the team), CancelJoinTeam, GetTeam, guild GetPlayerInfo, GetTeamInfo
+    (rank, score, top50).
+  - Team contribution: GetNewScoreToken + NewScore (the token is single use).
+  - 20 teams (`config/ace/guild/guild_team_template.ace`).
+  - Our rules [INFERRED design]: you join the least populated team; scores are weekly, using the same week
+    boundary as GetGlobalInfo.nextResetDate.
+  - Weekly team reward bundles are NOT handed out yet.
+- **Tournament** [VERIFIED code]: registered = a TournamentLevel exists (`module/tournament/util/TournamentUtil.as:53`).
+  - GetTournamentInfo now returns a null level until RegisterTournament. The client pays the 5 DP entry fee
+    locally (`logic/BuyTournamentEntryFeeFlow.as`).
+  - Start level 81 = rank 15 / token 0 (`config/ace/tournament/tournament_level_template.ace`; ladder via
+    levelTemplateAfter/Before).
+  - Top / previous leaderboards are served; CancelTournamentMatch returns OK.
+- **Server pushes (needed for phase 4)** [VERIFIED code]: every element of a response array is broadcast to its
+  message listeners (`common/core/engine/EngineServerCom.as:520-543`), so notifications (PlayCombatNotification,
+  PlayCombatEndNotification, ...) can ride on any response, e.g. the PvP ping (`mmog.xml`
+  ping_pvp_frequency 2000 ms).
+  - Tournament matches (PlayCombatTournament → notification → live duel) are real-time PvP and belong to phase 4.
+- **Arena**: friends are drawn first as opponents.
+- **Tests**: `tests/test_teams.py` OK. Arena, friends, login and AMF tests still OK.
+- **Device** (dev build) [VERIFIED screenshots work/logs/p3_14..21]:
+  - Teams: FIND A TEAM → "Welcome to Team Akiza" → MY TEAM (rank, time left, members).
+  - Logging in with a null tournament level works.
+  - Tournament: SIGN UP (5 DP) → RegisterTournament → "Please build a Dark deck" (the deck rule of template 21).
+- **Popup text** updated (Friends / Arena / Teams available, live duels not yet). The heredoc route turned `\x`
+  into `\x`; it was fixed via a script file. Auto-reload refused the broken file (compile check), so the live and
+  dev servers kept running.
+- **Deployed** to Y: (live reload 04:33:47; checked: popup, login page, /me error JSON).
+  - Release APK rebuilt with the keep-login patch and installed. It shows LOG IN once, because the dev-server
+    token on the phone is not valid on live.

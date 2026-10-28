@@ -27,7 +27,7 @@ Client references (work/as3):
     ALLTIME 1, WEEKLY 2, ALLTIME_FRIEND 3, WEEKLY_FRIEND 4.
 
 Our rules:
-  * 5 opponents per set: other registered players with a deck first (random order); the rest are
+  * 5 opponents per set: other registered players with a deck, friends first (random order); the rest are
     practice bots (BOTS, uid BOT_BASE+n, names served by fakefb Graph) playing a real player's deck
     or, with nobody else around, your own.
   * A new set when the old one is a day old (lastDateGenerated) or when paid for (RESET_COST coins).
@@ -103,8 +103,10 @@ class Arena:
                 deck = self._deck_list(self.deck_for(user["uid"]))
                 if deck:
                     decks[user["uid"]] = deck
+        friends = set(self.store.friends_of(uid))
         real = list(decks)
         random.shuffle(real)
+        real.sort(key=lambda other: other not in friends)  # friends first, random order otherwise
         duels = []
         for other in real[:NBR_DUELS]:
             duels.append({"opp": other, "deck": decks[other], "result": PENDING, "score": 0,

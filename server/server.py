@@ -95,9 +95,9 @@ CROSSDOMAIN_XML = b"""<?xml version="1.0"?>
 CLOSE_POPUP_CONFIG_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
 <content transactionDate="12/31/2099 16:00:00 UTC-0700" closeDate="08/31/2016 16:00:00 UTC-0700">
 	<en><![CDATA[Yu-Gi-Oh! BAM Pocket private preservation server.<br><br>
-The official service was retired by Konami on %close_date%. This private server keeps the game running. LOG IN uses a private-server account (no Facebook) and saves your game online; Play Offline also works. BAM Pro and all currency bundles are free: no real money can be charged. Friends, Arena, Tournaments and online PvP are not available yet.]]></en>
+The official service was retired by Konami on %close_date%. This private server keeps the game running. LOG IN with a server account to save online and play with friends, in the Arena and in Teams. BAM Pro and all purchases are free. Live duels are not available yet.]]></en>
 	<fr><![CDATA[Serveur priv\xc3\xa9 de pr\xc3\xa9servation de Yu-Gi-Oh! BAM Pocket.<br><br>
-Le service officiel a \xc3\xa9t\xc3\xa9 ferm\xc3\xa9 par Konami le %close_date%. Ce serveur priv\xc3\xa9 fait fonctionner le jeu. Le bouton de connexion utilise un compte du serveur priv\xc3\xa9 (pas Facebook) et sauvegarde la partie en ligne ; le mode hors ligne fonctionne aussi. BAM Pro et tous les paquets de monnaie sont gratuits : aucun argent r\xc3\xa9el ne peut \xc3\xaatre d\xc3\xa9bit\xc3\xa9. Les amis, l'ar\xc3\xa8ne, les tournois et le JcJ en ligne ne sont pas encore disponibles.]]></fr>
+Le service officiel a \xc3\xa9t\xc3\xa9 ferm\xc3\xa9 par Konami le %close_date%. Ce serveur priv\xc3\xa9 fait fonctionner le jeu. Connectez-vous avec un compte du serveur pour sauvegarder en ligne et jouer avec vos amis, dans l'ar\xc3\xa8ne et en \xc3\xa9quipe. BAM Pro et tous les achats sont gratuits. Les duels en direct ne sont pas encore disponibles.]]></fr>
 </content>
 """
 

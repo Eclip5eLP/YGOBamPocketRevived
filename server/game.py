@@ -30,6 +30,7 @@ from pathlib import Path
 import amf3
 from accounts import AccountStore
 from arena import Arena
+from teams import Teams
 
 P = "com.frimastudio.snowstorm.project."
 C = "com.frimastudio.snowstorm.core."
@@ -70,6 +71,7 @@ class Game:
         self.sessions = {}
         self.lock = threading.Lock()
         self.arena = Arena(store, self.deck_for, logger)
+        self.teams = Teams(store, logger)
         self._load_sessions()
 
     # Logged-in sessions survive a server restart (deploy / auto-reload); otherwise every client
@@ -210,25 +212,75 @@ class Game:
     def tournament_info(self, req, ctx):
         # TournamentManager.OnGetTournamentInfoResponse returns WITHOUT dispatching when tournament is
         # null, which hangs the PvP login (TournamentManager.as:383-393), so there is always one.
-        # Templates 2..21 (config/ace/tournament/tournament_template.ace), 14 days each; level template 2
-        # = rank 15, token 1 (tournament_level_template.ace). Rotates every 14 days from TOURNAMENT_EPOCH.
-        now = time.time()
-        idx = int((now - TOURNAMENT_EPOCH) // TOURNAMENT_SECONDS)
-        start = TOURNAMENT_EPOCH + idx * TOURNAMENT_SECONDS
+        # Templates 2..21 (config/ace/tournament/tournament_template.ace), 14 days each (server/teams.py).
+        # tournamentLevel stays null until RegisterTournament (registered = level exists).
         s = self._session(ctx)
-        tournament = amf3.AMF3Object(P + "tournament.amf.Tournament",
-                                     tournementTemplateId=TOURNAMENT_TEMPLATES[idx % len(TOURNAMENT_TEMPLATES)],
-                                     timeStarted=amf3.AMF3Date(start * 1000),
-                                     tournamentDurationInSeconds=float(TOURNAMENT_SECONDS))
-        level = amf3.AMF3Object(P + "tournament.amf.TournamentLevel",
-                                externalId=float(s.uid) if s else 0.0, levelTemplateId=2, eliteRank=0, eliteToken=0)
         return amf3.encode_typed_object(P + "tournament.amf.GetTournamentInfoResponse",
-                                        {"exception": None, "tournament": tournament, "tournamentLevel": level,
+                                        {"exception": None, "tournament": self.teams.tournament(),
+                                         "tournamentLevel": self.teams.level(s.uid) if s else None,
                                          "beforeNext": 0.0})
 
+    def register_tournament(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "tournament.amf.RegisterTournamentRequest", "Not logged in", code=1)
+        return amf3.encode_typed_object(P + "tournament.amf.RegisterTournamentResponse",
+                                        {"exception": None, "tournament": self.teams.tournament(),
+                                         "tournementLevel": self.teams.register(s.uid)})
+
+    def top_tournament(self, req, ctx):
+        return amf3.encode_typed_object(P + "tournament.amf.GetTopTournamentLeaderboardResponse",
+                                        {"exception": None,
+                                         "tournamentLevel": self.teams.leaderboard(req.get("numberPlayers"))})
+
+    def previous_top_tournament(self, req, ctx):
+        return amf3.encode_typed_object(P + "tournament.amf.GetPreviousTopTournamentLeaderboardResponse",
+                                        {"exception": None,
+                                         "tournamentLevel": self.teams.leaderboard(req.get("numberPlayers"), True)})
+
+    def cancel_tournament_match(self, req, ctx):
+        return amf3.encode_typed_object(P + "tournament.amf.CancelTournamentMatchResponse", {"exception": None})
+
+    # ---- teams (server/teams.py) ----------------------------------------------------------------
     def get_team(self, req, ctx):
         # teamTemplateId 0 = not in a team (GuildManager.IsInAGuild: > 0, GuildManager.as:151-154)
-        return amf3.encode_typed_object(P + "guild.amf.GetTeamResponse", {"exception": None, "teamTemplateId": 0})
+        s = self._session(ctx)
+        return amf3.encode_typed_object(P + "guild.amf.GetTeamResponse",
+                                        {"exception": None, "teamTemplateId": self.teams.team_of(s.uid) if s else 0})
+
+    def join_team(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "guild.amf.JoinTeamRequest", "Not logged in", code=1)
+        return amf3.encode_typed_object(P + "guild.amf.JoinTeamResponse",
+                                        {"exception": None, "teamTemplateId": self.teams.join(s.uid)})
+
+    def cancel_join_team(self, req, ctx):
+        s = self._session(ctx)
+        if s:
+            self.teams.leave(s.uid)
+        return amf3.encode_typed_object(P + "guild.amf.CancelJoinTeamResponse", {"exception": None})
+
+    def guild_player_info(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "guild.amf.GetPlayerInfoRequest", "Not logged in", code=1)
+        return amf3.encode_typed_object(P + "guild.amf.GetPlayerInfoResponse",
+                                        {"exception": None, "playerGuildInfo": self.teams.player_info(s.uid)})
+
+    def team_info(self, req, ctx):
+        info = self.teams.team_info(int(req.get("teamTemplateId") or 0))
+        return amf3.encode_typed_object(P + "guild.amf.GetTeamInfoResponse", {"exception": None, **info})
+
+    def new_score_token(self, req, ctx):
+        s = self._session(ctx)
+        return amf3.encode_typed_object(P + "guild.amf.GetNewScoreTokenResponse",
+                                        {"exception": None, "token": self.teams.new_token(s.uid) if s else 0})
+
+    def new_score(self, req, ctx):
+        s = self._session(ctx)
+        added = self.teams.add_score(s.uid, int(req.get("score") or 0), int(req.get("token") or 0)) if s else 0
+        return amf3.encode_typed_object(P + "guild.amf.NewScoreResponse", {"exception": None, "score": added})
 
     def guild_global_info(self, req, ctx):
         week = 7 * 24 * 3600
@@ -374,9 +426,6 @@ class Game:
 
 
 DECK_SIZE = 15  # deck editor slots (EDIT DECK grid)
-TOURNAMENT_TEMPLATES = list(range(2, 22))
-TOURNAMENT_SECONDS = 1209600
-TOURNAMENT_EPOCH = 1_767_225_600  # 2026-01-01 00:00 UTC
 
 HANDLERS = {
     C + "player.amf.GetTokenRequest": Game.get_token,
@@ -403,4 +452,14 @@ HANDLERS = {
     P + "arena.amf.StartDuelArenaRequest": Game.start_duel_arena,
     P + "arena.amf.CompleteDuelArenaRequest": Game.complete_duel_arena,
     P + "leaderboardygo.amf.GetHighScoresRequest": Game.get_high_scores,
+    P + "tournament.amf.RegisterTournamentRequest": Game.register_tournament,
+    P + "tournament.amf.GetTopTournamentLeaderboardRequest": Game.top_tournament,
+    P + "tournament.amf.GetPreviousTopTournamentLeaderboardRequest": Game.previous_top_tournament,
+    P + "tournament.amf.CancelTournamentMatchRequest": Game.cancel_tournament_match,
+    P + "guild.amf.JoinTeamRequest": Game.join_team,
+    P + "guild.amf.CancelJoinTeamRequest": Game.cancel_join_team,
+    P + "guild.amf.GetPlayerInfoRequest": Game.guild_player_info,
+    P + "guild.amf.GetTeamInfoRequest": Game.team_info,
+    P + "guild.amf.GetNewScoreTokenRequest": Game.new_score_token,
+    P + "guild.amf.NewScoreRequest": Game.new_score,
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Phase 3 arena flow against a running (dev) server, two fresh accounts A and B:
-B sets an arena deck -> A's GetDuelArena returns 5 duels, B among them with B's deck, the rest bots with
+A and B become friends, B sets an arena deck -> A's GetDuelArena returns 5 duels, B among them with B's deck, the rest bots with
 Graph names -> Start/Complete: win scores 50 x stage multiplier and raises the bonus, a loss resets it ->
 B's registry counts its deck's AI result -> unknown opponent gives exception code -1 -> PayDuelArena
 gives a fresh set -> leaderboards list A.
@@ -30,6 +30,8 @@ def main():
     a, b = Player(base), Player(base)
     print("A", a.name, a.uid, "| B", b.name, b.uid)
 
+    a.invite(b.uid)
+    b.invite(a.uid)  # friends are drawn first
     assert b.amf(A + "SetDuelArenaDeckRequest", {"cardsTemplateId": [11, 12, 13]})["exception"] is None
     r = a.amf(A + "GetDuelArenaRequest", {"cardTemplatesId": [1, 2, 3, 4]})
     assert r["exception"] is None, r
