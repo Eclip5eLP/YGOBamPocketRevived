@@ -981,3 +981,34 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - Device: one tap → app (log "FB: remembered login", Login OK). [VERIFIED]
 - **Pages trimmed**: title + inputs + two buttons. No explanatory text; the redirect page is only a fallback
   button. Invite page lines shortened.
+
+### 6.27 Phase 3a: Arena + leaderboards; sessions survive restarts
+
+- **Client flow** [VERIFIED code]:
+  - ArenaModule.InitQueue (`module/arena/ArenaModule.as:224-238`): LoseUnfinishedDuels → SetDuelArenaDeck →
+    CompleteDuelArena for pending duels → GetDuelArena{cardTemplatesId} → GetHighScores.
+  - StartDuelArena is cache-only on the client (`ArenaManagerYGO.as:171-188`): no request was seen on the device.
+    A surrendered arena duel is reported as DEFEAT the next time the Arena opens (seen on the device, log 04:25:34).
+  - `LoadOpponentName` waits for one Graph name per duel and never completes with 0 duels
+    (`ArenaManagerYGO.as:351-372`), so there are always 5 duels (NBR_DUELS, `ui/ArenaModuleUI.as:44-46`).
+  - DuelDisplay needs matchScore/50 to be a multiplier of 1/2/4/8/16 (`ui/DuelDisplay.as:170-195`,
+    `EArenaConst.as:6`). CompletedDuelBlocker offers new duels at lastDateGenerated + 1 day for nextResetCost
+    (`ui/CompletedDuelBlocker.as:94-99`).
+  - PayDuelArena: the client checks and deducts INGAME coins itself (`ArenaManagerYGO.as:130-154`).
+  - GetHighScoresResponse fields: `leaderboardygo/amf/*`. playerHighScoreWeekly is used without a null check in
+    ArenaModule.ValidateArenaQuest, so it is always sent.
+- **Server rules** (`server/arena.py`, our design; the original logic is unknown) [INFERRED design]:
+  - 5 opponents per day: real players first, then practice bots (uid 900000000+n, names served by fake Graph)
+    using a real deck.
+  - Win = 50 × stage multiplier and the stage goes up; a loss resets the stage.
+  - Reset costs 100 coins.
+  - Weekly score and all-time score; a real opponent's aiVictories/aiDefeat record how its deck did.
+- **Sessions**: game sessions were in memory only, so every server restart (deploy, auto-reload) made the phone's
+  next request fail with "no logged-in session". Seen on the device: SendPlayerSave rejected, Pro popup stuck.
+  Logged-in sessions are now persisted to `server/data/sessions.json` (7 days).
+- **Tests**: `tests/test_arena.py` (two accounts): duel set, scores 50/100/0/50, bonus, idempotent completion,
+  deck stats, code -1, leaderboards, paid reset. All OK. A bot fill on an empty store gives 5 named bots.
+- **Device** (dev build) [VERIFIED screenshots work/logs/p3_*]:
+  - Free Pro → ARENA shows 5 opponents with scores and the Next Win ladder 50..800.
+  - FIGHT starts the duel with the opponent's deck (friend help offered). Surrender → loss reported.
+  - STATISTICS shows 0-1 and deck 1-0.

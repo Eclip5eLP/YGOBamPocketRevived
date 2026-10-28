@@ -29,6 +29,7 @@ from pathlib import Path
 
 import amf3
 from accounts import AccountStore
+from arena import Arena
 
 P = "com.frimastudio.snowstorm.project."
 C = "com.frimastudio.snowstorm.core."
@@ -68,6 +69,27 @@ class Game:
         self.log = logger
         self.sessions = {}
         self.lock = threading.Lock()
+        self.arena = Arena(store, self.deck_for, logger)
+        self._load_sessions()
+
+    # Logged-in sessions survive a server restart (deploy / auto-reload); otherwise every client
+    # would get "no logged-in session" until it logs in again.
+    SESSION_FILE = "sessions.json"
+    SESSION_SECONDS = 7 * 24 * 3600
+
+    def _load_sessions(self):
+        now = time.time()
+        for token, v in self.store._load(self.SESSION_FILE, {}).items():
+            if now - v["created"] < self.SESSION_SECONDS:
+                sess = Session(token, v.get("parent_uid"))
+                sess.uid, sess.created = v["uid"], v["created"]
+                self.sessions[token] = sess
+
+    def _save_sessions(self):
+        # caller holds self.lock
+        data = {t: {"uid": v.uid, "parent_uid": v.parent_uid, "created": v.created}
+                for t, v in self.sessions.items() if v.uid}
+        self.store._store(self.SESSION_FILE, data)
 
     # ---- session lookup -----------------------------------------------------------------
     def find_session(self, ext_id, cookie_token):
@@ -98,7 +120,7 @@ class Game:
         seed = secrets.randbelow(0x7FFFFFFF)
         with self.lock:
             now = time.time()
-            self.sessions = {k: v for k, v in self.sessions.items() if now - v.created < 7 * 24 * 3600}
+            self.sessions = {k: v for k, v in self.sessions.items() if now - v.created < self.SESSION_SECONDS}
             parent = self.sessions.get(ctx["cookie"] or "")
             parent_uid = parent.uid if parent else None
             self.sessions[token] = Session(token, parent_uid)
@@ -136,6 +158,7 @@ class Game:
             return amf3.build_error_response(err_alias, "Login failed", code=1)
         with self.lock:
             s.uid = uid
+            self._save_sessions()
         self.log.info("[%s] Login OK: %s (uid %s, session %s, %s)", ctx["ip"], user["username"], uid, s.token[:8],
                       "pvp" if s.parent_uid else "main")
         return amf3.encode_typed_object(C + "player.amf.LoginResponse",
@@ -301,6 +324,51 @@ class Game:
         return self._stamp(ctx, req.get("friendPlayerId"), "help",
                            P + "relation.amf.FriendHelpResponse", "lastHelpDate")
 
+    # ---- phase 3: arena (server/arena.py) -------------------------------------------------------
+    @staticmethod
+    def _ext(value):
+        return str(int(float(value or 0)))
+
+    def get_duel_arena(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "arena.amf.GetDuelArenaRequest", "Not logged in", code=1)
+        deck = [int(c) for c in (req.get("cardTemplatesId") or []) if isinstance(c, (int, float))]
+        matches, registry = self.arena.get_duel_arena(s.uid, deck)
+        return amf3.encode_typed_object(P + "arena.amf.GetDuelArenaResponse",
+                                        {"exception": None, "matches": matches, "playerRegistry": registry})
+
+    def pay_duel_arena(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "arena.amf.PayDuelArenaRequest", "Not logged in", code=1)
+        return amf3.encode_typed_object(P + "arena.amf.PayDuelArenaResponse",
+                                        {"exception": None, "matches": self.arena.pay_duel_arena(s.uid)})
+
+    def start_duel_arena(self, req, ctx):
+        s = self._session(ctx)
+        if s:
+            self.arena.start_duel(s.uid, self._ext(req.get("opponentExternalId")))
+        return amf3.encode_typed_object(P + "arena.amf.StartDuelArenaResponse", {"exception": None})
+
+    def complete_duel_arena(self, req, ctx):
+        alias = P + "arena.amf.CompleteDuelArenaRequest"
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(alias, "Not logged in", code=1)
+        res = self.arena.complete_duel(s.uid, self._ext(req.get("opponentExternalId")), int(req.get("matchResultId") or 0))
+        if res is None:  # EArenaError.OPPONENT_INEXISTANT: client clears its cached matches
+            return amf3.build_error_response(alias, "Opponent not in current arena set", code=-1)
+        return amf3.encode_typed_object(P + "arena.amf.CompleteDuelArenaResponse",
+                                        {"exception": None, "playerRegistry": res[1], "matches": res[0]})
+
+    def get_high_scores(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "leaderboardygo.amf.GetHighScoresRequest", "Not logged in", code=1)
+        props = self.arena.high_scores(s.uid, [self._ext(f) for f in (req.get("friendExternalIds") or [])])
+        return amf3.encode_typed_object(P + "leaderboardygo.amf.GetHighScoresResponse", {"exception": None, **props})
+
     def accidental_zero(self, req, ctx):
         return amf3.encode_typed_object(P + "player.amf.AccidentalZeroResponse", {"exception": None})
 
@@ -330,4 +398,9 @@ HANDLERS = {
     P + "relation.amf.GetRelationsProjectRequest": Game.get_relations,
     P + "worldmap.amf.CompleteDuelFriendRequest": Game.complete_duel_friend,
     P + "relation.amf.FriendHelpRequest": Game.friend_help,
+    P + "arena.amf.GetDuelArenaRequest": Game.get_duel_arena,
+    P + "arena.amf.PayDuelArenaRequest": Game.pay_duel_arena,
+    P + "arena.amf.StartDuelArenaRequest": Game.start_duel_arena,
+    P + "arena.amf.CompleteDuelArenaRequest": Game.complete_duel_arena,
+    P + "leaderboardygo.amf.GetHighScoresRequest": Game.get_high_scores,
 }

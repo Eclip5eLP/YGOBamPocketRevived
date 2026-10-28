@@ -33,6 +33,7 @@ import urllib.parse
 import zlib
 
 from accounts import AccountError, AccountStore
+from arena import bot_name
 
 APP_ID = "145583478967400"
 ALLOWED_REDIRECT = f"fb{APP_ID}://authorize"
@@ -240,6 +241,8 @@ class FakeFacebook:
         if len(parts) >= 2 and parts[1] == "picture":
             return 200, "image/png", DEFAULT_PICTURE
         user = self.store.user_by_uid(parts[0])
+        if user is None and bot_name(parts[0]):  # arena practice bots (server/arena.py)
+            user = {"uid": parts[0], "username": bot_name(parts[0])}
         if user is None:
             return 404, "application/json", b'{"error":{"message":"Unknown user"}}'
         return 200, "application/json", json.dumps(self._user_json(user)).encode()
