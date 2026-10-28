@@ -18,7 +18,7 @@ PKG = "air.com.konami.ygo"
 
 
 def adb(serial, *args, check=False, capture=True):
-    return subprocess.run(["adb", "-s", serial, *args], capture_output=capture, check=check)
+    return subprocess.run(["adb", *(["-s", serial] if serial else []), *args], capture_output=capture, check=check)
 
 
 def pidof(serial, pkg=PKG):
@@ -30,7 +30,7 @@ def main():
     ap.add_argument("--tag", required=True)
     ap.add_argument("--apk")
     ap.add_argument("--seconds", type=int, default=15)
-    ap.add_argument("--serial", default="58051FDCR00159")
+    ap.add_argument("--serial", default="", help="adb device serial (default: the only connected device)")
     ap.add_argument("--pkg", default=PKG)
     args = ap.parse_args()
     s = args.serial

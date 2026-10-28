@@ -231,6 +231,11 @@ In short:
 
 ---
 
+## License
+
+The tooling and server code in this repository are released under the [MIT License](LICENSE). The license
+covers only this project's own code, not the game or its assets (see the disclaimer below).
+
 ## Disclaimer
 
 Yu-Gi-Oh! and Yu-Gi-Oh! BAM Pocket are trademarks of their respective owners (Kazuki Takahashi, Konami
