@@ -1,0 +1,18 @@
+[Unit]
+Description=Yu-Gi-Oh! BAM Pocket Revival Server
+After=network.target
+
+[Service]
+Type=simple
+User=eclip5e
+Group=eclip5e
+WorkingDirectory=/home/eclip5e/Documents/PythonBots/YGOBamPocketRevival
+ExecStart=/usr/bin/python3 server/server.py --host 0.0.0.0 --port 8087 --cdn-host ygo.eclip5e.com --input-dir "input/data/data/air.com.konami.ygo/com.konami.ygo/Local Store" --cache-dir "work/package_cache"
+Restart=on-failure
+RestartSec=5s
+Environment=PYTHONUNBUFFERED=1
+# Optional: YGO_LOG_TOKEN=<secret> enables GET /_logs (header X-Log-Token). Missing file = endpoint disabled.
+EnvironmentFile=-/home/eclip5e/.config/ygo-revival.env
+
+[Install]
+WantedBy=multi-user.target

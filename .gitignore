@@ -1,0 +1,42 @@
+# --- Game data (Konami): never commit ---------------------------------------------------
+input/
+work/
+*.apk
+*.aab
+*.swf
+*.ane
+*.swc
+*.ace
+*.sav
+
+# --- Third-party tools / SDKs (download separately) --------------------------------------
+tools/ffdec/
+tools/ffdec.zip
+airsdk/
+AIRSDK_*.zip
+notes/AIR_SDK_license.pdf
+
+# --- Server secrets and user data --------------------------------------------------------
+# server/data/publickey.xml is public and needed for client builds; everything else stays local
+server/data/*
+!server/data/publickey.xml
+*.keystore
+*.p12
+*.jks
+
+# --- Dev / environment -------------------------------------------------------------------
+scratch/
+.env
+.env.*
+*.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.log
+.claude/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
