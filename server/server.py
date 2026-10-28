@@ -163,7 +163,9 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
     def log_request(self, code='-', size='-'):
         """Logs every incoming request with resolved client IP and response code."""
         ip = self.get_client_ip()
-        logger.info("[%s] %s %s -> %s (size: %s)", ip, self.command, self.path, code, size)
+        # successful AMF POSTs are already described by the "AMF request" lines
+        quiet = self.path == "/facebook/proxy.html" and str(code) == "200"
+        (logger.debug if quiet else logger.info)("[%s] %s %s -> %s (size: %s)", ip, self.command, self.path, code, size)
 
     def log_error(self, format, *args):
         """Logs request errors with resolved client IP."""
@@ -521,8 +523,10 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
             self.send_error(400, f"Malformed AMF3 payload: {e}")
             return
 
-        logger.info("[%s] AMF request (ExternalId: '%s', %d request objects)",
-                    ip, ext_id, len(request_objects))
+        # keep-alive pings arrive every few seconds; log them at debug level only
+        only_pings = all(getattr(r, "class_alias", "").endswith(".PingRequest") for r in request_objects)
+        log_info = logger.debug if only_pings else logger.info
+        log_info("[%s] AMF request (ExternalId: '%s', %d request objects)", ip, ext_id, len(request_objects))
 
         responses = []
         ctx = {"ip": ip, "ext_id": ext_id, "cookie": self.session_cookie(), "set_cookie": []}
@@ -530,7 +534,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         # Process each request object in request order
         for req in request_objects:
             alias = getattr(req, "class_alias", "")
-            logger.info("[%s] Processing request: %s", ip, alias)
+            log_info("[%s] Processing request: %s", ip, alias)
 
             handled = self.server.game.handle(alias, req, ctx)
             if handled is not None:
@@ -544,7 +548,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
                 ))
             elif alias == "com.frimastudio.snowstorm.core.player.amf.PingRequest":
                 gameframe = float(req.get("gameframe", 0.0))
-                logger.info("[%s] Dispatching PingResponse (gameframe: %s)", ip, gameframe)
+                logger.debug("[%s] Dispatching PingResponse (gameframe: %s)", ip, gameframe)
                 responses.append(amf3.build_ping_response(gameframe=gameframe))
             else:
                 logger.warning("[%s] Unknown request class: %s with fields: %s", ip, alias, dict(req))

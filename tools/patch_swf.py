@@ -296,7 +296,8 @@ def string_patches(fb_base):
         (AbstractFacebook.as:69 api, :237 picture), API_URL (:199 REST/FQL), OAuth URLs
       FacebookManagerMobile.Authorize (FacebookManagerMobile.as:395-412): the OAuth dialog that
         mobile login opens in the external browser, redirect_uri fb<appId>://authorize
-      FacebookMobile.logout (FacebookMobile.as:320)"""
+      FacebookMobile.logout (FacebookMobile.as:320)
+      DialogWindow (DialogWindow.as:30-44): in-game Facebook dialogs (invite friends)"""
     return {
         "com/facebook/graph/core/FacebookURLDefaults": [
             ("https://graph.facebook.com", f"{fb_base}/graph"),
@@ -317,6 +318,11 @@ def string_patches(fb_base):
         ],
         "com/frimastudio/snowstorm/project/facebook/FacebookMobile": [
             ("https://m.facebook.com/logout.php", f"{fb_base}/logout.php"),
+        ],
+        # in-game invite dialog (FacebookManagerMobile.InviteFriends -> /apprequests), DialogWindow.as:30-44
+        "com/frimastudio/snowstorm/project/facebook/DialogWindow": [
+            ("https://m.facebook.com/dialog", f"{fb_base}/dialog"),
+            ("https://www.facebook.com/dialog", f"{fb_base}/dialog"),
         ],
     }
 

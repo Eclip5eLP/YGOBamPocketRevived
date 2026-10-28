@@ -104,6 +104,77 @@ class AccountStore:
             return entry["uid"]
         return None
 
+    def all_users(self):
+        return list(self.accounts["users"].values())
+
+    # --- friends ---------------------------------------------------------------------------
+    # friends.json {uid: {"friends": [uid...], "outgoing": [uid...]}}; a request becomes a friendship
+    # when the other side has already requested (invited) us.
+    def _friends(self):
+        if not hasattr(self, "_friend_data"):
+            self._friend_data = self._load("friends.json", {})
+        return self._friend_data
+
+    def _entry(self, uid):
+        return self._friends().setdefault(str(uid), {"friends": [], "outgoing": []})
+
+    def friends_of(self, uid):
+        return list(self._entry(uid)["friends"])
+
+    def incoming_requests(self, uid):
+        uid = str(uid)
+        return [u for u, e in self._friends().items() if uid in e["outgoing"]]
+
+    def request_friend(self, uid, other):
+        """Returns 'friends', 'requested' or 'already'."""
+        uid, other = str(uid), str(other)
+        if uid == other or self.user_by_uid(other) is None:
+            raise AccountError("unknown player")
+        with self.lock:
+            me, them = self._entry(uid), self._entry(other)
+            if other in me["friends"]:
+                return "already"
+            if uid in them["outgoing"]:
+                them["outgoing"].remove(uid)
+                me["friends"].append(other)
+                them["friends"].append(uid)
+                result = "friends"
+            elif other in me["outgoing"]:
+                return "already"
+            else:
+                me["outgoing"].append(other)
+                result = "requested"
+            self._store("friends.json", self._friends())
+            return result
+
+    def remove_friend(self, uid, other):
+        uid, other = str(uid), str(other)
+        with self.lock:
+            for a, b in ((uid, other), (other, uid)):
+                e = self._entry(a)
+                for key in ("friends", "outgoing"):
+                    if b in e[key]:
+                        e[key].remove(b)
+            self._store("friends.json", self._friends())
+
+    # --- per-player game data (arena deck etc.) ---------------------------------------------
+    def get_player_data(self, uid, key, default=None):
+        p = self.dir / "players" / f"{int(uid)}.json"
+        if p.exists():
+            return json.loads(p.read_text(encoding="utf-8")).get(key, default)
+        return default
+
+    def set_player_data(self, uid, key, value):
+        d = self.dir / "players"
+        d.mkdir(exist_ok=True)
+        p = d / f"{int(uid)}.json"
+        with self.lock:
+            data = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+            data[key] = value
+            tmp = p.with_suffix(".tmp")
+            tmp.write_text(json.dumps(data), encoding="utf-8")
+            os.replace(tmp, p)
+
     # --- saves -----------------------------------------------------------------------------
     def _save_path(self, uid: str) -> Path:
         if not str(uid).isdigit():

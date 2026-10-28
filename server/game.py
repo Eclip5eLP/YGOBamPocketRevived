@@ -22,6 +22,7 @@ Client references (work/as3):
 
 import json
 import secrets
+import zlib
 import threading
 import time
 from pathlib import Path
@@ -216,10 +217,95 @@ class Game:
         # pending friend duel challenges (readyforcombat/CombatManager.as:208-224); none yet (phase 2)
         return amf3.encode_typed_object(P + "readyforcombat.amf.GetCombatsResponse", {"exception": None, "combat": []})
 
+    # ---- phase 2: friends (Duel Ground friend duels, relations) -------------------------------
+    def deck_for(self, uid):
+        """Comma-separated card template ids the client parses in DuelGroundModule.OnFriendDeckReceived
+        (DuelGroundModule.as:552-575; empty string = client default deck). Order of preference:
+        deck uploaded by SetDuelArenaDeck (exact, ArenaModule.as:390) -> a save item flagged
+        isDefaultDeck -> the 15 strongest collection cards (max 3 copies) -> ''."""
+        arena = self.store.get_player_data(uid, "arena_deck")
+        if arena:
+            return ",".join(str(int(c)) for c in arena)
+        blob = self.store.get_save(uid)
+        if not blob:
+            return ""
+        try:
+            raw = amf3.AMF3Decoder(zlib.decompress(blob)).decode_value()
+            items = (json.loads(raw) if isinstance(raw, str) else raw).get("items", [])
+        except Exception as e:  # noqa: BLE001
+            self.log.warning("deck_for %s: unreadable save: %s", uid, e)
+            return ""
+        deck_ids = {it.get("id") for it in items if it.get("isDefaultDeck")}
+        out = []
+        if deck_ids:
+            for c in items:
+                if c.get("containerId") in deck_ids:
+                    out += [int(c["itemTemplateId"])] * int(c.get("quantity", 1))
+        else:
+            collection = [it for it in items if it.get("itemTemplateId", 0) > 0 and "atkStat" in it]
+            collection.sort(key=lambda c: -(c.get("atkStat", 0) + c.get("defStat", 0)))
+            for c in collection:
+                out += [int(c["itemTemplateId"])] * min(int(c.get("quantity", 1)), 3)
+            out = out[:DECK_SIZE]
+        return ",".join(map(str, out))
+
+    def get_deck_by_external_id(self, req, ctx):
+        other = str(int(float(req.get("externalId") or 0)))
+        deck = self.deck_for(other) if self.store.user_by_uid(other) else ""
+        self.log.info("[%s] GetDeckByExternalId %s -> %d cards", ctx["ip"], other, len(deck.split(",")) if deck else 0)
+        return amf3.encode_typed_object(P + "arena.amf.GetDeckByExternalIdResponse", {"exception": None, "deck": deck})
+
+    def set_duel_arena_deck(self, req, ctx):
+        s = self._session(ctx)
+        cards = [int(c) for c in (req.get("cardsTemplateId") or []) if isinstance(c, (int, float))]
+        if s and cards:
+            self.store.set_player_data(s.uid, "arena_deck", cards)
+        return amf3.encode_typed_object(P + "arena.amf.SetDuelArenaDeckResponse", {"exception": None})
+
+    def _relation(self, s, other_uid, rel):
+        other = self.store.user_by_uid(other_uid)
+        me = self.store.user_by_uid(s.uid)
+        return amf3.AMF3Object(P + "relation.amf.Relation",
+                               id=int(other["id"]), avatarIdFrom=int(me["id"]), avatarIdTo=int(other["id"]),
+                               relationTypeId=1, relationStatusId=1, strength=0, mutual=True, avatarToOnline=False,
+                               externalTypeId=1, externalId=float(other_uid), avatarName=other["username"], serverId=0,
+                               lastDuelDate=amf3.AMF3Date(rel["duel"] * 1000) if rel.get("duel") else None,
+                               lastHelpDate=amf3.AMF3Date(rel["help"] * 1000) if rel.get("help") else None)
+
+    def get_relations(self, req, ctx):
+        s = self._session(ctx)
+        rels = []
+        if s:
+            stamps = self.store.get_player_data(s.uid, "relations", {})
+            rels = [self._relation(s, f, stamps.get(f, {})) for f in self.store.friends_of(s.uid)
+                    if self.store.user_by_uid(f)]
+        return amf3.encode_typed_object(P + "relation.amf.GetRelationsProjectResponse",
+                                        {"exception": None, "relations": rels})
+
+    def _stamp(self, ctx, account_id, key, alias, date_field):
+        s = self._session(ctx)
+        other = next((u for u in self.store.all_users() if int(u["id"]) == int(account_id or 0)), None)
+        now = time.time()
+        if s and other:
+            stamps = self.store.get_player_data(s.uid, "relations", {})
+            stamps.setdefault(other["uid"], {})[key] = now
+            self.store.set_player_data(s.uid, "relations", stamps)
+        return amf3.encode_typed_object(alias, {"exception": None, "relationId": int(other["id"]) if other else 0,
+                                                date_field: amf3.AMF3Date(now * 1000)})
+
+    def complete_duel_friend(self, req, ctx):
+        return self._stamp(ctx, req.get("friendAvatarId"), "duel",
+                           P + "worldmap.amf.CompleteDuelFriendResponse", "lastDuelDate")
+
+    def friend_help(self, req, ctx):
+        return self._stamp(ctx, req.get("friendPlayerId"), "help",
+                           P + "relation.amf.FriendHelpResponse", "lastHelpDate")
+
     def accidental_zero(self, req, ctx):
         return amf3.encode_typed_object(P + "player.amf.AccidentalZeroResponse", {"exception": None})
 
 
+DECK_SIZE = 15  # deck editor slots (EDIT DECK grid)
 TOURNAMENT_TEMPLATES = list(range(2, 22))
 TOURNAMENT_SECONDS = 1209600
 TOURNAMENT_EPOCH = 1_767_225_600  # 2026-01-01 00:00 UTC
@@ -239,4 +325,9 @@ HANDLERS = {
     P + "guild.amf.GetTeamRequest": Game.get_team,
     P + "guild.amf.GetGlobalInfoRequest": Game.guild_global_info,
     P + "readyforcombat.amf.GetCombatsRequest": Game.get_combats,
+    P + "arena.amf.GetDeckByExternalIdRequest": Game.get_deck_by_external_id,
+    P + "arena.amf.SetDuelArenaDeckRequest": Game.set_duel_arena_deck,
+    P + "relation.amf.GetRelationsProjectRequest": Game.get_relations,
+    P + "worldmap.amf.CompleteDuelFriendRequest": Game.complete_duel_friend,
+    P + "relation.amf.FriendHelpRequest": Game.friend_help,
 }

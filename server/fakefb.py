@@ -14,7 +14,13 @@ Flow (client code references in work/as3):
      (FacebookMobile.as:211-232, FacebookManagerMobile.as:132-162).
   5. FQL friends: GET/POST <fb>/api/method/fql.query?query=..&format=json -> array of
      {uid, name, first_name, is_app_user} (FacebookManagerMobile.as:382-393, 190-219).
-     Phase 1: empty list.
+     Friends are is_app_user=true (Duel Ground, friend help: GetFriendList(true)); every other
+     registered player is is_app_user=false, which the game lists under "Invite friends"
+     (InviteFriendsPopup: GetFriendList(false)). Players with a pending request to you are marked.
+  7. Invite: the game opens <fb>/dialog/apprequests?to=<uids>&access_token=..&redirect_uri=.. in an
+     in-game StageWebView (FacebookManagerMobile.InviteFriends, DialogWindow.as). Each invite is a
+     friend request; inviting someone who already invited you makes you friends. The page's Close
+     link goes to redirect_uri (LOGIN_SUCCESS_URL), which closes the web view.
   6. Pictures: <fb>/graph/<id>/picture (AbstractFacebook.as:235-238).
 """
 
@@ -78,6 +84,15 @@ text-align:center;border-radius:6px;text-decoration:none;font-size:18px;margin-t
 <script>window.location.href = {url_js};</script></body></html>"""
 
 
+# shown in the game's 800x400 invite web view: Close first, short lines
+INVITE_PAGE = """<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{{margin:0;font-family:sans-serif;background:#0b1730;color:#eef;padding:8px;font-size:13px}}
+p{{margin:4px 0}} a{{display:block;margin-bottom:8px;padding:8px;background:#2d6cdf;color:#fff;
+text-align:center;border-radius:6px;text-decoration:none;font-size:15px}}</style></head>
+<body><a href="{close}">Close</a>{lines}</body></html>"""
+
+
 class FakeFacebook:
     def __init__(self, store: AccountStore, logger):
         self.store = store
@@ -99,7 +114,9 @@ class FakeFacebook:
                 return self._me(query)
             return self._graph_object(rest, query)
         if path.startswith("/fb/api/method/fql."):
-            return 200, "application/json", b"[]"
+            return self._fql_friends(query or form)
+        if path.startswith("/fb/dialog/apprequests"):
+            return self._apprequests(query, ip)
         if path in ("/fb/logout.php", "/fb/connect/login_success.html"):
             return 200, "text/html; charset=utf-8", b"<html><body>OK</body></html>"
         return None
@@ -129,6 +146,51 @@ class FakeFacebook:
         token = self.store.issue_token(user["uid"])
         url = f"{ALLOWED_REDIRECT}#access_token={urllib.parse.quote(token)}&expires_in=5184000"
         body = DONE.format(name=html.escape(user["username"]), url=html.escape(url), url_js=json.dumps(url))
+        return 200, "text/html; charset=utf-8", body.encode("utf-8")
+
+    INCOMING_MARK = "(!) "
+
+    def _fql_friends(self, params):
+        uid = self.store.uid_for_token(params.get("access_token", [""])[0])
+        if uid is None:
+            err = {"error_code": 190, "error_msg": "Invalid OAuth access token."}
+            return 400, "application/json", json.dumps(err).encode()
+        friends = set(self.store.friends_of(uid))
+        incoming = set(self.store.incoming_requests(uid))
+        rows = []
+        for user in self.store.all_users():
+            if user["uid"] == uid:
+                continue
+            is_friend = user["uid"] in friends
+            name = user["username"]
+            if not is_friend and user["uid"] in incoming:
+                name = self.INCOMING_MARK + name
+            rows.append({"uid": user["uid"], "name": name, "first_name": name, "is_app_user": is_friend})
+        return 200, "application/json", json.dumps(rows).encode()
+
+    def _apprequests(self, query, ip):
+        uid = self.store.uid_for_token(query.get("access_token", [""])[0])
+        close_url = query.get("redirect_uri", [""])[0] or "/fb/connect/login_success.html"
+        close_url += ("&" if "?" in close_url else "?") + "request=revival"
+        lines = []
+        if uid is None:
+            lines.append("Your login has expired. Log in again from the game.")
+        else:
+            for other in [u for u in query.get("to", [""])[0].split(",") if u.strip().isdigit()][:50]:
+                user = self.store.user_by_uid(other.strip())
+                try:
+                    result = self.store.request_friend(uid, other.strip())
+                except AccountError:
+                    continue
+                name = html.escape(user["username"])
+                lines.append({"friends": f"<b>{name}</b>: you are now friends.",
+                              "requested": f"<b>{name}</b>: request sent (friends once {name} invites you back).",
+                              "already": f"<b>{name}</b>: already friends or already requested."}[result])
+                self.log.info("[%s] FB: %s -> %s friend request: %s", ip, uid, other, result)
+            if not lines:
+                lines.append("No players selected.")
+            lines.append("New friends show up after the game logs in again (restart the game).")
+        body = INVITE_PAGE.format(lines="".join(f"<p>{ln}</p>" for ln in lines), close=html.escape(close_url))
         return 200, "text/html; charset=utf-8", body.encode("utf-8")
 
     @staticmethod

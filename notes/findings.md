@@ -931,3 +931,23 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
 - `tools/patch_swf.py` no longer ships disassembled game code: the OnPurchaseComplete P-code is exported from the SWF at build time and the 6 instructions are inserted after an anchor (PCODE_INSERTIONS). Output byte-identical to the previous build (decompressed SWF compared). [VERIFIED]
 - Deployment = `Y:/Documents/PythonBots/YGOBamPocketRevival/` (SSHFS-Win mount `\sshfs\eclip5e@192.168.178.127`). No SSH login is available to me, so `server.py` now re-execs itself when `server/*.py` change and compile (`watch_and_reload`, `--no-auto-reload` to disable). Tested in a scratch copy: change -> reload; syntax error -> skipped with warning, server keeps running. In-memory sessions are lost on reload. Needs one manual service restart to activate. [VERIFIED locally]
 - Live login test on ygo.eclip5e.com: pending. I don't create accounts on the production host, so the user runs it. `work/game_release.apk` installed on the Pixel.
+
+### 6.25 Phase 2: friends, friend duels, invites (2026-10-28)
+- **How friend features work client-side** (work/as3):
+  - Duel Ground lists `FacebookManagerMobile.GetFriendList(true)` = FQL rows with is_app_user (`module/duelground/DuelGroundModule.as:379-383`).
+  - A friend duel is an AI duel against the friend's deck from `GetDeckByExternalIdRequest{externalId}` -> `deck` = comma-separated card template ids; empty = client default deck (`:536-575`, `project/arena/ArenaManagerYGO.as:320-349`). Duel results and friend-help cooldowns live in the client save (`FriendDataUtil.FriendReadyForHelp`).
+  - `RelationManagerProject.OnFriendHelpRequested` has no callers, so FriendHelpRequest is never sent.
+  - Invite: `InviteFriendsPopup` lists GetFriendList(false). `FacebookManagerMobile.InviteFriends` opens `/dialog/apprequests?to=..&access_token=..` in an in-game StageWebView; it closes when the location reaches LOGIN_SUCCESS_URL (`DialogWindow.as`; `#_=_` = failure). [VERIFIED code]
+- **Implementation**:
+  - `accounts.py`: friends.json (mutual friends + outgoing requests); players/<uid>.json (arena deck, relation timestamps).
+  - `fakefb.py`: FQL returns friends (is_app_user true) + all other players (false, "(!) " prefix when they requested you); `/fb/dialog/apprequests` turns invites into friend requests (mutual invite = friends), compact page, Close -> redirect_uri.
+  - `game.py`: GetDeckByExternalId (Arena deck -> isDefaultDeck items -> 15 strongest collection cards, max 3 copies), SetDuelArenaDeck, GetRelationsProject, CompleteDuelFriend, FriendHelp.
+  - `patch_swf.py`: DialogWindow URLs -> `<fb>/dialog`.
+  - `server.py`: ping-only batches logged at debug.
+  - `tests/test_friends.py` passes. [VERIFIED]
+- **Device** (dev server, devtester + devfriend):
+  - MAIN MENU shows Arena / Teams / Friends / Tournament enabled.
+  - FRIENDS DUEL GROUND lists devfriend with FIGHT!. FIGHT -> GetDeckByExternalId -> duel devtester vs devfriend (3600 LP). Surrender -> DUEL REWARD (+1 CP) and online save upload.
+  - ADD FRIENDS lists the other registered players. Selecting one + INVITE FRIENDS -> our page in the in-game web view ("request sent"); Close returns to the game. [VERIFIED screenshots work/logs/p2_*]
+- **Limits**: new friends appear only after the game logs in again (the FQL friend list is fetched at login). Real-time PvP, Arena, Teams and Tournaments are not implemented.
+- Deployed to Y: (auto-reload worked, 03:51:35); release APK rebuilt with the dialog patch and installed on the Pixel.
