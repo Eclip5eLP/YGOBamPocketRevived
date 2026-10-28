@@ -15,6 +15,7 @@ Usage: python tools/build_stub_anes.py [--ns 33.1]
 """
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
@@ -24,7 +25,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 INPUT_APK = PROJECT_ROOT / "input" / "ygo.apk"
 SDK = PROJECT_ROOT / "work" / "airsdk"
-ADT_BAT = SDK / "bin" / "adt.bat"
+ADT_BAT = SDK / "bin" / ("adt.bat" if os.name == "nt" else "adt")
 FRE_JAR = SDK / "lib" / "android" / "FlashRuntimeExtensions.jar"
 KEYSTORE = PROJECT_ROOT / "work" / "debug.keystore"
 WORK = PROJECT_ROOT / "work" / "stub_anes"

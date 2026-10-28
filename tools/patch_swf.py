@@ -30,6 +30,8 @@ Then FFDec P-code method replacements (length may change; FFDec reassembles and 
 constant-pool entries; an unchanged round trip was verified byte-identical):
   AppPurchaseHandlerImpl.OnPurchaseComplete: after the success branch dispatches
   PURCHASE_COMPLETED, PopupManagerUtil.ShowInfo("Success", "Purchase complete.")
+  FacebookManagerMobile.OnInitFacebookComplete: keep the saved login when the account check
+  fails for network reasons (only an "error" reply from the server clears it).
   (generated at build time from the SWF, see PCODE_INSERTIONS).
 
 Usage: python tools/patch_swf.py <in.swf> <out.swf> [--fb-base http://ygo.eclip5e.com/fb]

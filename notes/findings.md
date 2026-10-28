@@ -929,7 +929,7 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
 ### 6.24 Repo, deploy path, auto-reload (2026-10-28)
 - Git repo initialised by the user; first commits `dfdd47c`, `8d9b7a3`. `.gitignore` excludes game data (input/, work/, apk/swf/ane/ace/sav), third-party tools (FFDec, AIR SDK, Harman license PDF), server secrets and user data (server/data/* except publickey.xml), env/dev files. `.gitattributes` forces LF (run.sh / service file run on Linux).
 - `tools/patch_swf.py` no longer ships disassembled game code: the OnPurchaseComplete P-code is exported from the SWF at build time and the 6 instructions are inserted after an anchor (PCODE_INSERTIONS). Output byte-identical to the previous build (decompressed SWF compared). [VERIFIED]
-- Deployment = `Y:/Documents/PythonBots/YGOBamPocketRevival/` (SSHFS-Win mount `\sshfs\eclip5e@192.168.178.127`). No SSH login is available to me, so `server.py` now re-execs itself when `server/*.py` change and compile (`watch_and_reload`, `--no-auto-reload` to disable). Tested in a scratch copy: change -> reload; syntax error -> skipped with warning, server keeps running. In-memory sessions are lost on reload. Needs one manual service restart to activate. [VERIFIED locally]
+- Deployment = `Y:/Documents/PythonBots/YGOBamPocketRevival/` (a network drive mapped to the server). No SSH login is available to me, so `server.py` now re-execs itself when `server/*.py` change and compile (`watch_and_reload`, `--no-auto-reload` to disable). Tested in a scratch copy: change -> reload; syntax error -> skipped with warning, server keeps running. In-memory sessions are lost on reload. Needs one manual service restart to activate. [VERIFIED locally]
 - Live login test on ygo.eclip5e.com: pending. I don't create accounts on the production host, so the user runs it. `work/game_release.apk` installed on the Pixel.
 
 ### 6.25 Phase 2: friends, friend duels, invites (2026-10-28)
@@ -1046,3 +1046,39 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
 - **Deployed** to Y: (live reload 04:33:47; checked: popup, login page, /me error JSON).
   - Release APK rebuilt with the keep-login patch and installed. It shows LOG IN once, because the dev-server
     token on the phone is not valid on live.
+
+### 6.29 Production release 1.0.0 (2026-10-28)
+
+- **Name "Yugioh BAM Pocket Revived"** everywhere users see it:
+  - login page title / h1 (`server/fakefb.py`);
+  - startup popup (`CLOSE_POPUP_CONFIG_XML`);
+  - server banner;
+  - APK launcher label: descriptor `<name>`/`<filename>` via `build_game_adt.py --name`; versionName 1.0.0 via
+    `<versionLabel>`.
+- **Startup popup** [VERIFIED code]: BigInfoPopup renders the text with `htmlText` and then `setTextFormat` for the
+  whole field (`AssetCreationUtil.GetImageFromHtmlTextField`, `AssetCreationUtil.as:100-135`) into a bitmap. One
+  font size, no clickable links. The footer is therefore plain lines (repo link, "By Eclip5e"). The text was
+  shortened until all of it fits without scrolling (device screenshot work/logs/final6.png).
+- **Release signing**: new key `work/release.p12` (CN=Yugioh BAM Pocket Revived, O=Eclip5e, RSA 2048, 30 years;
+  cert SHA-256 10:4B:D4:9D:...:E5:04). The password is in `work/release-signing.txt`; both files are git-ignored
+  and must be backed up. Earlier builds used `work/debug.keystore`, so switching from them needs an uninstall.
+- **One-command build**: `tools/build_release.py` (stub ANEs → patch_swf → build_game_adt). ADT path works on
+  Windows (`adt.bat`) and Unix (`adt`).
+- **Repo cleanup**:
+  - Removed the scripts of the abandoned hand-packaging route: bisect_control, build_hello_air, build_ygo_adt,
+    detailed_apk_diff, diff_apks, patch_exit_hook, setup_air_runtime, patch_apk (its `patch_mmog_xml` moved into
+    build_game_adt), test_patched_apk.
+  - Removed `download_airsdk.py`, which accepted the SDK license via the URL.
+  - Removed DEPLOY.md (now in README).
+  - `deploy/run.sh` and the service are generic templates (PUBLIC_HOST).
+  - LAN address removed from the notes; it is still present in older commits.
+  - No log token, private key or password in any tracked file or in history (grep over `git log -p`).
+- **Final APK** `work/release/YugiohBAMPocketRevived-1.0.0.apk` (34 MB) [VERIFIED, aapt + keytool]:
+  - package air.com.konami.ygo, versionCode 1011002, versionName 1.0.0, label "Yugioh BAM Pocket Revived";
+  - arm64-v8a, targetSdk 28, no BILLING permission;
+  - mmog.xml points to ygo.eclip5e.com; publickey.xml = the repo's/server's key.
+- **Fresh install on the Pixel** [VERIFIED]: content download from live (84.65 MB) → login screen → Play Offline →
+  new popup → LOG IN opens the live login page titled "Yugioh BAM Pocket Revived".
+  - Not tested end-to-end: logging in with this build, because the only live account is the user's.
+- **Original game content kept**: a one-time local "Breaking News: tournaments are live" popup
+  (`NewsControllerImpl.DisplayNews`, shown once per install via LAST_NEWS_SEEN).

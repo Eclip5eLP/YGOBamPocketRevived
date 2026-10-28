@@ -7,7 +7,7 @@ Inputs (read-only): input/ygo.apk
   - assets/MobileGame.swf (original, not work/MobileGame.swf which differs)
   - assets/config/**, assets/asset/**, assets/icons/** -> staged, passed to ADT so
     they land under assets/ in the output APK
-  - assets/config/mmog.xml patched with tools/patch_apk.patch_mmog_xml()
+  - assets/config/mmog.xml patched with patch_mmog_xml() (server host)
   - assets/META-INF/AIR/application.xml -> descriptor, with:
       * <extensions> removed
       * the 7 ANE-dependent manifest components removed
@@ -18,6 +18,7 @@ Usage: python tools/build_game_adt.py [--ns 20.0] [--target-sdk N] [--extdir DIR
 """
 
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -27,12 +28,9 @@ import zlib
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT / "tools"))
-from patch_apk import patch_mmog_xml  # noqa: E402
-
 INPUT_APK = PROJECT_ROOT / "input" / "ygo.apk"
-ADT_BAT = PROJECT_ROOT / "work" / "airsdk" / "bin" / "adt.bat"
-KEYSTORE = PROJECT_ROOT / "work" / "debug.keystore"
+ADT_BAT = PROJECT_ROOT / "work" / "airsdk" / "bin" / ("adt.bat" if os.name == "nt" else "adt")
+DEBUG_KEYSTORE = PROJECT_ROOT / "work" / "debug.keystore"  # dev builds, password "android"
 BUILD_DIR = PROJECT_ROOT / "work" / "game_adt"
 STAGE = BUILD_DIR / "stage"
 
@@ -46,6 +44,70 @@ LOCALIZATION_PATCHES = {
     "config/ace/resource/en/localization_section.ace": [(b"ONLY $ 4.99 USD", b"FREE OF CHARGE!")],
     "config/ace/resource/fr/localization_section.ace": [(b"SEULEMENT $ 4.99 USD", b"TOTALEMENT GRATUIT !")],
 }
+
+
+def patch_mmog_xml(xml_bytes: bytes, host: str, port: int = 80) -> bytes:
+    """
+    Patches serverUrl, pvpServerUrl, and openGraphServerUrl in mmog.xml.
+    Follows:
+    - ServerURLParser.as:19-22: Splits pvpServerUrl by '~'
+    - EngineServerCom.as:255-256: Hardcodes port 80 for HTTP serverUrl
+    - ServerComHTTP.as:249-251: Replaces URL host with host:port
+    """
+    xml_text = xml_bytes.decode("utf-8")
+
+    if port == 80:
+        http_server_url = f"http://{host}/facebook/proxy.html"
+        pvp_server_url = f"http://{host}/facebook/proxy.html~80~844"
+        reporting_server_url = f"http://{host}/facebook/proxy.html"
+        opengraph_server_url = f"http://{host}"
+    else:
+        http_server_url = f"http://{host}:{port}/facebook/proxy.html"
+        pvp_server_url = f"http://{host}/facebook/proxy.html~{port}~844"
+        reporting_server_url = f"http://{host}:{port}/facebook/proxy.html"
+        opengraph_server_url = f"http://{host}:{port}"
+
+    # 1. Update <http> section
+    def replace_http(m):
+        block = m.group(0)
+        block = re.sub(
+            r'(<var\s+name=["\']serverUrl["\']\s+value=["\'])[^"\']*(["\'])',
+            rf'\g<1>{http_server_url}\g<2>',
+            block,
+            count=1
+        )
+        block = re.sub(
+            r'(<var\s+name=["\']pvpServerUrl["\']\s+value=["\'])[^"\']*(["\'])',
+            rf'\g<1>{pvp_server_url}\g<2>',
+            block,
+            count=1
+        )
+        return block
+
+    xml_text = re.sub(r'<http>.*?</http>', replace_http, xml_text, flags=re.DOTALL)
+
+    # 2. Update <reporting> section
+    def replace_reporting(m):
+        block = m.group(0)
+        block = re.sub(
+            r'(<var\s+name=["\']serverUrl["\']\s+value=["\'])[^"\']*(["\'])',
+            rf'\g<1>{reporting_server_url}\g<2>',
+            block,
+            count=1
+        )
+        return block
+
+    xml_text = re.sub(r'<reporting>.*?</reporting>', replace_reporting, xml_text, flags=re.DOTALL)
+
+    # 3. Update <facebook> openGraphServerUrl
+    xml_text = re.sub(
+        r'(<var\s+name=["\']openGraphServerUrl["\']\s+value=["\'])[^"\']*(["\'])',
+        rf'\g<1>{opengraph_server_url}\g<2>',
+        xml_text,
+        count=1
+    )
+
+    return xml_text.encode("utf-8")
 
 
 def patch_ace(data: bytes, replacements) -> bytes:
@@ -68,7 +130,7 @@ ANE_COMPONENT_PATTERNS = [
 
 
 def patch_descriptor(xml: str, ns: str, target_sdk: int, keep_extensions: bool = False, cutout: str = "",
-                     app_id: str = "") -> str:
+                     app_id: str = "", name: str = "", version_label: str = "") -> str:
     if not keep_extensions:
         xml, n = re.subn(r"<extensions>.*?</extensions>", "", xml, flags=re.DOTALL)
         assert n == 1, "expected exactly one <extensions> block"
@@ -97,6 +159,17 @@ def patch_descriptor(xml: str, ns: str, target_sdk: int, keep_extensions: bool =
         assert n == 1
         xml = xml.replace("air.com.konami.ygo.", f"air.{app_id}.").replace(
             '<category android:name="air.com.konami.ygo"/>', f'<category android:name="air.{app_id}"/>')
+    if name:
+        # launcher label (<name>) and installed file name (<filename>, application.xml:7-8)
+        xml, n = re.subn(r"<filename>[^<]*</filename>", f"<filename>{name}</filename>", xml)
+        assert n == 1
+        xml, n = re.subn(r"<name>[^<]*</name>", f"<name>{name}</name>", xml)
+        assert n == 1
+    if version_label:
+        # Android versionName; versionNumber (versionCode) stays 1.11.2 unless changed in the descriptor
+        xml, n = re.subn(r"(<versionNumber>[^<]*</versionNumber>)",
+                         rf"\1\n\t<versionLabel>{version_label}</versionLabel>", xml)
+        assert n == 1
     if target_sdk:
         xml, n = re.subn(r'android:targetSdkVersion="\d+"', f'android:targetSdkVersion="{target_sdk}"', xml)
         assert n == 1
@@ -141,20 +214,26 @@ def main():
     ap.add_argument("--cutout", default="", help="android displayCutoutMode (default/always/never/shortEdges)")
     ap.add_argument("--app-id", default="", help="override <id> for a side-by-side test install")
     ap.add_argument("--swf", default="", help="use this MobileGame.swf instead of the original")
+    ap.add_argument("--name", default="", help="app name shown in the launcher")
+    ap.add_argument("--version-label", default="", help="Android versionName")
+    ap.add_argument("--keystore", default=str(DEBUG_KEYSTORE), help="PKCS#12 signing key")
+    ap.add_argument("--storepass-env", default="", help="env var holding the keystore password (default: 'android')")
     ap.add_argument("--out", default=str(PROJECT_ROOT / "work" / "game_adt_noext.apk"))
     args = ap.parse_args()
+    storepass = os.environ[args.storepass_env] if args.storepass_env else "android"
 
     desc = stage_files(args.host, args.swf)
     desc_out = BUILD_DIR / "application_game.xml"
-    desc_out.write_text(patch_descriptor(desc, args.ns, args.target_sdk, keep_extensions=bool(args.extdir), cutout=args.cutout, app_id=args.app_id), encoding="utf-8")
+    desc_out.write_text(patch_descriptor(desc, args.ns, args.target_sdk, keep_extensions=bool(args.extdir), cutout=args.cutout, app_id=args.app_id,
+                         name=args.name, version_label=args.version_label), encoding="utf-8")
     print(f"Descriptor written: {desc_out} (ns {args.ns})")
 
     cmd = [str(ADT_BAT), "-package", "-target", "apk-captive-runtime", "-arch", "armv8",
-           "-storetype", "pkcs12", "-keystore", str(KEYSTORE), "-storepass", "android", "-keypass", "android",
+           "-storetype", "pkcs12", "-keystore", args.keystore, "-storepass", storepass, "-keypass", storepass,
            args.out, str(desc_out), "-C", str(STAGE), "MobileGame.swf", "config", "asset", "icons"]
     if args.extdir:
         cmd += ["-extdir", args.extdir]
-    print("Running:", " ".join(cmd))
+    print("Running:", " ".join(c if c != storepass else "***" for c in cmd))
     res = subprocess.run(cmd, capture_output=True, text=True)
     print("ADT stdout:", res.stdout)
     print("ADT stderr:", res.stderr)

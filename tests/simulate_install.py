@@ -16,6 +16,7 @@ Verifies:
 
 import io
 import os
+import shutil
 import sys
 import tempfile
 import threading
@@ -41,7 +42,10 @@ def run_simulation():
         "cache_dir": cache_dir,
         "cdn_host": f"127.0.0.1:{test_port}",
         "version_string": "android=1.11.2~ios=1.11.2",
+        "data_dir": tempfile.mkdtemp(prefix="ygo_sim_data_"),
     }
+    # the server needs an RSA private key; use the project's (never written to)
+    shutil.copy(os.path.join("server", "data", "rsa_private.json"), config["data_dir"])
 
     # 1. Parse manifest versions for 1.11.1
     manifest_path = os.path.join(base_store, "versionning.xml")

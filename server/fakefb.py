@@ -61,8 +61,8 @@ button,a.btn{flex:1;padding:14px;font-size:16px;border:0;border-radius:6px;color
 
 HEAD = """<!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yu-Gi-Oh! BAM Pocket</title><style>""" + STYLE.replace("{", "{{").replace("}", "}}") + """</style></head><body><main>
-<h1>Yu-Gi-Oh! BAM Pocket</h1>"""
+<title>Yugioh BAM Pocket Revived</title><style>""" + STYLE.replace("{", "{{").replace("}", "}}") + """</style></head><body><main>
+<h1>Yugioh BAM Pocket Revived</h1>"""
 
 PAGE = HEAD + """{error}
 <form method="post" action="{action}">
