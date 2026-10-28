@@ -925,3 +925,9 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - BAM Pro is not restored on a new install: Pro comes from the store entitlement / device save, not the cloud save (`YGOMDataImpl.SetBamProData`). Re-buying is free and gives no second DP bonus.
   - Phase 2+ features (friends, arena, PvP, guilds, tournaments) not implemented.
   - Release APK `work/game_release.apk` built but not yet tested against the deployed server.
+
+### 6.24 Repo, deploy path, auto-reload (2026-10-28)
+- Git repo initialised by the user; first commits `dfdd47c`, `8d9b7a3`. `.gitignore` excludes game data (input/, work/, apk/swf/ane/ace/sav), third-party tools (FFDec, AIR SDK, Harman license PDF), server secrets and user data (server/data/* except publickey.xml), env/dev files. `.gitattributes` forces LF (run.sh / service file run on Linux).
+- `tools/patch_swf.py` no longer ships disassembled game code: the OnPurchaseComplete P-code is exported from the SWF at build time and the 6 instructions are inserted after an anchor (PCODE_INSERTIONS). Output byte-identical to the previous build (decompressed SWF compared). [VERIFIED]
+- Deployment = `Y:/Documents/PythonBots/YGOBamPocketRevival/` (SSHFS-Win mount `\sshfs\eclip5e@192.168.178.127`). No SSH login is available to me, so `server.py` now re-execs itself when `server/*.py` change and compile (`watch_and_reload`, `--no-auto-reload` to disable). Tested in a scratch copy: change -> reload; syntax error -> skipped with warning, server keeps running. In-memory sessions are lost on reload. Needs one manual service restart to activate. [VERIFIED locally]
+- Live login test on ygo.eclip5e.com: pending. I don't create accounts on the production host, so the user runs it. `work/game_release.apk` installed on the Pixel.
