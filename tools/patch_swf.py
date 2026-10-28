@@ -61,6 +61,27 @@ PCODE_INSERTIONS = [
       'pushstring "Purchase complete."',
       'callproperty QName(PackageNamespace(""),"ShowInfo"), 2',
       'pop']),
+    # Keep the saved login when /me fails for network reasons. Original: any /me failure ->
+    # OnLoginFailed(true), which clears the "diskCache" token, so a connection loss forces a new browser
+    # login. Now the token is cleared only when the failure object has an "error" field (the server's
+    # invalid-token JSON); network failures pass an IOErrorEvent, which has none
+    # (AbstractFacebookRequest.handleURLLoaderIOError), and call OnLoginFailed(false) instead.
+    ("com.frimastudio.snowstorm.project.facebook.FacebookManagerMobile",
+     "com.frimastudio.snowstorm.project.facebook:FacebookManagerMobile/private:OnInitFacebookComplete", 4,
+     ['debugline 109'],
+     ['getlocal2',
+      'iffalse ofs_wipe',
+      'pushstring "error"',
+      'getlocal2',
+      'in',
+      'iftrue ofs_wipe',
+      'getlocal0',
+      'pushfalse',
+      'callproperty QName(ProtectedNamespace("com.frimastudio.snowstorm.project.facebook:FacebookManagerMobile"),'
+      '"OnLoginFailed"), 1',
+      'pop',
+      'returnvoid',
+      'ofs_wipe:']),
 ]
 
 

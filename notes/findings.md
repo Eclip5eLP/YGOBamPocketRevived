@@ -951,3 +951,33 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - ADD FRIENDS lists the other registered players. Selecting one + INVITE FRIENDS -> our page in the in-game web view ("request sent"); Close returns to the game. [VERIFIED screenshots work/logs/p2_*]
 - **Limits**: new friends appear only after the game logs in again (the FQL friend list is fetched at login). Real-time PvP, Arena, Teams and Tournaments are not implemented.
 - Deployed to Y: (auto-reload worked, 03:51:35); release APK rebuilt with the dialog patch and installed on the Pixel.
+
+### 6.26 Login kept across connection loss; remembered browser login; minimal pages
+
+- **Cause of "logged out after connection loss"** [VERIFIED]: `FacebookManagerMobile.InitFacebook` sends the saved
+  token (SharedObject "diskCache") to Graph `/me` via `FacebookMobile.init` -> `verifyAccessToken`
+  (`work/as3/.../project/facebook/FacebookMobile.as:191-245`). Any failure calls
+  `OnInitFacebookComplete(null, error)` -> `OnLoginFailed(true)`, which clears diskCache
+  (`FacebookManagerMobile.as:89-94, 221-233`). With no token, `YGOMLoginImpl.IsNewLogin` is true and LOG IN opens
+  the browser (`YGOMLoginImpl.as:192-215, 501-521`).
+  - **Network failure reproduced**: live release build, airplane mode → CONNECTION LOST → PLAY OFFLINE → network
+    back → LOG IN opened Chrome (live log 04:07:45).
+  - **Your earlier logout** at 03:52:42 was a different trigger: the live `/me` returned 400 for a token issued by
+    the local dev server, because the release build was installed over the dev build.
+- **Network vs rejected-token failure** [VERIFIED]: a network failure passes the `IOErrorEvent` (empty body) or
+  `SecurityErrorEvent` as the error (`AbstractFacebookRequest.as:160-198`). A JSON reply with `error_code` is passed
+  as the parsed object (`AbstractFacebook.as:147-154`).
+- **Client fix** (`tools/patch_swf.py` PCODE_INSERTIONS, `OnInitFacebookComplete`, body index 4): if `aFail` is
+  non-null and has no `error` property → `OnLoginFailed(false)` + return. Otherwise the original wipe runs.
+  FFDec decompiles it as intended.
+- **Server change**: `/me` for an unknown token now answers HTTP 200 `{"error":{...},"error_code":190,...}`. The
+  client reliably gets an object with `error` and clears the token, so a player is never stuck with a dead token.
+- **Device test** (dev build, local server) [VERIFIED]:
+  1. Logged in, then removed `adb reverse` → CONNECTION LOST → PLAY OFFLINE → restored the route → LOG IN logged
+     straight in with the stored token. No browser; `/me` 200, Login OK main + pvp.
+  2. Deleted that token server-side and restarted → `/me` error → LOG IN opened the browser.
+- **Remember cookie** (`server/fakefb.py` REMEMBER_COOKIE, `Path=/fb/`, 60 days, HttpOnly, SameSite=Lax): every
+  successful login sets it. The OAuth page then shows only "Continue as <name>" / "Use another account".
+  - Device: one tap → app (log "FB: remembered login", Login OK). [VERIFIED]
+- **Pages trimmed**: title + inputs + two buttons. No explanatory text; the redirect page is only a fallback
+  button. Invite page lines shortened.

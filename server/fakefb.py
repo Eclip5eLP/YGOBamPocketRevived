@@ -6,7 +6,8 @@ string_patches). Nothing is ever sent to Facebook.
 Flow (client code references in work/as3):
   1. Login button -> FacebookManagerMobile.Authorize opens  <fb>/dialog/oauth?client_id&
      redirect_uri=fb<appId>://authorize&...  in the external browser (FacebookManagerMobile.as:395-412).
-  2. Our page: username + password, "Log in" or "Create account".
+  2. Our page: username + password, "Log in" or "Create account". After a login the browser keeps a
+     remember cookie (REMEMBER_COOKIE, path /fb/), so the next login is one "Continue as <name>" tap.
   3. Success -> browser goes to  fb<appId>://authorize#access_token=..&expires_in=..  which Android
      routes to the app (manifest VIEW filter, scheme fb145583478967400); OnInvoke -> ProcessLogin
      reads access_token / expires_in (FacebookManagerMobile.as:101-121, 235-261).
@@ -48,39 +49,39 @@ def _png(width=50, height=50, rgb=(40, 70, 140)):
 
 DEFAULT_PICTURE = _png()
 
-PAGE = """<!doctype html>
+STYLE = """body{margin:0;font-family:sans-serif;background:#0b1730;color:#eef;display:flex;justify-content:center}
+main{max-width:380px;width:100%;padding:24px 16px}
+h1{font-size:20px;margin:8px 0 16px;text-align:center}
+input{width:100%;box-sizing:border-box;padding:12px;margin-bottom:10px;font-size:16px;border-radius:6px;border:1px solid #456;background:#12244a;color:#fff}
+.row{display:flex;gap:10px;margin-top:6px}
+button,a.btn{flex:1;padding:14px;font-size:16px;border:0;border-radius:6px;color:#fff;text-align:center;text-decoration:none;display:block;background:#2d6cdf}
+.alt{background:#3a8f3a} .link{background:none;color:#aac;font-size:14px;margin-top:14px}
+.err{background:#5a1d1d;padding:10px;border-radius:6px;margin-bottom:12px;font-size:14px}"""
+
+HEAD = """<!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yu-Gi-Oh! BAM Pocket - Login</title>
-<style>
-body{{margin:0;font-family:sans-serif;background:#0b1730;color:#eef;display:flex;justify-content:center}}
-main{{max-width:420px;width:100%;padding:24px 16px}}
-h1{{font-size:22px;margin:8px 0 4px}} p{{color:#aac;font-size:14px}}
-label{{display:block;margin:14px 0 4px;font-size:14px}}
-input{{width:100%;box-sizing:border-box;padding:12px;font-size:16px;border-radius:6px;border:1px solid #456;background:#12244a;color:#fff}}
-.row{{display:flex;gap:10px;margin-top:20px}}
-button,a.btn{{flex:1;padding:14px;font-size:16px;border:0;border-radius:6px;color:#fff;text-align:center;text-decoration:none;display:block}}
-.login{{background:#2d6cdf}} .register{{background:#3a8f3a}}
-.err{{background:#5a1d1d;padding:10px;border-radius:6px;margin-top:12px}}
-</style></head><body><main>
-<h1>Yu-Gi-Oh! BAM Pocket</h1>
-<p>Private preservation server account. This is not Facebook.</p>
-{error}
+<title>Yu-Gi-Oh! BAM Pocket</title><style>""" + STYLE.replace("{", "{{").replace("}", "}}") + """</style></head><body><main>
+<h1>Yu-Gi-Oh! BAM Pocket</h1>"""
+
+PAGE = HEAD + """{error}
 <form method="post" action="{action}">
 <input type="hidden" name="redirect_uri" value="{redirect}">
-<label for="u">Username</label><input id="u" name="username" autocomplete="username" value="{username}" required>
-<label for="p">Password</label><input id="p" name="password" type="password" autocomplete="current-password" required>
-<div class="row"><button class="login" name="action" value="login">Log in</button>
-<button class="register" name="action" value="register">Create account</button></div>
+<input name="username" placeholder="Username" autocomplete="username" value="{username}" required>
+<input name="password" type="password" placeholder="Password" autocomplete="current-password" required>
+<div class="row"><button name="action" value="login">Log in</button>
+<button class="alt" name="action" value="register">Create account</button></div>
 </form></main></body></html>"""
 
-DONE = """<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Logged in</title>
-<style>body{{margin:0;font-family:sans-serif;background:#0b1730;color:#eef;display:flex;justify-content:center}}
-main{{max-width:420px;width:100%;padding:24px 16px}} a{{display:block;padding:16px;background:#2d6cdf;color:#fff;
-text-align:center;border-radius:6px;text-decoration:none;font-size:18px;margin-top:20px}}</style></head>
-<body><main><h1>Logged in as {name}</h1><p>Returning to the game...</p>
-<a id="go" href="{url}">Return to the game</a></main>
+# shown when the browser still remembers an account (REMEMBER_COOKIE): one tap back into the game
+CONTINUE_PAGE = HEAD + """
+<form method="post" action="{action}">
+<input type="hidden" name="redirect_uri" value="{redirect}">
+<button name="action" value="continue" style="width:100%">Continue as {name}</button>
+<button class="link" name="action" value="switch" style="width:100%">Use another account</button>
+</form></main></body></html>"""
+
+DONE = HEAD + """
+<a class="btn" href="{url}">Return to the game</a></main>
 <script>window.location.href = {url_js};</script></body></html>"""
 
 
@@ -92,19 +93,27 @@ p{{margin:4px 0}} a{{display:block;margin-bottom:8px;padding:8px;background:#2d6
 text-align:center;border-radius:6px;text-decoration:none;font-size:15px}}</style></head>
 <body><a href="{close}">Close</a>{lines}</body></html>"""
 
+REMEMBER_COOKIE = "ygo_remember"
+REMEMBER_SECONDS = 60 * 24 * 3600
+
 
 class FakeFacebook:
     def __init__(self, store: AccountStore, logger):
         self.store = store
         self.log = logger
 
-    # returns (status, content_type, body_bytes) or None if the path is not ours
-    def handle(self, method: str, path: str, query: dict, form: dict, ip: str):
+    # returns (status, content_type, body[, set_cookie_headers]) or None if the path is not ours
+    def handle(self, method: str, path: str, query: dict, form: dict, ip: str, cookies: dict = None):
+        cookies = cookies or {}
         if path == "/fb/dialog/oauth":
             if method == "POST":
-                return self._oauth_post(form, ip)
-            redirect = query.get("redirect_uri", [ALLOWED_REDIRECT])[0]
-            return self._page(redirect)
+                return self._oauth_post(form, ip, cookies)
+            user = self._remembered(cookies)
+            if user is not None:
+                body = CONTINUE_PAGE.format(action="/fb/dialog/oauth", redirect=html.escape(ALLOWED_REDIRECT),
+                                            name=html.escape(user["username"]))
+                return 200, "text/html; charset=utf-8", body.encode("utf-8")
+            return self._page(ALLOWED_REDIRECT)
         if path.startswith("/fb/graph/"):
             rest = path[len("/fb/graph/"):]
             # the client asks for versioned Graph paths, e.g. /fb/graph/v2.0/me (seen on device)
@@ -129,12 +138,24 @@ class FakeFacebook:
                            username=html.escape(username))
         return 200, "text/html; charset=utf-8", body.encode("utf-8")
 
-    def _oauth_post(self, form, ip):
+    def _remembered(self, cookies):
+        uid = self.store.uid_for_token(cookies.get(REMEMBER_COOKIE, ""))
+        return self.store.user_by_uid(uid) if uid else None
+
+    def _oauth_post(self, form, ip, cookies):
         username = form.get("username", [""])[0].strip()
         password = form.get("password", [""])[0]
         action = form.get("action", ["login"])[0]
+        if action == "switch":
+            page = self._page(ALLOWED_REDIRECT)
+            return page + ([f"{REMEMBER_COOKIE}=; Path=/fb/; Max-Age=0; HttpOnly; SameSite=Lax"],)
         try:
-            if action == "register":
+            if action == "continue":
+                user = self._remembered(cookies)
+                if user is None:
+                    raise AccountError("Please log in again.")
+                self.log.info("[%s] FB: remembered login '%s' uid %s", ip, user["username"], user["uid"])
+            elif action == "register":
                 user = self.store.register(username, password)
                 self.log.info("[%s] FB: registered account '%s' uid %s", ip, user["username"], user["uid"])
             else:
@@ -145,8 +166,10 @@ class FakeFacebook:
             return self._page(ALLOWED_REDIRECT, str(e), username)
         token = self.store.issue_token(user["uid"])
         url = f"{ALLOWED_REDIRECT}#access_token={urllib.parse.quote(token)}&expires_in=5184000"
-        body = DONE.format(name=html.escape(user["username"]), url=html.escape(url), url_js=json.dumps(url))
-        return 200, "text/html; charset=utf-8", body.encode("utf-8")
+        body = DONE.format(url=html.escape(url), url_js=json.dumps(url))
+        remember = self.store.issue_token(user["uid"])
+        cookie = f"{REMEMBER_COOKIE}={remember}; Path=/fb/; Max-Age={REMEMBER_SECONDS}; HttpOnly; SameSite=Lax"
+        return 200, "text/html; charset=utf-8", body.encode("utf-8"), [cookie]
 
     INCOMING_MARK = "(!) "
 
@@ -184,12 +207,12 @@ class FakeFacebook:
                     continue
                 name = html.escape(user["username"])
                 lines.append({"friends": f"<b>{name}</b>: you are now friends.",
-                              "requested": f"<b>{name}</b>: request sent (friends once {name} invites you back).",
-                              "already": f"<b>{name}</b>: already friends or already requested."}[result])
+                              "requested": f"<b>{name}</b>: request sent.",
+                              "already": f"<b>{name}</b>: already sent."}[result])
                 self.log.info("[%s] FB: %s -> %s friend request: %s", ip, uid, other, result)
             if not lines:
                 lines.append("No players selected.")
-            lines.append("New friends show up after the game logs in again (restart the game).")
+            lines.append("New friends appear after restarting the game.")
         body = INVITE_PAGE.format(lines="".join(f"<p>{ln}</p>" for ln in lines), close=html.escape(close_url))
         return 200, "text/html; charset=utf-8", body.encode("utf-8")
 
@@ -202,8 +225,12 @@ class FakeFacebook:
         uid = self.store.uid_for_token(query.get("access_token", [""])[0])
         user = self.store.user_by_uid(uid) if uid else None
         if user is None:
-            err = {"error": {"message": "Invalid OAuth access token.", "type": "OAuthException", "code": 190}}
-            return 400, "application/json", json.dumps(err).encode()
+            # HTTP 200 with error_code makes the client report a failure with this object
+            # (AbstractFacebook.handleRequestLoad); the "error" field tells the patched
+            # OnInitFacebookComplete to forget the saved token (tools/patch_swf.py PCODE_INSERTIONS)
+            err = {"error": {"message": "Invalid OAuth access token.", "type": "OAuthException", "code": 190},
+                   "error_code": 190, "error_msg": "Invalid OAuth access token."}
+            return 200, "application/json", json.dumps(err).encode()
         return 200, "application/json", json.dumps(self._user_json(user)).encode()
 
     def _graph_object(self, rest, query):

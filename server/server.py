@@ -196,7 +196,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
                 return
             form = urllib.parse.parse_qs(self.rfile.read(content_len).decode("utf-8", errors="replace"))
             self.send_fb(self.server.fakefb.handle("POST", path, urllib.parse.parse_qs(parsed.query), form,
-                                                   self.get_client_ip()), False)
+                                                   self.get_client_ip(), self.cookies()), False)
         elif path == "/_log":
             ip = self.get_client_ip()
             content_len = int(self.headers.get("Content-Length", 0))
@@ -259,7 +259,8 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
 
         # 0b2. Fake Facebook (server/fakefb.py)
         if path.startswith("/fb/"):
-            self.send_fb(self.server.fakefb.handle("GET", path, urllib.parse.parse_qs(parsed.query), {}, ip), is_head)
+            self.send_fb(self.server.fakefb.handle("GET", path, urllib.parse.parse_qs(parsed.query), {}, ip,
+                                                   self.cookies()), is_head)
             return
 
         # 0c. Debug log tail (token-protected, see LOG_TOKEN_ENV)
@@ -319,21 +320,27 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         if result is None:
             self.send_error(404, "Endpoint not found")
             return
-        status, ctype, body = result
+        status, ctype, body = result[:3]
         self.send_response(status)
         self.send_header("Content-Type", ctype)
+        for cookie in (result[3] if len(result) > 3 else ()):
+            self.send_header("Set-Cookie", cookie)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
         if not is_head:
             self.wfile.write(body)
 
-    def session_cookie(self) -> str:
+    def cookies(self) -> dict:
+        jar = {}
         for part in (self.headers.get("Cookie") or "").split(";"):
             k, _, v = part.strip().partition("=")
-            if k == COOKIE:
-                return v
-        return ""
+            if k:
+                jar[k] = v
+        return jar
+
+    def session_cookie(self) -> str:
+        return self.cookies().get(COOKIE, "")
 
     def serve_log_tail(self, query: str, is_head: bool):
         token = os.environ.get(LOG_TOKEN_ENV, "")
