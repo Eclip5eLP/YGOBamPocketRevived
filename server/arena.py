@@ -217,7 +217,11 @@ class Arena:
                 continue
             weekly = st.get("weekly", {})
             rows.append((user, st["reg"]["score"], weekly.get("score", 0) if weekly.get("week") == week else 0))
-        friends = set(str(f) for f in friend_ids or []) | {uid}
+        friends = set(str(f) for f in friend_ids or []) | set(self.store.friends_of(uid))
+        # The leaderboard popup opens on "Friends only" (LeaderboardPopupUI.as:231, IsChecked = true), so a
+        # player without friends would only ever see themselves there: show everyone instead.
+        everyone = not friends
+        friends.add(uid)
         now = amf3.AMF3Date(time.time() * 1000)
 
         def entry(kind, lb_type, user, score):
@@ -226,7 +230,7 @@ class Arena:
                                    score=float(score), dateAdded=now, firstName=user["username"], lastName="")
 
         def board(kind, lb_type, col, only_friends):
-            sel = [r for r in rows if r[col] > 0 and (not only_friends or r[0]["uid"] in friends)]
+            sel = [r for r in rows if r[col] > 0 and (not only_friends or everyone or r[0]["uid"] in friends)]
             sel.sort(key=lambda r: -r[col])
             return [entry(kind, lb_type, r[0], r[col]) for r in sel[:LEADERBOARD_SIZE]]
 

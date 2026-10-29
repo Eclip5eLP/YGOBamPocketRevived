@@ -1082,3 +1082,36 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - Not tested end-to-end: logging in with this build, because the only live account is the user's.
 - **Original game content kept**: a one-time local "Breaking News: tournaments are live" popup
   (`NewsControllerImpl.DisplayNews`, shown once per install via LAST_NEWS_SEEN).
+
+### 6.30 Live stats day 1, leaderboard "only me" fix, live-PvP feasibility (2026-10-29)
+
+- **Live server data** (`server/data` on the server, read 2026-10-29 ~10:45):
+  - 42 accounts, 41 of them created and logged in within 24 h; 13 logged in within 6 h, 5 within 1 h.
+  - 35 online saves; 29 players with arena data, 4 in a team, 4 tournament sign-ups.
+  - 0 friendships.
+- **Leaderboard showed only yourself** [VERIFIED code + live data]:
+  - The popup opens with "Friends only" checked (`module/arena/popup/ui/LeaderboardPopupUI.as:231`
+    `IsChecked = true`, list chosen in `LeaderboardPopup.UpdateScoreInfoDisplay`, `:87-111`).
+  - With no friends, the friend boards held only the player. The global boards on the live data were correct
+    (7 all-time, 4 weekly).
+  - Server fix (`server/arena.py` high_scores):
+    - friends = client list + server friend list;
+    - a player with no friends gets the full board in the friends view.
+  - Test: `tests/test_arena.py` friendless player C. Deployed (live reload 10:50:49); on a copy of the live data
+    the friends view now lists 4 weekly / 7 all-time entries.
+- **Live PvP needs no APK change as far as the code shows** [VERIFIED code / INFERRED end-to-end, untested]:
+  - Lockstep relay: `BamReadyRequest{slotCard, checksumBefore, roundNumber, forfeit}` →
+    `BamReadyNotification{slotCard}`; `StartRound`, `BamEnd{checksum, externalIdWinner}` →
+    `BamEndNotification{winnerExternalId, redeemCode}`; `ChecksumErrorNotification`,
+    `OpponentSurrenderedNotification` (`project/livepvp/amf/*`, `LivePvPManager.as:152-280`,
+    `module/cardgame/flowhandling/flowhandler/LivePvPFlow.as:132-260`).
+  - Each phone simulates the duel; the server only relays and compares checksums. No rules engine is needed.
+  - RNG seed = the starting player's uid on both clients (`module/cardgame/effect/EffectHandler.as:119-136`).
+  - Matchmaking: `project/readyforcombat/amf/*` (queue, SendCombat/AcceptCombat, PlayerMatchingInQueueNotification).
+  - Server pushes ride on responses (6.28). In PvP mode the client pings every 2 s
+    (`YGOMPvPLoginImpl.EnterPvpMode` → `MobileEngineServerComPvp.SetPvpPingFrequency`, mmog.xml 2000), i.e. the
+    original game already did PvP over HTTP polling.
+  - Open risks:
+    - the main and PvP engines share one ServerComHTTP; delivery of notifications to the PvP engine is unverified;
+    - where the client gets the opponent's deck is unknown;
+    - these need a 2-device test.

@@ -78,6 +78,12 @@ def main():
     assert any(e["externalId"] == float(a.uid) for e in hs["highScoreWeekly"])
     assert [e["externalId"] for e in hs["highScoreFriendAllTime"]] == [float(a.uid)]
     print("leaderboards OK, weekly rank", 1 + [e["externalId"] for e in hs["highScoreWeekly"]].index(float(a.uid)))
+    c = Player(base)  # no friends: the default "Friends only" view shows everyone
+    hc = c.amf(P + "leaderboardygo.amf.GetHighScoresRequest", {"friendExternalIds": []})
+    ids = lambda key: [e["externalId"] for e in hc[key]]  # noqa: E731
+    assert ids("highScoreFriendWeekly") == ids("highScoreWeekly") and float(a.uid) in ids("highScoreFriendWeekly")
+    assert ids("highScoreFriendAllTime") == ids("highScoreAllTime")
+    print("friendless player sees the full board in the friends view:", len(ids("highScoreFriendWeekly")), "entries")
 
     paid = a.amf(A + "PayDuelArenaRequest")
     assert paid["exception"] is None and all(d["matchResultId"] == 1 for d in paid["matches"]["duels"]), paid
