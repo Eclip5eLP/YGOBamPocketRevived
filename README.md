@@ -167,6 +167,14 @@ python tools/emu.py launch
 python tools/emu.py shot NAME      # work/logs/NAME.png; tap X Y to click
 ```
 
+After any change to `tools/as3_patches.py`, run the startup smoke test (it fails when the game no longer reaches
+the login screen, e.g. a recompiled class that hangs startup), both for a fresh install and for an upgrade:
+
+```bash
+python tools/emu.py smoke work/emu/ygo_x64.apk --fresh
+python tools/emu.py smoke work/emu/ygo_x64.apk
+```
+
 ---
 
 ## How it works

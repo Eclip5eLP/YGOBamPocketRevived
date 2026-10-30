@@ -9,6 +9,10 @@ Drive the headless Android emulator for testing (see README, Development).
   python tools/emu.py tap X Y [...]    tap at screen coordinates (2400x1080), several pairs allowed
   python tools/emu.py back             Android back key
   python tools/emu.py log [PATTERN]    app log lines (logcat), optionally filtered
+  python tools/emu.py smoke APK [--fresh] [--timeout 180]
+                                       startup smoke test: install (--fresh: uninstall first, i.e. no save),
+                                       launch, answer startup popups, pass when the login screen loaded
+                                       (the server log shows its closepopupconfig.xml request)
   python tools/emu.py stop             shut the emulator down
 
 SDK location: env ANDROID_SDK_ROOT, default C:/Users/ultim/dev/android-sdk.
@@ -57,6 +61,49 @@ def start():
     adb("shell", "settings", "put", "secure", "immersive_mode_confirmations", "confirmed")
 
 
+SERVER_LOG = ROOT / "work" / "server_requests.log"
+# Startup popups the smoke test answers, tapped in turn; each spot hits nothing on the other startup screens
+CONTINUE_BUTTONS = [
+    ("1200", "684"),  # extra content required: DOWNLOAD NOW
+    ("979", "788"),   # new update available (outdated APK): PLAY OFFLINE
+    ("1196", "696"),  # connection lost: PLAY OFFLINE
+]
+
+
+def smoke(apk, fresh=False, timeout=180):
+    """Fails when startup does not reach the login screen, e.g. a recompiled class that hangs a startup step."""
+    if fresh:
+        adb("uninstall", PKG)
+        time.sleep(2)
+    r = adb("install", "-r", "-d", apk)
+    if b"Success" not in r.stdout:
+        sys.exit(f"install failed: {r.stdout.decode()} {r.stderr.decode()}")
+    start = SERVER_LOG.stat().st_size if SERVER_LOG.exists() else 0
+    adb("shell", "am", "force-stop", PKG)
+    adb("shell", "am", "start", "-n", f"{PKG}/.AppEntry")
+    t0 = time.time()
+    while time.time() - t0 < timeout:
+        time.sleep(8)
+        with open(SERVER_LOG, "rb") as f:
+            f.seek(start)
+            new = f.read().decode("utf-8", "replace")
+        if "closepopupconfig.xml" in new:
+            shot = ROOT / "work" / "logs" / "smoke.png"
+            shot.write_bytes(adb("exec-out", "screencap", "-p").stdout)
+            print(f"SMOKE OK: login screen after {time.time() - t0:.0f} s ({shot})")
+            return
+        if not adb("shell", "pidof", PKG).stdout.strip():
+            time.sleep(3)  # the process can briefly be absent while Android restarts the activity
+            if not adb("shell", "pidof", PKG).stdout.strip():
+                (ROOT / "work" / "logs" / "smoke_fail.png").write_bytes(adb("exec-out", "screencap", "-p").stdout)
+                sys.exit("SMOKE FAILED: app process died (work/logs/smoke_fail.png)")
+        for button in CONTINUE_BUTTONS:
+            adb("shell", "input", "tap", *button)
+            time.sleep(1)
+    (ROOT / "work" / "logs" / "smoke_fail.png").write_bytes(adb("exec-out", "screencap", "-p").stdout)
+    sys.exit(f"SMOKE FAILED: no login screen within {timeout} s (work/logs/smoke_fail.png)")
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
@@ -87,6 +134,9 @@ def main():
         for line in lines.splitlines():
             if not args or re.search(args[0], line, re.I):
                 print(line)
+    elif cmd == "smoke":
+        timeout = int(args[args.index("--timeout") + 1]) if "--timeout" in args else 180
+        smoke(args[0], fresh="--fresh" in args, timeout=timeout)
     elif cmd == "stop":
         adb("emu", "kill")
     else:
