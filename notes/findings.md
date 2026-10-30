@@ -1253,3 +1253,91 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - A hypervisor is present (Win32_ComputerSystem); whether WHPX is enabled is unknown (needs elevation).
   - The stub ANEs are built for `Android-ARM64` only (`tools/build_stub_anes.py:234-290`). An x86_64 build needs
     an `Android-x64` platform entry.
+
+### 6.33 Expansion groundwork: sandbox, hybrid game data, data-driven packs, deck deletion (2026-10-30)
+- **Emulator sandbox** [VERIFIED, emulator]:
+  - Setup: Android SDK emulator + `system-images;android-34;default;x86_64`, AVD `ygo`, run headless
+    (`-no-window`), WHPX acceleration; boot takes about 30 s.
+  - Builds: `tools/build_release.py --arch x64` (ADT `-arch x64`; the stub ANEs now also declare
+    `Android-x64`).
+  - Port 80 on the device needs `adb root` (AOSP image) before `adb reverse tcp:80 tcp:8087`.
+  - `tools/emu.py` handles start, install, launch, screenshots, taps and the log.
+  - Result: full 85 MB content download, login, shop and deck builder all work in the emulator.
+- **Load order** [VERIFIED code + emulator]:
+  - Every data file loads during engine start (`MobileProjectEngine` step `InitEngine`; the managers' `Init`
+    calls `LoadByte`).
+  - The content download runs later (`ValidateAssets`, step 11). Startup popups render under the prelauncher
+    until `RemovePrelauncherVisual`.
+- **Hybrid game data** [VERIFIED, emulator]:
+  - `tools/patch_as3.py` recompiles classes from their decompiled source plus our edits
+    (`tools/as3_patches.py`), using `ffdec-cli -air -replace`.
+  - Loader:
+    - `Loader.BuildURL` serves `config/...` from app storage `asset/gamedata/` when the downloaded
+      `gamedata_version` is newer than the APK's `config/gamedata_version`;
+    - this is decided once per launch.
+  - Package list: `EExternalAsset.GAMEDATA` adds a "gamedata" package.
+  - Mid-session updates: `MobileProjectEngine.RemovePrelauncherVisual` shows "NEW CONTENT" and exits when the
+    effective version changed during the launch.
+  - Shared source: `tools/build_content.py` + `tools/content_mods.py` produce the APK's data and the package
+    from the same mods.
+  - Server: `server/content.py` adds a `<version value="1.12.0">` block to versionning.xml (old 1.11.x clients
+    keep their 1.11.1 block) and serves overlay zips.
+  - Tested in the emulator:
+    - bundled 1.0.0 plus downloaded 1.0.1: the change shows only after a restart, then also with no network;
+    - 1.0.1 → 1.0.2 shows the popup and the app exits;
+    - a server downgrade re-downloads the data and falls back to the APK's copy.
+- **.ace codec** [VERIFIED]:
+  - `tools/ace.py` round-trips all 265 data files byte-identically.
+  - Localization:
+    - the game reads only `resource/<lang>/localization_section.ace`, an array of 106 sections
+      (`Engine.ALL_LOCALIZATION_FILE`);
+    - the key index is in code-point order (`StringFinder.GetString` binary search);
+    - the text index is case-insensitive;
+    - keys and resource ids share string offsets, which gives the pairing.
+- **Booster packs** [VERIFIED, emulator]:
+  - Pack shop items are `shopItemTypeId 4` with `itemTemplateId` = loot template id (1269 → 19).
+  - `EBoosterPackInfo` also loads `config/boosterpacks.json` from game data.
+  - "Wings of Destiny" (PACK_4_SERIES_2) is complete in the original data and is now released:
+    - loot 26 / shop item 1414: 43 common ×5, 28 rare ×3, 16 ultra rare + 8 BAM legend ×1;
+    - cover frame 9 (Galaxy-Eyes Photon Dragon);
+    - all 95 cards have names and art.
+  - Purchase and pack opening work in the emulator.
+  - Not yet released:
+    - "Blazing Wind" (PACK_6_SERIES_2): name, description, cards and cover frame 10 exist (the cover shows
+      Brotherhood of the Fire Fist - Bear); no loot table.
+    - "Immemorial Cataclysm" (PACK_5_SERIES_2): name, description and cards exist; no loot table, no cover.
+  - The remaining 201 unreleased cards split by the archetypes in those two descriptions. The split is our
+    assignment (INFERRED from the descriptions).
+- **Deck deletion** [VERIFIED, emulator]:
+  - On mobile, `InventoryManagerGame.DestroyDeck` only made a server request the DAL ignored
+    (`InventoryManagerDalMobile.DoDestroyDeckRequest`: "Shouldn't be called anymore").
+  - It now works locally:
+    - cards are merged back into the collection stacks;
+    - the deck and its card items are removed;
+    - `YGOMData.Save`.
+  - The deck chooser has DELETE with a confirmation (`TwoChoicePopupData`); the last deck can't be deleted.
+  - The save contains only the remaining deck, with card counts restored.
+  - Note: deck edits made in a session that ends through Android Back were not in the save
+    (pre-existing behaviour, seen once).
+- **Starter decks in the shop** [VERIFIED code / INFERRED effort]:
+  - `module/shop/view/enum/EStarterPack.as` has 8 decks: name/description keys, card list, cost, shop item
+    775-781, cover frame (`StarterDeck.as:47`) and chapter unlock.
+  - Buying one: shop item → bundle products (`bundle_template.ace`) → `BundleManagerProject.BuildDeck`
+    (`:585-606`) creates the deck.
+  - More decks: the same data-driven approach as booster packs, plus bundle and shop rows and cover art.
+- **Several main (world) maps** [VERIFIED code / INFERRED effort]:
+  - The data model supports them:
+    - `worldnodetemplate.worldMapTemplateId` (all 47 rows use 1);
+    - `MapProgression.worldMapId`, the save's `worldMapArray`;
+    - `YGOMDefaultDataUtil.CreateWorldMap(templateId)`.
+  - The code assumes world map 1:
+    - `WorldMap.CreateContent` loads `asset/world/WorldMap.xml`
+      (`EMapModuleLibrary.WORLD_MAP_ASSET`);
+    - `WorldMap.AddMapSpecificElements` uses template 1;
+    - `WorldmapCacheLogic:305` and `WorldmapManagerDalMobile:104` use `GetWorldMapByTemplateId(1)`.
+  - A second main map needs:
+    - those classes patched to use the current world map;
+    - its world map instance created on load for existing saves;
+    - a switch control on the world map;
+    - a `WorldMapN.xml`, background art and node and chapter data.
+  - Chapter maps are already data plus downloaded XML (6.32).
