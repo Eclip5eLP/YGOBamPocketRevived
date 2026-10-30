@@ -91,6 +91,35 @@ Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
 
 ## Suggested order
 
-1. Priority 1 batch (one APK test round). 2. Map scrolling fix. 3. New-class build step + main menu relayout.
-4. Collection menu. 5. Profile. 6. Friends rewrite. 7. Release 1.1.0 (with packs, worlds when ready).
-8. Live PvP. 9. Browser spike. Performance and cover art in between when convenient.
+Done: Priority 1 batch (6.36), map scrolling fix (6.37).
+
+## Next up (plan, 2026-10-30)
+
+Recommendation: ship a first update (1.1.0) soon with what already works, then build the big screens for 1.2.0.
+Players get the fixes now, the version gate and hybrid data get tested by real users early, and every later
+feature ships on a proven release path.
+
+1. **Energy leftovers (S).** Hide the energy cost (icon + number) in `DuelInfoPopup` and `DuelStarPopup`; sweep for
+   other energy texts/buttons (objectives, loot, popups). Emulator check on a duel node.
+2. **Pack safety guard (S).** Client: `EBoosterPackInfo.LoadExtraPacks` skips a pack whose shop item has no loot
+   table (today only the build checks this). Fails safe: the pack just isn't listed.
+3. **Release 1.1.0 (M).**
+   - Contents: deck delete, world selection (hidden while there is one world), in-app login, no Facebook logo,
+     quick fixes, map fix, Wings of Destiny and Blazing Wind (original covers).
+   - Immemorial Cataclysm only if its cover reaches original quality in time; otherwise it waits for 1.2 (its
+     cards stay unobtainable, as today). Decision for the owner.
+   - Steps: deploy server (gate, content overlay) + content to ygo.eclip5e.com, signed armv8 APK with
+     `work/release.p12`, README/changelog, GitHub release text. Old APKs see the update notice, keep offline play.
+   - Check on the live server with the emulator (old-equivalent APK + new APK) before announcing.
+4. **`tools/build_newclasses.py` (S).** Make the verified mxmlc + DoABC merge a build step (`as3_new/**.as`),
+   with a build-time check that the merged SWF still loads (smoke test).
+5. **Main menu relayout (S-M).** Room for Profile and Collection (two more buttons; 4+... grid or a second row).
+6. **Collection menu (L).** Read-only browser (new classes), reuses deck builder scroller/filters; owned vs
+   missing, how to obtain.
+7. **Profile (L), then Friends rewrite (L).** Server endpoints first (tests), then the screens; profile icons fix the
+   blue placeholder avatars.
+8. **Release 1.2.0**, then Live PvP, then the browser spike. Performance profiling and cover art when convenient.
+
+Interactions to keep in mind: the main menu relayout serves both Profile and Collection; Collection's counters feed
+the Profile; Friends opens Profiles; Live PvP later hooks into Friends ("challenge"). Every new screen is a new class
+behind a try/catch entry point, so a failure only hides the button.
