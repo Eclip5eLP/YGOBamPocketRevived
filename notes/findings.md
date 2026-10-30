@@ -1341,3 +1341,41 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
     - a switch control on the world map;
     - a `WorldMapN.xml`, background art and node and chapter data.
   - Chapter maps are already data plus downloaded XML (6.32).
+
+### 6.34 Version gate, save compatibility, art pipeline (2026-10-30)
+- **Version gate** [VERIFIED, tests + emulator]:
+  - Client:
+    - `ServerComHTTP.Connect` appends `?v=<mmog client/version>&d=<game data version in effect>` to the game
+      server URL, so every request carries both;
+    - "UPDATE NOW" (`NewAppUpdate`, `VersionUnavailable`) opens GitHub releases instead of Google Play.
+  - Server (`server/content.py` gate, `server/server.py`):
+    - with `work/content/manifest.json` present, the minimum APK is `game_version` and the required data is the
+      current gamedata version;
+    - `GetVersionResponse.version` = minimum APK version, so older APKs show their own "NEW UPDATE AVAILABLE"
+      popup (PLAY OFFLINE / UPDATE NOW; `YGOMLoginImpl.ValidateAppVersion`) at startup and again on LOG IN;
+    - everything except GetVersion and Ping from a client without matching `v`/`d` gets an "Update required"
+      exception; the first public APK sends neither and is refused;
+    - the startup popup starts with an update notice for IPs whose latest GetVersionRequest had an outdated
+      `v`;
+    - `--no-version-gate` turns the gate off. Without `work/content` there is no gate at all, so deploying this
+      server code alone does not lock anyone out.
+  - `tests/test_version_gate.py`: old/older/outdated-data clients are refused; an up-to-date client logs in.
+  - Emulator: the 1.0.0-equivalent build shows the update popup and notice, downloads content and plays offline;
+    the new build logs in with `v=1.12.0&d=1.0.0`.
+  - Not done: recompiling `LoginModule`. With an edit there, the upgraded app hung at the end of startup; it
+    started normally without the edit. That's why the popup text is chosen by IP.
+- **Save compatibility** [VERIFIED, emulator]:
+  - Upgrading the 1.0.0-equivalent install in place keeps its save (deck "OldDeck" with 3 cards, collection).
+  - The new APK only downloads the 0.73 MB gamedata package; all other content is reused.
+  - Nothing in the save format changed. Deck deletion uses existing item/container fields.
+  - New cards only add item rows, which old APKs never see (they are refused online and keep their own save).
+- **Startup smoke test**: `tools/emu.py smoke APK [--fresh]` installs, launches, answers the startup popups
+  and passes when the login screen loads (the server sees `closepopupconfig.xml`). It caught a failure as a
+  hang and passes for the fresh old APK, the upgrade, and the current build.
+- **Art pipeline** [VERIFIED, emulator]:
+  - Texture atlas lists (`asset/list/module/*_list.xml`, in the APK) are now game data, with the same override
+    as `config/`.
+  - `content_mods.add_atlas_frames` ships a second atlas page `<atlas>_2` in the module's package and lists it.
+  - Starling `AssetManager.getTextureNames` merges and sorts frame names across pages
+    (`starling/assets/AssetManager.as:143-153`), so `shop_booster_covers_0011` is frame 11.
+  - Tested with a recolored copy of cover 9 shown as the Wings of Destiny cover.
