@@ -438,7 +438,227 @@ VERSION_UNAVAILABLE_EDITS = [
      f"""private const ANDROID_APP_URL:String = "{RELEASES_URL}";"""),
 ]
 
+# --- Several main (world) maps (notes/findings.md 6.35) -------------------------------------------------------
+# World map template N > 1 is defined by worldnodetemplate rows with worldMapTemplateId N (game data) and its layout
+# asset/world/worldmap<N>.xml (world package). Saves get the missing world maps when they load (ValidateWorld runs
+# on every load), the world map shows a switch button when the save has more than one, and the helpers that
+# assumed world map 1 look across all world maps.
+DEFAULT_DATA = "com.frimastudio.snowstorm.project.engine.data.YGOMDefaultDataUtil"
+DEFAULT_DATA_EDITS = [
+    ("""      private static function ValidateWorld() : void
+      {
+""", """      private static function ValidateMissingWorldMaps() : void
+      {
+         var templateId:int = 0;
+         var map:WorldMap = null;
+         var found:Boolean = false;
+         var templateList:Vector.<WorldNodeTemplate> = null;
+         var template:WorldNodeTemplate = null;
+         var node:WorldNode = null;
+         var mapManager:IWorldmapManagerYGO = ManagerA.GetManager(EManagerDefinitionProject.WORLDMAP_MANAGER) as IWorldmapManagerYGO;
+         for(templateId = 2; templateId <= 20; templateId++)
+         {
+            templateList = mapManager.CacheLogic.GetWorldNodeTemplateListByWorldMapTemplateId(templateId);
+            if(templateList == null || templateList.length == 0)
+            {
+               continue;
+            }
+            found = false;
+            for each(map in mJSONSave.worldMapArray)
+            {
+               if(map.worldMapTemplateId == templateId)
+               {
+                  found = true;
+               }
+            }
+            if(found)
+            {
+               continue;
+            }
+            map = new WorldMap();
+            map.id = mJSONSave.currentIndex--;
+            map.avatarPlayerId = mJSONSave.worldMapArray[0].avatarPlayerId;
+            map.totalStarCompleted = 0;
+            map.worldMapTemplateId = templateId;
+            map.worldNodes = new Array();
+            for each(template in templateList)
+            {
+               node = new WorldNode();
+               node.id = mJSONSave.currentIndex--;
+               node.worldMapId = map.id;
+               node.worldNodeTemplateId = template.id;
+               node.completed = false;
+               node.locked = template.locked;
+               node.starTotal = 0;
+               node.fullyCompletedTotal = 0;
+               map.worldNodes.push(node);
+            }
+            mJSONSave.worldMapArray.push(map);
+         }
+      }
+
+      private static function ValidateWorld() : void
+      {
+         ValidateMissingWorldMaps();
+"""),
+]
+
+WORLDMAP_CACHE = "com.frimastudio.snowstorm.project.worldmap.WorldmapCacheLogic"
+WORLDMAP_CACHE_EDITS = [
+    ("""         var worldMap:WorldMap = this.GetWorldMapByTemplateId(1);
+         var templateId:int = int.MAX_VALUE;
+         for(var i:int = 0; i < worldMap.worldNodes.length; i++)
+         {
+            worldTemplate = this.GetWorldNodeTemplateById(worldMap.worldNodes[i].worldNodeTemplateId);
+            if(worldTemplate != null && worldTemplate.storyMapTemplateId == aStoryMapTemplateId)
+            {
+               if(worldTemplate.id < templateId)
+               {
+                  worldXMLName = worldTemplate.xmlNodeName;
+                  templateId = worldTemplate.id;
+               }
+            }
+         }
+         return this.GetWorldNodeByXmlNodeName(worldMap.id,worldXMLName);""",
+     """         var worldMap:WorldMap = null;
+         var foundMap:WorldMap = null;
+         var templateId:int = int.MAX_VALUE;
+         for each(worldMap in this.mCache.GetWorldMapList())
+         {
+            for(var i:int = 0; i < worldMap.worldNodes.length; i++)
+            {
+               worldTemplate = this.GetWorldNodeTemplateById(worldMap.worldNodes[i].worldNodeTemplateId);
+               if(worldTemplate != null && worldTemplate.storyMapTemplateId == aStoryMapTemplateId)
+               {
+                  if(worldTemplate.id < templateId)
+                  {
+                     worldXMLName = worldTemplate.xmlNodeName;
+                     templateId = worldTemplate.id;
+                     foundMap = worldMap;
+                  }
+               }
+            }
+         }
+         if(foundMap == null)
+         {
+            return null;
+         }
+         return this.GetWorldNodeByXmlNodeName(foundMap.id,worldXMLName);"""),
+]
+
+WORLDMAP_DAL = "com.frimastudio.snowstorm.project.worldmap.dal.WorldmapManagerDalMobile"
+WORLDMAP_DAL_EDITS = [
+    ("""            template = (mManager as IWorldmapManagerYGO).CacheLogic.GetWorldNodeTemplateById(aRequest.worldNodeTemplatesId[i]);
+            node = (mManager as IWorldmapManagerYGO).CacheLogic.GetWorldNodeByXmlNodeName(worldMap.id,template.xmlNodeName);""",
+     """            template = (mManager as IWorldmapManagerYGO).CacheLogic.GetWorldNodeTemplateById(aRequest.worldNodeTemplatesId[i]);
+            worldMap = (mManager as IWorldmapManagerYGO).CacheLogic.GetWorldMapByTemplateId(template.worldMapTemplateId);
+            node = (mManager as IWorldmapManagerYGO).CacheLogic.GetWorldNodeByXmlNodeName(worldMap.id,template.xmlNodeName);"""),
+]
+
+# Chapters missing from the hard-coded chapter list (maptoload "60" -> id 59) get an entry on first use
+WORLD_NODE_ENUM = "com.frimastudio.snowstorm.module.map.enum.WorldNodeEnum"
+WORLD_NODE_ENUM_EDITS = [
+    ("""            if(enum.MapToLoad == aMapToLoad)
+            {
+               return enum;
+            }
+         }
+         return null;""", """            if(enum.MapToLoad == aMapToLoad)
+            {
+               return enum;
+            }
+         }
+         if(int(aMapToLoad) > 1)
+         {
+            return new WorldNodeEnum(int(aMapToLoad) - 1,aMapToLoad,false);
+         }
+         return null;"""),
+]
+
+WORLD_MAP_VIEW = "com.frimastudio.snowstorm.module.map.map.WorldMap"
+WORLD_MAP_VIEW_EDITS = [
+    ("""   import com.frimastudio.snowstorm.project.worldmap.amf.WorldNodeTemplate;
+""", """   import com.frimastudio.snowstorm.project.worldmap.amf.WorldNodeTemplate;
+   import com.frimastudio.mobile.asset.AssetManagerWrapper;
+   import com.frimastudio.snowstorm.project.ui.ECommonButton;
+   import com.frimastudio.snowstorm.project.fonts.EFonts;
+   import flash.filesystem.File;
+   import flash.geom.Point;
+   import starling.core.Starling;
+   import starling.display.DisplayObject;
+   import starling.events.Event;
+   import starling.utils.Color;
+   import starling.utils.HAlign;
+   import starling.utils.VAlign;
+"""),
+    ("""         LoadWorldXML(EMapModuleLibrary.WORLD_MAP_ASSET);""",
+     """         var templateId:int = mWorldmapManager.CacheLogic.GetWorldMapById(mMapProgression.worldMapId).worldMapTemplateId;
+         LoadWorldXML(templateId == 1 ? EMapModuleLibrary.WORLD_MAP_ASSET : File.applicationStorageDirectory.url + "asset/world/worldmap" + templateId + ".xml");"""),
+    ("""      override protected function AddMapSpecificElements() : void
+      {
+         var i:int = 0;
+""", """      private function GetOtherWorldMap() : com.frimastudio.snowstorm.project.worldmap.amf.WorldMap
+      {
+         var map:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = null;
+         var current:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = mWorldmapManager.CacheLogic.GetWorldMapById(mMapProgression.worldMapId);
+         var next:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = null;
+         var first:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = null;
+         for each(map in mWorldmapManager.CacheLogic.GetWorldMapList())
+         {
+            if(first == null || map.worldMapTemplateId < first.worldMapTemplateId)
+            {
+               first = map;
+            }
+            if(map.worldMapTemplateId > current.worldMapTemplateId && (next == null || map.worldMapTemplateId < next.worldMapTemplateId))
+            {
+               next = map;
+            }
+         }
+         return next != null ? next : (first != current ? first : null);
+      }
+
+      private function AddWorldMapSwitch() : void
+      {
+         var other:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = this.GetOtherWorldMap();
+         if(other == null)
+         {
+            return;
+         }
+         var button:DisplayObject = AssetManagerWrapper.GetButton(ECommonButton.GOLD_BUTTON,new Point(260,70),"WORLD " + other.worldMapTemplateId,EFonts.HANZEL_BOLD,32,Color.WHITE,true,HAlign.CENTER,VAlign.CENTER);
+         button.x = Starling.current.stage.stageWidth - 280;
+         button.y = Starling.current.stage.stageHeight - 90;
+         button.addEventListener(Event.TRIGGERED,this.OnWorldMapSwitch);
+         addChild(button);
+      }
+
+      private function OnWorldMapSwitch(aEvent:Event) : void
+      {
+         var other:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = this.GetOtherWorldMap();
+         if(other == null || Boolean(PopupManager.IsPopupDisplayed()))
+         {
+            return;
+         }
+         mMapProgression.worldMapId = other.id;
+         mMapProgression.worldMapNodeId = 1;
+         mMapProgression.storyMapId = WORLDMAP_ID;
+         mMapProgression.storyNodeId = 0;
+         mWorldmapManager.SaveTravelProgression(mMapProgression);
+         ChangeModule(EStarlingModuleDefinition.MAP,null);
+      }
+
+      override protected function AddMapSpecificElements() : void
+      {
+         var i:int = 0;
+         this.AddWorldMapSwitch();
+"""),
+]
+
 PATCHES = {
+    DEFAULT_DATA: DEFAULT_DATA_EDITS,
+    WORLDMAP_CACHE: WORLDMAP_CACHE_EDITS,
+    WORLDMAP_DAL: WORLDMAP_DAL_EDITS,
+    WORLD_NODE_ENUM: WORLD_NODE_ENUM_EDITS,
+    WORLD_MAP_VIEW: WORLD_MAP_VIEW_EDITS,
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
     ENGINE: ENGINE_EDITS,

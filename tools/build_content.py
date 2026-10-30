@@ -16,6 +16,7 @@ Usage: python tools/build_content.py [--out work/content]
 
 import argparse
 import json
+import os
 import shutil
 import sys
 import zipfile
@@ -146,7 +147,12 @@ def main():
 
     with zipfile.ZipFile(INPUT_APK) as apk:
         ctx = Context(apk)
-        for mod in content_mods.MODS:
+        mods = list(content_mods.MODS)
+        if os.environ.get("YGO_TEST_CONTENT"):
+            import content_test_mods
+            mods[-1:-1] = content_test_mods.MODS  # before write_boosterpacks
+            print("TEST CONTENT included (YGO_TEST_CONTENT)")
+        for mod in mods:
             print("mod:", mod.__name__)
             mod(ctx)
         changed = ctx.changed_files()

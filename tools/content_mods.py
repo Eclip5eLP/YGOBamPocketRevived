@@ -12,6 +12,8 @@ from pathlib import Path
 # Asset package -> directory under Local Store (server/server.py PACKAGE_PATHS, EExternalAsset.as:10-60)
 PACKAGE_DIRS = {
     "shop": "asset/module/shop/",
+    "world": "asset/world/",
+    "mappreview": "asset/misc/mappreview/",
 }
 
 
