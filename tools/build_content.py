@@ -39,7 +39,9 @@ class Context:
         self.names = {n[len("assets/"):].lower(): n for n in apk.namelist() if n.startswith("assets/config/")}
         self.raw_cache = {}    # path -> decompressed bytes (raw edits)
         self.ace_cache = {}    # path -> decoded value (structured edits)
-        self.string_edits = {}  # (lang, section) -> (section object, by_key, by_id)
+        self.string_edits = {}  # (lang, section) -> (section object, by_key, by_id, key_ids)
+        self.new_files = {}    # path -> bytes, files that are not in the APK
+        self.boosterpacks = []  # config/boosterpacks.json entries (content_mods.add_booster_pack)
         self.packages = {}     # package -> {relative path: bytes} overlay files
         self.package_versions = {}
 
@@ -87,6 +89,13 @@ class Context:
             self.string_edits[key] = (sec, *ace.read_strings(sec))
         return self.string_edits[key][1:]
 
+    def new_file(self, path, data):
+        """A data file the original APK does not have (e.g. config/boosterpacks.json)."""
+        path = path.lower()
+        if path in self.names:
+            raise RuntimeError(f"{path} exists in the APK; edit it instead")
+        self.new_files[path] = data
+
     def package_file(self, package, rel_path, data, version):
         """Add or replace a file in a downloadable art package (rel_path inside the package's asset dir)."""
         self.packages.setdefault(package, {})[rel_path] = data
@@ -101,7 +110,9 @@ class Context:
         for path, value in self.ace_cache.items():
             out[path] = ace.dumps(value)
         # keep only real changes (compare decompressed, compression levels may differ)
-        return {p: d for p, d in out.items() if zlib.decompress(d) != zlib.decompress(self.original(p))}
+        out = {p: d for p, d in out.items() if zlib.decompress(d) != zlib.decompress(self.original(p))}
+        out.update(self.new_files)
+        return out
 
 
 def write_zip(path, files):

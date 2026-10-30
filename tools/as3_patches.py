@@ -168,8 +168,101 @@ ENGINE_EDITS = [
 """),
 ]
 
+# --- Booster packs from data (notes/findings.md 6.33) ------------------------------------------------------
+# The 9 original packs are code. Extra packs come from config/boosterpacks.json (game data: downloaded copy when
+# active, else the APK's), read synchronously when the class initializes:
+#   [{"shopItemId", "currency": "RMT"|"INGAME"|"CARD_PIECE", "cost", "id", "name", "description",
+#     "guaranteed": [[rarityId, "5"], ...], "bonus": [[rarityId, "1:4"], ...], "cards": [templateId, ...],
+#     "frame": cover frame in shop_booster_covers, "series": 1|2}]
+BOOSTER_INFO = "com.frimastudio.snowstorm.module.shop.view.enum.EBoosterPackInfo"
+BOOSTER_INFO_EDITS = [
+    ("""   import com.frimastudio.snowstorm.project.inventory.enumeration.CurrencyTypes;
+""", """   import com.frimastudio.snowstorm.project.inventory.enumeration.CurrencyTypes;
+   import com.frimastudio.as3ToolKit.net.Loader;
+   import flash.filesystem.File;
+   import flash.filesystem.FileMode;
+   import flash.filesystem.FileStream;
+"""),
+    ("""BOOSTER_PACK_9_ID,8,2);
+""", """BOOSTER_PACK_9_ID,8,2);
+
+      private static const mExtraPacksLoaded:Boolean = LoadExtraPacks();
+
+      private static function ExtraPackCurrency(aName:String) : int
+      {
+         if(aName == "INGAME")
+         {
+            return CurrencyTypes.INGAME.Id;
+         }
+         if(aName == "CARD_PIECE")
+         {
+            return CurrencyTypes.CARD_PIECE.Id;
+         }
+         return CurrencyTypes.RMT.Id;
+      }
+
+      private static function LoadExtraPacks() : Boolean
+      {
+         var file:File = null;
+         var stream:FileStream = null;
+         var list:Array = null;
+         var pack:Object = null;
+         var pair:Array = null;
+         var cardId:int = 0;
+         var guaranteed:Vector.<RarityBoosterPackInfo> = null;
+         var bonus:Vector.<RarityBoosterPackInfo> = null;
+         var cards:Vector.<int> = null;
+         try
+         {
+            file = File.applicationStorageDirectory.resolvePath("asset/gamedata/config/boosterpacks.json");
+            if(!Loader.GameDataActive || !file.exists)
+            {
+               file = File.applicationDirectory.resolvePath("config/boosterpacks.json");
+            }
+            if(!file.exists)
+            {
+               return false;
+            }
+            stream = new FileStream();
+            stream.open(file,FileMode.READ);
+            list = JSON.parse(stream.readUTFBytes(stream.bytesAvailable)) as Array;
+            stream.close();
+            for each(pack in list)
+            {
+               if(GetBoosterByShopItemId(int(pack.shopItemId)) == null)
+               {
+                  guaranteed = new Vector.<RarityBoosterPackInfo>();
+                  for each(pair in pack.guaranteed)
+                  {
+                     guaranteed.push(new RarityBoosterPackInfo(int(pair[0]),String(pair[1])));
+                  }
+                  bonus = new Vector.<RarityBoosterPackInfo>();
+                  for each(pair in pack.bonus)
+                  {
+                     bonus.push(new RarityBoosterPackInfo(int(pair[0]),String(pair[1])));
+                  }
+                  cards = new Vector.<int>();
+                  for each(cardId in pack.cards)
+                  {
+                     cards.push(cardId);
+                     (int(pack.series) == 1 ? mCardTemplateIdSerie1List : mCardTemplateIdSerie2List).push(cardId);
+                  }
+                  new EBoosterPackInfo(int(pack.shopItemId),ExtraPackCurrency(String(pack.currency)),int(pack.cost),int(pack.id),String(pack.name),String(pack.description),guaranteed,bonus,cards,int(pack.frame),int(pack.series));
+               }
+            }
+         }
+         catch(error:Error)
+         {
+            return false;
+         }
+         return true;
+      }
+"""),
+]
+
 PATCHES = {
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
     ENGINE: ENGINE_EDITS,
+    BOOSTER_INFO: BOOSTER_INFO_EDITS,
 }
