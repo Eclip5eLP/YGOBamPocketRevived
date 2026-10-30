@@ -40,6 +40,7 @@ def main():
     ap.add_argument("--host", default="ygo.eclip5e.com", help="revival server host name (port 80)")
     ap.add_argument("--keystore", default="", help="PKCS#12 release key; password in env YGO_KEYSTORE_PASS")
     ap.add_argument("--version-label", default=VERSION_LABEL)
+    ap.add_argument("--arch", default="armv8", choices=["armv8", "x64"], help="x64 builds run in the Android emulator")
     ap.add_argument("--out", default=str(ROOT / "work" / "release" / "YugiohBAMPocketRevived.apk"))
     args = ap.parse_args()
 
@@ -63,7 +64,7 @@ def main():
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     cmd = [py, ROOT / "tools" / "build_game_adt.py", "--ns", "51.1", "--target-sdk", "28",
            "--extdir", STUB_DIR, "--cutout", "shortEdges", "--swf", swf, "--host", args.host,
-           "--name", APP_NAME, "--version-label", args.version_label, "--out", args.out]
+           "--name", APP_NAME, "--version-label", args.version_label, "--arch", args.arch, "--out", args.out]
     if args.keystore:
         cmd += ["--keystore", args.keystore, "--storepass-env", "YGO_KEYSTORE_PASS"]
     run(cmd)

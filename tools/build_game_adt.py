@@ -218,6 +218,7 @@ def main():
     ap.add_argument("--version-label", default="", help="Android versionName")
     ap.add_argument("--keystore", default=str(DEBUG_KEYSTORE), help="PKCS#12 signing key")
     ap.add_argument("--storepass-env", default="", help="env var holding the keystore password (default: 'android')")
+    ap.add_argument("--arch", default="armv8", choices=["armv8", "x64"], help="armv8 for phones, x64 for the emulator")
     ap.add_argument("--out", default=str(PROJECT_ROOT / "work" / "game_adt_noext.apk"))
     args = ap.parse_args()
     storepass = os.environ[args.storepass_env] if args.storepass_env else "android"
@@ -228,7 +229,7 @@ def main():
                          name=args.name, version_label=args.version_label), encoding="utf-8")
     print(f"Descriptor written: {desc_out} (ns {args.ns})")
 
-    cmd = [str(ADT_BAT), "-package", "-target", "apk-captive-runtime", "-arch", "armv8",
+    cmd = [str(ADT_BAT), "-package", "-target", "apk-captive-runtime", "-arch", args.arch,
            "-storetype", "pkcs12", "-keystore", args.keystore, "-storepass", storepass, "-keypass", storepass,
            args.out, str(desc_out), "-C", str(STAGE), "MobileGame.swf", "config", "asset", "icons"]
     if args.extdir:

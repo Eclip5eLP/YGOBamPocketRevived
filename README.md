@@ -155,6 +155,18 @@ Testing on a phone without a public server: build with `--host 127.0.0.1` and ru
 `adb reverse tcp:80 tcp:8087`; the phone then reaches the local server over USB.
 `tools/device_run.py` installs, launches and captures logcat and a screenshot.
 
+Testing without a phone: an x86_64 build runs in the headless Android emulator (Android SDK `emulator`,
+`platform-tools` and `system-images;android-34;default;x86_64`, AVD named `ygo`):
+
+```bash
+python tools/build_release.py --host 127.0.0.1 --arch x64 --out work/emu/ygo_x64.apk
+python server/server.py --cdn-host 127.0.0.1
+python tools/emu.py start          # boots headless, adb root, reverse tcp:80 -> 8087
+python tools/emu.py install work/emu/ygo_x64.apk
+python tools/emu.py launch
+python tools/emu.py shot NAME      # work/logs/NAME.png; tap X Y to click
+```
+
 ---
 
 ## How it works

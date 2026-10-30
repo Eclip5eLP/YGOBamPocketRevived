@@ -1115,3 +1115,141 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
     - the main and PvP engines share one ServerComHTTP; delivery of notifications to the PvP engine is unverified;
     - where the client gets the opponent's deck is unknown;
     - these need a 2-device test.
+
+### 6.31 Friend "(!)" mark; expanding the game with new cards, packs and story maps (2026-10-30, read-only)
+- **"(!)" not shown in Add Friends** [VERIFIED code + live data]:
+  - The server's FQL list does mark incoming requests: `(!) name` (`server/fakefb.py` `_fql_friends`).
+  - The invite row displays `FacebookCache...FirstName` from the Graph `/<id>` lookup
+    (`module/duelground/display/InviteFriendSlot.as:118-168`), and that lookup has no mark. The FQL name is
+    only used for sorting (`InviteFriendsPopup.as:269, 306-315`). The user decided to leave it as is.
+- **Where the game's content is defined**:
+  - Configs are plain `zlib(AMF3 array)` with no signature or hash [VERIFIED: decoded with `server/amf3.py`,
+    0 bytes left over]. They ship only in the APK: `config/ace/**` (`work/apk/assets/config/ace`).
+    - Cards: `inventory/item_template.ace`.
+    - Shop: `shop/shop.ace`.
+    - Crafting: `crafting/crafting.ace`.
+    - Loot: `loot/*.ace`.
+    - Story maps: `worldmap/storymaptemplate.ace`, `storynodetemplate.ace`, `worldnodetemplate.ace`.
+  - Paths come from mmog.xml vars (`ShopManager.Init` `shop_path`, mmog.xml:304-319) or constants
+    (`WorldmapManagerYGO.as:55-59`).
+  - Art is in the downloaded content (Local Store `asset/cards/`, via `CardLoadingUtil.as:17-80` and
+    `representation/*.ace`). The server can update it.
+  - `DataRefreshManager.RefreshCachedData` (reloads the ace files with `?v=`) exists, but nothing in the client
+    calls it [VERIFIED: rg over the scripts]. So the server cannot make the client reload its configs.
+- **Booster packs are hard-coded in the game code** [VERIFIED]:
+  - `module/shop/view/enum/EBoosterPackInfo.as`: 9 packs; each has a fixed card id list, cost, shop item id,
+    rarity odds and visual frame.
+  - A new pack therefore needs a SWF patch plus shop/loot ace edits, i.e. an APK update.
+- **"Coming soon" cards** [VERIFIED code; counts from the decoded ace]:
+  - `BuyCardPopup.GetCardStatus` (`:202-233`) checks, in order: buyable shop item, crafting recipe,
+    EBoosterPackInfo list, tournament theme reward. Anything else is "Coming soon".
+  - Of 1183 card templates: 698 booster, 170 shop, 19 tournament, 296 coming soon (crafting has 101 products,
+    none of them coming soon).
+  - The 296 are mostly series 2: 271, plus 16 of series 99, 7 of series 1 and 2 of series 98. 260 of them are
+    backorder shop items in `shop.ace`.
+  - 289 of the 296 already have card art on every phone (art present: 1176/1183 cards overall; missing
+    1149, 1150, 1356-1360).
+  - 295 of them have effects. Whether they have localized names: unknown (not checked).
+  - So these appear to be finished but unreleased cards (INFERRED).
+- **Server-only way to hand out any card** [VERIFIED code path / INFERRED end-to-end, untested]:
+  - At login, `YGOMLoginImpl.GetTournamentReward` (`:282-297`) sends `GetTournamentRewardRequest`.
+  - `InventoryManagerGame.OnGetTournamentRewardResponse`/`ShowTournamentReward`/`ConsumeTournamentReward`
+    (`:724-840`) then, for each `TournamentReward{id, itemTemplateId, itemQuantity, TournamentTemplateId,
+    levelTemplateId, EliteRank}` paired with an `Item` of the same itemTemplateId:
+    - shows a popup (`TournamentNewRankPopup` for cards, `TournamentEliteRewardPopup` for currency);
+    - adds the item to the local inventory and saves;
+    - records the reward id in `save.rewardReceived` and sends `RewardConsumedRequest`.
+  - The popup text is tournament-themed: "new rank" + theme name (`TournamentNewRankPopup.as:80-93`).
+  - Our server currently returns an empty list (`server/game.py` `get_tournament_reward`).
+  - `GetRewardsResponse` (REFUND/GUILD) only credits currency (`InventoryManagerGame.ConsumeReward`
+    `:672-697`).
+- **Story maps** [VERIFIED counts]:
+  - 48 story map templates: map 1 is the world map; 47 are reached from 47 world nodes.
+  - 2447 story nodes. The map layout XML is embedded in the template (`xml` field).
+  - Unlock dates on world nodes are all in 2012/2013, so everything is unlocked.
+  - A new map needs new ace rows (map, nodes, world node, opponents), localization and art. Only the art is
+    server-side, so a new map is APK work.
+- **One-time APK change that would make later content server-driven** [VERIFIED part / INFERRED design]:
+  - `Loader.BuildURL` passes `http://` and `file:///` URLs through unchanged (`as3ToolKit/net/Loader.as:594-610`).
+  - An APK whose config paths point into app storage (a new downloadable "config" package) or at the server
+    would let config updates ship like content packages.
+  - EBoosterPackInfo would still be code, unless it is patched to build its list from data.
+
+### 6.32 Full expansion feasibility: cards, packs, maps, objectives, versioning, offline, sandbox (2026-10-30, read-only)
+- **Cards are data** [VERIFIED]:
+  - `inventory/item_template.ace` (1183 cards) holds stats, rarity, series, family, element, level and an
+    `effects` list.
+  - Each effect is `{triggerId, triggerDispatcherId, targetTypeId, target*/dispatcher* filters, effect{atk/def/hp
+    modifier+operator, destroyCard, resurrect, grant/breakImmunity, silence, necro, oncePerGame, ...}}`.
+  - The engine has 6 effect primitives: `module/cardgame/effect/EffectCreater.as:27-52`, with classes in
+    `effectlist/`. Any new card that combines existing triggers, targets and primitives needs no code; a new
+    mechanic does.
+  - Name and description come from `resourceNameId`/`resourceDescriptionId`, looked up in
+    `resource/<lang>/inventory.ace`.
+    - Format: AMF object `{string: ByteArray, sortedByResourceId: [[id, offset]], sortedByUTF, guid, ...}`.
+    - Each string is a 2-byte big-endian length followed by UTF-8 [VERIFIED by decoding: 8608 entries].
+    - 292 of the 296 "coming soon" cards have English names. Their `resourceDescriptionId` is not in
+      inventory.ace (where card text comes from: unknown).
+  - Art is resolved through `representation/item_template_to_asset.ace` + `asset.ace` to
+    `asset/cards/<name>_1.jpg` in the downloaded content (`CardLoadingUtil.as:17-80`).
+- **Story maps are data + downloaded XML** [VERIFIED]:
+  - Layout and duels are loaded from the downloaded content: `asset/world/Map<N>_level1.xml`
+    (`module/map/map/StoryMap.as:147`).
+  - Each `DuelNode` has `deckid` (opponent card list), `characterid`, `stringid` (dialogue), `rewardid`/
+    `rewardqt`, `completionid`, `energycost`, `timer`, `Rules`, `nodelink`/`nodelocked`.
+  - Node rows (energy, stars, unlocks) are in `worldmap/storynodetemplate.ace`; placement on the world map is in
+    `worldnodetemplate.ace` + `storymaptemplate.ace`.
+  - Art is Starling PNG + XML atlases: `misc/mapbackground` (backgroundmapN), `mapcharacter` (duelcharacterN),
+    `mappreview`, `maplibrary`.
+  - Text is in `resource/<lang>/MAP_0NN.ace`, `map_0NN.ace` and `DIALOG.ace`. The section name comes from the map
+    id (`StoryMap.as:120-133`).
+- **Booster packs** [VERIFIED]:
+  - The pack definitions are code (`EBoosterPackInfo.as`).
+  - Card odds are data: `loot/loot_template.ace` (weighted `lootItemTemplates` per pack), linked to the shop by
+    `loot_shop_item_template.ace` (19 rows).
+  - Shop entries are in `shop/shop.ace`.
+  - Packs are rolled on the phone: `project/loot/LootManagerYGO.CreateBooster` `:195-230` uses `Random`, so they
+    work offline.
+  - Cover art is the frame `mVisualFrame` in `module/shop/shop_all_1.xml`. There are 11 frames
+    `shop_booster_covers_0000..0010`, of which 9 are used.
+  - There are 2 series icons. Series-specific code compares with `CardSeries.SERIE_1`
+    (`ShopCollectionView.as:189-225`, `BuyBoosterPackShopDisplay.as:185-291`).
+- **Objectives (quests) are data** [VERIFIED]:
+  - `quest/quest_template.ace` has 376 quests. Each has steps with `actionTypeId` (21 kinds in use) and targets.
+  - Unlocks: `requiredQuestId`, `unlockLevel` and dates (`QuestManagerYGO.CheckUnlockOtherQuest`).
+  - Rewards come from `bundle/bundle_template.ace` (`QuestManagerYGO.GetRewardProductListForQuestTemplateId`
+    `:487-492`). Text is in `resource/<lang>/quest.ace`.
+  - Quests are tracked on the phone (`LocalQuestActionListener`).
+- **Code changes beyond byte patches are possible** [VERIFIED compile / INFERRED runtime]:
+  - `ffdec-cli -air -replace MobileGame.swf out.swf <class> <file.as>` recompiled a modified `EBoosterPackInfo`
+    with a 10th pack.
+  - Re-decompiling `out.swf` shows the new pack (scratchpad test, 2026-10-30). FFDec calls the feature
+    experimental.
+- **Version checks already in the game** [VERIFIED]:
+  - APK gate:
+    - `YGOMLoginImpl.ValidateAppVersion` (`:455-494`) compares mmog.xml `client/version` with the server's
+      `GetVersionResponse.version` (our `--version-string`).
+    - If the APK is older, it shows `VersionUpdateData.NEW_APP_UPDATE_STATE` and `OnContinueOffline` logs out to
+      offline play (`:436-447`). Online features are locked; offline still works.
+  - Content gate:
+    - `versionning.xml` lists packages per game version, and each package has a version.
+    - At startup, any package whose local `<name>_version` differs is downloaded again (5.4).
+    - Packages live in app storage, so they work offline (5.1, 5.5).
+  - Missing:
+    - the client never sends its own version (`LoginRequest{name, password, token}`, `GetVersionRequest` has no
+      fields), so the server cannot reject old clients by itself;
+    - the ace configs ship in the APK, so a data change needs a new APK.
+  - Fixes (INFERRED, not built):
+    - a version query parameter on mmog.xml `serverUrl` (set at build time);
+    - and/or a recompiled login class that sends the APK and content versions;
+    - a recompiled loader (`as3ToolKit/net/Loader.BuildURL` `:594-610`) that reads `config/...` from app storage
+      when a downloaded "gamedata" package has it, with the APK copy as fallback.
+  - Risk: an old client meeting cards it doesn't know (friend duels, arena decks).
+    `InventoryCacheLogic.GetTemplateById` returns null with a warning (`:320`); the callers likely crash
+    (INFERRED). This is why online play must be gated on matching content.
+- **Sandbox** [VERIFIED presence / unknown state]:
+  - The AIR SDK has x86_64 Android runtimes (`work/airsdk/runtimes/air/android/device/x86_64`) and `bin/adl.exe`.
+  - No Android emulator or SDK is installed (only `C:\Users\ultim\dev\adb\adb.exe`).
+  - A hypervisor is present (Win32_ComputerSystem); whether WHPX is enabled is unknown (needs elevation).
+  - The stub ANEs are built for `Android-ARM64` only (`tools/build_stub_anes.py:234-290`). An x86_64 build needs
+    an `Android-x64` platform entry.

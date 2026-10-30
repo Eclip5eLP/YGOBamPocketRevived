@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Build no-op stub ANEs for the 4 extension IDs the game SWF uses, packaged by the
-official ADT (-target ane, platform Android-ARM64). Java only, no native code.
+official ADT (-target ane, platforms Android-ARM64 and Android-x64). Java only, no native code.
 
 Each stub registers every function name its AS3 wrapper calls (taken from the
 wrapper sources in work/as3) and returns null for all of them, so
@@ -238,6 +238,13 @@ EXTENSION_XML = """<?xml version="1.0" encoding="utf-8"?>
         <finalizer>revival.anestub.{pkg}.StubExtension</finalizer>
       </applicationDeployment>
     </platform>
+    <platform name="Android-x64">
+      <applicationDeployment>
+        <nativeLibrary>stub.jar</nativeLibrary>
+        <initializer>revival.anestub.{pkg}.StubExtension</initializer>
+        <finalizer>revival.anestub.{pkg}.StubExtension</finalizer>
+      </applicationDeployment>
+    </platform>
   </platforms>
 </extension>
 """
@@ -287,7 +294,8 @@ def build_one(ext_id, pkg, names, ns, apk):
     out.parent.mkdir(exist_ok=True)
     # unsigned: ADT rejects the self-signed debug key for ANEs ("not an X509 code-signing certificate")
     run([ADT_BAT, "-package", "-target", "ane", out, d / "extension.xml", "-swc", d / "library.swc",
-         "-platform", "Android-ARM64", "-C", plat, "library.swf", "stub.jar"])
+         "-platform", "Android-ARM64", "-C", plat, "library.swf", "stub.jar",
+         "-platform", "Android-x64", "-C", plat, "library.swf", "stub.jar"])
     print(f"built {out} ({out.stat().st_size} bytes)")
 
 
