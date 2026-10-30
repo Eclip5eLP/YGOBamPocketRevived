@@ -24,6 +24,12 @@ def free_bam_pro(ctx):
         ctx.set_text(lang, "bam_pro", "bam_pro_price", text)
 
 
+
+def settings_github_text(ctx):
+    """Settings support button opens GitHub (as3_patches OPTION_POPUP_EDITS); label keys of OptionPopup.as:240,246."""
+    for lang in ("en", "fr"):
+        ctx.set_text(lang, "option", "option_visit_forum", "GitHub")
+
 def _shop_items(ctx):
     """All shop item objects of shop.ace with their group."""
     for shop in ctx.ace("config/ace/shop/shop.ace"):
@@ -296,6 +302,7 @@ def write_boosterpacks(ctx):
 
 MODS = [
     free_bam_pro,
+    settings_github_text,
     wings_of_destiny,
     immemorial_cataclysm,
     blazing_wind,

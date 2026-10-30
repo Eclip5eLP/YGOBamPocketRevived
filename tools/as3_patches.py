@@ -885,7 +885,91 @@ MAIN_MENU_VIEW = "com.frimastudio.snowstorm.module.mainmenu.view.MainMenuView"
 LOGIN_VIEW = "com.frimastudio.snowstorm.module.login.view.LoginView"
 ADVANTAGE_POPUP = "com.frimastudio.snowstorm.module.login.popup.AdvantageLoginPopup"
 
+# --- Quick fixes (notes/todo.md priority 1) ---------------------------------------------------------------------
+# The server info popup (ShowApplicationClosePopup) only at startup (LoginModule), not every time the currency
+# shop opens.
+POPUP_UTIL = "com.frimastudio.snowstorm.project.popup.PopupManagerUtil"
+POPUP_UTIL_EDITS = [
+    ("""         PopupManager.Show(popup,aQueuePopup) as CurrencyPopup;
+         ShowApplicationClosePopup();
+""", """         PopupManager.Show(popup,aQueuePopup) as CurrencyPopup;
+"""),
+]
+
+# Leaderboard opens on all players, "friends only" unticked.
+LEADERBOARD_UI = "com.frimastudio.snowstorm.module.arena.popup.ui.LeaderboardPopupUI"
+LEADERBOARD_UI_EDITS = [
+    ("""         this.mFriendOnlyCheckbox.IsChecked = true;""", """         this.mFriendOnlyCheckbox.IsChecked = false;"""),
+]
+
+# Settings: the support button opens the project's GitHub; no BAM Pro "restore purchases" (Pro is always on).
+OPTION_POPUP = "com.frimastudio.snowstorm.module.option.popup.OptionPopup"
+OPTION_POPUP_EDITS = [
+    ('''      private static const FORUM_URL:String = "http://yugioh-bam.com/mobile";''',
+     '''      private static const FORUM_URL:String = "https://github.com/Eclip5eLP/YGOBamPocketRevived";'''),
+    ("""         mUiContainer.addChild(this.mRestoreTransactionBtn);
+""", """         mUiContainer.addChild(this.mRestoreTransactionBtn);
+         this.mRestoreTransactionBtn.visible = false;
+         bamProText.visible = false;
+"""),
+    # the support block alone, centred in the right column
+    ("""         forSupportText.y = 422;""", """         forSupportText.y = 280;"""),
+    ("""         this.mVisitForumButton.y = 470;""", """         this.mVisitForumButton.y = 328;"""),
+]
+
+# BAM Pro is always unlocked: every Pro check reads this getter (chapters, series 2 packs and cards, arena, the
+# upgrade banners); GateBamPro read the field directly. Saves store isPremium = true from then on.
+BAM_PRO = "com.frimastudio.snowstorm.project.bampro.BamProHandlerImpl"
+BAM_PRO_EDITS = [
+    ("""      public function get IsBamPro() : Boolean
+      {
+         return this.mIsBamPro;""", """      public function get IsBamPro() : Boolean
+      {
+         return true;"""),
+    ("""         if(this.mIsBamPro)
+         {
+            dispatchEvent(new BamProHandlerEvent(BamProHandlerEvent.BAM_PRO_GATE,true));""",
+     """         if(this.IsBamPro)
+         {
+            dispatchEvent(new BamProHandlerEvent(BamProHandlerEvent.BAM_PRO_GATE,true));"""),
+]
+
+# Energy never runs out: every reader (duel start, try again, consume requests, the widget) sees at least the
+# maximum, so consumption has no effect. The HUD energy bar is not shown (the widget still exists, unchanged).
+ENERGY_MANAGER = "com.frimastudio.snowstorm.project.energy.EnergyManager"
+ENERGY_MANAGER_EDITS = [
+    ("""      public function get CurrentEnergy() : Energy
+      {
+         return this.mCurrentEnergy;""", """      public function get CurrentEnergy() : Energy
+      {
+         if(this.mCurrentEnergy != null && this.mCurrentEnergy.energy < this.mCurrentEnergy.maximumEnergy)
+         {
+            this.mCurrentEnergy.energy = this.mCurrentEnergy.maximumEnergy;
+         }
+         return this.mCurrentEnergy;"""),
+]
+
+PLAYER_INFO_BAR = "com.frimastudio.snowstorm.module.hud.bar.PlayerInfoBar"
+PLAYER_INFO_BAR_EDITS = [
+    ("""         this.mHudElementList.push(this.mEnergyWidget);
+""", ""),
+]
+
+# No "Energy" tile in the shop menu (buying energy is pointless now).
+SHOP_MENU = "com.frimastudio.snowstorm.module.shop.view.ShopMenuView"
+SHOP_MENU_EDITS = [
+    ("""         bottomMenuContainer.addChild(this.mEnergyBtn);
+""", ""),
+]
+
 PATCHES = {
+    POPUP_UTIL: POPUP_UTIL_EDITS,
+    LEADERBOARD_UI: LEADERBOARD_UI_EDITS,
+    OPTION_POPUP: OPTION_POPUP_EDITS,
+    BAM_PRO: BAM_PRO_EDITS,
+    ENERGY_MANAGER: ENERGY_MANAGER_EDITS,
+    PLAYER_INFO_BAR: PLAYER_INFO_BAR_EDITS,
+    SHOP_MENU: SHOP_MENU_EDITS,
     MAIN_MENU_VIEW: [_no_icon("mLoginButton", "facebookIcon")],
     LOGIN_VIEW: [_no_icon("mLoginBtn", "facebookIcon"), _no_icon("mBtnLoginMini", "facebookIcon")],
     ADVANTAGE_POPUP: [_no_icon("mLoginBtn", "fbIcon")],

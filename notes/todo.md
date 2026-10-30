@@ -18,7 +18,9 @@ game code can use them. Tested: a world-select popup title came from a new class
 merge ABC, then run patch_as3). This makes the big UI items (profile, friends, collection) clean new screens
 instead of hacks inside old classes.
 
-## Priority 1: small server/APK fixes, high value, low risk (one batch, S each)
+## Priority 1: small server/APK fixes, high value, low risk (one batch, S each) — DONE (findings 6.36)
+
+Left open: energy costs still printed in DuelInfoPopup/DuelStarPopup; the 25 DP Pro reward is not given automatically.
 
 | Item | Where | Plan | Risk / interactions |
 |---|---|---|---|

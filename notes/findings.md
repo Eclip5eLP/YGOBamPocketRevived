@@ -1438,3 +1438,35 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
     Immemorial Cataclysm, 73 for Blazing Wind.
   - 55 match neither. They're mostly series 98/99 legends (arena/promo cards), plus 5 series-1 commons that are
     the starter backup cards new saves already receive (`BackupCardAssociation`).
+
+### 6.36 Quick fixes: shop popup, leaderboard, settings, BAM Pro always on, energy never runs out (2026-10-30)
+
+All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 build, local dev server).
+
+- **Server info popup** [VERIFIED]: `PopupManagerUtil.ShowCurrencyPopup` (`PopupManagerUtil.as:94-100`) called
+  `ShowApplicationClosePopup()` on every currency shop open. Call removed; the startup popup
+  (`LoginModule.as:444`) is unchanged. Emulator: currency shop from the shop menu opens without it; startup still
+  shows it.
+- **Leaderboard** [VERIFIED]: `LeaderboardPopupUI.as:231` `IsChecked = true` → `false`;
+  `LeaderboardPopup.UpdateScoreInfoDisplay` reads `FriendOnlyChecked`, so the first list is the global one.
+  Emulator: opens unticked with all players.
+- **Settings** [VERIFIED]: `OptionPopup.FORUM_URL` (`:48`) → the GitHub repository; the restore-purchases button
+  and the "Already a BAM PRO?" text are hidden (`visible = false`, so the dispose code is untouched); the support
+  block is moved up to the middle of the right column. Label `option/option_visit_forum` = "GitHub" (content mod
+  `settings_github_text`).
+- **BAM Pro always on** [VERIFIED]: every Pro check reads `BamProHandlerImpl.IsBamPro` (grep of `.IsBamPro`: login
+  view banners and arena button, main menu, shop series 2 packs/cards, contextual offers, option popup, purchase
+  handler); the getter now returns true and `GateBamPro` (which read the field `mIsBamPro`) uses the getter.
+  Saves then store `isPremium: true` (`YGOMCacheUtil.as:208,298`). The one-time 25 DP Pro reward
+  (`AppPurchaseHandlerImpl.ManageBamPro`) is no longer reachable for players who never "bought" Pro; not given
+  automatically (adding DP during save load is riskier than the reward is worth). Emulator: fresh install shows the
+  PRO badge, Arena opens for a new account, no upgrade banner.
+- **Energy** [VERIFIED]: kept but never limiting. `EnergyManager.CurrentEnergy` getter tops the value up to
+  `maximumEnergy` before returning it. Every reader goes through it: duel start check `StoryMap.as:489`,
+  try-again checks `GameEndHandler.as:374,806`, the offline consume DAL `EnergyManagerDalMobile` (reads the
+  getter, so it never fails for "not enough energy"), the widget, and the save writer `YGOMCacheUtil.as:194,284`.
+  The HUD energy bar is no longer added to `PlayerInfoBar`'s element list, and the shop menu's "Energy" tile is
+  not added (`ShopMenuView`). Node energy costs stay in data and are still printed in the duel info popups
+  (cosmetic, `DuelInfoPopup.as:98`, `DuelStarPopup.as:170`). Emulator: an online save edited to energy 0 was
+  loaded on a cleared device (sync popup, server save chosen; DP 60 → 110 after a purchase proves it was the
+  loaded save), and the next upload had energy 200/200.
