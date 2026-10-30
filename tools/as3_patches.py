@@ -653,7 +653,97 @@ WORLD_MAP_VIEW_EDITS = [
 """),
 ]
 
+# --- In-app login (notes/findings.md 6.35) --------------------------------------------------------------------
+# Login opened the system browser (navigateToURL) and came back through the fb<appId>://authorize link. Now the
+# login page opens in a StageWebView over the game, like the invite dialog; the authorize redirect is caught in
+# the web view and handed to the existing ProcessLogin. Android Back or the page's Cancel link closes it.
+FB_MANAGER = "com.frimastudio.snowstorm.project.facebook.FacebookManagerMobile"
+FB_MANAGER_EDITS = [
+    ("""   import flash.media.StageWebView;
+""", """   import flash.media.StageWebView;
+   import flash.events.LocationChangeEvent;
+   import flash.events.KeyboardEvent;
+   import flash.ui.Keyboard;
+"""),
+    ("""         navigateToURL(req);
+""", """         this.OpenLoginWebView(url + "?" + ops.toString());
+"""),
+    ("""      protected function OnLoginFailed(aResetDiskCache:Boolean = false) : void
+""", """      private var mLoginWebView:StageWebView;
+
+      private function OpenLoginWebView(aUrl:String) : void
+      {
+         this.CloseLoginWebView();
+         var stage:Object = Starling.current.nativeStage;
+         this.mLoginWebView = new StageWebView();
+         this.mLoginWebView.stage = Starling.current.nativeStage;
+         this.mLoginWebView.viewPort = new Rectangle(stage.stageWidth * 0.15,stage.stageHeight * 0.04,stage.stageWidth * 0.7,stage.stageHeight * 0.92);
+         this.mLoginWebView.addEventListener(LocationChangeEvent.LOCATION_CHANGING,this.OnLoginWebViewLocation);
+         this.mLoginWebView.addEventListener(LocationChangeEvent.LOCATION_CHANGE,this.OnLoginWebViewLocation);
+         Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN,this.OnLoginWebViewKey,false,1000);
+         this.mLoginWebView.loadURL(aUrl);
+      }
+
+      private function CloseLoginWebView() : void
+      {
+         if(this.mLoginWebView == null)
+         {
+            return;
+         }
+         Starling.current.nativeStage.removeEventListener(KeyboardEvent.KEY_DOWN,this.OnLoginWebViewKey);
+         this.mLoginWebView.removeEventListener(LocationChangeEvent.LOCATION_CHANGING,this.OnLoginWebViewLocation);
+         this.mLoginWebView.removeEventListener(LocationChangeEvent.LOCATION_CHANGE,this.OnLoginWebViewLocation);
+         this.mLoginWebView.stage = null;
+         this.mLoginWebView.dispose();
+         this.mLoginWebView = null;
+      }
+
+      private function OnLoginWebViewLocation(aEvent:LocationChangeEvent) : void
+      {
+         var location:String = aEvent.location;
+         if(location == null || location.indexOf("fb" + this.mAppId + "://") != 0)
+         {
+            return;
+         }
+         aEvent.preventDefault();
+         this.CloseLoginWebView();
+         this.mListenForLoginInvoke = false;
+         this.ProcessLogin(location);
+      }
+
+      private function OnLoginWebViewKey(aEvent:KeyboardEvent) : void
+      {
+         if(aEvent.keyCode != Keyboard.BACK || this.mLoginWebView == null)
+         {
+            return;
+         }
+         aEvent.preventDefault();
+         aEvent.stopImmediatePropagation();
+         this.CloseLoginWebView();
+         this.mListenForLoginInvoke = false;
+         this.ProcessLogin(null);
+      }
+
+      protected function OnLoginFailed(aResetDiskCache:Boolean = false) : void
+"""),
+]
+
+# --- No Facebook logo on the login buttons ----------------------------------------------------------------------
+def _no_icon(button, icon):
+    return (f"""         this.{button}.AddIcon({icon});
+         this.{button}.textBounds = new Rectangle({icon}.width,0,this.{button}.textBounds.width - {icon}.width - 10,this.{button}.textBounds.height);
+""", "")
+
+
+MAIN_MENU_VIEW = "com.frimastudio.snowstorm.module.mainmenu.view.MainMenuView"
+LOGIN_VIEW = "com.frimastudio.snowstorm.module.login.view.LoginView"
+ADVANTAGE_POPUP = "com.frimastudio.snowstorm.module.login.popup.AdvantageLoginPopup"
+
 PATCHES = {
+    MAIN_MENU_VIEW: [_no_icon("mLoginButton", "facebookIcon")],
+    LOGIN_VIEW: [_no_icon("mLoginBtn", "facebookIcon"), _no_icon("mBtnLoginMini", "facebookIcon")],
+    ADVANTAGE_POPUP: [_no_icon("mLoginBtn", "fbIcon")],
+    FB_MANAGER: FB_MANAGER_EDITS,
     DEFAULT_DATA: DEFAULT_DATA_EDITS,
     WORLDMAP_CACHE: WORLDMAP_CACHE_EDITS,
     WORLDMAP_DAL: WORLDMAP_DAL_EDITS,

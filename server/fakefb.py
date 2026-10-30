@@ -71,7 +71,7 @@ PAGE = HEAD + """{error}
 <input name="password" type="password" placeholder="Password" autocomplete="current-password" required>
 <div class="row"><button name="action" value="login">Log in</button>
 <button class="alt" name="action" value="register">Create account</button></div>
-</form></main></body></html>"""
+</form>{cancel}</main></body></html>"""
 
 # shown when the browser still remembers an account (REMEMBER_COOKIE): one tap back into the game
 CONTINUE_PAGE = HEAD + """
@@ -79,7 +79,7 @@ CONTINUE_PAGE = HEAD + """
 <input type="hidden" name="redirect_uri" value="{redirect}">
 <button name="action" value="continue" style="width:100%">Continue as {name}</button>
 <button class="link" name="action" value="switch" style="width:100%">Use another account</button>
-</form></main></body></html>"""
+</form>{cancel}</main></body></html>"""
 
 DONE = HEAD + """
 <a class="btn" href="{url}">Return to the game</a></main>
@@ -94,7 +94,14 @@ p{{margin:4px 0}} a{{display:block;margin-bottom:8px;padding:8px;background:#2d6
 text-align:center;border-radius:6px;text-decoration:none;font-size:15px}}</style></head>
 <body><a href="{close}">Close</a>{lines}</body></html>"""
 
+# back to the game without logging in (closes the in-app login view; in a browser it reopens the game)
+CANCEL_LINK = '<a class="link" style="display:block;text-align:center" href="{href}">Cancel</a>'
+
 REMEMBER_COOKIE = "ygo_remember"
+
+
+def cancel_link():
+    return CANCEL_LINK.format(href=html.escape(ALLOWED_REDIRECT + "#error=cancelled"))
 REMEMBER_SECONDS = 60 * 24 * 3600
 
 
@@ -111,7 +118,7 @@ class FakeFacebook:
                 return self._oauth_post(form, ip, cookies)
             user = self._remembered(cookies)
             if user is not None:
-                body = CONTINUE_PAGE.format(action="/fb/dialog/oauth", redirect=html.escape(ALLOWED_REDIRECT),
+                body = CONTINUE_PAGE.format(action="/fb/dialog/oauth", redirect=html.escape(ALLOWED_REDIRECT), cancel=cancel_link(),
                                             name=html.escape(user["username"]))
                 return 200, "text/html; charset=utf-8", body.encode("utf-8")
             return self._page(ALLOWED_REDIRECT)
@@ -135,7 +142,7 @@ class FakeFacebook:
         if redirect != ALLOWED_REDIRECT:
             redirect = ALLOWED_REDIRECT
         body = PAGE.format(error=f'<div class="err">{html.escape(error)}</div>' if error else "",
-                           action="/fb/dialog/oauth", redirect=html.escape(redirect),
+                           action="/fb/dialog/oauth", redirect=html.escape(redirect), cancel=cancel_link(),
                            username=html.escape(username))
         return 200, "text/html; charset=utf-8", body.encode("utf-8")
 
