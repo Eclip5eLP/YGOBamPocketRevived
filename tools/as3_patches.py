@@ -22,6 +22,8 @@ LOADER_EDITS = [
 
       private static var sGameDataActive:Boolean = false;
 
+      private static var sSessionGameDataVersion:String = "";
+
       public static function ReadGameDataVersion(aFile:File) : String
       {
          var stream:FileStream = null;
@@ -75,6 +77,7 @@ LOADER_EDITS = [
             {
                downloaded = DownloadedGameDataVersion;
                sGameDataActive = downloaded != "" && CompareGameDataVersion(downloaded,BundledGameDataVersion) > 0;
+               sSessionGameDataVersion = sGameDataActive ? downloaded : BundledGameDataVersion;
             }
             catch(error:Error)
             {
@@ -86,7 +89,27 @@ LOADER_EDITS = [
 
       public static function get ActiveGameDataVersion() : String
       {
-         return GameDataActive ? DownloadedGameDataVersion : BundledGameDataVersion;
+         return GameDataActive ? sSessionGameDataVersion : BundledGameDataVersion;
+      }
+
+      public static function get GameDataChangedSinceStart() : Boolean
+      {
+         var downloaded:String = null;
+         var bundled:String = null;
+         if(!sGameDataChecked)
+         {
+            return false;
+         }
+         try
+         {
+            downloaded = DownloadedGameDataVersion;
+            bundled = BundledGameDataVersion;
+            return (downloaded != "" && CompareGameDataVersion(downloaded,bundled) > 0 ? downloaded : bundled) != sSessionGameDataVersion;
+         }
+         catch(error:Error)
+         {
+         }
+         return false;
       }
 """),
     ("""      private function BuildURL(aWorker:Worker) : void
@@ -115,7 +138,38 @@ EXTERNAL_ASSET_EDITS = [
 """),
 ]
 
+# New game data downloaded during this launch only applies from the next start: tell the player and close.
+ENGINE = "com.frimastudio.mobile.MobileProjectEngine"
+ENGINE_EDITS = [
+    ("""   import flash.desktop.NativeApplication;
+""", """   import flash.desktop.NativeApplication;
+   import com.frimastudio.as3ToolKit.net.Loader;
+   import com.frimastudio.snowstorm.project.popup.PopupManagerUtil;
+"""),
+    # popups during startup are drawn under the prelauncher visual, so ask after it is removed (last step)
+    ("""         this.mPrelauncher = null;
+         NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.NORMAL;
+""", """         this.mPrelauncher = null;
+         NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.NORMAL;
+         if(Loader.GameDataChangedSinceStart)
+         {
+            PopupManagerUtil.ShowInfo("NEW CONTENT","New game content was downloaded. The game will now close. Start it again to play with the new content.").addEventListener(PopupManagerEvent.POPUP_CLOSED,this.OnGameDataUpdated);
+         }
+"""),
+    ("""      private function LoadCommon() : void
+      {
+""", """      private function OnGameDataUpdated(aEvent:PopupManagerEvent) : void
+      {
+         NativeApplication.nativeApplication.exit();
+      }
+
+      private function LoadCommon() : void
+      {
+"""),
+]
+
 PATCHES = {
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
+    ENGINE: ENGINE_EDITS,
 }
