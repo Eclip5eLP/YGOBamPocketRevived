@@ -1523,4 +1523,5 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
 - **New classes**: `tools/build_newclasses.py` (run by build_release.py between the byte patches and patch_as3):
   compiles `as3_new/**.as` with the SDK's `compc` against a SWC of the game SWF (FFDec `-swf2swc`, cached by
   hash in work/newclasses/) and inserts the library's DoABC tags before the game's first ShowFrame. With no
-  `as3_new/` files it copies the SWF unchanged (current state; the collection needed no new class).
+  `as3_new/` files it copies the SWF unchanged (current state; the collection needed no new class). Checked with a
+  sample class: compiled, merged, listed by FFDec in the output SWF.
