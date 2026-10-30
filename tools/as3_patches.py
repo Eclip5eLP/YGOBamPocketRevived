@@ -949,6 +949,107 @@ ENERGY_MANAGER_EDITS = [
          return this.mCurrentEnergy;"""),
 ]
 
+# No energy costs on screen: the duel popups lose the energy icon + number (the button label is centred instead),
+# the "try again" button loses its energy icon, and a node's "-N" energy animation is skipped (the flow continues
+# exactly like for a node without cost). Node hover tooltips (web only) are left as they are.
+DUEL_INFO_POPUP = "com.frimastudio.snowstorm.module.map.popup.DuelInfoPopup"
+DUEL_INFO_POPUP_EDITS = [
+    ("""         mUiContainer.addChild(energyIcon);
+""", ""),
+    ("""         mUiContainer.addChild(energyCost);
+""", ""),
+    ("""         var duelText:TextField = new TextField(175,56,data.BtnText,EFonts.HANZEL_BOLD,43,16777215);
+         duelText.vAlign = VAlign.CENTER;
+         duelText.hAlign = HAlign.LEFT;
+         duelText.touchable = false;
+         duelText.autoScale = true;
+         duelText.x = 400;""", """         var duelText:TextField = new TextField(280,56,data.BtnText,EFonts.HANZEL_BOLD,43,16777215);
+         duelText.vAlign = VAlign.CENTER;
+         duelText.hAlign = HAlign.CENTER;
+         duelText.touchable = false;
+         duelText.autoScale = true;
+         duelText.x = 312;"""),
+]
+
+DUEL_STAR_POPUP = "com.frimastudio.snowstorm.module.map.popup.DuelStarPopup"
+DUEL_STAR_POPUP_EDITS = [
+    ("""         var buttonText:TextField = new TextField(47,33,aBtnText,EFonts.HANZEL_BOLD,26,16777215);
+         buttonText.touchable = false;
+         buttonText.autoScale = true;
+         buttonText.x = 15;""", """         var buttonText:TextField = new TextField(150,33,aBtnText,EFonts.HANZEL_BOLD,26,16777215);
+         buttonText.touchable = false;
+         buttonText.autoScale = true;
+         buttonText.x = 21;"""),
+    ("""         container.addChild(energyIcon);
+""", ""),
+    ("""         container.addChild(energyCost);
+""", ""),
+]
+
+TRY_AGAIN_POPUP = "com.frimastudio.snowstorm.module.cardgame.popup.TryAgainPopup"
+TRY_AGAIN_POPUP_EDITS = [
+    ("""         this.mTryAgainButton.AddIcon(AssetManagerWrapper.GetImage("popup_energy_buton"));
+         this.mTryAgainButton.textBounds = new Rectangle(140,22,204,52);""",
+     """         this.mTryAgainButton.textBounds = new Rectangle(20,22,315,52);"""),
+    ("""         mUiContainer.addChild(energyText);
+""", ""),
+]
+
+STORY_MAP = "com.frimastudio.snowstorm.module.map.map.StoryMap"
+STORY_MAP_EDITS = [
+    ("""            StarlingListener.Add(AnimationHandlerEvent.ENERGY_COST_ANIM_PLAYED,mAnimationHandler as EventDispatcher,this.OnEnergyCostDone);
+            mAnimationHandler.PlayEnergyCostAnim(aXmlNode.EnergyCost);""",
+     """            this.OnEnergyCostDone(null);"""),
+]
+
+# Pack guard: a booster pack whose shop item opens no loot table (or an empty one) is refused before any currency
+# is taken (the original flow charges first, then rolls the pack). The build already validates this
+# (content_mods.write_boosterpacks); this is the runtime safety net. If the check itself fails, the purchase
+# proceeds as before.
+SHOP_MANAGER = "com.frimastudio.snowstorm.project.shop.ShopManagerProject"
+SHOP_MANAGER_EDITS = [
+    ("""   import com.frimastudio.common.core.manager.ManagerA;
+""", """   import com.frimastudio.common.core.manager.ManagerA;
+   import com.frimastudio.snowstorm.project.shop.enumeration.ShopItemTypes;
+   import com.frimastudio.snowstorm.project.popup.PopupManagerUtil;
+"""),
+    ("""         var purchaseCost:int = shopItemConversion.cost * Math.max(aShopItem.quantity,1);""",
+     """         if(aShopItem.shopItemTypeId == ShopItemTypes.LOOT.Id && !this.HasLootTable(aShopItem.id))
+         {
+            PopupManagerUtil.ShowWarning("PACK UNAVAILABLE","This booster pack cannot be opened right now. Nothing was spent.");
+            return PASS_DATE;
+         }
+         var purchaseCost:int = shopItemConversion.cost * Math.max(aShopItem.quantity,1);"""),
+    ("""      private function SendBuyQuestInformation(aShopItem:ShopItem) : void""",
+     """      private function HasLootTable(aShopItemId:int) : Boolean
+      {
+         var loot:LootShopItemTemplate = null;
+         var group:Object = null;
+         try
+         {
+            loot = (ManagerA.GetManager(EManagerDefinitionProject.LOOT_MANAGER) as ILootManagerYGO).CacheLogic.GetLootShopItemTemplateById(aShopItemId);
+            if(loot == null || loot.lootGroups == null)
+            {
+               return false;
+            }
+            for each(group in loot.lootGroups)
+            {
+               if(group.lootItemTemplates != null && group.lootItemTemplates.length > 0)
+               {
+                  return true;
+               }
+            }
+            return false;
+         }
+         catch(error:Error)
+         {
+         }
+         return true;
+      }
+
+      private function SendBuyQuestInformation(aShopItem:ShopItem) : void"""),
+]
+
 PLAYER_INFO_BAR = "com.frimastudio.snowstorm.module.hud.bar.PlayerInfoBar"
 PLAYER_INFO_BAR_EDITS = [
     ("""         this.mHudElementList.push(this.mEnergyWidget);
@@ -993,6 +1094,11 @@ PATCHES = {
     ENERGY_MANAGER: ENERGY_MANAGER_EDITS,
     PLAYER_INFO_BAR: PLAYER_INFO_BAR_EDITS,
     SHOP_MENU: SHOP_MENU_EDITS,
+    DUEL_INFO_POPUP: DUEL_INFO_POPUP_EDITS,
+    DUEL_STAR_POPUP: DUEL_STAR_POPUP_EDITS,
+    TRY_AGAIN_POPUP: TRY_AGAIN_POPUP_EDITS,
+    STORY_MAP: STORY_MAP_EDITS,
+    SHOP_MANAGER: SHOP_MANAGER_EDITS,
     MAIN_MENU_VIEW: [_no_icon("mLoginButton", "facebookIcon")],
     LOGIN_VIEW: [_no_icon("mLoginBtn", "facebookIcon"), _no_icon("mBtnLoginMini", "facebookIcon")],
     ADVANTAGE_POPUP: [_no_icon("mLoginBtn", "fbIcon")],

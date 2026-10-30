@@ -21,7 +21,7 @@ instead of hacks inside old classes.
 ## Priority 1: small server/APK fixes, high value, low risk (one batch, S each) — DONE (findings 6.36)
 
 Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
-- Energy leftovers (S): hide the energy cost in `DuelInfoPopup` (`:98-104`, icon + number) and `DuelStarPopup`
+- DONE (6.38) Energy leftovers (S): hide the energy cost in `DuelInfoPopup` (`:98-104`, icon + number) and `DuelStarPopup`
   (`:170-175`); check other energy UI: the energy popup (`EnergyPopup`, reachable from `EnergyWidget` and the shop,
   both hidden now), any "+ energy" buttons, energy rewards in objectives/loot text.
 
@@ -95,13 +95,16 @@ Done: Priority 1 batch (6.36), map scrolling fix (6.37).
 
 ## Next up (plan, 2026-10-30)
 
-Recommendation: ship a first update (1.1.0) soon with what already works, then build the big screens for 1.2.0.
+Owner decision (2026-10-30): no early 1.1.0. Updates are manual APK installs, so releases should be rare and
+big; the next release bundles the new screens too.
+
+Original recommendation (declined): ship a first update (1.1.0) soon with what already works, then build the big screens for 1.2.0.
 Players get the fixes now, the version gate and hybrid data get tested by real users early, and every later
 feature ships on a proven release path.
 
-1. **Energy leftovers (S).** Hide the energy cost (icon + number) in `DuelInfoPopup` and `DuelStarPopup`; sweep for
+1. DONE (6.38) **Energy leftovers (S).** Hide the energy cost (icon + number) in `DuelInfoPopup` and `DuelStarPopup`; sweep for
    other energy texts/buttons (objectives, loot, popups). Emulator check on a duel node.
-2. **Pack safety guard (S).** Client: `EBoosterPackInfo.LoadExtraPacks` skips a pack whose shop item has no loot
+2. DONE (6.38, guard at purchase time in ShopManagerProject.BuyShopItem) **Pack safety guard (S).** Client: `EBoosterPackInfo.LoadExtraPacks` skips a pack whose shop item has no loot
    table (today only the build checks this). Fails safe: the pack just isn't listed.
 3. **Release 1.1.0 (M).**
    - Contents: deck delete, world selection (hidden while there is one world), in-app login, no Facebook logo,

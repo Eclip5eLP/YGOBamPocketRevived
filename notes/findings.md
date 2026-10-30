@@ -1484,3 +1484,19 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   position (`ViewPort.x/y = -engine.x/y`, inside try/catch), then the flag is cleared. Emulator: the map stays put,
   the pointer walks to the tapped node, and the camera follows it again when it walks off-centre (tap on STORY at
   the top edge scrolled the map along). Applies to world maps too (same base class).
+
+### 6.38 Energy leftovers hidden; runtime pack guard (2026-10-30)
+
+- Energy on screen [VERIFIED code + emulator]: `DuelInfoPopup` (energy icon + cost next to the duel button) and
+  `DuelStarPopup` (icon + cost on every challenge button) no longer add them; the button labels are centred.
+  `TryAgainPopup` loses the energy icon and number on its button (code only; not reached in the emulator, it needs
+  a lost duel). `StoryMap.EnergyCostNode` skips the "-N" energy animation and continues like a free node
+  (`OnEnergyCostDone(null)`, the path the original takes for cost 0). Node hover tooltips (`StoryNodeTooltip*`,
+  web mouse-over) are untouched; they don't appear on touch. Emulator: duel star popup shows plain "OK" buttons,
+  "Replay Duel" starts the duel at once.
+- Pack guard [VERIFIED emulator]: `ShopManagerProject.BuyShopItem` refuses a LOOT shop item whose loot table is
+  missing or has no items, before the currency is taken (warning "PACK UNAVAILABLE ... Nothing was spent.",
+  returns `PASS_DATE`). If the check itself throws, the purchase proceeds as before. Test: content built with Blazing
+  Wind's loot groups emptied → refused, DP unchanged (1,507); Legend of the Dragon and Immemorial Cataclysm still
+  open (also right after a refusal). The game fills `LootShopItemTemplate.lootGroups` from `loot_template` at
+  runtime (the shop-item rows have `lootGroups: null` in data), which the guard reads.
