@@ -4,7 +4,7 @@ FFDec-decompiled class and must occur exactly once. Keep edits small and anchore
 """
 
 # --- Game data override (notes/findings.md 6.33) ---------------------------------------------------------
-# Data files under config/ normally come from the APK. A downloaded "gamedata" package (asset/gamedata/ in
+# Data files under config/ and the texture atlas lists under asset/list/ normally come from the APK. A downloaded "gamedata" package (asset/gamedata/ in
 # app storage, marker asset/gamedata/gamedata_version) overrides them when its version is newer than the
 # APK's own config/gamedata_version. Decided once per launch, so one session never mixes data versions.
 LOADER = "com.frimastudio.as3ToolKit.net.Loader"
@@ -117,7 +117,7 @@ LOADER_EDITS = [
 """, """      private function BuildURL(aWorker:Worker) : void
       {
          var gameDataFile:File = null;
-         if(aWorker.mUnversionnedURL.indexOf("config/") == 0 && GameDataActive)
+         if((aWorker.mUnversionnedURL.indexOf("config/") == 0 || aWorker.mUnversionnedURL.indexOf("asset/list/") == 0) && GameDataActive)
          {
             gameDataFile = File.applicationStorageDirectory.resolvePath("asset/gamedata/" + aWorker.mUnversionnedURL.split("?")[0]);
             if(gameDataFile.exists)

@@ -36,11 +36,13 @@ class Context:
 
     def __init__(self, apk: zipfile.ZipFile):
         self.apk = apk
-        self.names = {n[len("assets/"):].lower(): n for n in apk.namelist() if n.startswith("assets/config/")}
+        self.names = {n[len("assets/"):].lower(): n for n in apk.namelist()
+                      if n.startswith(("assets/config/", "assets/asset/list/"))}
         self.raw_cache = {}    # path -> decompressed bytes (raw edits)
         self.ace_cache = {}    # path -> decoded value (structured edits)
         self.string_edits = {}  # (lang, section) -> (section object, by_key, by_id, key_ids)
         self.new_files = {}    # path -> bytes, files that are not in the APK
+        self.replaced = {}     # path -> bytes, plain (non-.ace) APK files replaced as a whole
         self.boosterpacks = []  # config/boosterpacks.json entries (content_mods.add_booster_pack)
         self.packages = {}     # package -> {relative path: bytes} overlay files
         self.package_versions = {}
@@ -96,6 +98,13 @@ class Context:
             raise RuntimeError(f"{path} exists in the APK; edit it instead")
         self.new_files[path] = data
 
+    def replace_file(self, path, data):
+        """Replace a non-.ace data file from the APK (e.g. an asset list XML) with new bytes."""
+        path = path.lower()
+        if path not in self.names:
+            raise RuntimeError(f"{path} is not in the APK")
+        self.replaced[path] = data
+
     def package_file(self, package, rel_path, data, version):
         """Add or replace a file in a downloadable art package (rel_path inside the package's asset dir)."""
         self.packages.setdefault(package, {})[rel_path] = data
@@ -111,6 +120,7 @@ class Context:
             out[path] = ace.dumps(value)
         # keep only real changes (compare decompressed, compression levels may differ)
         out = {p: d for p, d in out.items() if zlib.decompress(d) != zlib.decompress(self.original(p))}
+        out.update({p: d for p, d in self.replaced.items() if d != self.original(p)})
         out.update(self.new_files)
         return out
 

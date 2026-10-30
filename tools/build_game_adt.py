@@ -203,7 +203,7 @@ def stage_files(host: str, swf: str = "", content_dir: str = "") -> str:
         manifest = json.loads((content / "manifest.json").read_text(encoding="utf-8"))
         gd = content / "gamedata"
         n = 0
-        for f in (gd / "config").rglob("*"):
+        for f in [*(gd / "config").rglob("*"), *(gd / "asset").rglob("*")]:
             if f.is_file():
                 out = STAGE / f.relative_to(gd)
                 out.parent.mkdir(parents=True, exist_ok=True)

@@ -64,7 +64,8 @@ def main():
     bytepatched = swf.with_suffix(".bytes.swf")
     run([py, ROOT / "tools" / "patch_swf.py", ORIG_SWF, bytepatched, "--fb-base", f"http://{args.host}/fb"])
     run([py, ROOT / "tools" / "patch_as3.py", bytepatched, swf])
-    run([py, ROOT / "tools" / "build_content.py"])
+    if not os.environ.get("YGO_KEEP_CONTENT"):
+        run([py, ROOT / "tools" / "build_content.py"])
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     cmd = [py, ROOT / "tools" / "build_game_adt.py", "--ns", "51.1", "--target-sdk", "28",

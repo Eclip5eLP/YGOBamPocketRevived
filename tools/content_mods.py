@@ -4,7 +4,10 @@ Content mods applied in order by tools/build_content.py. Each mod takes the buil
 """
 
 import copy
+import io
 import json
+import re
+from pathlib import Path
 
 # Asset package -> directory under Local Store (server/server.py PACKAGE_PATHS, EExternalAsset.as:10-60)
 PACKAGE_DIRS = {
@@ -69,6 +72,47 @@ def _card_by_name(ctx, name):
         if "cardRarityId" in t and by_id.get(int(t["resourceNameId"])) == name:
             return t["id"]
     raise RuntimeError(f"no card named {name}")
+
+
+LOCAL_STORE = (Path(__file__).resolve().parent.parent / "input" / "data" / "data" / "air.com.konami.ygo" /
+               "com.konami.ygo" / "Local Store")
+
+
+def add_atlas_frames(ctx, package, atlas, list_path, frames, version):
+    """Add texture frames to a module as a second atlas page <atlas>_2 (Starling merges all pages of a module,
+    AssetManager.getTextureNames sorts names across atlases, so e.g. shop_booster_covers_0011 becomes frame 11).
+
+    frames: {frame name: PIL image}. The page is added to the module's asset list (asset/list/..., game data)
+    and shipped in the module's package (version = new package version)."""
+    from PIL import Image
+    pad = 2
+    width = max(img.width for img in frames.values()) + 2 * pad
+    height = sum(img.height + pad for img in frames.values()) + pad
+    page = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    xml = [f'<TextureAtlas imagePath="{atlas}_2.png">']
+    y = pad
+    for name, img in sorted(frames.items()):
+        page.paste(img, (pad, y))
+        xml.append(f'    <SubTexture name="{name}" x="{pad}" y="{y}" width="{img.width}" height="{img.height}"/>')
+        y += img.height + pad
+    xml.append("</TextureAtlas>")
+    buf = io.BytesIO()
+    page.save(buf, "PNG")
+    ctx.package_file(package, f"{atlas}_2.png", buf.getvalue(), version)
+    ctx.package_file(package, f"{atlas}_2.xml", ("\n".join(xml) + "\n").encode("utf-8"), version)
+    lst = ctx.original(list_path).decode("utf-8")
+    first = re.search(rf'<Asset name="{atlas}_1" path="([^"]+)"[^>]*/>', lst)
+    entry = first.group(0).replace(f"{atlas}_1", f"{atlas}_2")
+    ctx.replace_file(list_path, lst.replace(first.group(0), first.group(0) + "\n    " + entry).encode("utf-8"))
+
+
+def atlas_frame(package_dir, atlas, frame):
+    """A frame of an original atlas as a PIL image (for building new art from existing art)."""
+    from PIL import Image
+    xml = (LOCAL_STORE / package_dir / f"{atlas}.xml").read_text(encoding="utf-8")
+    m = re.search(rf'<SubTexture name="{frame}" x="(\d+)" y="(\d+)" width="(\d+)" height="(\d+)"', xml)
+    x, y, w, h = map(int, m.groups())
+    return Image.open(LOCAL_STORE / package_dir / f"{atlas}.png").convert("RGBA").crop((x, y, x + w, y + h))
 
 
 def write_boosterpacks(ctx):
