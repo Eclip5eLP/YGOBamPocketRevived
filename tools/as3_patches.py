@@ -579,78 +579,224 @@ WORLD_MAP_VIEW = "com.frimastudio.snowstorm.module.map.map.WorldMap"
 WORLD_MAP_VIEW_EDITS = [
     ("""   import com.frimastudio.snowstorm.project.worldmap.amf.WorldNodeTemplate;
 """, """   import com.frimastudio.snowstorm.project.worldmap.amf.WorldNodeTemplate;
-   import com.frimastudio.mobile.asset.AssetManagerWrapper;
-   import com.frimastudio.snowstorm.project.ui.ECommonButton;
-   import com.frimastudio.snowstorm.project.fonts.EFonts;
    import flash.filesystem.File;
-   import flash.geom.Point;
-   import starling.core.Starling;
-   import starling.display.DisplayObject;
-   import starling.events.Event;
-   import starling.utils.Color;
-   import starling.utils.HAlign;
-   import starling.utils.VAlign;
 """),
+    # fail safe: an unknown world map id or a missing layout file (e.g. content not downloaded) falls back to map 1
     ("""         LoadWorldXML(EMapModuleLibrary.WORLD_MAP_ASSET);""",
-     """         var templateId:int = mWorldmapManager.CacheLogic.GetWorldMapById(mMapProgression.worldMapId).worldMapTemplateId;
-         LoadWorldXML(templateId == 1 ? EMapModuleLibrary.WORLD_MAP_ASSET : File.applicationStorageDirectory.url + "asset/world/worldmap" + templateId + ".xml");"""),
-    ("""      override protected function AddMapSpecificElements() : void
-      {
-         var i:int = 0;
-""", """      private function GetOtherWorldMap() : com.frimastudio.snowstorm.project.worldmap.amf.WorldMap
-      {
-         var map:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = null;
-         var current:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = mWorldmapManager.CacheLogic.GetWorldMapById(mMapProgression.worldMapId);
-         var next:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = null;
-         var first:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = null;
-         for each(map in mWorldmapManager.CacheLogic.GetWorldMapList())
+     """         var worldMapUrl:String = EMapModuleLibrary.WORLD_MAP_ASSET;
+         var currentWorldMap:Object = mWorldmapManager.CacheLogic.GetWorldMapById(mMapProgression.worldMapId);
+         var layoutFile:File = null;
+         if(currentWorldMap != null && currentWorldMap.worldMapTemplateId != 1)
          {
-            if(first == null || map.worldMapTemplateId < first.worldMapTemplateId)
+            layoutFile = File.applicationStorageDirectory.resolvePath("asset/world/worldmap" + currentWorldMap.worldMapTemplateId + ".xml");
+            if(layoutFile.exists)
             {
-               first = map;
+               worldMapUrl = layoutFile.url;
             }
-            if(map.worldMapTemplateId > current.worldMapTemplateId && (next == null || map.worldMapTemplateId < next.worldMapTemplateId))
+            else
             {
-               next = map;
+               currentWorldMap = null;
             }
          }
-         return next != null ? next : (first != current ? first : null);
-      }
-
-      private function AddWorldMapSwitch() : void
-      {
-         var other:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = this.GetOtherWorldMap();
-         if(other == null)
+         if(currentWorldMap == null && mWorldmapManager.CacheLogic.GetWorldMapByTemplateId(1) != null)
          {
-            return;
+            mMapProgression.worldMapId = mWorldmapManager.CacheLogic.GetWorldMapByTemplateId(1).id;
+            mMapProgression.worldMapNodeId = 1;
          }
-         var button:DisplayObject = AssetManagerWrapper.GetButton(ECommonButton.GOLD_BUTTON,new Point(260,70),"WORLD " + other.worldMapTemplateId,EFonts.HANZEL_BOLD,32,Color.WHITE,true,HAlign.CENTER,VAlign.CENTER);
-         button.x = Starling.current.stage.stageWidth - 280;
-         button.y = Starling.current.stage.stageHeight - 90;
-         button.addEventListener(Event.TRIGGERED,this.OnWorldMapSwitch);
-         addChild(button);
-      }
+         LoadWorldXML(worldMapUrl);"""),
+]
 
-      private function OnWorldMapSwitch(aEvent:Event) : void
-      {
-         var other:com.frimastudio.snowstorm.project.worldmap.amf.WorldMap = this.GetOtherWorldMap();
-         if(other == null || Boolean(PopupManager.IsPopupDisplayed()))
-         {
-            return;
-         }
-         mMapProgression.worldMapId = other.id;
-         mMapProgression.worldMapNodeId = 1;
-         mMapProgression.storyMapId = WORLDMAP_ID;
-         mMapProgression.storyNodeId = 0;
-         mWorldmapManager.SaveTravelProgression(mMapProgression);
-         ChangeModule(EStarlingModuleDefinition.MAP,null);
-      }
+# World selection: a fifth button in the map's left action bar (only on a world map, only when the save has several
+# world maps) opens a scrollable list of worlds (BigInfoPopup with Entries). Any failure leaves the bar as it was.
+BIG_INFO_DATA = "com.frimastudio.snowstorm.project.popup.data.BigInfoPopupData"
+BIG_INFO_DATA_EDITS = [
+    ("""      public function BigInfoPopupData(aContentText:String = null)""",
+     """      public var Entries:Array = null;
 
-      override protected function AddMapSpecificElements() : void
-      {
-         var i:int = 0;
-         this.AddWorldMapSwitch();
+      public var SelectedEntry:int = -1;
+
+      public function BigInfoPopupData(aContentText:String = null)"""),
+]
+
+BIG_INFO = "com.frimastudio.snowstorm.project.popup.popups.BigInfoPopup"
+BIG_INFO_EDITS = [
+    ("""   import starling.utils.HAlign;
+""", """   import starling.utils.HAlign;
+   import com.frimastudio.snowstorm.project.popup.data.BigInfoPopupData;
+   import com.frimastudio.snowstorm.project.ui.ECommonButton;
+   import starling.display.DisplayObject;
+   import starling.text.TextField;
+   import flash.geom.Point;
 """),
+    ("""      private function SetupScrollerText() : void
+      {
+""", """      private function SetupEntries(aEntries:Array) : void
+      {
+         var i:int = 0;
+         var button:DisplayObject = null;
+         var title:TextField = new TextField(this.mPopupSize.width - 80,80,(mPopupData as InfoPopupData).ContentText,EFonts.HANZEL_BOLD,40,7223);
+         this.mScrollerElement.addChild(title);
+         for(i = 0; i < aEntries.length; i++)
+         {
+            button = AssetManagerWrapper.GetButton(i == (mPopupData as BigInfoPopupData).SelectedEntry ? ECommonButton.GREEN_BUTTON : ECommonButton.LIGHT_BLUE_BUTTON,new Point(this.mPopupSize.width - 120,90),String(aEntries[i]),EFonts.HANZEL_BOLD,34,16777215,true,HAlign.CENTER,VAlign.CENTER);
+            button.name = String(i);
+            button.addEventListener(Event.TRIGGERED,this.OnEntryTouch);
+            this.mScrollerElement.addChild(button);
+         }
+      }
+
+      private function OnEntryTouch(aEvent:Event) : void
+      {
+         if(this.mScrollerElement.HasMoved)
+         {
+            return;
+         }
+         mPopupData.CustomData = int((aEvent.currentTarget as DisplayObject).name);
+         DispatchPopupClosedEvent();
+      }
+
+      private function SetupScrollerText() : void
+      {
+         if(mPopupData is BigInfoPopupData && (mPopupData as BigInfoPopupData).Entries != null)
+         {
+            this.SetupEntries((mPopupData as BigInfoPopupData).Entries);
+            return;
+         }
+"""),
+]
+
+MAP_ACTION_BAR = "com.frimastudio.snowstorm.module.hud.bar.MapActionBar"
+MAP_ACTION_BAR_EDITS = [
+    ("""   import com.frimastudio.snowstorm.module.map.popup.data.StoryPopupData;
+""", """   import com.frimastudio.snowstorm.module.map.popup.data.StoryPopupData;
+   import com.frimastudio.snowstorm.project.popup.data.BigInfoPopupData;
+"""),
+    ("""      private var mMenuButton:Button;
+""", """      private var mMenuButton:Button;
+
+      private var mWorldButton:Button;
+
+      private var mWorldPopup:Popup;
+
+      private var mWorldList:Array;
+
+      private function GetSortedWorldMaps() : Array
+      {
+         var map:Object = null;
+         var list:Array = [];
+         for each(map in this.mWorldMapManager.CacheLogic.GetWorldMapList())
+         {
+            list.push(map);
+         }
+         list.sortOn("worldMapTemplateId",Array.NUMERIC);
+         return list;
+      }
+
+      private function AddWorldButton() : void
+      {
+         var progression:MapProgression = null;
+         try
+         {
+            progression = this.mWorldMapManager.CacheLogic.GetMapProgression();
+            if(this.IsOpenedOutsideMapModule || progression == null || progression.storyNodeId != 0 || this.GetSortedWorldMaps().length < 2)
+            {
+               return;
+            }
+            this.mWorldButton = AssetManagerWrapper.GetBaseButton("hud_worldbutton");
+            this.mWorldButton.addChildAt(AssetManagerWrapper.GetButton(ECommonButton.DARK_BLUE_BUTTON,new Point(98.5,98.5)),0);
+            this.mWorldButton.x = 10;
+            this.mWorldButton.y = BUTTON_POSITION_Y[0] - 108;
+            this.mWorldButton.addEventListener(Event.TRIGGERED,this.OnWorldButton);
+            this.mContainer.addChild(this.mWorldButton);
+            this.mContainer.y -= 108;
+            this.mBackground.y -= 108;
+            this.mBackground.height += 108;
+         }
+         catch(error:Error)
+         {
+            if(this.mWorldButton != null)
+            {
+               this.mWorldButton.removeFromParent(true);
+               this.mWorldButton = null;
+            }
+         }
+      }
+
+      private function OnWorldButton(aEvent:Event) : void
+      {
+         var i:int = 0;
+         var labels:Array = [];
+         var data:BigInfoPopupData = null;
+         var current:int = this.mWorldMapManager.CacheLogic.GetMapProgression().worldMapId;
+         if(PopupManager.IsPopupDisplayed())
+         {
+            return;
+         }
+         this.mWorldList = this.GetSortedWorldMaps();
+         data = new BigInfoPopupData("SELECT A WORLD");
+         data.Entries = labels;
+         for(i = 0; i < this.mWorldList.length; i++)
+         {
+            labels.push(this.WorldName(this.mWorldList[i].worldMapTemplateId));
+            if(this.mWorldList[i].id == current)
+            {
+               data.SelectedEntry = i;
+            }
+         }
+         this.mWorldPopup = PopupManager.Show(data);
+         this.mWorldPopup.addEventListener(PopupManagerEvent.POPUP_CLOSED,this.OnWorldSelected);
+      }
+
+      private function WorldName(aTemplateId:int) : String
+      {
+         var key:String = "WORLD_NAME_" + aTemplateId;
+         var name:String = this.mLocalizer.GetString(EMapStringId.WORLD_MAP_LOCALIZER_SECTION,key);
+         return name == null || name == "" || name == key ? "World " + aTemplateId : name;
+      }
+
+      private function OnWorldSelected(aEvent:PopupManagerEvent) : void
+      {
+         var progression:MapProgression = null;
+         var map:Object = null;
+         this.mWorldPopup.removeEventListener(PopupManagerEvent.POPUP_CLOSED,this.OnWorldSelected);
+         this.mWorldPopup = null;
+         if(!(aEvent.CustomData is int) || int(aEvent.CustomData) < 0 || int(aEvent.CustomData) >= this.mWorldList.length)
+         {
+            return;
+         }
+         map = this.mWorldList[int(aEvent.CustomData)];
+         progression = this.mWorldMapManager.CacheLogic.GetMapProgression();
+         if(map.id == progression.worldMapId)
+         {
+            return;
+         }
+         progression.worldMapId = map.id;
+         progression.worldMapNodeId = 1;
+         progression.storyMapId = 0;
+         progression.storyNodeId = 0;
+         this.mWorldMapManager.SaveTravelProgression(progression);
+         this.ChangeModule(EStarlingModuleDefinition.MAP);
+      }
+"""),
+    ("""         for(var i:int = 0; i < 4; i++)
+         {
+            this.AddButton(i);
+         }
+""", """         for(var i:int = 0; i < 4; i++)
+         {
+            this.AddButton(i);
+         }
+         this.AddWorldButton();
+"""),
+    ("""         if(Boolean(this.mMenuButton))
+         {""", """         if(Boolean(this.mWorldButton))
+         {
+            this.mWorldButton.removeEventListener(Event.TRIGGERED,this.OnWorldButton);
+            this.mWorldButton.removeFromParent(true);
+            this.mWorldButton = null;
+         }
+         if(Boolean(this.mMenuButton))
+         {"""),
 ]
 
 # --- In-app login (notes/findings.md 6.35) --------------------------------------------------------------------
@@ -749,6 +895,9 @@ PATCHES = {
     WORLDMAP_DAL: WORLDMAP_DAL_EDITS,
     WORLD_NODE_ENUM: WORLD_NODE_ENUM_EDITS,
     WORLD_MAP_VIEW: WORLD_MAP_VIEW_EDITS,
+    BIG_INFO_DATA: BIG_INFO_DATA_EDITS,
+    BIG_INFO: BIG_INFO_EDITS,
+    MAP_ACTION_BAR: MAP_ACTION_BAR_EDITS,
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
     ENGINE: ENGINE_EDITS,

@@ -14,6 +14,7 @@ PACKAGE_DIRS = {
     "shop": "asset/module/shop/",
     "world": "asset/world/",
     "mappreview": "asset/misc/mappreview/",
+    "hud": "asset/module/hud/",
 }
 
 
@@ -80,12 +81,14 @@ LOCAL_STORE = (Path(__file__).resolve().parent.parent / "input" / "data" / "data
                "com.konami.ygo" / "Local Store")
 
 
-def add_atlas_frames(ctx, package, atlas, list_path, frames, version):
+def add_atlas_frames(ctx, package, atlas, list_path, frames, version, first_page=None):
     """Add texture frames to a module as a second atlas page <atlas>_2 (Starling merges all pages of a module,
     AssetManager.getTextureNames sorts names across atlases, so e.g. shop_booster_covers_0011 becomes frame 11).
 
     frames: {frame name: PIL image}. The page is added to the module's asset list (asset/list/..., game data)
-    and shipped in the module's package (version = new package version)."""
+    and shipped in the module's package (version = new package version). first_page: list name of the original
+    page when it is not <atlas>_1 (e.g. hud_all)."""
+    first_page = first_page or f"{atlas}_1"
     from PIL import Image
     pad = 2
     width = max(img.width for img in frames.values()) + 2 * pad
@@ -103,8 +106,9 @@ def add_atlas_frames(ctx, package, atlas, list_path, frames, version):
     ctx.package_file(package, f"{atlas}_2.png", buf.getvalue(), version)
     ctx.package_file(package, f"{atlas}_2.xml", ("\n".join(xml) + "\n").encode("utf-8"), version)
     lst = ctx.original(list_path).decode("utf-8")
-    first = re.search(rf'<Asset name="{atlas}_1" path="([^"]+)"[^>]*/>', lst)
-    entry = first.group(0).replace(f"{atlas}_1", f"{atlas}_2")
+    first = re.search(rf'<Asset name="{first_page}" path="([^"]+)"[^>]*/>', lst)
+    entry = first.group(0).replace(f'name="{first_page}"', f'name="{atlas}_2"').replace(
+        f"/{first_page}.png", f"/{atlas}_2.png")
     ctx.replace_file(list_path, lst.replace(first.group(0), first.group(0) + "\n    " + entry).encode("utf-8"))
 
 
@@ -261,6 +265,18 @@ def blazing_wind(ctx):
     print("  Blazing Wind:", counts)
 
 
+def world_select_icon(ctx):
+    """HUD button icon for the world selection menu (MapActionBar.AddWorldButton, tools/as3_patches.py): the main
+    menu's story mode icon, scaled into the HUD buttons' 98x98 frame, as hud_worldbutton on a second hud page."""
+    from PIL import Image
+    icon = atlas_frame("asset/module/mainmenu", "mainmenu_all", "mainmenu_storymode_icon_0000")
+    icon = icon.resize((int(icon.width * 0.78), int(icon.height * 0.78)), Image.LANCZOS)
+    frame = Image.new("RGBA", (98, 98), (0, 0, 0, 0))
+    frame.paste(icon, ((98 - icon.width) // 2, (98 - icon.height) // 2), icon)
+    add_atlas_frames(ctx, "hud", "hud_all", "asset/list/module/hud_list.xml", {"hud_worldbutton_0000": frame},
+                     version="1.1.5", first_page="hud_all")
+
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -283,5 +299,6 @@ MODS = [
     wings_of_destiny,
     immemorial_cataclysm,
     blazing_wind,
+    world_select_icon,
     write_boosterpacks,
 ]
