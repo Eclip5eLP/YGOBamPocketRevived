@@ -3,6 +3,7 @@
 One-command build of the Yugioh BAM Pocket Revived APK:
   1. stub ANEs           (tools/build_stub_anes.py, skipped if already built)
   2. patched SWF         (tools/patch_swf.py byte patches, fake-Facebook URLs point at <host>/fb;
+                          then tools/build_newclasses.py merges the new classes of as3_new/,
                           then tools/patch_as3.py class source edits from tools/as3_patches.py)
   3. game content       (tools/build_content.py: work/content, gamedata package + server overlay)
   4. APK via HARMAN ADT  (tools/build_game_adt.py: server host, descriptor, assets + game data, signing)
@@ -63,7 +64,9 @@ def main():
     swf = ROOT / "work" / "game_adt" / f"MobileGame_{args.host.replace(':', '_')}.swf"
     bytepatched = swf.with_suffix(".bytes.swf")
     run([py, ROOT / "tools" / "patch_swf.py", ORIG_SWF, bytepatched, "--fb-base", f"http://{args.host}/fb"])
-    run([py, ROOT / "tools" / "patch_as3.py", bytepatched, swf])
+    withnew = swf.with_suffix(".new.swf")
+    run([py, ROOT / "tools" / "build_newclasses.py", bytepatched, withnew])
+    run([py, ROOT / "tools" / "patch_as3.py", withnew, swf])
     if not os.environ.get("YGO_KEEP_CONTENT"):
         run([py, ROOT / "tools" / "build_content.py"])
 

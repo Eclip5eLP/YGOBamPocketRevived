@@ -15,6 +15,7 @@ PACKAGE_DIRS = {
     "world": "asset/world/",
     "mappreview": "asset/misc/mappreview/",
     "hud": "asset/module/hud/",
+    "mainmenu": "asset/module/mainmenu/",
 }
 
 
@@ -283,6 +284,26 @@ def world_select_icon(ctx):
                      version="1.1.5", first_page="hud_all")
 
 
+
+def mainmenu_icons(ctx):
+    """Icons and labels for the new main menu buttons (MainMenuView.CreateMainMenuButton reads <type>_icon and the
+    MAINMENU text <type>_text): Collection = the shop's card stack, scaled to the other icons' height; Profile = the
+    front figure of the Friends icon, mirrored from its left half (the right half is covered by the second figure)."""
+    from PIL import Image, ImageOps
+    cards = atlas_frame("asset/module/shop", "shop_all_1", "shop_cards_btn_0000")
+    cards = cards.resize((int(cards.width * 91 / cards.height), 91), Image.LANCZOS)
+    friends = atlas_frame("asset/module/mainmenu", "mainmenu_all", "mainmenu_friends_icon_0000")
+    left = friends.crop((0, 0, 35, friends.height))
+    profile = Image.new("RGBA", (70, friends.height), (0, 0, 0, 0))
+    profile.paste(left, (0, 0))
+    profile.paste(ImageOps.mirror(left), (35, 0))
+    add_atlas_frames(ctx, "mainmenu", "mainmenu_all", "asset/list/module/mainmenu_list.xml",
+                     {"mainmenu_collection_icon_0000": cards, "mainmenu_profile_icon_0000": profile},
+                     version="1.1.11", first_page="mainmenu_all")
+    for lang, collection, profile_text in (("en", "COLLECTION", "PROFILE"), ("fr", "COLLECTION", "PROFIL")):
+        ctx.set_text(lang, "mainmenu", "mainmenu_collection_text", collection)
+        ctx.set_text(lang, "mainmenu", "mainmenu_profile_text", profile_text)
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -307,5 +328,6 @@ MODS = [
     immemorial_cataclysm,
     blazing_wind,
     world_select_icon,
+    mainmenu_icons,
     write_boosterpacks,
 ]

@@ -1500,3 +1500,27 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   Wind's loot groups emptied → refused, DP unchanged (1,507); Legend of the Dragon and Immemorial Cataclysm still
   open (also right after a refusal). The game fills `LootShopItemTemplate.lootGroups` from `loot_template` at
   runtime (the shop-item rows have `lootGroups: null` in data), which the guard reads.
+
+### 6.39 Collection menu; new-class build step (2026-10-30)
+
+- **Collection** [VERIFIED emulator]: a COLLECTION button in the main menu's top row (between Edit Deck and
+  Shop; `MainMenuView.AddCollectionButton`, inside try/catch, so a missing icon or text leaves the original 9
+  buttons). It opens the shop module directly in the card view with `ShopCardView.CollectionMode` (static flag,
+  cleared in `ShopModule.Dispose`):
+  - list: every card the deck builder knows (`CardTemplateListUtil.GenerateCardTemplateDataList`, sorted by name,
+    fusion results excluded like in the deck builder): 1,141 cards; owned quantity per card ("3 x"), unowned cards
+    at 45 % opacity, no buy buttons (`BuyCardShopDisplay.CreateBuyButton` returns early).
+  - footer: "owned / shown" count; FILTERS opens the normal filter screen with the "My Cards Only" and
+    "Tournament cards" boxes (FilterModule data `[true,true,...]`); tested "My Cards Only" → "5 / 5".
+  - tapping a card opens the full card popup; BACK closes the shop module (back to the main menu).
+  - The normal shop path is unchanged (Shop → menu → Cards: 155 cards with prices, tested after using the
+    collection).
+- Icons and labels: content mod `mainmenu_icons` adds a second main menu atlas page (`mainmenu_all_2`, package
+  mainmenu 1.1.11): Collection = the shop's card-stack icon, Profile = the front figure of the Friends icon,
+  mirrored from its left half (for the profile button, not used yet). Texts `mainmenu/mainmenu_collection_text`,
+  `mainmenu_profile_text` (en/fr). Existing installs get the package through the normal content download
+  (0.53 MB, seen in the emulator).
+- **New classes**: `tools/build_newclasses.py` (run by build_release.py between the byte patches and patch_as3):
+  compiles `as3_new/**.as` with the SDK's `compc` against a SWC of the game SWF (FFDec `-swf2swc`, cached by
+  hash in work/newclasses/) and inserts the library's DoABC tags before the game's first ShowFrame. With no
+  `as3_new/` files it copies the SWF unchanged (current state; the collection needed no new class).

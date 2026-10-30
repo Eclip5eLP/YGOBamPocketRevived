@@ -114,10 +114,10 @@ feature ships on a proven release path.
    - Steps: deploy server (gate, content overlay) + content to ygo.eclip5e.com, signed armv8 APK with
      `work/release.p12`, README/changelog, GitHub release text. Old APKs see the update notice, keep offline play.
    - Check on the live server with the emulator (old-equivalent APK + new APK) before announcing.
-4. **`tools/build_newclasses.py` (S).** Make the verified mxmlc + DoABC merge a build step (`as3_new/**.as`),
+4. DONE (6.39, not yet exercised by a real class) **`tools/build_newclasses.py` (S).** Make the verified mxmlc + DoABC merge a build step (`as3_new/**.as`),
    with a build-time check that the merged SWF still loads (smoke test).
-5. **Main menu relayout (S-M).** Room for Profile and Collection (two more buttons; 4+... grid or a second row).
-6. **Collection menu (L).** Read-only browser (new classes), reuses deck builder scroller/filters; owned vs
+5. DONE (6.39: top row holds 6 buttons, room for Profile in the bottom row) **Main menu relayout (S-M).** Room for Profile and Collection (two more buttons; 4+... grid or a second row).
+6. DONE (6.39, collection mode of the shop card view, no new screen needed) **Collection menu (L).** Read-only browser (new classes), reuses deck builder scroller/filters; owned vs
    missing, how to obtain.
 7. **Profile (L), then Friends rewrite (L).** Server endpoints first (tests), then the screens; profile icons fix the
    blue placeholder avatars.

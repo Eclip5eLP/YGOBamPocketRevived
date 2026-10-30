@@ -1050,6 +1050,215 @@ SHOP_MANAGER_EDITS = [
       private function SendBuyQuestInformation(aShopItem:ShopItem) : void"""),
 ]
 
+# Collection: a main menu button opens the shop's card view in collection mode (ShopCardView.CollectionMode):
+# every card of the game with the owned quantity (CardTemplateListUtil, like the deck builder), unowned cards
+# dimmed, no prices, the filter screen with its "my cards only" box, "owned / shown" count; back returns to the main
+# menu. The flag is cleared when the shop module closes. The button is only added if its icon and label can be
+# built (new main menu atlas page, content_mods.mainmenu_icons); otherwise the menu stays as it was.
+MAIN_MENU_VIEW_EDITS = [
+    ("""      private var mCraftingButton:Scale9Button;
+""", """      private var mCraftingButton:Scale9Button;
+
+      private var mCollectionButton:Scale9Button;
+
+      public function get CollectionButton() : Scale9Button
+      {
+         return this.mCollectionButton;
+      }
+
+      private function AddCollectionButton(aBar:Element) : void
+      {
+         try
+         {
+            this.mCollectionButton = this.CreateMainMenuButton("mainmenu_collection");
+            aBar.addChild(this.mCollectionButton);
+         }
+         catch(error:Error)
+         {
+            if(this.mCollectionButton != null)
+            {
+               this.mCollectionButton.removeFromParent(true);
+               this.mCollectionButton = null;
+            }
+         }
+      }
+"""),
+    ("""         topButtonBar.addChild(this.mEditDeckButton);
+""", """         topButtonBar.addChild(this.mEditDeckButton);
+         this.AddCollectionButton(topButtonBar);
+"""),
+    ("""         this.mCraftingButton = null;
+""", """         this.mCraftingButton = null;
+         if(this.mCollectionButton != null)
+         {
+            this.mCollectionButton.removeFromParent(true);
+            this.mCollectionButton = null;
+         }
+"""),
+]
+
+MAIN_MENU_MODULE = "com.frimastudio.snowstorm.module.mainmenu.MainMenuModule"
+MAIN_MENU_MODULE_EDITS = [
+    ("""   import com.frimastudio.mobile.module.EStarlingModuleDefinition;
+""", """   import com.frimastudio.mobile.module.EStarlingModuleDefinition;
+   import com.frimastudio.snowstorm.module.shop.view.ShopCardView;
+"""),
+    ("""         this.mUi.CraftingButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
+""", """         this.mUi.CraftingButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
+         if(this.mUi.CollectionButton != null)
+         {
+            this.mUi.CollectionButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
+         }
+"""),
+    ("""         this.mUi.CraftingButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
+""", """         this.mUi.CraftingButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
+         if(this.mUi.CollectionButton != null)
+         {
+            this.mUi.CollectionButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
+         }
+"""),
+    ("""            case this.mUi.ShopButton:
+               this.ChangeModule(EStarlingModuleDefinition.SHOP);
+               break;""", """            case this.mUi.ShopButton:
+               this.ChangeModule(EStarlingModuleDefinition.SHOP);
+               break;
+            case this.mUi.CollectionButton:
+               ShopCardView.CollectionMode = true;
+               this.ChangeModule(EStarlingModuleDefinition.SHOP);
+               break;"""),
+]
+
+SHOP_MODULE = "com.frimastudio.snowstorm.module.shop.ShopModule"
+SHOP_MODULE_EDITS = [
+    ("""   import com.frimastudio.snowstorm.module.shop.view.AbstractShopView;
+""", """   import com.frimastudio.snowstorm.module.shop.view.AbstractShopView;
+   import com.frimastudio.snowstorm.module.shop.view.ShopCardView;
+"""),
+    ("""         this.ChangeView(EShopView.MENU);""",
+     """         this.ChangeView(ShopCardView.CollectionMode ? EShopView.CARD : EShopView.MENU);"""),
+    ("""      override public function Dispose() : void
+      {
+         super.Dispose();""", """      override public function Dispose() : void
+      {
+         ShopCardView.CollectionMode = false;
+         super.Dispose();"""),
+]
+
+SHOP_CARD_VIEW = "com.frimastudio.snowstorm.module.shop.view.ShopCardView"
+SHOP_CARD_VIEW_EDITS = [
+    ("""   import com.frimastudio.utils.cardfiltering.CardFiltering;
+""", """   import com.frimastudio.utils.cardfiltering.CardFiltering;
+   import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListUtil;
+   import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListData;
+"""),
+    ("""      private var mCardScrollerDataList:Vector.<AbstractScrollerData>;
+""", """      private var mCardScrollerDataList:Vector.<AbstractScrollerData>;
+
+      public static var CollectionMode:Boolean = false;
+
+      private function CollectionText(aKey:String, aFallback:String) : String
+      {
+         var text:String = mLocalizerManager.GetString(ELocalizationName.MAIN_MENU.SectionName,aKey);
+         return text == null || text == "" || text == aKey ? aFallback : text;
+      }
+
+      private function UpdateCollectionList() : void
+      {
+         var i:int = 0;
+         var owned:int = 0;
+         var data:CardTemplateListData = CardTemplateListUtil.GenerateCardTemplateDataList(FilterModule.MyCardOnly,FilterModule.TournamentCardOnly,this.mSelectedFilterDisplay.ActiveFilterList,this.SortCardByName);
+         this.mCardTemplateList = data.CardTemplateList;
+         this.mCardScrollerDataList.length = 0;
+         for(i = 0; i < this.mCardTemplateList.length; i++)
+         {
+            this.mCardScrollerDataList.push(new CardScrollerData(BuyCardShopDisplay,291,this.mCardTemplateList[i],data.QuantityList[i]));
+            if(data.QuantityList[i] > 0)
+            {
+               owned++;
+            }
+         }
+         this.mShopCardScroller.dataProvider = this.mCardScrollerDataList.concat();
+         this.mCardCountText.text = owned + " / " + this.mCardTemplateList.length;
+      }
+"""),
+    ("""         TitleText = Localize("shop_card_title");
+         BackLabelText = Localize("shop_menu_back_btn");""", """         TitleText = Localize("shop_card_title");
+         BackLabelText = Localize("shop_menu_back_btn");
+         if(CollectionMode)
+         {
+            FilterModule.MyCardOnly = false;
+            TitleText = this.CollectionText("mainmenu_collection_text","COLLECTION");
+            BackLabelText = this.CollectionText("mainmenu_back_btn_text","BACK");
+         }"""),
+    ("""         var shopItemGroup:ShopItemGroup = mShopManager.GetShopItemGroupById(ShopItemGroupEnum.CARD.Id);""",
+     """         if(CollectionMode)
+         {
+            this.UpdateCollectionList();
+            return;
+         }
+         var shopItemGroup:ShopItemGroup = mShopManager.GetShopItemGroupById(ShopItemGroupEnum.CARD.Id);"""),
+    ("""         this.mActiveShopDisplay = aEvent.currentTarget as BuyCardShopDisplay;
+         if(this.mShopCardScroller.HasMoved)
+         {
+            this.mActiveShopDisplay.BuyButton.RemoveAnimation();
+            return;
+         }
+         this.mCurrentEventCardTemplate = aEvent.RelatedCardTemplate;
+         if(this.mCurrentEventCardTemplate.cardRarityId == CardRarities.BAM_LEGEND.Id""",
+     """         this.mActiveShopDisplay = aEvent.currentTarget as BuyCardShopDisplay;
+         if(this.mShopCardScroller.HasMoved)
+         {
+            if(this.mActiveShopDisplay.BuyButton != null)
+            {
+               this.mActiveShopDisplay.BuyButton.RemoveAnimation();
+            }
+            return;
+         }
+         this.mCurrentEventCardTemplate = aEvent.RelatedCardTemplate;
+         if(this.mCurrentEventCardTemplate.cardRarityId == CardRarities.BAM_LEGEND.Id"""),
+    ("""            mModuleManager.OpenSubModule(EStarlingModuleDefinition.FILTER,[false,false,false,false]);""",
+     """            mModuleManager.OpenSubModule(EStarlingModuleDefinition.FILTER,CollectionMode ? [true,true,false,false] : [false,false,false,false]);"""),
+    ("""      override protected function OnBackTapped() : void
+      {
+         DispatchChangeView(EShopView.MENU);""", """      override protected function OnBackTapped() : void
+      {
+         if(CollectionMode)
+         {
+            CloseShop();
+            return;
+         }
+         DispatchChangeView(EShopView.MENU);"""),
+]
+
+BUY_CARD_DISPLAY = "com.frimastudio.snowstorm.module.shop.display.BuyCardShopDisplay"
+BUY_CARD_DISPLAY_EDITS = [
+    ("""   import com.frimastudio.snowstorm.module.shop.display.event.CardShopDisplayEvent;
+""", """   import com.frimastudio.snowstorm.module.shop.display.event.CardShopDisplayEvent;
+   import com.frimastudio.snowstorm.module.shop.view.ShopCardView;
+"""),
+    ("""      private function CreateBuyButton() : void
+      {
+         var shopItem:ShopItem = null;""", """      private function CreateBuyButton() : void
+      {
+         var shopItem:ShopItem = null;
+         if(ShopCardView.CollectionMode)
+         {
+            this.DisposeButton();
+            return;
+         }"""),
+    ("""         if(this.mBuyMovieClip != null)
+         {
+            this.CreateBuyButton();
+         }
+         this.mCardOwnedPanel.Quantity = (mScrollerData as CardScrollerData).Quantity;""",
+     """         if(this.mBuyMovieClip != null)
+         {
+            this.CreateBuyButton();
+         }
+         this.mCardOwnedPanel.Quantity = (mScrollerData as CardScrollerData).Quantity;
+         this.mFullCardVisual.alpha = ShopCardView.CollectionMode && (mScrollerData as CardScrollerData).Quantity <= 0 ? 0.45 : 1;"""),
+]
+
 PLAYER_INFO_BAR = "com.frimastudio.snowstorm.module.hud.bar.PlayerInfoBar"
 PLAYER_INFO_BAR_EDITS = [
     ("""         this.mHudElementList.push(this.mEnergyWidget);
@@ -1099,7 +1308,11 @@ PATCHES = {
     TRY_AGAIN_POPUP: TRY_AGAIN_POPUP_EDITS,
     STORY_MAP: STORY_MAP_EDITS,
     SHOP_MANAGER: SHOP_MANAGER_EDITS,
-    MAIN_MENU_VIEW: [_no_icon("mLoginButton", "facebookIcon")],
+    MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
+    SHOP_MODULE: SHOP_MODULE_EDITS,
+    SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,
+    BUY_CARD_DISPLAY: BUY_CARD_DISPLAY_EDITS,
+    MAIN_MENU_VIEW: [_no_icon("mLoginButton", "facebookIcon")] + MAIN_MENU_VIEW_EDITS,
     LOGIN_VIEW: [_no_icon("mLoginBtn", "facebookIcon"), _no_icon("mBtnLoginMini", "facebookIcon")],
     ADVANTAGE_POPUP: [_no_icon("mLoginBtn", "fbIcon")],
     FB_MANAGER: FB_MANAGER_EDITS,
