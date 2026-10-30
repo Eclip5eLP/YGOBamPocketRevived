@@ -260,9 +260,157 @@ BOOSTER_INFO_EDITS = [
 """),
 ]
 
+# --- Delete decks (the original game had no way to remove a deck) ------------------------------------------
+# InventoryManagerGame.DestroyDeck only sent a server request the mobile DAL ignores ("Shouldn't be called
+# anymore"). Now it works locally: every card stack of the deck goes back into the collection (merged into the
+# existing stack of that card), then the deck's card items and the deck are deleted, and the save is written.
+INVENTORY = "com.frimastudio.snowstorm.project.inventory.InventoryManagerGame"
+INVENTORY_EDITS = [
+    ("""      public function DestroyDeck(aDeck:Deck) : void
+      {
+         var request:DestroyDeckRequest = new DestroyDeckRequest();
+         request.deckId = aDeck.id;
+         (mDAL as InventoryManagerDalMobile).DoDestroyDeckRequest(request);
+      }
+""", """      public function DestroyDeck(aDeck:Deck) : void
+      {
+         var deckCard:Item = null;
+         var target:Item = null;
+         var pending:Item = null;
+         var stacks:Vector.<Item> = null;
+         var inventory:Item = mCacheLogic.GetFloatingContainer(mAvatarManager.GetSelectedAvatarId(),ContainerTypes.INVENTORY.Id);
+         var change:InventoryChange = new InventoryChange();
+         change.addedItems = [];
+         change.updatedItems = [];
+         change.deletedItems = [];
+         for each(deckCard in mCacheLogic.GetItemListByContainerId(aDeck.id))
+         {
+            change.deletedItems.push(deckCard);
+            target = null;
+            for each(pending in change.updatedItems.concat(change.addedItems))
+            {
+               if(pending.itemTemplateId == deckCard.itemTemplateId)
+               {
+                  target = pending;
+               }
+            }
+            if(target == null)
+            {
+               stacks = mCacheLogic.GetItemListByItemTemplateId(inventory.id,deckCard.itemTemplateId);
+               if(Boolean(stacks) && stacks.length > 0)
+               {
+                  target = ObjectGenerator.CopyItem(stacks[0]);
+                  change.updatedItems.push(target);
+               }
+               else
+               {
+                  target = ObjectGenerator.CreateItemFromTemplateId(deckCard.itemTemplateId,YGOMData.GetNextId());
+                  target.containerId = inventory.id;
+                  target.quantity = 0;
+                  change.addedItems.push(target);
+               }
+            }
+            target.quantity += deckCard.quantity;
+         }
+         change.deletedItems.push(aDeck);
+         this.ParseInventoryChange(change);
+         YGOMData.Save(true);
+         DispatchInventoryEvent(InventoryManagerEventGame.ON_DESTROY_DECK,InventoryManagerEvent.CODE_SUCCESS);
+      }
+"""),
+]
+
+CHOOSE_DECK_UI = "com.frimastudio.snowstorm.module.deckbuilder.screens.ui.ChooseDeckScreenUI"
+CHOOSE_DECK_UI_EDITS = [
+    ("""      private var mEditButton:Scale9Button;
+""", """      private var mEditButton:Scale9Button;
+
+      private var mDeleteButton:Scale9Button;
+
+      public function get DeleteButton() : Scale9Button
+      {
+         return this.mDeleteButton;
+      }
+"""),
+    ("""         this.mEditButton.removeFromParent(true);
+         this.mEditButton = null;
+""", """         this.mEditButton.removeFromParent(true);
+         this.mEditButton = null;
+         this.mDeleteButton.removeFromParent(true);
+         this.mDeleteButton = null;
+"""),
+    ("""         container.addChild(this.mEditButton);
+""", """         container.addChild(this.mEditButton);
+         this.mDeleteButton = AssetManagerWrapper.GetButton(ECommonButton.PINK_BUTTON,new Point(132,70),"DELETE",EFonts.HANZEL_BOLD,28,Color.WHITE,true,HAlign.CENTER,VAlign.CENTER);
+         this.mDeleteButton.x = 541;
+         this.mDeleteButton.y = 10;
+         container.addChild(this.mDeleteButton);
+"""),
+]
+
+CHOOSE_DECK = "com.frimastudio.snowstorm.module.deckbuilder.screens.ChooseDeckScreen"
+CHOOSE_DECK_EDITS = [
+    ("""   import com.frimastudio.snowstorm.project.popup.PopupManagerUtil;
+""", """   import com.frimastudio.snowstorm.project.popup.PopupManagerUtil;
+   import com.frimastudio.snowstorm.project.popup.data.EPopupCloseData;
+   import com.frimastudio.snowstorm.project.popup.data.TwoChoicePopupData;
+"""),
+    ("""         this.mUI.EditButton.addEventListener(Event.TRIGGERED,this.OnButtonTapped);
+""", """         this.mUI.EditButton.addEventListener(Event.TRIGGERED,this.OnButtonTapped);
+         (this.mUI as ChooseDeckScreenUI).DeleteButton.addEventListener(Event.TRIGGERED,this.OnDeleteTapped);
+"""),
+    ("""         this.mUI.EditButton.removeEventListener(Event.TRIGGERED,this.OnButtonTapped);
+""", """         this.mUI.EditButton.removeEventListener(Event.TRIGGERED,this.OnButtonTapped);
+         (this.mUI as ChooseDeckScreenUI).DeleteButton.removeEventListener(Event.TRIGGERED,this.OnDeleteTapped);
+"""),
+    ("""      private function GoBack() : void
+""", """      private function OnDeleteTapped(aEvent:Event) : void
+      {
+         var popup:Popup = null;
+         if(this.mSelectedDeck == null || this.mDeckIsLoaded == false)
+         {
+            return;
+         }
+         if(this.mDeckList.length <= 1)
+         {
+            PopupManagerUtil.ShowWarning("DELETE DECK","You need to keep at least one deck.");
+            return;
+         }
+         popup = PopupManager.Show(new TwoChoicePopupData("DELETE DECK",'Delete the deck "' + this.mSelectedDeck.deckName + '"? Its cards go back to your collection.',"DELETE",EPopupCloseData.YES,null,null,"CANCEL",EPopupCloseData.NO,null,null),false);
+         popup.addEventListener(PopupManagerEvent.POPUP_CLOSED,this.OnDeleteConfirmed);
+      }
+
+      private function OnDeleteConfirmed(aEvent:PopupManagerEvent) : void
+      {
+         var deck:Deck = this.mSelectedDeck;
+         aEvent.currentTarget.removeEventListener(PopupManagerEvent.POPUP_CLOSED,this.OnDeleteConfirmed);
+         if(aEvent.PopupCloseData != EPopupCloseData.YES || deck == null || this.mDeckList.indexOf(deck) == -1)
+         {
+            return;
+         }
+         if(deck.isDefaultDeck)
+         {
+            this.SetAsDefaultDeck(null);
+         }
+         this.mDeckList.splice(this.mDeckList.indexOf(deck),1);
+         this.mInventoryManager.DestroyDeck(deck);
+         this.mUI.DeckDisplay.ClearDeckDisplayed();
+         this.mSelectedDeck = null;
+         this.PopulateComboBox();
+         this.SelectDeck(this.GetDefaultDeck());
+         this.PopulateComboBox();
+      }
+
+      private function GoBack() : void
+"""),
+]
+
 PATCHES = {
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
     ENGINE: ENGINE_EDITS,
     BOOSTER_INFO: BOOSTER_INFO_EDITS,
+    INVENTORY: INVENTORY_EDITS,
+    CHOOSE_DECK_UI: CHOOSE_DECK_UI_EDITS,
+    CHOOSE_DECK: CHOOSE_DECK_EDITS,
 }
