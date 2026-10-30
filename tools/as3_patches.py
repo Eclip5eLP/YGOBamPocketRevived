@@ -962,7 +962,30 @@ SHOP_MENU_EDITS = [
 """, ""),
 ]
 
+# Map jump: dragging moves the scrolling engine by hand while the camera viewport stays on the pointer; selecting a
+# node switched back to the camera, so the map snapped back to the pointer (in chapters often the top). The camera
+# now takes over the dragged position, then keeps following the pointer from there.
+ABSTRACT_MAP = "com.frimastudio.snowstorm.module.map.map.AbstractMap"
+ABSTRACT_MAP_EDITS = [
+    ("""         Log.Report("AbstractMap::OnNodeSelectedEvent","Node " + aEvent.nameId + " selected",Log.INFO);
+         this.mIsMovedByDragging = false;""",
+     """         Log.Report("AbstractMap::OnNodeSelectedEvent","Node " + aEvent.nameId + " selected",Log.INFO);
+         try
+         {
+            if(this.mIsMovedByDragging && this.mScrollingEngine != null && this.mScrollingEngine.ScrollingCamera != null)
+            {
+               this.mScrollingEngine.ScrollingCamera.ViewPort.x = -this.mScrollingEngine.x;
+               this.mScrollingEngine.ScrollingCamera.ViewPort.y = -this.mScrollingEngine.y;
+            }
+         }
+         catch(error:Error)
+         {
+         }
+         this.mIsMovedByDragging = false;"""),
+]
+
 PATCHES = {
+    ABSTRACT_MAP: ABSTRACT_MAP_EDITS,
     POPUP_UTIL: POPUP_UTIL_EDITS,
     LEADERBOARD_UI: LEADERBOARD_UI_EDITS,
     OPTION_POPUP: OPTION_POPUP_EDITS,

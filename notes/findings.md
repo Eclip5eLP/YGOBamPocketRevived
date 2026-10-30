@@ -1470,3 +1470,17 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   (cosmetic, `DuelInfoPopup.as:98`, `DuelStarPopup.as:170`). Emulator: an online save edited to energy 0 was
   loaded on a cleared device (sync popup, server save chosen; DP 60 → 110 after a purchase proves it was the
   loaded save), and the next upload had energy 200/200.
+
+### 6.37 Map jump after dragging (2026-10-30)
+
+- Cause [VERIFIED, `AbstractMap.as`]: `MoveDrag` (`:209-238`) moves `mScrollingEngine.x/y` directly and sets
+  `mIsMovedByDragging`; while it is set, `Update` (`:482-501`) stops copying the camera viewport into the engine.
+  The camera (`scrollingengine2d/camera/Camera.as`) keeps its viewport on the pointer (`IFocus`) and only moves by
+  the pointer's movement deltas. `OnNodeSelectedEvent` (`:523-527`) cleared the flag, so the next `Update` snapped
+  the map back to the old viewport around the pointer — usually the top of a chapter, where players start.
+- Reproduced in the emulator (chapter 1 with completed nodes from an edited local save: drag up, tap the treasure
+  node → map jumped back by the drag distance).
+- Fix (`as3_patches.py` ABSTRACT_MAP): on node selection after a drag, the camera viewport takes over the dragged
+  position (`ViewPort.x/y = -engine.x/y`, inside try/catch), then the flag is cleared. Emulator: the map stays put,
+  the pointer walks to the tapped node, and the camera follows it again when it walks off-centre (tap on STORY at
+  the top edge scrolled the map along). Applies to world maps too (same base class).

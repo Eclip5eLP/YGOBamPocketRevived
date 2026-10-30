@@ -20,7 +20,10 @@ instead of hacks inside old classes.
 
 ## Priority 1: small server/APK fixes, high value, low risk (one batch, S each) — DONE (findings 6.36)
 
-Left open: energy costs still printed in DuelInfoPopup/DuelStarPopup; the 25 DP Pro reward is not given automatically.
+Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
+- Energy leftovers (S): hide the energy cost in `DuelInfoPopup` (`:98-104`, icon + number) and `DuelStarPopup`
+  (`:170-175`); check other energy UI: the energy popup (`EnergyPopup`, reachable from `EnergyWidget` and the shop,
+  both hidden now), any "+ energy" buttons, energy rewards in objectives/loot text.
 
 | Item | Where | Plan | Risk / interactions |
 |---|---|---|---|
@@ -34,7 +37,7 @@ Left open: energy costs still printed in DuelInfoPopup/DuelStarPopup; the 25 DP 
 
 | Item | Feasibility | Plan | Interactions |
 |---|---|---|---|
-| Map scrolling jumps to top when moving to a node (sub-maps) | needs reproduction; drag code moves `mScrollingEngine.x/y` directly (`AbstractMap.MoveDrag :209-238`) while the pointer/camera logic (`StoryMapPointer`, ScrollingEngine2D camera) likely re-centres on its own target; first reproduce in the emulator, then fix the camera target | M, mostly investigation | affects world maps too; test with world 2 |
+| DONE (findings 6.37) Map scrolling jumps to top when moving to a node (sub-maps) | needs reproduction; drag code moves `mScrollingEngine.x/y` directly (`AbstractMap.MoveDrag :209-238`) while the pointer/camera logic (`StoryMapPointer`, ScrollingEngine2D camera) likely re-centres on its own target; first reproduce in the emulator, then fix the camera target | M, mostly investigation | affects world maps too; test with world 2 |
 | Deck delete | DONE (65245be) | | |
 | World selection | DONE (2daebec) | | |
 | Collection menu (main menu button) | L. Reuse `CardScroller` + `FullCardVisual` + card filters from the deck builder (`module/deckbuilder/screens/EditDeckScreen`, `utils/cardfiltering`) in a new read-only screen (new classes) | browse owned + unowned cards (greyed), filters (series, rarity, type, pack), card details popup with how to obtain (BuyCardPopup logic) | profile "collection info" reuses its counters; needs a 10th/11th main menu button → main menu relayout (see Profile) |
