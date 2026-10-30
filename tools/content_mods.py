@@ -31,6 +31,12 @@ def settings_github_text(ctx):
     for lang in ("en", "fr"):
         ctx.set_text(lang, "option", "option_visit_forum", "GitHub")
 
+
+def star_duel_button_text(ctx):
+    """Duel star popup buttons say DUEL like the duel popup (key map/star_duel_popup_button, DuelNode.as:224; was OK)."""
+    for lang in ("en", "fr"):
+        ctx.set_text(lang, "map", "star_duel_popup_button", "DUEL")
+
 def _shop_items(ctx):
     """All shop item objects of shop.ace with their group."""
     for shop in ctx.ace("config/ace/shop/shop.ace"):
@@ -324,6 +330,7 @@ def write_boosterpacks(ctx):
 MODS = [
     free_bam_pro,
     settings_github_text,
+    star_duel_button_text,
     wings_of_destiny,
     immemorial_cataclysm,
     blazing_wind,

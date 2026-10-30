@@ -1016,7 +1016,7 @@ SHOP_MANAGER_EDITS = [
     ("""         var purchaseCost:int = shopItemConversion.cost * Math.max(aShopItem.quantity,1);""",
      """         if(aShopItem.shopItemTypeId == ShopItemTypes.LOOT.Id && !this.HasLootTable(aShopItem.id))
          {
-            PopupManagerUtil.ShowWarning("PACK UNAVAILABLE","This booster pack cannot be opened right now. Nothing was spent.");
+            PopupManagerUtil.ShowWarning("PACK UNAVAILABLE","This booster pack cannot be opened right now.");
             return PASS_DATE;
          }
          var purchaseCost:int = shopItemConversion.cost * Math.max(aShopItem.quantity,1);"""),

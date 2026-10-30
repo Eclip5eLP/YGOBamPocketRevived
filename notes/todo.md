@@ -119,6 +119,26 @@ feature ships on a proven release path.
 5. DONE (6.39: top row holds 6 buttons, room for Profile in the bottom row) **Main menu relayout (S-M).** Room for Profile and Collection (two more buttons; 4+... grid or a second row).
 6. DONE (6.39, collection mode of the shop card view, no new screen needed) **Collection menu (L).** Read-only browser (new classes), reuses deck builder scroller/filters; owned vs
    missing, how to obtain.
+6b. **Collection layout like Edit Deck (M), requested 2026-10-30, researched, not implemented.**
+   Wanted: card preview pane on the right; on the left a horizontally scrollable list of small cards (owned count,
+   unowned semi-transparent); tap a small card → shown in the preview pane; tap the preview → the usual full card
+   popup (FullCardPopupData, as in the shop).
+   Feasibility: yes, everything exists in the deck builder.
+   - `EditDeckScreenUI` (module/deckbuilder/screens/ui): preview frame = Scale9 `DECKBUILDER_FRAME_CARDPREVIEW`
+     280x388 (CreateDeckDisplay), small-card scroller = `CardScroller` in the footer (PopulateLeftFooterContainer,
+     180 px high, slider + gradients, `deckbuilder_*` assets) with the count + FILTERS block on the right
+     (PopulateRightFooterContainer, SelectedFilterDisplay).
+   - `EditDeckScreen` fills that scroller from `CardTemplateListUtil.GenerateCardTemplateDataList` (same list the
+     collection already uses) and shows the tapped card in the preview; check its small-card display class and
+     how it sets the preview (search for the scroller's dataProvider and the preview display in EditDeckScreen).
+   Plan: a new screen class in as3_new/ (first real use of build_newclasses.py), layout: full-height left area
+   with a 2-3 row grid or one tall horizontal scroller of small cards (deck builder card display + quantity panel,
+   alpha 0.45 when 0 owned), right column = preview frame (large card visual, tap → FullCardPopup) + count +
+   FILTERS. Host it in the shop module's collection mode (replaces ShopCardView in CollectionMode) so the main menu
+   button, filters and back behaviour stay as they are. Needs the deckbuilder asset list loaded
+   (ShopModule.CreateAssetList: add EAssetListDefinition for the deck builder only in collection mode) or the
+   screen hosted in the deck builder module instead; decide after reading DeckBuilderModule. Fail safe: if the
+   new screen throws while building, fall back to the current collection view.
 7. **Profile (L), then Friends rewrite (L).** Server endpoints first (tests), then the screens; profile icons fix the
    blue placeholder avatars.
 8. **Release 1.2.0**, then Live PvP, then the browser spike. Performance profiling and cover art when convenient.
