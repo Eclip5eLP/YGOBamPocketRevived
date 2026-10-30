@@ -10,13 +10,24 @@ Content overlay: new and changed asset packages produced by tools/build_content.
 versionning.xml is served as the original plus one <version value=game_version> block (base block with the
 manifest's packages added or replaced). Older clients keep using their own block, so they never see new
 packages. Zips for game_version come from the manifest when listed, otherwise from the original content.
+
+Version gate (notes/findings.md 6.34): with a manifest, online play needs APK version >= game_version and the
+current gamedata version. Clients send both as ?v=&d= on every game request (tools/as3_patches.py
+ServerComHTTP); the first public APK sends neither and is refused.
 """
 
 import copy
 import json
 import os
 import xml.etree.ElementTree as ET
-from typing import Optional
+from typing import Optional, Tuple
+
+
+def version_tuple(v: str) -> Tuple[int, ...]:
+    try:
+        return tuple(int(x) for x in v.split("."))
+    except (AttributeError, ValueError):
+        return ()
 
 
 class Content:
@@ -68,3 +79,21 @@ class Content:
             return None
         path = os.path.join(self.dir, m["packages"][name]["zip"])
         return path if os.path.isfile(path) else None
+
+    def gate(self) -> Optional[Tuple[str, str]]:
+        """(minimum APK version, required gamedata version), or None when there is no content (no gate)."""
+        m = self.load()
+        if not m or "gamedata" not in m["packages"]:
+            return None
+        return m["game_version"], m["packages"]["gamedata"]["version"]
+
+    def check_client(self, apk_version: str, data_version: str) -> Optional[str]:
+        """None if this client may play online, else the reason ("apk" or "data")."""
+        g = self.gate()
+        if g is None:
+            return None
+        if not version_tuple(apk_version) or version_tuple(apk_version) < version_tuple(g[0]):
+            return "apk"
+        if version_tuple(data_version) != version_tuple(g[1]):
+            return "data"
+        return None

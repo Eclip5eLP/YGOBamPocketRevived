@@ -42,7 +42,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import amf3
 from accounts import AccountStore
-from content import Content
+from content import Content, version_tuple
 from fakefb import FakeFacebook
 from game import COOKIE, Game
 
@@ -99,6 +99,20 @@ CLOSE_POPUP_CONFIG_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
 	<fr><![CDATA[Yugioh BAM Pocket Revived : une renaissance gratuite g\xc3\xa9r\xc3\xa9e par des fans, non affili\xc3\xa9e \xc3\xa0 Konami.<br><br>Connectez-vous pour jouer en ligne : sauvegarde en ligne, amis, Ar\xc3\xa8ne et \xc3\x89quipes. Les duels en direct arrivent plus tard.<br><br>Tous les achats sont gratuits, BAM Pro compris.<br><br>github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e]]></fr>
 </content>
 """
+
+# Shown first in the startup popup to APKs below the minimum version (server/content.py version gate)
+UPDATE_NOTICE = (
+    b"<b>UPDATE AVAILABLE</b>: get the new version at github.com/Eclip5eLP/YGOBamPocketRevived/releases. "
+    b"Online play needs the new version; offline play keeps working.<br><br>",
+    "<b>MISE \u00c0 JOUR DISPONIBLE</b> : t\u00e9l\u00e9chargez la nouvelle version sur "
+    "github.com/Eclip5eLP/YGOBamPocketRevived/releases. Le jeu en ligne n\u00e9cessite la nouvelle version ; "
+    "le jeu hors ligne continue de fonctionner.<br><br>".encode("utf-8"),
+)
+# Requests answered for every client: the version check itself and keep-alives
+UNGATED_REQUESTS = {
+    "com.frimastudio.snowstorm.project.player.amf.GetVersionRequest",
+    "com.frimastudio.snowstorm.core.player.amf.PingRequest",
+}
 
 # GET /_logs (debug): returns the tail of work/server_requests.log. Disabled (404) unless the env var
 # YGO_LOG_TOKEN is set; the token must be sent in the X-Log-Token header (never in the URL, so it is not
@@ -282,12 +296,13 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         # 2. Close Popup Config XML [LoginModule.as:120]
         if path == "/closepopupconfig.xml":
             logger.info("[%s] Serving closepopupconfig.xml", ip)
+            body = self.close_popup_xml(self.server.client_versions.get(ip, ""))
             self.send_response(200)
             self.send_header("Content-Type", "application/xml")
-            self.send_header("Content-Length", str(len(CLOSE_POPUP_CONFIG_XML)))
+            self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             if not is_head:
-                self.wfile.write(CLOSE_POPUP_CONFIG_XML)
+                self.wfile.write(body)
             return
 
         # 3. Asset Versionning XML [VersionControllerImpl.as:86]
@@ -497,6 +512,27 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
                     except OSError:
                         pass
 
+    def gate_reason(self, apk_version: str, data_version: str) -> Optional[str]:
+        if not self.config.get("version_gate", True):
+            return None
+        return self.server.content.check_client(apk_version, data_version)
+
+    def version_string(self) -> str:
+        """GetVersionResponse.version: the minimum APK version. Older APKs show their built-in "NEW UPDATE
+        AVAILABLE" popup and continue offline (YGOMLoginImpl.ValidateAppVersion)."""
+        g = self.server.content.gate() if self.config.get("version_gate", True) else None
+        return f"android={g[0]}~ios={g[0]}" if g else self.config["version_string"]
+
+    def close_popup_xml(self, apk_version: str) -> bytes:
+        """Startup popup; APKs below the minimum version get an update notice first. apk_version is the one the
+        client IP sent with its latest GetVersionRequest (the popup request itself carries none)."""
+        g = self.server.content.gate() if self.config.get("version_gate", True) else None
+        if not g or (version_tuple(apk_version) and version_tuple(apk_version) >= version_tuple(g[0])):
+            return CLOSE_POPUP_CONFIG_XML
+        en, fr = UPDATE_NOTICE
+        return CLOSE_POPUP_CONFIG_XML.replace(b"<en><![CDATA[", b"<en><![CDATA[" + en).replace(
+            b"<fr><![CDATA[", b"<fr><![CDATA[" + fr)
+
     def handle_amf_proxy(self):
         """
         Handles incoming AMF3 requests sent to /facebook/proxy.html.
@@ -545,20 +581,28 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
 
         responses = []
         ctx = {"ip": ip, "ext_id": ext_id, "cookie": self.session_cookie(), "set_cookie": []}
+        query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+        refused = self.gate_reason(query.get("v", [""])[0], query.get("d", [""])[0])
 
         # Process each request object in request order
         for req in request_objects:
             alias = getattr(req, "class_alias", "")
             log_info("[%s] Processing request: %s", ip, alias)
 
+            if refused and alias not in UNGATED_REQUESTS:
+                logger.info("[%s] Refused %s: client outdated (%s)", ip, alias, refused)
+                responses.append(amf3.build_error_response(alias, "Update required", code=1))
+                continue
             handled = self.server.game.handle(alias, req, ctx)
             if handled is not None:
                 responses.append(handled)
             elif alias == "com.frimastudio.snowstorm.project.player.amf.GetVersionRequest":
+                # remembered for the startup popup, which the client loads without version parameters
+                self.server.client_versions[ip] = query.get("v", [""])[0]
                 logger.info("[%s] Dispatching GetVersionResponse (version: %s, cdn: %s)",
                             ip, self.config["version_string"], self.config["cdn_host"])
                 responses.append(amf3.build_get_version_response(
-                    version=self.config["version_string"],
+                    version=self.version_string(),
                     cdn_host=self.config["cdn_host"]
                 ))
             elif alias == "com.frimastudio.snowstorm.core.player.amf.PingRequest":
@@ -595,6 +639,7 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         self.fakefb = FakeFacebook(store, logger)
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
         self.content = Content(config.get("content_dir", ""))
+        self.client_versions = {}  # ip -> APK version sent with the latest GetVersionRequest ("" = none)
 
     def handle_error(self, request, client_address):
         # idle keep-alive connections time out after 30 s; log one line instead of a traceback
@@ -706,6 +751,8 @@ def main():
                         help="Accounts, tokens, saves and rsa_private.json (default: server/data)")
     parser.add_argument("--content-dir", default=str(PROJECT_ROOT / "work" / "content"),
                         help="Content overlay from tools/build_content.py (default: work/content)")
+    parser.add_argument("--no-version-gate", action="store_true",
+                        help="Allow online play for every client version even when content is present")
     parser.add_argument("--prebuild", action="store_true",
                         help="Prebuild all 26 package zips into cache directory and exit immediately")
     parser.add_argument("--no-auto-reload", action="store_true",
@@ -723,6 +770,7 @@ def main():
         "version_string": args.version_string,
         "data_dir": os.path.abspath(os.path.expanduser(args.data_dir)),
         "content_dir": os.path.abspath(os.path.expanduser(args.content_dir)),
+        "version_gate": not args.no_version_gate,
     }
 
     if args.prebuild:

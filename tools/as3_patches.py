@@ -405,6 +405,39 @@ CHOOSE_DECK_EDITS = [
 """),
 ]
 
+# --- Version gate (notes/findings.md 6.34) ------------------------------------------------------------------
+# Every game request carries the APK version (mmog.xml client/version) and the game data version in effect, so
+# the server can refuse online play to outdated clients (server/game.py version gate). APKs without these
+# parameters (1.0.0) are refused too; they also get the original "NEW UPDATE AVAILABLE" popup, because the
+# server's GetVersionResponse names a newer version, and continue offline.
+SERVERCOM = "com.frimastudio.common.core.servercom.ServerComHTTP"
+SERVERCOM_EDITS = [
+    ("""   import flash.utils.ByteArray;
+""", """   import flash.utils.ByteArray;
+   import com.frimastudio.as3ToolKit.net.Loader;
+"""),
+    ("""         this.mServerUrl = param1.replace(_loc4_,_loc4_ + ":" + param2);
+""", """         this.mServerUrl = param1.replace(_loc4_,_loc4_ + ":" + param2);
+         this.mServerUrl += (this.mServerUrl.indexOf("?") == -1 ? "?" : "&") + "v=" + (ManagerA.Util as IUtil).GetVar("client","version") + "&d=" + Loader.ActiveGameDataVersion;
+"""),
+]
+
+# Do not recompile LoginModule: with an edit there (closepopupconfig.xml?v=) the upgraded app hung at the end of
+# startup in the emulator; without it, it starts normally. The server picks the startup popup text from the version
+# the client IP last sent with GetVersionRequest instead (server/server.py).
+# "UPDATE NOW" opens the project's releases page instead of the closed Google Play listing.
+RELEASES_URL = "https://github.com/Eclip5eLP/YGOBamPocketRevived/releases/latest"
+NEW_APP_UPDATE = "com.frimastudio.snowstorm.project.popup.popups.versionupdate.NewAppUpdate"
+NEW_APP_UPDATE_EDITS = [
+    ("""private const ANDROID_APP_URL:String = "https://play.google.com/store/apps/details?id=air." + "com.konami.ygo";""",
+     f"""private const ANDROID_APP_URL:String = "{RELEASES_URL}";"""),
+]
+VERSION_UNAVAILABLE = "com.frimastudio.snowstorm.project.popup.popups.versionupdate.VersionUnavailable"
+VERSION_UNAVAILABLE_EDITS = [
+    ("""private const ANDROID_APP_URL:String = "https://play.google.com/store/apps/details?id=" + "com.konami.ygo";""",
+     f"""private const ANDROID_APP_URL:String = "{RELEASES_URL}";"""),
+]
+
 PATCHES = {
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
@@ -413,4 +446,7 @@ PATCHES = {
     INVENTORY: INVENTORY_EDITS,
     CHOOSE_DECK_UI: CHOOSE_DECK_UI_EDITS,
     CHOOSE_DECK: CHOOSE_DECK_EDITS,
+    SERVERCOM: SERVERCOM_EDITS,
+    NEW_APP_UPDATE: NEW_APP_UPDATE_EDITS,
+    VERSION_UNAVAILABLE: VERSION_UNAVAILABLE_EDITS,
 }

@@ -39,13 +39,22 @@ def rsa_encrypt(msg: str) -> bytes:
     return pow(int.from_bytes(block, "big"), e, n).to_bytes(k, "big")
 
 
-def amf_request(opener, base, objects, ext_id=""):
+def client_query():
+    """?v=&d= of an up-to-date client: the APK and game data versions of work/content (version gate)."""
+    manifest = ROOT / "work" / "content" / "manifest.json"
+    if not manifest.exists():
+        return ""
+    m = json.loads(manifest.read_text(encoding="utf-8"))
+    return "?" + urllib.parse.urlencode({"v": m["game_version"], "d": m["packages"]["gamedata"]["version"]})
+
+
+def amf_request(opener, base, objects, ext_id="", query=None):
     arr = bytearray([0x09]) + amf3.encode_u29((len(objects) << 1) | 1) + b"\x01"
     for alias, props in objects:
         arr += amf3.encode_typed_object(alias, props)
     eid = ext_id.encode()
     body = zlib.compress(struct.pack(">H", len(eid)) + eid + bytes(arr))
-    req = urllib.request.Request(base + "/facebook/proxy.html", data=body,
+    req = urllib.request.Request(base + "/facebook/proxy.html" + (client_query() if query is None else query), data=body,
                                  headers={"Content-Type": "binary/octet-stream"})
     raw = opener.open(req).read()
     assert struct.unpack(">i", raw[:4])[0] == 0
