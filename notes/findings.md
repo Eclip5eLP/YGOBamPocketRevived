@@ -1379,3 +1379,62 @@ Verified from `com.frimastudio.snowstorm.project.externalfile.enum.EExternalAsse
   - Starling `AssetManager.getTextureNames` merges and sorts frame names across pages
     (`starling/assets/AssetManager.as:143-153`), so `shop_booster_covers_0011` is frame 11.
   - Tested with a recolored copy of cover 9 shown as the Wings of Destiny cover.
+
+### 6.35 Several main maps, in-app login, no Facebook logo, browser version (2026-10-30)
+- **Several world (main) maps** [VERIFIED, emulator]:
+  - The original data model already allows them: `YGOMDefaultDataUtil.EXTENSION_WORLD_TEMPLATE_ID = 2`
+    (unused), `worldnodetemplate.worldMapTemplateId`.
+  - Save migration exists and runs on every load: `YGOMDataImpl.SetupPlayerData` → `ValidateJSONSave` →
+    `ValidateQuest/ValidateWorld/ValidateStory`. It adds new quests, world nodes and chapters, but no missing
+    world maps; our `ValidateMissingWorldMaps` adds that.
+  - Changes:
+    - `WorldMap.CreateContent` loads `asset/world/worldmap<N>.xml` for N > 1;
+    - a "WORLD N" button cycles through the save's world maps and saves `MapProgression.worldMapId`;
+    - `GetWorldNodeByStoryMapTemplateId` and `DoUnlockWorldNodeRequest` no longer assume map 1;
+    - `WorldNodeEnum` makes entries for chapters it doesn't know.
+  - New chapter ids need:
+    - story map, story node and star template rows;
+    - `asset/world/map<id-1>_level1.xml`;
+    - `mappreview_preview<id-1>`;
+    - localization sections `map_0<id-1>` (dialogue), `map` `WORLD_NODE_INFO_MAP_ID_<id-1>` and `world_map`
+      `NAME_CHAPTER<id-1>`.
+  - Chapters 16 and up (`EBamProConst.WORLD_MAP_GATE`) are BAM Pro gated, so new chapters are too unless
+    changed.
+  - Test (`YGO_TEST_CONTENT=1`, `tools/content_test_mods.py`): map 2 with one node opening chapter 60, a copy of
+    chapter 1.
+  - Not yet solved: world map 2 uses map 1's background and banner ("ALBA LITORA"), which are classes in the
+    world XML (`backgroundWorld`, `maplibrary`). A real second map needs its own background art.
+- **In-app login** [VERIFIED, emulator]:
+  - `FacebookManagerMobile.Authorize` used `navigateToURL` (system browser).
+  - It now uses a StageWebView over the game, the same mechanism as the invite dialog (`InviteFriends`,
+    800x400).
+  - The `fb<appId>://authorize` redirect is caught (LOCATION_CHANGING/CHANGE) and passed to the original
+    `ProcessLogin`.
+  - Back or the page's Cancel link (`#error=cancelled`) cancels.
+  - The web view has its own cookie store, so "Continue as" works inside the game after the first login there.
+- **Facebook logo**: removed in code at all 4 login buttons (`MainMenuView`, `LoginView` ×2,
+  `AdvantageLoginPopup`); texture names `common_login_facebook_ico`, `loginpopup_loginbutton_ico`.
+- **Browser version** [INFERRED unless stated]:
+  - Browsers no longer run SWF natively. The game is AS3 on Starling/Stage3D (457 of 2929 classes import
+    starling), plus a few AIR-only APIs [VERIFIED counts]:
+    - `flash.filesystem` 14 files;
+    - `StageWebView` 4;
+    - `NativeApplication` 11.
+  - Option A, Ruffle (open-source Flash Player in WebAssembly):
+    - runs the SWF itself, no rewrite;
+    - needs a web build that swaps the AIR-only classes (file storage → browser storage, packages fetched from
+      the server instead of unzipped to disk, web view → popup/iframe);
+    - unknown: how well Ruffle handles Stage3D/AGAL for Starling, and its performance. A one-day experiment
+      would settle it (needs downloading Ruffle).
+  - Option B, server-side Android streamed to the browser (e.g. an Android container + WebRTC/scrcpy-style
+    streaming):
+    - runs the unchanged x86_64 APK;
+    - costs roughly one CPU core and 1–2 GB RAM per concurrent player on the server, plus input latency.
+  - Option C, port to HTML5 (e.g. OpenFL/Haxe): a large rewrite.
+  - Option D (not a browser): a Windows/macOS desktop build from the same SWF with the AIR SDK and desktop
+    stub extensions, for little effort.
+- **Pack split proposal**: `notes/pack_split_proposal.md`.
+  - 146 of the 201 remaining unreleased cards match the archetypes in the two pack descriptions: 73 for
+    Immemorial Cataclysm, 73 for Blazing Wind.
+  - 55 match neither. They're mostly series 98/99 legends (arena/promo cards), plus 5 series-1 commons that are
+    the starter backup cards new saves already receive (`BackupCardAssociation`).
