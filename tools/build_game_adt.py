@@ -18,13 +18,13 @@ Usage: python tools/build_game_adt.py [--ns 20.0] [--target-sdk N] [--extdir DIR
 """
 
 import argparse
+import json
 import os
 import re
 import shutil
 import subprocess
 import sys
 import zipfile
-import zlib
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -37,13 +37,7 @@ STAGE = BUILD_DIR / "stage"
 STAGED_PREFIXES = ("assets/config/", "assets/asset/", "assets/icons/")
 PUBLIC_KEY_XML = PROJECT_ROOT / "server" / "data" / "publickey.xml"
 
-# Localization (.ace = zlib-compressed, strings length-prefixed): same-length text replacements
-# for the BAM Pro popup price line (key bam_pro_price, EBamProLoc.as:18, BamProPopup.as:109).
-LOCALIZATION_PATCHES = {
-    "config/ace/resource/en/bam_pro.ace": [(b"ONLY $ 4.99 USD", b"FREE OF CHARGE!")],
-    "config/ace/resource/en/localization_section.ace": [(b"ONLY $ 4.99 USD", b"FREE OF CHARGE!")],
-    "config/ace/resource/fr/localization_section.ace": [(b"SEULEMENT $ 4.99 USD", b"TOTALEMENT GRATUIT !")],
-}
+CONTENT_DIR = PROJECT_ROOT / "work" / "content"
 
 
 def patch_mmog_xml(xml_bytes: bytes, host: str, port: int = 80) -> bytes:
@@ -110,12 +104,14 @@ def patch_mmog_xml(xml_bytes: bytes, host: str, port: int = 80) -> bytes:
     return xml_text.encode("utf-8")
 
 
-def patch_ace(data: bytes, replacements) -> bytes:
-    text = zlib.decompress(data)
-    for old, new in replacements:
-        assert len(old) == len(new) and text.count(old) == 1, (old, text.count(old))
-        text = text.replace(old, new)
-    return zlib.compress(text, 9)
+def set_client_version(xml_bytes: bytes, version: str) -> bytes:
+    """<client> <var name="version">: the APK version the server compares (YGOMLoginImpl.ValidateAppVersion) and the
+    versionning.xml block the client uses (VersionControllerImpl.CurrentGameVersion)."""
+    text = xml_bytes.decode("utf-8")
+    new, n = re.subn(r'(<var name="version" value=")[^"]*(")', r"\g<1>" + version + r"\g<2>", text, count=1)
+    assert n == 1, "client version var not found in mmog.xml"
+    return new.encode("utf-8")
+
 
 # Components whose classes only exist in the ANE Java code (application.xml:40-61)
 ANE_COMPONENT_PATTERNS = [
@@ -176,7 +172,7 @@ def patch_descriptor(xml: str, ns: str, target_sdk: int, keep_extensions: bool =
     return xml
 
 
-def stage_files(host: str, swf: str = "") -> str:
+def stage_files(host: str, swf: str = "", content_dir: str = "") -> str:
     if STAGE.exists():
         shutil.rmtree(STAGE)
     STAGE.mkdir(parents=True)
@@ -195,13 +191,28 @@ def stage_files(host: str, swf: str = "") -> str:
             if rel == "config/publickey.xml":
                 # our own key pair (tools/gen_rsa_key.py); the server holds the private key
                 data = PUBLIC_KEY_XML.read_bytes()
-            if rel in LOCALIZATION_PATCHES:
-                data = patch_ace(data, LOCALIZATION_PATCHES[rel])
             out = STAGE / rel
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_bytes(data)
             count += 1
     print(f"Staged MobileGame.swf + {count} files under {STAGE}")
+    if content_dir:
+        # game data from tools/build_content.py: the same files the "gamedata" package carries, so the APK
+        # works fully offline and a download only overrides it when its version is newer
+        content = Path(content_dir)
+        manifest = json.loads((content / "manifest.json").read_text(encoding="utf-8"))
+        gd = content / "gamedata"
+        n = 0
+        for f in (gd / "config").rglob("*"):
+            if f.is_file():
+                out = STAGE / f.relative_to(gd)
+                out.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(f, out)
+                n += 1
+        shutil.copyfile(gd / "gamedata_version", STAGE / "config" / "gamedata_version")
+        mmog = STAGE / "config" / "mmog.xml"
+        mmog.write_bytes(set_client_version(mmog.read_bytes(), manifest["game_version"]))
+        print(f"Game data {(gd / 'gamedata_version').read_text()}: {n} file(s), client version {manifest['game_version']}")
     return desc
 
 
@@ -219,11 +230,12 @@ def main():
     ap.add_argument("--keystore", default=str(DEBUG_KEYSTORE), help="PKCS#12 signing key")
     ap.add_argument("--storepass-env", default="", help="env var holding the keystore password (default: 'android')")
     ap.add_argument("--arch", default="armv8", choices=["armv8", "x64"], help="armv8 for phones, x64 for the emulator")
+    ap.add_argument("--content-dir", default="", help="game data from tools/build_content.py (e.g. work/content)")
     ap.add_argument("--out", default=str(PROJECT_ROOT / "work" / "game_adt_noext.apk"))
     args = ap.parse_args()
     storepass = os.environ[args.storepass_env] if args.storepass_env else "android"
 
-    desc = stage_files(args.host, args.swf)
+    desc = stage_files(args.host, args.swf, args.content_dir)
     desc_out = BUILD_DIR / "application_game.xml"
     desc_out.write_text(patch_descriptor(desc, args.ns, args.target_sdk, keep_extensions=bool(args.extdir), cutout=args.cutout, app_id=args.app_id,
                          name=args.name, version_label=args.version_label), encoding="utf-8")

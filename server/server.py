@@ -42,6 +42,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import amf3
 from accounts import AccountStore
+from content import Content
 from fakefb import FakeFacebook
 from game import COOKIE, Game
 
@@ -377,7 +378,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
 
         try:
             with open(v_path, "rb") as f:
-                data = f.read()
+                data = self.server.content.versionning_xml(f.read())
             logger.info("[%s] Serving versionning.xml (%d bytes)", ip, len(data))
             self.send_response(200)
             self.send_header("Content-Type", "application/xml")
@@ -404,6 +405,11 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         pkg_filename = parts[3]
         pkg_name = pkg_filename[:-4]
 
+        overlay = self.server.content.package_zip(parts[2], pkg_name)
+        if overlay:
+            self.stream_zip(overlay, pkg_name, is_head)
+            return
+
         if pkg_name not in PACKAGE_PATHS:
             logger.warning("[%s] Unknown package requested: %s", ip, pkg_name)
             self.send_error(404, f"Unknown package: {pkg_name}")
@@ -415,6 +421,10 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
             self.send_error(500, f"Failed to generate package {pkg_name}")
             return
 
+        self.stream_zip(zip_path, pkg_name, is_head)
+
+    def stream_zip(self, zip_path: str, pkg_name: str, is_head: bool):
+        ip = self.get_client_ip()
         file_size = os.path.getsize(zip_path)
         logger.info("[%s] Streaming package %s.zip (%d bytes)", ip, pkg_name, file_size)
         self.send_response(200)
@@ -584,6 +594,7 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         store = AccountStore(Path(config["data_dir"]))
         self.fakefb = FakeFacebook(store, logger)
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
+        self.content = Content(config.get("content_dir", ""))
 
     def handle_error(self, request, client_address):
         # idle keep-alive connections time out after 30 s; log one line instead of a traceback
@@ -693,6 +704,8 @@ def main():
                         help="Raw version string returned in GetVersionResponse.version (default: android=1.11.2~ios=1.11.2)")
     parser.add_argument("--data-dir", default=str(PROJECT_ROOT / "server" / "data"),
                         help="Accounts, tokens, saves and rsa_private.json (default: server/data)")
+    parser.add_argument("--content-dir", default=str(PROJECT_ROOT / "work" / "content"),
+                        help="Content overlay from tools/build_content.py (default: work/content)")
     parser.add_argument("--prebuild", action="store_true",
                         help="Prebuild all 26 package zips into cache directory and exit immediately")
     parser.add_argument("--no-auto-reload", action="store_true",
@@ -709,6 +722,7 @@ def main():
         "cdn_host": args.cdn_host,
         "version_string": args.version_string,
         "data_dir": os.path.abspath(os.path.expanduser(args.data_dir)),
+        "content_dir": os.path.abspath(os.path.expanduser(args.content_dir)),
     }
 
     if args.prebuild:
