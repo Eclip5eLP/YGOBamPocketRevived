@@ -1,6 +1,11 @@
 # Browser version: research notes (2026-10-30)
 
-Status: research only, nothing implemented. To be picked up once the new APK features are done (decision 2026-10-30).
+Status (2026-10-31): spike started. `tools/web_spike.py` serves a Ruffle page, the game files and a forward to the
+dev server on one origin (tested: page, SWF, config and forwarded versionning.xml load). Waiting for the owner's OK
+to download Ruffle's self-hosted web build into work/ruffle/; then build the SWF for that origin
+(`build_release.py --host 127.0.0.1:8090`) and see how far startup gets. Ruffle's `playerRuntime: "air"` option
+(set in the page) enables the AIR-only classes Ruffle implements; which of File/FileStream/StageWebView/
+NativeApplication it covers is unknown until tested.
 Goal: play in a browser at e.g. `ygo.eclip5e.com/webgame`, ideally running the existing game code ("APK natively in
 the browser") so nothing has to be rewritten. Code references are to `work/as3/scripts` (decompiled MobileGame.swf).
 
