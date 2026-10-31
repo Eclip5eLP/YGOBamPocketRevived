@@ -2056,3 +2056,29 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   CardAssetManager.LoadCardByTemplateId, one HTTP request + decode + texture each, with setTimeout(…,1) steps in
   starling AssetManager), which costs a few frames per card in Ruffle. The per-turn duel slowdown is unexplained.
   Measuring needs the page in the foreground (a hidden built-in browser pane throttles timers).
+
+### 6.60 Browser version: Edit Deck usable, measured performance, drawing only when needed (2026-10-31)
+
+- **Edit Deck clicks ignored** [VERIFIED built-in browser]: ComboBox shows a full-screen blocker while the soft
+  keyboard is "open" and removes it on SOFT_KEYBOARD_DEACTIVATE; a browser has no soft keyboard. WebStageText now
+  reports focus in = ACTIVATING/ACTIVATE, click outside / Enter / focus out = DEACTIVATE, also when the game asks for
+  focus before the field is on the stage (deck chooser first-time flow). Ruffle cannot construct SoftKeyboardEvent
+  (Error #1056 "_triggerType"): plain Events of those types, and the two ComboBox handlers take flash.events.Event
+  (web edit). Test: named a deck, Edit → the card editor with collection and card preview.
+- **Measurement tools** (dev): `/bam/?stats=1` shows Starling's stats box (fps, memory, draw calls);
+  `?w=640` forces a smaller game area; profiling build `YGO_WEB_PROFILE=1` (WEB_PROFILE_EDITS + WebProf) reports
+  per 2 s to the page's `__prof(json)`: Starling advance vs render time, draw calls, merged-batch flush time, quads,
+  rendered-text time. Measure only with the page in the foreground (a hidden pane throttles everything).
+- **Where the time goes** [VERIFIED profiling build, card editor, 1025x577 and 640x360 the same]:
+  ~16 fps, render ~62 ms/frame, ~61 draw calls/frame, only ~68 quads/frame; flushes alone ~0.9 ms each.
+  So Ruffle's Stage3D costs about 1 ms per draw call regardless of size (≈1000 draw calls/s on this PC);
+  text rendering and game logic are negligible; resolution does not matter. Screens with many separately
+  textured things (cards: picture, frame, texts) are slow; duels add cards/effects each turn.
+  Ruffle's `webgpu` renderer hangs the page (Chromium 152 here); `wgpu-webgl` (default) is the one that works.
+- **Draw only when needed** (WEB_EDITS on starling.core.Starling + starling.animation.Juggler, class
+  `com.revival.web.WebRender`): advanceTime every frame, render() only while there was input in the last 1.5 s,
+  the juggler holds anything (tweens, delayed calls, animations), or every 200 ms otherwise. Ruffle keeps showing
+  the last frame (no flicker seen). [VERIFIED] idle card editor: page busy 98% → 32%, logic 30 fps, drawing 5/s.
+  Interaction on heavy screens is still ~16 fps (the per-draw-call cost).
+- Not measured yet: a duel turn by turn (owner: each turn about twice as slow) — `?stats=1` shows whether the draw
+  call count grows per turn.

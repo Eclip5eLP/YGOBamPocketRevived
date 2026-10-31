@@ -70,7 +70,9 @@ let player = null;
 // game area: 16:9, at most 1280x720 (rendering cost grows with the pixel count; the game's art is phone-sized)
 const gameBox = document.getElementById("game");
 // (a tab opened in the background reports a 0x0 window: then 1280x720)
-const GAME_W = innerWidth > 0 && innerHeight > 0 ? Math.round(Math.min(1280, innerWidth, innerHeight * 16 / 9)) : 1280;
+// (?w=960: a smaller area for testing)
+const MAX_W = Number(new URLSearchParams(location.search).get("w")) || 1280;
+const GAME_W = innerWidth > 0 && innerHeight > 0 ? Math.round(Math.min(MAX_W, innerWidth, innerHeight * 16 / 9)) : MAX_W;
 const GAME_H = Math.round(GAME_W * 9 / 16);
 gameBox.style.width = GAME_W + "px";
 gameBox.style.height = GAME_H + "px";
@@ -137,10 +139,11 @@ window.addEventListener("load", async () => {
     setTimeout(() => document.getElementById("loading").classList.add("done"), 1200);
   });
   // parameters the game reads (com.revival.web.Web.Param): origin = the host content and the startup text come
-  // from; boosterpacks = config/boosterpacks.json, which the APK reads from its files at start-up
+  // from; boosterpacks = config/boosterpacks.json, which the APK reads from its files at start-up; stats=1 (?stats=1): Starling's fps / draw call box
   const packs = await fetch("config/boosterpacks.json").then((r) => r.ok ? r.text() : "[]").catch(() => "[]");
   player.ruffle().load({ data: await fetchGame(), swfFileName: "MobileGame.swf",
-                         parameters: { origin: location.host, boosterpacks: packs } });
+                         parameters: { origin: location.host, boosterpacks: packs,
+                                       stats: new URLSearchParams(location.search).get("stats") || "" } });
 });
 </script></body></html>
 """

@@ -1684,6 +1684,47 @@ WEB_EDITS = {
     # Stage.assignFocus / FocusDirection are AIR-only (not in Ruffle)
     "com.frimastudio.mobile.display.combobox.ComboBox": [
         ("""         this.mStageRef.assignFocus(null,FocusDirection.NONE);""", """         this.mStageRef.focus = null;"""),
+        # Ruffle can't construct SoftKeyboardEvent (#1056 _triggerType): WebStageText sends plain Events of those types
+        ("""      private function OnInputStart(aEvent:SoftKeyboardEvent) : void""",
+         """      private function OnInputStart(aEvent:flash.events.Event) : void"""),
+        ("""      private function OnInputFinished(aEvent:SoftKeyboardEvent) : void""",
+         """      private function OnInputFinished(aEvent:flash.events.Event) : void"""),
+    ],
+    # drawing only when something can have changed (com.revival.web.WebRender, findings 6.60)
+    "starling.animation.Juggler": [
+        ("""      public function add(object:IAnimatable) : void""", """      public function get revivalBusy() : Boolean
+      {
+         for each(var o:IAnimatable in this.mObjects)
+         {
+            if(o != null)
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+
+      public function add(object:IAnimatable) : void"""),
+    ],
+    "starling.core.Starling": [
+        ("""   import flash.display.Sprite;
+""", """   import flash.display.Sprite;
+   import com.revival.web.WebRender;
+"""),
+        ("""         this.advanceTime(passedTime);
+         this.render();""", """         this.advanceTime(passedTime);
+         if(WebRender.ShouldRender(this.mJuggler.revivalBusy))
+         {
+            this.render();
+         }"""),
+        ("""      private function onTouch(event:flash.events.Event) : void
+      {""", """      private function onTouch(event:flash.events.Event) : void
+      {
+         WebRender.Input();"""),
+        ("""      private function onKey(event:flash.events.KeyboardEvent) : void
+      {""", """      private function onKey(event:flash.events.KeyboardEvent) : void
+      {
+         WebRender.Input();"""),
     ],
     # content host: the page's own origin (the game server's "cdn" may name another host or port)
     "com.frimastudio.snowstorm.project.player.PlayerManagerGT": [
@@ -1716,7 +1757,18 @@ WEB_EDITS = {
          return;
 """),
     ],
-    ENGINE: _storage_url(ENGINE, "var directory:String = File.applicationStorageDirectory.url;"),
+    ENGINE: _storage_url(ENGINE, "var directory:String = File.applicationStorageDirectory.url;") + [
+        # /bam/?stats=1: Starling's stats box (fps, memory, draw calls) for measuring the browser version
+        ("""         this.mPrelauncher = null;
+         NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.NORMAL;
+""", """         this.mPrelauncher = null;
+         NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.NORMAL;
+         if(Web.Param("stats") == "1")
+         {
+            Starling.current.showStats = true;
+         }
+"""),
+    ],
     "com.frimastudio.mobile.asset.AssetManagerWrapperImpl": [
         _web_import("com.frimastudio.mobile.asset.AssetManagerWrapperImpl"),
         ("""var prefix:String = File.applicationStorageDirectory.nativePath + "/";""",
@@ -1810,4 +1862,60 @@ WEB_EDITS = {
 }
 if __import__("os").environ.get("YGO_WEB") == "1":
     for _cls, _edits in WEB_EDITS.items():
+        PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
+
+# Browser profiling (YGO_WEB_PROFILE=1 on top of YGO_WEB, dev only): Starling's per-frame logic vs. drawing, and
+# rendered (non-bitmap-font) text, reported to the page every 2 s (com.revival.web.WebProf).
+WEB_PROFILE_EDITS = {
+    "starling.core.Starling": [
+        ("""   import flash.display.Sprite;
+""", """   import flash.display.Sprite;
+   import com.revival.web.WebProf;
+"""),
+        ("""         this.advanceTime(passedTime);
+         if(WebRender.ShouldRender(this.mJuggler.revivalBusy))
+         {
+            this.render();
+         }""", """         var profT0:int = getTimer();
+         this.advanceTime(passedTime);
+         var profT1:int = getTimer();
+         if(WebRender.ShouldRender(this.mJuggler.revivalBusy))
+         {
+            this.render();
+            WebProf.Add("drawcalls",this.mSupport.drawCount);
+            WebProf.Add("render",getTimer() - profT1);
+         }
+         WebProf.Add("advance",profT1 - profT0);"""),
+    ],
+    # merged batches: vertex upload + state + drawTriangles (QuadBatch itself can't be recompiled: internal access)
+    "starling.core.RenderSupport": [
+        ("""   import com.adobe.utils.AGALMiniAssembler;
+""", """   import com.adobe.utils.AGALMiniAssembler;
+   import com.revival.web.WebProf;
+   import flash.utils.getTimer;
+"""),
+        ("""         var currentBatch:QuadBatch = this.mQuadBatches[this.mCurrentQuadBatchID];
+         if(currentBatch.numQuads != 0)
+         {
+            currentBatch.renderCustom(this.mProjectionMatrix);""", """         var currentBatch:QuadBatch = this.mQuadBatches[this.mCurrentQuadBatchID];
+         if(currentBatch.numQuads != 0)
+         {
+            var profT0:int = getTimer();
+            WebProf.Add("quads",currentBatch.numQuads);
+            currentBatch.renderCustom(this.mProjectionMatrix);
+            WebProf.Add("flush",getTimer() - profT0);"""),
+    ],
+    "starling.text.TextField": [
+        ("""   import flash.display.BitmapData;
+""", """   import flash.display.BitmapData;
+   import com.revival.web.WebProf;
+   import flash.utils.getTimer;
+"""),
+        ("""               this.createRenderedContents();""", """               var profT0:int = getTimer();
+               this.createRenderedContents();
+               WebProf.Add("text",getTimer() - profT0);"""),
+    ],
+}
+if __import__("os").environ.get("YGO_WEB") == "1" and __import__("os").environ.get("YGO_WEB_PROFILE") == "1":
+    for _cls, _edits in WEB_PROFILE_EDITS.items():
         PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
