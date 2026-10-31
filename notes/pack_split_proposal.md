@@ -219,3 +219,37 @@ Nothing is implemented yet; the split and the Immemorial Cataclysm cover card ar
    1459 C    s1     The Melting Red Shadow
    1460 C    s1     Dark Prisoner
 ```
+
+## Where the 55 "unassigned" cards can be obtained today (analysis 2026-10-31)
+
+Checked against the game data (input APK: shop.ace, loot_template.ace, bundle_template.ace, quest_template.ace) and
+client code. Shop group 5 is the card shop (`ShopItemGroupEnum.CARD`); `ShopCardView.UpdateCardList` lists every
+card of that group for single purchase in DP (`CurrencyTypes.RMT` -1) [VERIFIED code]. Bundle type 6 =
+ARENA_REWARD, type 4 = QUEST_REWARD (`project/bundle/enumeration/BundleTypes.as`) [VERIFIED].
+
+1. Already obtainable, no change needed (35 cards):
+   - Card shop, single purchase (30): 970, 975, 1009, 1010, 1011, 1053, 1054, 1055, 1137, 1138, 1139, 1148,
+     1180, 1181, 1182, 1292, 1293, 1294, 1299, 1300, 1351, 1352, 1353, 1386, 1388, 1390, 1392, 1401 (DP prices
+     13-89; Hidden Spellbook 999), and the fusion results 1387, 1389, 1393 at 999 DP (fusion results are made in
+     duels, so the price only matters for collectors). Many of them are also in old event packs (loot 16/17/24/25).
+   - Starter backup cards (5): 1456-1460 (Doron, Holograh, Robolady, The Melting Red Shadow, Dark Prisoner),
+     given to every player as backups of the starter cards (`utils/instantdeck/BackupCardAssociation.as`).
+2. Arena season rewards only (bundle type 6), unobtainable today because our Arena hands out no rewards (13):
+   855 Alien Hypno, 1006 Endymion, 1056-1058 B.E.S. Covered Core / Crystal Core / Tetran, 1151 Darklord Edeh
+   Arae, 1301 Harpie Queen, 1302 Insect Queen, 1356-1360 Eradicator Epidemic Virus (5 versions, no card art),
+   1149 and 1150 (no name, no art). The bundles come in tiers per season, e.g. 2261-2265: 3 cards for the top
+   tiers, then 2, then 1 [VERIFIED data]; which arena rank got which tier, and how the old server delivered them,
+   is unknown (the client has no ARENA_REWARD code).
+3. No source at all (4) + expired event quest (1):
+   502 Ancient Sorcerer (series 1, no rarity), 515 Gradius (series 1 legend), 1195 The Winged Dragon of Ra
+   (series 98, 4000/4000, no English name in the data), 1196 Obelisk the Tormentor (series 98, same; only from
+   event quest 480, expired 2013).
+
+Options for the owner (nothing implemented):
+- A. Arena weekly rewards on the server, reusing the original reward sets: each week one set (in the original
+  order), top weekly Arena ranks get the full set, lower ranks fewer cards; needs a delivery path to the client
+  inventory (to investigate: the tournament's GiveRewardNotification / ShowPendingReward at startup, or gifting).
+  Cards without art (1149, 1150, 1356-1360) stay out.
+- B. Simpler: add the 13 arena cards (minus the art-less ones), Gradius and Ancient Sorcerer to the card shop.
+- C. The God cards (1195, 1196): a special reward (e.g. reaching Elite in the tournament, or a story milestone),
+  with their names added to the localization.
