@@ -2,6 +2,7 @@
 Friends manager page for the game's in-app web view (Duel Ground > Friends button, notes/todo.md "Friends
 rewrite"): GET/POST /fb/dialog/revival_friends with the player's access_token.
 
+Online players (server/livepvp.py is_online) get a green dot on their picture.
 Tabs: Friends (remove, profile), Requests (people who added you: accept / decline; your pending requests:
 cancel), Find players (every player, 40 per page, filtered by name: add). "Profile" closes the view with ...login_success.html?view=<uid>;
 the game then opens that player's profile (as3_new/com/revival/friends).
@@ -24,13 +25,15 @@ a.close{{display:block;padding:9px;background:#2d6cdf;color:#fff;text-align:cent
 text-decoration:none;font-size:15px}} .tabs{{display:flex;gap:4px;margin:8px 0}} .tabs a{{flex:1;padding:8px 2px;
 text-align:center;border-radius:6px;background:#12244a;color:#aac;text-decoration:none}} .tabs a.on{{background:#2d6cdf;
 color:#fff}} .row{{display:flex;align-items:center;gap:8px;padding:6px;border-bottom:1px solid #1d3360}}
-.row img{{width:40px;height:40px;border-radius:4px}} .row .n{{flex:1;overflow:hidden;text-overflow:ellipsis}}
+.av{{position:relative;width:40px;height:40px;flex:none}} .row img{{width:40px;height:40px;border-radius:4px}}
+.dot{{position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;background:#3bd16f;
+border:3px solid #0b1730}} .row .n{{flex:1;overflow:hidden;text-overflow:ellipsis}}
 .row form{{margin:0}} button,.row a.b{{padding:7px 10px;border:0;border-radius:6px;background:#2d6cdf;color:#fff;
 font-size:13px;text-decoration:none;display:inline-block}} .alt{{background:#3a8f3a!important}} .red{{background:#8a2b2b!important}}
 .msg{{padding:8px;border-radius:6px;margin:8px 0;background:#1d4a2a}} .err{{background:#5a1d1d}}
 .search{{display:flex;gap:6px}} .search input{{flex:1;padding:8px;font-size:15px;border-radius:6px;border:1px solid #456;
 background:#12244a;color:#fff}} p.e{{color:#99a;margin:10px 4px}} h3{{font-size:13px;color:#aac;margin:12px 4px 2px}}
-.off{{color:#778;font-size:12px}} .nav{{display:flex;justify-content:space-between;align-items:center;margin:10px 0}}</style>
+.nav{{display:flex;justify-content:space-between;align-items:center;margin:10px 0}}</style>
 </head><body><a class="close" href="{close}">Close</a>
 <div class="tabs">{tabs}</div>{message}{body}</body></html>"""
 
@@ -70,17 +73,21 @@ class FriendsPage:
             hidden += (f'<input type="hidden" name="q" value="{html.escape(value("q"))}">'
                        f'<input type="hidden" name="page" value="{html.escape(value("page"))}">')
 
-        def row(user, *buttons, duel=None, status=None):
+        online = self.livepvp.is_online if self.livepvp else (lambda _: False)
+
+        def row(user, *buttons, duel=None):
             pic = f'/fb/graph/{user["uid"]}/picture'
             view = html.escape(redirect + ("&" if "?" in redirect else "?") + "request=revival_friends&view=" + user["uid"])
-            acts = f'<span class="off">{status}</span>' if status else ""
+            dot = '<i class="dot" title="online"></i>' if online(user["uid"]) else ""
+            acts = ""
             if duel:
                 challenge = redirect + ("&" if "?" in redirect else "?") + "request=revival_friends&challenge=" + user["uid"]
                 acts = f'<a class="b alt" href="{html.escape(challenge)}">{duel}</a>'
             acts += "".join(f'<form method="post">{hidden}<input type="hidden" name="uid" value="{user["uid"]}">'
                            f'<button name="action" value="{a}" class="{cls}">{label}</button></form>'
                            for a, label, cls in buttons)
-            return (f'<div class="row"><img src="{pic}" alt="" loading="lazy"><span class="n">{html.escape(user["username"])}</span>'
+            return (f'<div class="row"><span class="av"><img src="{pic}" alt="" loading="lazy">{dot}</span>'
+                    f'<span class="n">{html.escape(user["username"])}</span>'
                     f'<a class="b" href="{view}">Profile</a>{acts}</div>')
 
         users = lambda uids: [u for u in (self.store.user_by_uid(x) for x in uids) if u]  # noqa: E731
@@ -89,10 +96,9 @@ class FriendsPage:
             waiting = users(self._challenges(uid))
             body = ("<h3>Waiting for a live duel with you</h3>" + "".join(row(u, duel="Accept") for u in waiting)
                     + "<h3>Friends</h3>") if waiting else ""
-            online = self.livepvp.is_online if self.livepvp else (lambda _: False)
             friends.sort(key=lambda u: not online(u["uid"]))  # online friends first
-            body += "".join(row(u, ("remove", "Remove", "red"), duel="Live duel" if online(u["uid"]) else None,
-                                status=None if online(u["uid"]) else "offline") for u in friends) or \
+            body += "".join(row(u, ("remove", "Remove", "red"), duel="Live duel" if online(u["uid"]) else None)
+                            for u in friends) or \
                 '<p class="e">No friends yet. Find players in the third tab.</p>'
         elif tab == "requests":
             incoming = users(self.store.incoming_requests(uid))

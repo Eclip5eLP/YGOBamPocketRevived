@@ -133,6 +133,8 @@ class FakeFacebook:
                 return self._profile_post(query, form)
             if rest == "me/revival_requests":  # main menu Friends badge (as3_new/com/revival/friends)
                 uid = self.store.uid_for_token(query.get("access_token", [""])[0])
+                if uid and self.livepvp is not None:
+                    self.livepvp.touch(uid)  # the challenge poll also marks the player online
                 count = len(self.store.incoming_requests(uid)) if uid else 0
                 challenges = self._incoming_challenges(uid) if uid else []
                 # challengers: the in-game challenge toast (as3_new/com/revival/friends/ChallengeToast.as)

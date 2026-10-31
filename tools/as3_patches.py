@@ -1419,6 +1419,21 @@ MOBILE_ENGINE_EDITS = [
          if(true)"""),
 ]
 
+# PvP connection while idle: one ping per minute instead of every ping_frequency. It only carries live duel messages,
+# which happen in PvP mode (search popup to duel end: 2 s pings, unchanged); duel results arrive together with the
+# duel's last message. notes 6.50.
+PVP_COM = "com.frimastudio.snowstorm.project.engine.MobileEngineServerComPvp"
+PVP_COM_EDITS = [
+    ("""      public function ForceStartPingCycle() : void
+      {
+         mPingTimer.start();""", """      public function ForceStartPingCycle() : void
+      {
+         mPingTimer.delay = 60000;
+         mPingTimer.start();"""),
+    ("""         var frequency:uint = uint(ManagerA.Util.GetVar("engine","ping_frequency"));
+         mPingTimer.delay = frequency < 1000 ? DEFAULT_PING_FREQUENCY : frequency;""", """         mPingTimer.delay = 60000;"""),
+]
+
 # Game settings (tutorials done, selected deck type, sound, ...) survive APK updates: the original reset them to
 # defaults whenever the app's install date changed, so every update showed the live duel tutorial prompt again.
 GAME_SETTINGS = "com.frimastudio.snowstorm.module.option.GameSettings"
@@ -1497,6 +1512,7 @@ PATCHES = {
     DUEL_GROUND: DUEL_GROUND_EDITS,
     TOURNAMENT_VIEW: TOURNAMENT_VIEW_EDITS,
     GAME_SETTINGS: GAME_SETTINGS_EDITS,
+    PVP_COM: PVP_COM_EDITS,
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,

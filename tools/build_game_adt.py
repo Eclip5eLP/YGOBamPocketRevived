@@ -101,6 +101,11 @@ def patch_mmog_xml(xml_bytes: bytes, host: str, port: int = 80) -> bytes:
         count=1
     )
 
+    # 3. Main connection keep-alive ping: 30 s instead of 10 s. The server needs no keep-alive (sessions last 7 days,
+    #    nothing is pushed on the main connection); online status tolerates it (livepvp.ONLINE_SECONDS). notes 6.50.
+    xml_text, n = re.subn(r'(<var name="ping_frequency" value=")\d+(")', r"\g<1>30000\g<2>", xml_text, count=1)
+    assert n == 1, "ping_frequency not found in mmog.xml"
+
     return xml_text.encode("utf-8")
 
 

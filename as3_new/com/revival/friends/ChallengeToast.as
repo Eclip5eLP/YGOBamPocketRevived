@@ -30,7 +30,7 @@ package com.revival.friends
    // errors are ignored, the friends page still lists the challenge.
    public class ChallengeToast
    {
-      private static const POLL_MS:int = 15000;
+      private static const POLL_MS:int = 20000;
 
       private static const SHOW_MS:int = 30000;
 

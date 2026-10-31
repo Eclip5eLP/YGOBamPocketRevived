@@ -1766,3 +1766,25 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   build lacked the 3 older engine edits instead). Merged into one list; `tools/patch_as3.py` now refuses to build
   when a class is named twice. [VERIFIED emulator] normal build: 4 engine edits, smoke test login screen after
   19 s (31 s without the push fix, same emulator), main menu fine after login.
+
+### 6.50 Ping traffic: a server bug made every client ping ~7 times per second; idle traffic now 6 requests/min
+
+- Measuring: the server now logs one line per minute, "traffic last 60 s: N requests (main ping, pvp ping, pvp amf,
+  challenge poll, other)" (`server/server.py` Traffic). Useful on the live server too.
+- Bug [VERIFIED code + measurement]: our PingResponse had `ping: True` (`server/amf3.py build_ping_response`, set in
+  the initial commit without a recorded reason). `EngineServerCom.OnPingResponse` answers `ping == true` with an
+  immediate new Ping(), so every client pinged in a loop limited only by round-trip time, on both connections. One
+  idle emulator: 900 requests/min (448 main + 448 PvP pings). Now `ping: False`: 16/min with the current APK
+  (main 6, PvP 6, challenge poll 4). Server-only fix, so it helps all installed APKs once the server is deployed.
+- What pings are for [VERIFIED code]: keep-alive plus a frame counter sync (`GameLoop.CurrentFrame`, not used
+  anywhere else) and a carrier for server pushes. The server needs no keep-alive: sessions last 7 days from login
+  (`Game.SESSION_SECONDS`); nothing is pushed on the main connection; live duel messages go over the PvP connection
+  in PvP mode (2 s pings), and duel results arrive with the duel's last message.
+- Reduced in the next APK: main ping 30 s (`build_game_adt.patch_mmog_xml` sets mmog.xml ping_frequency 30000);
+  PvP connection idle ping 60 s (`MobileEngineServerComPvp` ForceStartPingCycle / SetNormalPingFrequency, PVP_COM_EDITS);
+  PvP mode stays 2 s; challenge poll 20 s (ChallengeToast). Online status: any request in the last 70 s (was 40),
+  and the challenge poll now counts. [VERIFIED emulator] idle client: 6 requests/min (challenge poll 3, main ping 2,
+  PvP ping 1); during a live duel 2 s PvP pings as before; a full friend duel (toast → accept → winner, no checksum
+  error) played normally; after the duel back to 6/min per client.
+- Friends page: online players have a green dot on their picture; "offline" text removed (offline = no dot, no
+  Live duel button). The dot's CSS class is `dot` (the page already uses `on` for the active tab).

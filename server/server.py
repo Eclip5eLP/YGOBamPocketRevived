@@ -179,6 +179,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
     def log_request(self, code='-', size='-'):
         """Logs every incoming request with resolved client IP and response code."""
         ip = self.get_client_ip()
+        self.server.traffic.count(self.path.split("?")[0], getattr(self, "_traffic_kind", None))
         # successful AMF POSTs are already described by the "AMF request" lines
         quiet = self.path.split("?")[0] in ("/facebook/proxy.html", PVP_PATH) and str(code) == "200"
         (logger.debug if quiet else logger.info)("[%s] %s %s -> %s (size: %s)", ip, self.command, self.path, code, size)
@@ -581,6 +582,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
 
         # keep-alive pings arrive every few seconds; log them at debug level only
         only_pings = all(getattr(r, "class_alias", "").endswith(".PingRequest") for r in request_objects)
+        self._traffic_kind = "ping" if only_pings else "amf"
         log_info = logger.debug if only_pings else logger.info
         log_info("[%s] AMF request (ExternalId: '%s', %d request objects)", ip, ext_id, len(request_objects))
 
@@ -638,6 +640,34 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(resp_bytes)
 
 
+class Traffic:
+    """Requests per minute by kind, logged once a minute while there is traffic (load overview; notes 6.50)."""
+
+    def __init__(self):
+        self.lock = threading.Lock()
+        self.counts = {}
+        threading.Thread(target=self._report, daemon=True).start()
+
+    def count(self, path, kind):
+        if path in ("/facebook/proxy.html", PVP_PATH):
+            key = ("pvp " if path == PVP_PATH else "main ") + (kind or "amf")
+        elif path.startswith("/fb/graph/") and path.endswith("/revival_requests"):
+            key = "challenge poll"
+        else:
+            key = "other"
+        with self.lock:
+            self.counts[key] = self.counts.get(key, 0) + 1
+
+    def _report(self):
+        while True:
+            time.sleep(60)
+            with self.lock:
+                counts, self.counts = self.counts, {}
+            if counts:
+                logger.info("traffic last 60 s: %d requests (%s)", sum(counts.values()),
+                            ", ".join(f"{k} {v}" for k, v in sorted(counts.items())))
+
+
 class BAMThreadingServer(http.server.ThreadingHTTPServer):
     """Multi-threaded HTTP Server holding server configuration and package build locks."""
 
@@ -645,6 +675,7 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         super().__init__(server_address, RequestHandlerClass)
         self.config = config
         self.package_locks = {pkg: threading.Lock() for pkg in PACKAGE_PATHS}
+        self.traffic = Traffic()
         store = AccountStore(Path(config["data_dir"]))
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
         self.content = Content(config.get("content_dir", ""))

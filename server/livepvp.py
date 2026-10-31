@@ -39,7 +39,9 @@ import amf3
 
 P = "com.frimastudio.snowstorm.project."
 DISCONNECT_SECONDS = 45
-ONLINE_SECONDS = 40  # the game pings its main connection every 10 s while it runs (mmog.xml ping_frequency)
+# online = any request in this window. While the game runs it pings every 30 s (10 s in APKs before 1.1, mmog.xml
+# ping_frequency) and polls for challenges every 20 s from the main menu on (notes 6.50).
+ONLINE_SECONDS = 70
 QUEUE_SECONDS = 600
 
 

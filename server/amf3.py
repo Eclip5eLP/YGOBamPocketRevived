@@ -380,11 +380,13 @@ def build_ping_response(gameframe: float = 0.0) -> bytes:
     Builds PingResponse:
     [RemoteClass(alias="com.frimastudio.snowstorm.core.player.amf.PingResponse")]
     [PingResponse.as:6-19]
+    ping must be False: True asks the client to ping again at once (EngineServerCom.OnPingResponse), which made
+    every client ping in a tight loop (~7 per second per connection) instead of every ping_frequency ms (notes 6.50).
     """
     props = {
         "exception": None,
         "gameframe": float(gameframe),
-        "ping": True,
+        "ping": False,
         "disconected": False,
     }
     return encode_typed_object("com.frimastudio.snowstorm.core.player.amf.PingResponse", props)
