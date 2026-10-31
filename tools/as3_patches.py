@@ -178,6 +178,34 @@ ENGINE_EDITS = [
 #     "frame": cover frame in shop_booster_covers, "series": 1|2}]
 BOOSTER_INFO = "com.frimastudio.snowstorm.module.shop.view.enum.EBoosterPackInfo"
 BOOSTER_INFO_EDITS = [
+    # Recompiling this class from FFDec's decompiled source broke this lookup: the decompiler turned the original
+    # loop into "for each(...) {} continue loop0", which never returns a pack, so every booster card's popup said
+    # "Coming soon!" (owner's test, findings 6.64). The same lookup, written plainly:
+    ("""         var eBoosterPackInfo:EBoosterPackInfo = null;
+         var cardTemplateId:int = 0;
+         loop0:
+         for each(eBoosterPackInfo in mList)
+         {
+            var _loc6_:int = 0;
+            var _loc7_:* = eBoosterPackInfo.mBoosterPackCardTemplateIdList;
+            do
+            {
+               for each(cardTemplateId in _loc7_)
+               {
+               }
+               continue loop0;
+            }
+            while(cardTemplateId != aCardTemplateId);
+            return eBoosterPackInfo;
+         }
+         return null;""", """         for each(var eBoosterPackInfo:EBoosterPackInfo in mList)
+         {
+            if(eBoosterPackInfo.mBoosterPackCardTemplateIdList.indexOf(aCardTemplateId) != -1)
+            {
+               return eBoosterPackInfo;
+            }
+         }
+         return null;"""),
     ("""   import com.frimastudio.snowstorm.project.inventory.enumeration.CurrencyTypes;
 """, """   import com.frimastudio.snowstorm.project.inventory.enumeration.CurrencyTypes;
    import com.frimastudio.as3ToolKit.net.Loader;

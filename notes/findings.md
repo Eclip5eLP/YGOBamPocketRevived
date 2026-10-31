@@ -2140,3 +2140,18 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
 - [VERIFIED emulator 2] fresh install, no server at all: all packages installed from the APK (1184 card files),
   title screen, play offline, collection with card art, our startup text. Fresh install against a server with a newer
   package (test content, series3): "Download size: 0.01 Mb", only series3.zip requested, revival9001_1.jpg installed.
+
+### 6.64 Booster-only cards said "Coming soon"; APK size checked (2026-10-31)
+
+- VERIFIED cause: `EBoosterPackInfo` is recompiled from FFDec source (to add the extra packs). FFDec decompiled
+  `GetBoosterByCardTemplateId` into a labelled `do { for each ... } while(...)` loop that never returns a pack
+  (`work/as3/scripts/com/frimastudio/snowstorm/module/shop/view/enum/EBoosterPackInfo.as`, about lines 171-188).
+  BuyCardPopup.GetCardStatus therefore never reached its booster-pack status and fell through to "Coming soon".
+- Fix: the first edit in `tools/as3_patches.py` BOOSTER_INFO_EDITS (line 180, lookup at line 203) replaces the
+  body with a plain `mBoosterPackCardTemplateIdList.indexOf(aCardTemplateId)` lookup. VERIFIED on the emulator:
+  the A Feather of the Phoenix popup in the collection shows the game's own text naming the pack (Alba Litora's Elite).
+  A scan of the other recompiled classes found no other loop garbled this way.
+- APK size (dev APK 119 MB, about 85 MB of it the bundled content packages: 58 MB PNG, 27 MB JPG). Lossless options
+  measured with installed tools only: Pillow `optimize` on PNGs about 1% smaller, max deflate on PNG/XML 6 KB,
+  identical files in the APK under 1 MB. Not applied; the content is already well compressed. Bigger lossless
+  gains would need new tools (oxipng, jpegtran), not installed. INFERRED: a few MB at most.
