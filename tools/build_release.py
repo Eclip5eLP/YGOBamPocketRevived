@@ -79,6 +79,8 @@ def main():
            "--content-dir", ROOT / "work" / "content", "--out", args.out]
     if args.app_id:
         cmd += ["--app-id", args.app_id]
+    if os.environ.get("YGO_NO_BUNDLE"):  # quick dev builds: content packages download instead of shipping in the APK
+        cmd += ["--no-bundle"]
     if args.keystore:
         cmd += ["--keystore", args.keystore, "--storepass-env", "YGO_KEYSTORE_PASS"]
     run(cmd)

@@ -1215,6 +1215,94 @@ SHOP_MODULE_EDITS = [
          super.Dispose();"""),
 ]
 
+# Original content in the APK (findings 6.63): the APK carries the content packages under
+# assets/externalpackage/<name>-<version>.zip plus the version list (externalpackage/versionning.xml), so a fresh
+# install plays at once, even offline. A bundled package is used only when it is exactly the version the version
+# list asks for (newer packages, e.g. new cards, still download). The game already had a debug path that installs
+# externalpackage/<name>.zip without a version check (LoadPackage); it now uses the versioned name. Without a saved
+# version list and without the server (first start offline), the bundled list is used instead of failing; when every
+# missing package is bundled, installing starts without the download popup and without the server check.
+EXTERNAL_FILES = "com.frimastudio.snowstorm.project.externalfile.ExternalFileControllerImpl"
+EXTERNAL_FILES_EDITS = [
+    ("""         var debugFastPackage:File = File.applicationDirectory.resolvePath("externalpackage/" + aAssetToLoad.Name + this.PACKAGE_END);""",
+     """         var debugFastPackage:File = this.BundledPackage(aAssetToLoad);"""),
+    ("""            if(isDebugLoading == true)
+            {
+               this.DisplayLoadingPopup(-1);
+            }""", """            if(this.AllMissingBundled())
+            {
+               this.OnStartLoading(null);
+            }
+            else if(isDebugLoading == true)
+            {
+               this.DisplayLoadingPopup(-1);
+            }"""),
+    # the download popup counts only what really downloads
+    ("""               loadingSpace += assetData.CompressedSize;""", """               if(!this.BundledPackage(this.mMissingPackageList[i]).exists)
+               {
+                  loadingSpace += assetData.CompressedSize;
+               }"""),
+    ("""      private function ValidateVersionAvailableOnServer() : void""", """      private function BundledPackage(aAsset:EExternalAsset) : File
+      {
+         var version:String = VersionController.GetAssetVersion(VersionController.CurrentGameVersion,aAsset.Name);
+         return File.applicationDirectory.resolvePath("externalpackage/" + aAsset.Name + "-" + version + this.PACKAGE_END);
+      }
+
+      private function AllMissingBundled() : Boolean
+      {
+         try
+         {
+            for each(var asset:EExternalAsset in this.mMissingPackageList)
+            {
+               if(!this.BundledPackage(asset).exists)
+               {
+                  return false;
+               }
+            }
+            return this.mMissingPackageList.length > 0;
+         }
+         catch(error:Error)
+         {
+         }
+         return false;
+      }
+
+      private function ValidateVersionAvailableOnServer() : void"""),
+]
+# Startup popup text before the server has ever been reached (fresh install, offline): ours instead of Konami's
+# shutdown notice (the server sends the current text, server/server.py CLOSE_POPUP_CONFIG_XML, which the game keeps).
+# The original literal stays in an unused constant (the edit only replaces the start of its line).
+_POPUP_EN = ("Yugioh BAM Pocket Revived: a free, fan-run revival, not affiliated with Konami.<br><br>LOG IN to play online: "
+             "online save, friends, Arena, Teams, tournaments and live duels against your friends.<br><br>All purchases "
+             "are free, including BAM Pro.<br><br>github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e")
+_POPUP_FR = ("Yugioh BAM Pocket Revived : une renaissance gratuite gérée par des fans, non affiliée à Konami."
+             "<br><br>Connectez-vous pour jouer en ligne : sauvegarde en ligne, amis, Arène, Équipes, tournois et "
+             "duels en direct contre vos amis.<br><br>Tous les achats sont gratuits, BAM Pro compris.<br><br>"
+             "github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e")
+GAME_SETTINGS_ENUM = "com.frimastudio.snowstorm.module.option.EGameSettings"
+GAME_SETTINGS_ENUM_EDITS = [
+    ('''      public static const CLOSE_POPUP_EN_CONTENT:EGameSettings = new EGameSettings("close_config_content_en",''',
+     f'''      public static const CLOSE_POPUP_EN_CONTENT:EGameSettings = new EGameSettings("close_config_content_en","<![CDATA[{_POPUP_EN}]]>");
+
+      private static const KONAMI_CLOSE_POPUP_EN:String = ('''),
+    ('''      public static const CLOSE_POPUP_FR_CONTENT:EGameSettings = new EGameSettings("close_config_content_fr",''',
+     f'''      public static const CLOSE_POPUP_FR_CONTENT:EGameSettings = new EGameSettings("close_config_content_fr","<![CDATA[{_POPUP_FR}]]>");
+
+      private static const KONAMI_CLOSE_POPUP_FR:String = ('''),
+]
+VERSION_CONTROLLER = "com.frimastudio.snowstorm.project.externalfile.versionning.VersionControllerImpl"
+VERSION_CONTROLLER_EDITS = [
+    ("""               this.OnLocalVersionXmlLoaded(false,null);""", """               localVersionningFile = File.applicationDirectory.resolvePath("externalpackage/" + this.VERSIONNING_XML_NAME);
+               if(localVersionningFile.exists)
+               {
+                  FrimaLoader.LoadXML(localVersionningFile.url,this.OnLocalVersionXmlLoaded,this);
+               }
+               else
+               {
+                  this.OnLocalVersionXmlLoaded(false,null);
+               }"""),
+]
+
 # Fusion (never released by Konami, so these paths were never used; findings 6.62):
 # - a pack with the player's first fusion card skipped the opening animation and went straight to the fusion
 #   tutorial popup: the animation now always plays, the tutorial popup comes when it closes;
@@ -1631,6 +1719,9 @@ PATCHES = {
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,
     BUY_CARD_POPUP: BUY_CARD_POPUP_EDITS,
     BOOSTER_VIEW: BOOSTER_VIEW_EDITS,
+    EXTERNAL_FILES: EXTERNAL_FILES_EDITS,
+    VERSION_CONTROLLER: VERSION_CONTROLLER_EDITS,
+    GAME_SETTINGS_ENUM: GAME_SETTINGS_ENUM_EDITS,
     FUSION_TUTO_POPUP: FUSION_TUTO_POPUP_EDITS,
     FUSION_TUTO: FUSION_TUTO_EDITS,
     BUY_CARD_DISPLAY: BUY_CARD_DISPLAY_EDITS,

@@ -11,7 +11,8 @@ new community server instead of Konami's servers and Facebook. Not affiliated wi
 2. Install it. Android asks you to allow installing apps from your browser or file manager.
    - Needs a 64-bit Android phone (arm64). Tested on a Pixel 10 with Android 17.
    - If you still have the original Konami app installed, uninstall it first: both use the same app id.
-3. Open the game. On the first start it downloads about 85 MB of game content.
+3. Open the game. All game content is in the app (about 120 MB), so it plays right away, even without internet.
+   New content (new cards, packs, maps) downloads automatically when the server has it.
 4. Tap **LOG IN** and create an account on the login page (username + password). You return to the game
    automatically. Your browser remembers you, so logging in later is one tap.
    - **PLAY OFFLINE** also works: story mode, deck building, shop and crafting need no account.
@@ -55,6 +56,8 @@ ever being available to players.
 - **More cards in the shop**: 44 cards that were never on sale unlock in the card shop as you clear story
   chapters.
 - **Delete decks** from the deck chooser.
+- **Works out of the box**: the original game content ships inside the app, so a new install needs no download
+  and plays offline straight away; only newer content downloads.
 - **Faster and lighter**: the game starts about 15 seconds faster, uses far less network traffic, and keeps your
   settings when you install an update.
 - **New content by download**: new cards, booster packs and game data arrive from the server, without a new

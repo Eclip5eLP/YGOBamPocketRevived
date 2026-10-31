@@ -2118,3 +2118,25 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   placed. The tutorial deck can fuse (Naturia Beast + any Beast, 4 Beasts in it). Pack/tutorial changes are not
   emulator-tested (needs a pack that rolls a first fusion card).
 - Live duel from a new account: the phone still had the build before 6.61 (tutorial, then tournament screen).
+
+### 6.63 Original content inside the APK: plays at once, even offline (2026-10-31)
+
+- Owner's request: ship the ~85 MB first-start download in the APK; only newer content downloads.
+- The game had a debug path [VERIFIED code]: `ExternalFileControllerImpl.LoadPackage` installs
+  `applicationDirectory/externalpackage/<name>.zip` instead of downloading, without a version check; and a fresh
+  install without the server failed before installing anything (`VersionControllerImpl.OnVersionXmlLoaded`: no server
+  list, no saved list → INIT_FAILED → "You must update" popup).
+- Changes (as3_patches.py EXTERNAL_FILES_EDITS, VERSION_CONTROLLER_EDITS, GAME_SETTINGS_ENUM_EDITS):
+  - bundled packages are named `externalpackage/<name>-<version>.zip` and used only when exactly that version is
+    required (a newer server package downloads);
+  - with neither server nor saved list, the bundled `externalpackage/versionning.xml` is used;
+  - when every missing package is bundled: install at once (no download popup, no server check); the download
+    popup counts only packages that really download;
+  - the startup popup's default text (before the server was ever reached) is ours, not Konami's shutdown notice.
+- Build (`build_game_adt.bundle_content`, on by default; `YGO_NO_BUNDLE=1` / `--no-bundle` to skip): the version list
+  the server sends (`content.Content.versionning_xml`) and every package of the APK's block: our content zips for
+  changed packages, the original ones zipped from Local Store (cached in work/bundle_cache), series2 = only its version
+  file (series1 already holds every card picture), gamedata too. 27 packages, 85 MB; APK 34 → 120 MB.
+- [VERIFIED emulator 2] fresh install, no server at all: all packages installed from the APK (1184 card files),
+  title screen, play offline, collection with card art, our startup text. Fresh install against a server with a newer
+  package (test content, series3): "Download size: 0.01 Mb", only series3.zip requested, revival9001_1.jpg installed.

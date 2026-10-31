@@ -221,6 +221,75 @@ def stage_files(host: str, swf: str = "", content_dir: str = "") -> str:
     return desc
 
 
+LOCAL_STORE = PROJECT_ROOT / "input" / "data" / "data" / "air.com.konami.ygo" / "com.konami.ygo" / "Local Store"
+BUNDLE_CACHE = PROJECT_ROOT / "work" / "bundle_cache"
+# package -> folder in app storage (EExternalAsset.as; server/server.py PACKAGE_PATHS; series3 = our new cards)
+PACKAGE_PATHS = {
+    "series1": "asset/cards/", "series2": "asset/cards/", "series3": "asset/cards/",
+    "anim": "asset/anim/", "common": "asset/common/", "cardgamebg": "asset/misc/cardgamebg/",
+    "mapbackground": "asset/misc/mapbackground/", "mapcharacter": "asset/misc/mapcharacter/",
+    "maplibrary": "asset/misc/maplibrary/", "mappreview": "asset/misc/mappreview/", "arena": "asset/module/arena/",
+    "cardgamecommon": "asset/module/cardgamecommon/", "crafting": "asset/module/crafting/",
+    "deckbuilder": "asset/module/deckbuilder/", "duelground": "asset/module/duelground/",
+    "filters": "asset/module/filters/", "hud": "asset/module/hud/", "login": "asset/module/login/",
+    "livepvpgame": "asset/module/livepvpgame/", "mainmenu": "asset/module/mainmenu/", "shop": "asset/module/shop/",
+    "tournament": "asset/module/tournament/", "transition": "asset/transition/", "world": "asset/world/",
+    "guild": "asset/module/guild/", "menubackground": "asset/misc/menubackground/", "font": "asset/font/",
+}
+
+
+def _original_package_zip(name: str, version: str) -> Path:
+    """The original package as a zip (from Local Store, like server.py builds it), cached per version. series2
+    shares asset/cards/ with series1, which already holds every card picture: in the APK it carries only its
+    version file (about 27 MB less)."""
+    out = BUNDLE_CACHE / f"{name}-{version}.zip"
+    if out.is_file():
+        return out
+    src = LOCAL_STORE / PACKAGE_PATHS[name]
+    BUNDLE_CACHE.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_suffix(".tmp")
+    with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(src.rglob("*")):
+            if not f.is_file():
+                continue
+            rel = f.relative_to(src).as_posix()
+            if f.name.endswith("_version") and f.name != f"{name}_version":
+                continue  # each package carries only its own version file
+            if name == "series2" and f.name != "series2_version":
+                continue
+            z.write(f, rel)
+    os.replace(tmp, out)
+    return out
+
+
+def bundle_content(content_dir: str) -> None:
+    """assets/externalpackage/: the version list the server sends (original + our block, server/content.py) and
+    every package of the APK's version block as <name>-<version>.zip, so a fresh install needs no download
+    (as3_patches.py EXTERNAL_FILES_EDITS / VERSION_CONTROLLER_EDITS; findings 6.63)."""
+    sys.path.insert(0, str(PROJECT_ROOT / "server"))
+    from content import Content
+    import xml.etree.ElementTree as ET
+    content = Content(content_dir)
+    manifest = content.load()
+    original = (LOCAL_STORE / "versionning.xml").read_bytes()
+    listing = content.versionning_xml(original) if manifest else original
+    game_version = manifest["game_version"] if manifest else ET.fromstring(original).find("version").get("value")
+    block = ET.fromstring(listing).find(f"version[@value='{game_version}']")
+    out = STAGE / "externalpackage"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "versionning.xml").write_bytes(listing)
+    total = 0
+    for pkg in block.findall("package"):
+        name, version = pkg.get("name"), pkg.get("version")
+        # gamedata too: its files are already in config/, but the game checks it like any package (equal versions
+        # keep the APK's copy in use, Loader.GameDataActive)
+        overlay = content.package_zip(game_version, name) if manifest else None
+        src = Path(overlay) if overlay else _original_package_zip(name, version)
+        shutil.copyfile(src, out / f"{name}-{version}.zip")
+        total += src.stat().st_size
+    print(f"Bundled content: {len(block.findall('package'))} package(s), {total // 1024 // 1024} MB, version block {game_version}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ns", default="20.0", help="AIR descriptor namespace version")
@@ -236,11 +305,14 @@ def main():
     ap.add_argument("--storepass-env", default="", help="env var holding the keystore password (default: 'android')")
     ap.add_argument("--arch", default="armv8", choices=["armv8", "x64"], help="armv8 for phones, x64 for the emulator")
     ap.add_argument("--content-dir", default="", help="game data from tools/build_content.py (e.g. work/content)")
+    ap.add_argument("--no-bundle", action="store_true", help="leave the content packages out (they download)")
     ap.add_argument("--out", default=str(PROJECT_ROOT / "work" / "game_adt_noext.apk"))
     args = ap.parse_args()
     storepass = os.environ[args.storepass_env] if args.storepass_env else "android"
 
     desc = stage_files(args.host, args.swf, args.content_dir)
+    if args.content_dir and not args.no_bundle:
+        bundle_content(args.content_dir)
     desc_out = BUILD_DIR / "application_game.xml"
     desc_out.write_text(patch_descriptor(desc, args.ns, args.target_sdk, keep_extensions=bool(args.extdir), cutout=args.cutout, app_id=args.app_id,
                          name=args.name, version_label=args.version_label), encoding="utf-8")
@@ -249,6 +321,8 @@ def main():
     cmd = [str(ADT_BAT), "-package", "-target", "apk-captive-runtime", "-arch", args.arch,
            "-storetype", "pkcs12", "-keystore", args.keystore, "-storepass", storepass, "-keypass", storepass,
            args.out, str(desc_out), "-C", str(STAGE), "MobileGame.swf", "config", "asset", "icons"]
+    if (STAGE / "externalpackage").is_dir():
+        cmd += ["-C", str(STAGE), "externalpackage"]
     if args.extdir:
         cmd += ["-extdir", args.extdir]
     print("Running:", " ".join(c if c != storepass else "***" for c in cmd))
