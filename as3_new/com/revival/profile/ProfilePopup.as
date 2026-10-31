@@ -238,7 +238,7 @@ package com.revival.profile
             }
             else if(DeckCopier.Copy(this.mDeck,this.mPlayerName + " copy"))
             {
-               PopupManagerUtil.ShowInfo("COPY DECK","The deck \"" + (this.mPlayerName + " copy").substr(0,25) + "\" is now in Edit Deck.",false);
+               PopupManagerUtil.ShowInfo("COPY DECK","Deck \"" + (this.mPlayerName + " copy").substr(0,25) + "\" copied.",false);
             }
          }
          catch(error:Error)

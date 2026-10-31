@@ -31,6 +31,7 @@ import amf3
 from accounts import AccountStore
 from arena import Arena
 from teams import Teams
+from livepvp import LivePvP
 
 P = "com.frimastudio.snowstorm.project."
 C = "com.frimastudio.snowstorm.core."
@@ -72,6 +73,7 @@ class Game:
         self.lock = threading.Lock()
         self.arena = Arena(store, self.deck_for, logger)
         self.teams = Teams(store, logger)
+        self.livepvp = LivePvP(store, self.teams, logger)
         self._load_sessions()
 
     # Logged-in sessions survive a server restart (deploy / auto-reload); otherwise every client
@@ -239,7 +241,41 @@ class Game:
                                          "tournamentLevel": self.teams.leaderboard(req.get("numberPlayers"), True)})
 
     def cancel_tournament_match(self, req, ctx):
+        s = self._session(ctx)
+        if s:
+            self.livepvp.cancel_queue(s.uid)
         return amf3.encode_typed_object(P + "tournament.amf.CancelTournamentMatchResponse", {"exception": None})
+
+    # ---- live PvP (server/livepvp.py) ---------------------------------------------------------------
+    def play_combat_tournament(self, req, ctx):
+        s = self._session(ctx)
+        if s is None:
+            return amf3.build_error_response(P + "tournament.amf.PlayCombatTournamentRequest", "Not logged in", code=1)
+        combat = self.livepvp.enter_queue(s.uid, req)
+        return amf3.encode_typed_object(P + "tournament.amf.PlayCombatTournamentResponse", {"exception": None, "combat": combat})
+
+    def start_round(self, req, ctx):
+        s = self._session(ctx)
+        if s:
+            self.livepvp.start_round(s.uid)
+        return amf3.encode_typed_object(P + "livepvp.amf.StartRoundResponse", {"exception": None})
+
+    def bam_ready(self, req, ctx):
+        s = self._session(ctx)
+        if s:
+            self.livepvp.bam_ready(s.uid, req)
+        return amf3.encode_typed_object(P + "livepvp.amf.BamReadyResponse", {"exception": None})
+
+    def bam_end(self, req, ctx):
+        s = self._session(ctx)
+        if s:
+            self.livepvp.bam_end(s.uid, req)
+        return amf3.encode_typed_object(P + "livepvp.amf.BamEndResponse", {"exception": None})
+
+    def pvp_notifications(self, ctx):
+        """Queued live PvP notifications for the player of a PvP-connection request (server.py appends them)."""
+        s = self.find_session(ctx["ext_id"], ctx["cookie"])
+        return self.livepvp.drain(s.uid) if s and s.uid else []
 
     # ---- teams (server/teams.py) ----------------------------------------------------------------
     def get_team(self, req, ctx):
@@ -484,6 +520,10 @@ HANDLERS = {
     P + "tournament.amf.GetTopTournamentLeaderboardRequest": Game.top_tournament,
     P + "tournament.amf.GetPreviousTopTournamentLeaderboardRequest": Game.previous_top_tournament,
     P + "tournament.amf.CancelTournamentMatchRequest": Game.cancel_tournament_match,
+    P + "tournament.amf.PlayCombatTournamentRequest": Game.play_combat_tournament,
+    P + "livepvp.amf.StartRoundRequest": Game.start_round,
+    P + "livepvp.amf.BamReadyRequest": Game.bam_ready,
+    P + "livepvp.amf.BamEndRequest": Game.bam_end,
     P + "guild.amf.JoinTeamRequest": Game.join_team,
     P + "guild.amf.CancelJoinTeamRequest": Game.cancel_join_team,
     P + "guild.amf.GetPlayerInfoRequest": Game.guild_player_info,

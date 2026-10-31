@@ -52,12 +52,12 @@ def patch_mmog_xml(xml_bytes: bytes, host: str, port: int = 80) -> bytes:
 
     if port == 80:
         http_server_url = f"http://{host}/facebook/proxy.html"
-        pvp_server_url = f"http://{host}/facebook/proxy.html~80~844"
+        pvp_server_url = f"http://{host}/facebook/pvp/proxy.html~80~844"  # server.py PVP_PATH
         reporting_server_url = f"http://{host}/facebook/proxy.html"
         opengraph_server_url = f"http://{host}"
     else:
         http_server_url = f"http://{host}:{port}/facebook/proxy.html"
-        pvp_server_url = f"http://{host}/facebook/proxy.html~{port}~844"
+        pvp_server_url = f"http://{host}/facebook/pvp/proxy.html~{port}~844"
         reporting_server_url = f"http://{host}:{port}/facebook/proxy.html"
         opengraph_server_url = f"http://{host}:{port}"
 

@@ -48,13 +48,13 @@ def client_query():
     return "?" + urllib.parse.urlencode({"v": m["game_version"], "d": m["packages"]["gamedata"]["version"]})
 
 
-def amf_request(opener, base, objects, ext_id="", query=None):
+def amf_request(opener, base, objects, ext_id="", query=None, path="/facebook/proxy.html"):
     arr = bytearray([0x09]) + amf3.encode_u29((len(objects) << 1) | 1) + b"\x01"
     for alias, props in objects:
         arr += amf3.encode_typed_object(alias, props)
     eid = ext_id.encode()
     body = zlib.compress(struct.pack(">H", len(eid)) + eid + bytes(arr))
-    req = urllib.request.Request(base + "/facebook/proxy.html" + (client_query() if query is None else query), data=body,
+    req = urllib.request.Request(base + path + (client_query() if query is None else query), data=body,
                                  headers={"Content-Type": "binary/octet-stream"})
     raw = opener.open(req).read()
     assert struct.unpack(">i", raw[:4])[0] == 0

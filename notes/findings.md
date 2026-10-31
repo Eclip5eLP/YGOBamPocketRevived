@@ -1618,3 +1618,35 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   order: chosen deck → arena deck → default deck → best cards. EDIT PROFILE now uploads the save first
   (`YGOMData.Save(true)`, waits for SAVE_COMPLETE/FAILED) so new decks are listed. [VERIFIED emulator + server]
 - All 8 server test scripts pass; smoke fresh + upgrade OK.
+
+### 6.45 Live PvP, part 1: protocol mapped, server relay + matchmaking (2026-10-31)
+
+- Entry point [VERIFIED code]: only the Tournament starts live duels. DUEL (`TournamentDisplay.as:236-249`, needs a
+  deck meeting the tournament requirement and the live PvP tutorial once) → `TournamentDuelSearchPopup` →
+  `YGOMPvPLogin.EnterPvpMode()` (PvP connection pings every 2 s) + `TournamentManager.EnterTournamentQueue`
+  (`PlayCombatTournamentRequest{cards = default deck amfCards, deckName, friendsNbr}`, `:443-464`). The popup closes
+  when it has both `NewCombatNotification` (or a combat in the queue response) and `StartDuelNotification`; then
+  `TournamentDuelFoundPopup` → `LivePvpUtil.LaunchLivePvpCombat` (`:49-71`): player1Id = starting player (also the
+  RNG seed, 6.30), decks = card template id arrays, opponent name from the Facebook cache.
+- Duel [VERIFIED code, `LivePvPFlow.as:158-300`]: after the coin flip each side sends StartRound once →
+  StartRoundNotification. Each round BamReady{slotCard, checksumBefore (0 in round 1, else local+opponent checksum
+  + round-1, identical on both phones), roundNumber} → BamReadyNotification{opponent's slotCard}. Round end and game
+  end: BamEnd{checksum, externalIdWinner (0 = round only)} → BamEndNotification. Surrender = BamReady{forfeit}.
+  Watchdog timeouts 40 s (start round, ready) / 20 s (end) (`ELivePvpTimeout.as`).
+- Connections [VERIFIED]: Tournament, ReadyForCombat, LivePvP and Guild DALs send on `ManagerA.PvpEngineCom`;
+  every object in a response array is dispatched to its listeners (`EngineServerCom.OnReceivedData:476-540`), so
+  notifications can be appended to any response on that connection.
+- Implementation:
+  - The PvP connection now uses its own path `/facebook/pvp/proxy.html` (mmog.xml pvpServerUrl,
+    `tools/build_game_adt.py`; `server.py` PVP_PATH, same handler). Queued notifications are appended to
+    responses on that path only. Old APKs are gated anyway.
+  - `server/livepvp.py`: FIFO queue (first come, first matched; random starting player), relay of StartRound /
+    BamReady / BamEnd with round and checksum comparison (mismatch → ChecksumErrorNotification), surrender,
+    45 s disconnect timeout (OpponentDisconnectedNotification), a new search abandons an unfinished duel. Duel end
+    sends PlayCombatEndNotification{current tournament level}.
+  - `tests/test_livepvp.py` plays two simulated clients through matchmaking, start, two rounds, a checksum
+    mismatch, a surrender and queue cancel. All 9 server test scripts pass.
+  - [VERIFIED emulator] the rebuilt APK logs in on the PvP path ("Login OK … pvp") and the Tournament screen loads.
+- Next (part 2): a real duel between two emulators (second AVD); tournament level changes on win/loss (today the
+  level is only echoed); possibly a friend challenge entry point (ReadyForCombat SendCombat/AcceptCombat) so live
+  duels aren't limited to the tournament queue.

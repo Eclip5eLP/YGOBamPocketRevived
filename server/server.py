@@ -44,6 +44,8 @@ import amf3
 from accounts import AccountStore
 from content import Content, version_tuple
 from fakefb import FakeFacebook
+
+PVP_PATH = "/facebook/pvp/proxy.html"  # the PvP connection (mmog.xml pvpServerUrl, tools/build_game_adt.py)
 from profiles import Profiles
 from game import COOKIE, Game
 
@@ -178,7 +180,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         """Logs every incoming request with resolved client IP and response code."""
         ip = self.get_client_ip()
         # successful AMF POSTs are already described by the "AMF request" lines
-        quiet = self.path == "/facebook/proxy.html" and str(code) == "200"
+        quiet = self.path.split("?")[0] in ("/facebook/proxy.html", PVP_PATH) and str(code) == "200"
         (logger.debug if quiet else logger.info)("[%s] %s %s -> %s (size: %s)", ip, self.command, self.path, code, size)
 
     def log_error(self, format, *args):
@@ -203,6 +205,8 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         # Only exact known POST routes are allowed
         if path == "/facebook/proxy.html":
             self.handle_amf_proxy()
+        elif path == PVP_PATH:
+            self.handle_amf_proxy(pvp=True)
         elif path.startswith("/fb/"):
             content_len = int(self.headers.get("Content-Length", 0) or 0)
             if content_len > 64 * 1024:
@@ -534,7 +538,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         return CLOSE_POPUP_CONFIG_XML.replace(b"<en><![CDATA[", b"<en><![CDATA[" + en).replace(
             b"<fr><![CDATA[", b"<fr><![CDATA[" + fr)
 
-    def handle_amf_proxy(self):
+    def handle_amf_proxy(self, pvp=False):
         """
         Handles incoming AMF3 requests sent to /facebook/proxy.html.
         Hardened with 1 MiB body cap, 4 MiB decompressed limit, and 1:1 request/response ordering.
@@ -616,6 +620,10 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
 
         if not request_objects:
             logger.warning("[%s] Empty or unparsable request array received", ip)
+
+        # live PvP notifications ride on responses of the PvP connection (server/livepvp.py)
+        if pvp and not refused:
+            responses.extend(self.server.game.pvp_notifications(ctx))
 
         # Wrap in client binary framing: [return_code: 4 bytes] + [zlib AMF3 array]
         resp_bytes = amf3.wrap_server_response(responses, return_code=0)
