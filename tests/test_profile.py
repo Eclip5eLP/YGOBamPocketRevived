@@ -82,6 +82,9 @@ def main():
     page = urllib.request.urlopen(base + "/fb/dialog/revival_profile", data=form).read().decode()
     assert "Picture changed." in page and 'value="2" class="sel"' in page
     assert "expired" in get(base, "/fb/dialog/revival_profile?access_token=bad").decode()
+    assert "Online deck" in page and "Automatic" in page
+    form = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "x", "action": "deck", "deck": "12345"}).encode()
+    assert "Unknown deck" in urllib.request.urlopen(base + "/fb/dialog/revival_profile", data=form).read().decode()
     print("edit page OK")
 
     assert "error" in post_profile(base, "not-a-token", action="icon", icon="1")

@@ -130,6 +130,10 @@ class FakeFacebook:
                 rest = rest.split("/", 1)[1]
             if rest == "me/revival_profile" and method == "POST" and self.profiles is not None:
                 return self._profile_post(query, form)
+            if rest == "me/revival_requests":  # main menu Friends badge (as3_new/com/revival/friends)
+                uid = self.store.uid_for_token(query.get("access_token", [""])[0])
+                count = len(self.store.incoming_requests(uid)) if uid else 0
+                return 200, "application/json", json.dumps({"incoming": count}).encode()
             if rest == "me":
                 return self._me(query)
             return self._graph_object(rest, query)

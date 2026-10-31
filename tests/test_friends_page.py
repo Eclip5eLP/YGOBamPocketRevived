@@ -58,6 +58,18 @@ def main():
     assert "No friends yet" in out and a.name not in page(base, b, tab="friends").split("</div>", 1)[1]
     print("remove OK")
 
+    listing = page(base, c, tab="find")
+    assert a.name in listing and b.name in listing and "players" in listing  # all players without a filter
+    filtered = page(base, c, tab="find", q=a.name)
+    assert a.name in filtered and b.name not in filtered
+    import json
+    count = json.loads(urllib.request.urlopen(f"{base}/fb/graph/me/revival_requests?access_token={a.token}").read())
+    assert count == {"incoming": 0}, count
+    page(base, c, "POST", tab="find", action="add", uid=a.uid)
+    count = json.loads(urllib.request.urlopen(f"{base}/fb/graph/me/revival_requests?access_token={a.token}").read())
+    assert count == {"incoming": 1}, count
+    print("list all + filter + request count OK")
+
     expired = urllib.request.urlopen(base + URL + "?access_token=bad").read().decode()
     assert "expired" in expired
     print("ALL FRIENDS PAGE TESTS PASSED")

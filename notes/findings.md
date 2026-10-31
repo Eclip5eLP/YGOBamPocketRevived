@@ -1593,3 +1593,28 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
 - Still open from the Friends item: choosing the online defense deck (today the last arena deck), "copy deck" on a
   friend's profile, pending-request badge on the main menu Friends button, the old Facebook-style invite list
   (kept as fallback).
+
+### 6.44 Friends extras: all players list, request badge, copy deck, online deck choice (2026-10-31)
+
+- Find players lists every player (newest first), 40 per page with Previous/Next; the box filters by name (prefix
+  matches first). Measured on the dev server: 147 players → 4 ms, 27 KB per page; pictures `loading="lazy"`. Rows
+  show Add / Accept (they already asked you) / Cancel / nothing (already friends).
+- Request badge: `GET /fb/graph/me/revival_requests` → `{"incoming": n}`; `RequestBadge` (as3_new) adds the
+  original "new" mark (`mainmenu_newcontent`) to the main menu FRIENDS button when n > 0. Online only, errors
+  ignored. [VERIFIED emulator]
+- Copy deck (friend's profile → COPY DECK, `DeckCopier`): counts the deck's cards against your free collection
+  stacks (`GetCompleteDifferentFloatingCardList`, cards already in decks don't count); if anything is missing it
+  says how many and builds nothing. Otherwise the same two steps as the deck builder: `BuildDeck` of an empty deck,
+  then `UpdateFullDeck` with one entry per slot (quantity 1, id = the collection stack); the DAL takes each card out
+  of the collection. Then `YGOMData.Save()`.
+  - Lesson [VERIFIED]: a first version passed `BuildDeck` entries with quantity 3; `DoBuildDeckRequest` subtracts
+    per entry from the unchanged cache object and the deck display shows one card per entry → a 5-card deck.
+    BuildDeck is only meant for empty decks.
+  - [VERIFIED emulator] fresh account, friend deck of its 5 cards x3 → "fr_59f38c copy" with 15 cards, 3600 LP in
+    Edit Deck; copying again → "You are missing 15 cards".
+- Online deck choice (profile → EDIT PROFILE → "Online deck"): lists the decks of your online save (server
+  `Game.save_decks`, deck items de-duplicated: the client writes each deck item twice, YGOMCacheUtil inventory loop
+  + deck loop) plus "Automatic"; the choice is stored as player data `defense_deck` (deck id). `Game.deck_source`
+  order: chosen deck → arena deck → default deck → best cards. EDIT PROFILE now uploads the save first
+  (`YGOMData.Save(true)`, waits for SAVE_COMPLETE/FAILED) so new decks are listed. [VERIFIED emulator + server]
+- All 8 server test scripts pass; smoke fresh + upgrade OK.

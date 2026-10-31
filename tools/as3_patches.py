@@ -1056,9 +1056,14 @@ SHOP_MANAGER_EDITS = [
 # menu. The flag is cleared when the shop module closes. The button is only added if its icon and label can be
 # built (new main menu atlas page, content_mods.mainmenu_icons); otherwise the menu stays as it was.
 MAIN_MENU_VIEW_EDITS = [
+    ("""   import com.frimastudio.mobile.adaptativeui.Element;
+""", """   import com.frimastudio.mobile.adaptativeui.Element;
+   import com.revival.friends.RequestBadge;
+"""),
     ("""         bottomButtonBar.addChild(this.mTournamentButton);
 """, """         bottomButtonBar.addChild(this.mTournamentButton);
          this.AddProfileButton(bottomButtonBar);
+         RequestBadge.Attach(this.mFriendsButton);
 """),
     ("""         this.mTournamentButton.filter = tournamentColor;""", """         this.mTournamentButton.filter = tournamentColor;
          if(this.mProfileButton != null)

@@ -139,7 +139,7 @@ feature ships on a proven release path.
    (ShopModule.CreateAssetList: add EAssetListDefinition for the deck builder only in collection mode) or the
    screen hosted in the deck builder module instead; decide after reading DeckBuilderModule. Fail safe: if the
    new screen throws while building, fall back to the current collection view.
-7. Profile DONE (6.41, 6.42: own + friends' profiles, presets, rename, password, deck view, Level). Friends manager DONE (6.43: search, requests, accept/decline/cancel, remove, view profile). Left: online defense deck choice, copy deck, request badge on the main menu. **Profile (L), then Friends rewrite (L).**
+7. Profile DONE (6.41, 6.42: own + friends' profiles, presets, rename, password, deck view, Level). Friends manager DONE (6.43: search, requests, accept/decline/cancel, remove, view profile). Friends extras DONE (6.44: all players + filter, request badge, copy deck, online deck choice). **Profile (L), then Friends rewrite (L).**
    Profile research (2026-10-31), for the next session:
    - Transport: the client already talks to `<host>/fb/graph/...` (FacebookURLDefaults.GRAPH_URL, rewritten by
      patch_swf.py) with its access token (`FacebookManagerMobile.AccessToken`, :541). Put the profile API there:

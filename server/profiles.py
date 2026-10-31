@@ -26,10 +26,12 @@ from accounts import AccountError
 
 
 class Profiles:
-    def __init__(self, store, content_dir, deck_for, logger):
+    def __init__(self, store, content_dir, game, logger):
         self.store = store
         self.icons_dir = os.path.join(content_dir or "", "server", "icons")
-        self.deck_for = deck_for  # Game.deck_for: uid -> "id,id,..." (arena deck, default deck or best cards)
+        self.deck_source = game.deck_source if game else None  # uid -> (label, [template ids])
+        self.decks = game.save_decks if game else None
+        self.save_items = game.save_items if game else None
         self.log = logger
 
     # --- preset pictures ------------------------------------------------------------------------
@@ -75,13 +77,7 @@ class Profiles:
         inventory = {it.get("id") for it in items if it.get("itemTemplateId") == -1}
         cards = [it for it in items if it.get("containerId") in inventory and it.get("itemTemplateId", 0) > 0]
         league = save.get("league") or {}
-        # same order as Game.deck_for: the online (arena / friend duel) deck, the default deck, else the best cards
-        deck_name = ("Online deck" if self.store.get_player_data(uid, "arena_deck") else
-                     next((it.get("deckName") for it in items if it.get("isDefaultDeck") and it.get("deckName")),
-                          "Best cards (no deck set)"))
-        deck = self.deck_for(uid) if self.deck_for else ""
-        if not deck:
-            deck_name = "No deck yet"
+        deck_name, deck_cards = self.deck_source(uid) if self.deck_source else ("No deck yet", [])
         return {
             "uid": user["uid"],
             "name": user["username"],
@@ -92,7 +88,7 @@ class Profiles:
             "cards_unique": len({c["itemTemplateId"] for c in cards}),
             "cards_total": sum(int(c.get("quantity") or 1) for c in cards),
             "deck_name": deck_name,
-            "deck": [int(c) for c in deck.split(",") if c.strip().isdigit()] if deck else [],
+            "deck": deck_cards,
             "created": user.get("created", 0),
         }
 
@@ -110,6 +106,14 @@ class Profiles:
                 self.store.rename(uid, value("name").strip())
             elif action == "password":
                 self.store.change_password(uid, value("old"), value("new"))
+            elif action == "deck":
+                if value("deck") == "auto":
+                    self.store.set_player_data(uid, "defense_deck", None)
+                else:
+                    ids = [d["id"] for d in self.decks(self.save_items(uid)) if d["cards"]] if self.decks else []
+                    if not value("deck").lstrip("-").isdigit() or int(value("deck")) not in ids:
+                        raise AccountError("Unknown deck")
+                    self.store.set_player_data(uid, "defense_deck", int(value("deck")))
             else:
                 raise AccountError("Unknown action")
         except AccountError as e:
@@ -128,8 +132,11 @@ input{{width:100%;box-sizing:border-box;padding:9px;margin-bottom:6px;font-size:
 border:1px solid #456;background:#12244a;color:#fff}} .msg{{padding:8px;border-radius:6px;margin:8px 0;background:#1d4a2a}}
 .err{{background:#5a1d1d}} .icons{{display:flex;flex-wrap:wrap;gap:6px}} .icons button{{width:64px;height:64px;padding:0;
 background:none;border:3px solid transparent}} .icons button.sel{{border-color:#f2c200}} .icons img{{width:58px;height:58px;
-border-radius:4px}}</style></head><body><a class="close" href="{close}">Close</a>{message}
+border-radius:4px}} .hint{{color:#99a;margin:2px 0 6px;font-size:12px}} .deck{{display:flex;align-items:center;gap:8px;
+padding:4px 0}} .deck span{{flex:1}} .deck form{{margin:0}} .deck button{{width:auto;padding:7px 12px}} .deck b{{color:#f2c200}}</style></head><body><a class="close" href="{close}">Close</a>{message}
 <h2>Picture</h2><form method="post" class="icons">{hidden}<input type="hidden" name="action" value="icon">{icons}</form>
+<h2>Online deck</h2><p class="hint">The deck friends duel against. Decks appear here after the game has saved
+online.</p>{decks}
 <h2>Username</h2><form method="post">{hidden}<input type="hidden" name="action" value="rename">
 <input name="name" value="{name}" maxlength="20" autocomplete="off"><button>Change username</button></form>
 <h2>Password</h2><form method="post">{hidden}<input type="hidden" name="action" value="password">
@@ -152,7 +159,8 @@ def edit_dialog(profiles, store, query, form):
     message = ""
     if form.get("action"):
         result = profiles.update(uid, form)
-        done = {"icon": "Picture changed.", "rename": "Username changed.", "password": "Password changed."}
+        done = {"icon": "Picture changed.", "rename": "Username changed.", "password": "Password changed.",
+                "deck": "Online deck changed."}
         message = (f'<p class="msg err">{html.escape(result["error"])}</p>' if "error" in result else
                    f'<p class="msg">{done.get(value("action"), "Saved.")}</p>')
     user = store.user_by_uid(uid)
@@ -162,6 +170,15 @@ def edit_dialog(profiles, store, query, form):
     icons = "".join(f'<button name="icon" value="{i["id"]}" class="{"sel" if i["id"] == current else ""}">'
                     f'<img src="/fb/graph/revival_icons/{i["id"]}" alt="{html.escape(i["card"])}"></button>'
                     for i in profiles.icon_list())
-    body = EDIT_PAGE.format(close=html.escape(close), message=message, hidden=hidden, icons=icons,
+    decks = profiles.decks(profiles.save_items(uid)) if profiles.decks else []
+    chosen = store.get_player_data(uid, "defense_deck")
+    rows = []
+    for d in [{"id": "auto", "name": "Automatic (arena deck, else default deck)", "cards": None}] +             [d for d in decks if d["cards"]]:
+        on = (d["id"] == "auto" and chosen is None) or d["id"] == chosen
+        count = "" if d["cards"] is None else f' ({len(d["cards"])} cards)'
+        button = "<b>In use</b>" if on else (f'<form method="post">{hidden}<input type="hidden" name="action" value="deck">'
+                                            f'<button name="deck" value="{d["id"]}">Use</button></form>')
+        rows.append(f'<div class="deck"><span>{html.escape(d["name"])}{count}</span>{button}</div>')
+    body = EDIT_PAGE.format(close=html.escape(close), message=message, hidden=hidden, icons=icons, decks="".join(rows),
                             name=html.escape(user["username"]))
     return 200, "text/html; charset=utf-8", body.encode("utf-8")

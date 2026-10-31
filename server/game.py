@@ -293,37 +293,64 @@ class Game:
         return amf3.encode_typed_object(P + "readyforcombat.amf.GetCombatsResponse", {"exception": None, "combat": []})
 
     # ---- phase 2: friends (Duel Ground friend duels, relations) -------------------------------
-    def deck_for(self, uid):
-        """Comma-separated card template ids the client parses in DuelGroundModule.OnFriendDeckReceived
-        (DuelGroundModule.as:552-575; empty string = client default deck). Order of preference:
-        deck uploaded by SetDuelArenaDeck (exact, ArenaModule.as:390) -> a save item flagged
-        isDefaultDeck -> the 15 strongest collection cards (max 3 copies) -> ''."""
-        arena = self.store.get_player_data(uid, "arena_deck")
-        if arena:
-            return ",".join(str(int(c)) for c in arena)
+    def save_items(self, uid):
+        """The items of a player's online save ([] when there is none or it is unreadable)."""
         blob = self.store.get_save(uid)
         if not blob:
-            return ""
+            return []
         try:
             raw = amf3.AMF3Decoder(zlib.decompress(blob)).decode_value()
-            items = (json.loads(raw) if isinstance(raw, str) else raw).get("items", [])
+            return (json.loads(raw) if isinstance(raw, str) else raw).get("items", []) or []
         except Exception as e:  # noqa: BLE001
-            self.log.warning("deck_for %s: unreadable save: %s", uid, e)
-            return ""
-        deck_ids = {it.get("id") for it in items if it.get("isDefaultDeck")}
-        out = []
-        if deck_ids:
+            self.log.warning("save of %s unreadable: %s", uid, e)
+            return []
+
+    @staticmethod
+    def save_decks(items):
+        """[{"id", "name", "default", "cards": [template ids]}] of the decks in a save (deck items have a deckName;
+        their cards are the items whose containerId is the deck's id)."""
+        decks, seen = [], set()
+        for d in items:  # the client writes deck items twice (YGOMCacheUtil: inventory loop and deck loop)
+            if d.get("deckName") is None or not d.get("id") or d["id"] in seen:
+                continue
+            seen.add(d["id"])
+            cards = []
             for c in items:
-                if c.get("containerId") in deck_ids:
-                    out += [int(c["itemTemplateId"])] * int(c.get("quantity", 1))
-        else:
-            collection = [it for it in items if it.get("itemTemplateId", 0) > 0 and "atkStat" in it]
-            collection.sort(key=lambda c: -(c.get("atkStat", 0) + c.get("defStat", 0)))
-            for c in collection:  # max 3 copies per card, even when it is spread over several save items
-                tid = int(c["itemTemplateId"])
-                out += [tid] * max(0, min(int(c.get("quantity", 1)), 3 - out.count(tid)))
-            out = out[:DECK_SIZE]
-        return ",".join(map(str, out))
+                if c.get("containerId") == d["id"] and c.get("itemTemplateId", 0) > 0:
+                    cards += [int(c["itemTemplateId"])] * int(c.get("quantity", 1))
+            decks.append({"id": d["id"], "name": d.get("deckName") or "Deck", "default": bool(d.get("isDefaultDeck")),
+                          "cards": cards})
+        return decks
+
+    def deck_source(self, uid):
+        """(label, [template ids]) of the deck others duel against. Order of preference: the deck the player chose
+        on their profile ("defense_deck", a deck id in the online save) -> the deck uploaded by SetDuelArenaDeck
+        (ArenaModule.as:390) -> the deck flagged isDefaultDeck -> the 15 strongest cards (max 3 copies) -> none."""
+        items = self.save_items(uid)
+        decks = self.save_decks(items)
+        chosen = self.store.get_player_data(uid, "defense_deck")
+        for d in decks:
+            if chosen is not None and d["id"] == chosen and d["cards"]:
+                return d["name"], d["cards"]
+        arena = self.store.get_player_data(uid, "arena_deck")
+        if arena:
+            return "Arena deck", [int(c) for c in arena]
+        for d in decks:
+            if d["default"] and d["cards"]:
+                return d["name"], d["cards"]
+        out = []
+        collection = [it for it in items if it.get("itemTemplateId", 0) > 0 and "atkStat" in it]
+        collection.sort(key=lambda c: -(c.get("atkStat", 0) + c.get("defStat", 0)))
+        for c in collection:  # max 3 copies per card, even when it is spread over several save items
+            tid = int(c["itemTemplateId"])
+            out += [tid] * max(0, min(int(c.get("quantity", 1)), 3 - out.count(tid)))
+        out = out[:DECK_SIZE]
+        return ("Best cards (no deck set)" if out else "No deck yet"), out
+
+    def deck_for(self, uid):
+        """Comma-separated card template ids the client parses in DuelGroundModule.OnFriendDeckReceived
+        (DuelGroundModule.as:552-575; empty string = client default deck); see deck_source."""
+        return ",".join(map(str, self.deck_source(uid)[1]))
 
     def get_deck_by_external_id(self, req, ctx):
         other = str(int(float(req.get("externalId") or 0)))

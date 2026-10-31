@@ -639,7 +639,7 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         store = AccountStore(Path(config["data_dir"]))
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
         self.content = Content(config.get("content_dir", ""))
-        self.fakefb = FakeFacebook(store, logger, Profiles(store, config.get("content_dir", ""), self.game.deck_for, logger))
+        self.fakefb = FakeFacebook(store, logger, Profiles(store, config.get("content_dir", ""), self.game, logger))
         self.client_versions = {}  # ip -> APK version sent with the latest GetVersionRequest ("" = none)
 
     def handle_error(self, request, client_address):

@@ -8,6 +8,9 @@ package com.revival.profile
    import com.frimastudio.snowstorm.project.fonts.EFonts;
    import com.frimastudio.snowstorm.project.popup.popups.InfoPopup;
    import com.frimastudio.snowstorm.project.popup.PopupManager;
+   import com.frimastudio.snowstorm.project.popup.PopupManagerUtil;
+   import com.frimastudio.snowstorm.project.engine.data.YGOMData;
+   import com.frimastudio.snowstorm.project.engine.data.event.YGOMDataEvent;
    import com.frimastudio.snowstorm.project.ui.ECommonButton;
    import com.frimastudio.utils.button.Scale9Button;
    import flash.display.Bitmap;
@@ -49,6 +52,10 @@ package com.revival.profile
 
       private var mDeckButton:Scale9Button;
 
+      private var mCopyButton:Scale9Button;
+
+      private var mPlayerName:String = "";
+
       private var mDeck:Array;
 
       private var mDeckName:String;
@@ -64,12 +71,15 @@ package com.revival.profile
 
       override public function Dispose() : void
       {
+         YGOMData.removeEventListener(YGOMDataEvent.SAVE_COMPLETE,this.OnSavedForEdit);
+         YGOMData.removeEventListener(YGOMDataEvent.SAVE_FAILED,this.OnSavedForEdit);
          this.StopLoading();
          this.ClearPicture();
          this.mLines = null;
          this.mName = null;
          this.mEditButton = null;
          this.mDeckButton = null;
+         this.mCopyButton = null;
          this.mDeck = null;
          super.Dispose();
       }
@@ -107,13 +117,24 @@ package com.revival.profile
          {
             this.mEditButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(330,90),420,410,"EDIT PROFILE",EFonts.HANZEL_BOLD,36,16777215);
          }
+         else
+         {
+            this.mDeckButton.x = 50;
+            this.mCopyButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(330,90),420,410,"COPY DECK",EFonts.HANZEL_BOLD,36,16777215);
+            this.mCopyButton.visible = false;
+         }
       }
 
       override protected function OnButtonTouch(aEvent:Event) : void
       {
          if(aEvent.currentTarget == this.mEditButton)
          {
-            this.OpenEditPage();
+            this.SaveThenEdit();
+            return;
+         }
+         if(aEvent.currentTarget == this.mCopyButton)
+         {
+            this.CopyDeck();
             return;
          }
          if(aEvent.currentTarget == this.mDeckButton)
@@ -192,11 +213,37 @@ package com.revival.profile
             this.mDeck = profile.deck as Array;
             this.mDeckName = profile.deck_name ? String(profile.deck_name) : "DECK";
             this.mDeckButton.visible = this.mDeck != null && this.mDeck.length > 0;
+            this.mPlayerName = String(profile.name);
+            if(this.mCopyButton != null)
+            {
+               this.mCopyButton.visible = this.mDeckButton.visible;
+            }
             this.mLines.text = "Level " + profile.league + "     Stars " + profile.stars + "\n" + "Cards: " + profile.cards_unique + " different, " + profile.cards_total + " in total\n" + "Deck: " + (profile.deck.length == 0 ? (profile.deck_name ? profile.deck_name : "none") : (profile.deck_name ? profile.deck_name + " (" + profile.deck.length + " cards)" : profile.deck.length + " cards")) + (profile.created ? "\nPlaying since " + this.FormatDate(Number(profile.created)) : "");
          }
          catch(error:Error)
          {
             this.mLines.text = "The profile could not be loaded.";
+         }
+      }
+
+      private function CopyDeck() : void
+      {
+         var missing:int = 0;
+         try
+         {
+            missing = DeckCopier.MissingCount(this.mDeck);
+            if(missing > 0)
+            {
+               PopupManagerUtil.ShowInfo("COPY DECK","You are missing " + missing + " card" + (missing == 1 ? "" : "s") + " of this deck. Cards already in your decks don't count.",false);
+            }
+            else if(DeckCopier.Copy(this.mDeck,this.mPlayerName + " copy"))
+            {
+               PopupManagerUtil.ShowInfo("COPY DECK","The deck \"" + (this.mPlayerName + " copy").substr(0,25) + "\" is now in Edit Deck.",false);
+            }
+         }
+         catch(error:Error)
+         {
+            PopupManagerUtil.ShowInfo("COPY DECK","The deck could not be copied.",false);
          }
       }
 
@@ -243,6 +290,35 @@ package com.revival.profile
             this.mPictureTexture.dispose();
             this.mPictureTexture = null;
          }
+      }
+
+      // Upload the save first so the edit page lists your current decks (online deck choice); open the page when the
+      // upload is done or failed.
+      private function SaveThenEdit() : void
+      {
+         try
+         {
+            this.mEditButton.enabled = false;
+            YGOMData.addEventListener(YGOMDataEvent.SAVE_COMPLETE,this.OnSavedForEdit);
+            YGOMData.addEventListener(YGOMDataEvent.SAVE_FAILED,this.OnSavedForEdit);
+            YGOMData.Save(true);
+         }
+         catch(error:Error)
+         {
+            this.OnSavedForEdit(null);
+         }
+      }
+
+      private function OnSavedForEdit(aEvent:*) : void
+      {
+         YGOMData.removeEventListener(YGOMDataEvent.SAVE_COMPLETE,this.OnSavedForEdit);
+         YGOMData.removeEventListener(YGOMDataEvent.SAVE_FAILED,this.OnSavedForEdit);
+         if(this.mEditButton == null)
+         {
+            return;
+         }
+         this.mEditButton.enabled = true;
+         this.OpenEditPage();
       }
 
       private function OpenEditPage() : void

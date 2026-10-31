@@ -3,7 +3,7 @@ Friends manager page for the game's in-app web view (Duel Ground > Friends butto
 rewrite"): GET/POST /fb/dialog/revival_friends with the player's access_token.
 
 Tabs: Friends (remove, profile), Requests (people who added you: accept / decline; your pending requests:
-cancel), Find players (search by name: add). "Profile" closes the view with ...login_success.html?view=<uid>;
+cancel), Find players (every player, 40 per page, filtered by name: add). "Profile" closes the view with ...login_success.html?view=<uid>;
 the game then opens that player's profile (as3_new/com/revival/friends).
 Friendships use AccountStore (request_friend: a request to someone who requested you makes you friends;
 remove_friend: removes the friendship and pending requests both ways).
@@ -26,11 +26,13 @@ color:#fff}} .row{{display:flex;align-items:center;gap:8px;padding:6px;border-bo
 font-size:13px;text-decoration:none;display:inline-block}} .alt{{background:#3a8f3a!important}} .red{{background:#8a2b2b!important}}
 .msg{{padding:8px;border-radius:6px;margin:8px 0;background:#1d4a2a}} .err{{background:#5a1d1d}}
 .search{{display:flex;gap:6px}} .search input{{flex:1;padding:8px;font-size:15px;border-radius:6px;border:1px solid #456;
-background:#12244a;color:#fff}} p.e{{color:#99a;margin:10px 4px}} h3{{font-size:13px;color:#aac;margin:12px 4px 2px}}</style>
+background:#12244a;color:#fff}} p.e{{color:#99a;margin:10px 4px}} h3{{font-size:13px;color:#aac;margin:12px 4px 2px}}
+.nav{{display:flex;justify-content:space-between;align-items:center;margin:10px 0}}</style>
 </head><body><a class="close" href="{close}">Close</a>
 <div class="tabs">{tabs}</div>{message}{body}</body></html>"""
 
 TABS = (("friends", "Friends"), ("requests", "Requests"), ("find", "Find players"))
+PAGE_SIZE = 40
 
 
 class FriendsPage:
@@ -58,6 +60,10 @@ class FriendsPage:
                        f'{self._badge(uid) if key == "requests" else ""}</a>' for key, label in TABS)
         hidden = "".join(f'<input type="hidden" name="{k}" value="{html.escape(v)}">' for k, v in base.items())
         hidden += f'<input type="hidden" name="tab" value="{tab}">'
+        search_hidden = hidden
+        if tab == "find":
+            hidden += (f'<input type="hidden" name="q" value="{html.escape(value("q"))}">'
+                       f'<input type="hidden" name="page" value="{html.escape(value("page"))}">')
 
         def row(user, *buttons):
             pic = f'/fb/graph/{user["uid"]}/picture'
@@ -65,7 +71,7 @@ class FriendsPage:
             acts = "".join(f'<form method="post">{hidden}<input type="hidden" name="uid" value="{user["uid"]}">'
                            f'<button name="action" value="{a}" class="{cls}">{label}</button></form>'
                            for a, label, cls in buttons)
-            return (f'<div class="row"><img src="{pic}" alt=""><span class="n">{html.escape(user["username"])}</span>'
+            return (f'<div class="row"><img src="{pic}" alt="" loading="lazy"><span class="n">{html.escape(user["username"])}</span>'
                     f'<a class="b" href="{view}">Profile</a>{acts}</div>')
 
         users = lambda uids: [u for u in (self.store.user_by_uid(x) for x in uids) if u]  # noqa: E731
@@ -81,22 +87,41 @@ class FriendsPage:
             body += "<h3>Sent by you</h3>" + ("".join(row(u, ("remove", "Cancel", "red")) for u in outgoing)
                                               or '<p class="e">None pending.</p>')
         else:
+            # every player, newest first; the search box filters by name (prefix matches first). Pages of PAGE_SIZE
+            # rows keep the page small with any number of players; pictures load lazily.
             q = value("q").strip()
-            body = (f'<form method="get" class="search">{hidden}<input name="q" value="{html.escape(q)}" '
-                    f'placeholder="Player name" autocomplete="off"><button>Search</button></form>')
+            page = int(value("page")) if value("page").isdigit() else 0
+            body = (f'<form method="get" class="search">{search_hidden}<input name="q" value="{html.escape(q)}" '
+                    f'placeholder="Filter by name" autocomplete="off"><button>Filter</button></form>')
+            friends, outgoing = set(self.store.friends_of(uid)), set(self.store._entry(uid)["outgoing"])
+            incoming = set(self.store.incoming_requests(uid))
+            players = [u for u in self.store.all_users() if u["uid"] != uid and q.lower() in u["username"].lower()]
             if q:
-                friends, outgoing = set(self.store.friends_of(uid)), set(self.store._entry(uid)["outgoing"])
-                found = [u for u in self.store.all_users() if q.lower() in u["username"].lower() and u["uid"] != uid]
-                found.sort(key=lambda u: (not u["username"].lower().startswith(q.lower()), u["username"].lower()))
-                rows = []
-                for u in found[:30]:
-                    if u["uid"] in friends:
-                        rows.append(row(u))
-                    elif u["uid"] in outgoing:
-                        rows.append(row(u, ("remove", "Cancel", "red")))
-                    else:
-                        rows.append(row(u, ("add", "Add", "alt")))
-                body += "".join(rows) or '<p class="e">No player found.</p>'
+                players.sort(key=lambda u: (not u["username"].lower().startswith(q.lower()), u["username"].lower()))
+            else:
+                players.sort(key=lambda u: -u.get("created", 0))
+            pages = max(1, (len(players) + PAGE_SIZE - 1) // PAGE_SIZE)
+            page = min(page, pages - 1)
+            rows = []
+            for u in players[page * PAGE_SIZE:(page + 1) * PAGE_SIZE]:
+                if u["uid"] in friends:
+                    rows.append(row(u))
+                elif u["uid"] in outgoing:
+                    rows.append(row(u, ("remove", "Cancel", "red")))
+                elif u["uid"] in incoming:
+                    rows.append(row(u, ("add", "Accept", "alt")))
+                else:
+                    rows.append(row(u, ("add", "Add", "alt")))
+            body += f'<p class="e">{len(players)} player{"s" if len(players) != 1 else ""}</p>'
+            body += "".join(rows) or '<p class="e">No player found.</p>'
+            if pages > 1:
+                nav = []
+                if page > 0:
+                    nav.append(f'<a class="b" href="{html.escape(link(tab="find", q=q, page=page - 1))}">Previous</a>')
+                nav.append(f'<span class="e">Page {page + 1} / {pages}</span>')
+                if page < pages - 1:
+                    nav.append(f'<a class="b" href="{html.escape(link(tab="find", q=q, page=page + 1))}">Next</a>')
+                body += '<div class="nav">' + "".join(nav) + "</div>"
         return self._page(close, tabs, message, body)
 
     def _badge(self, uid):
