@@ -65,6 +65,9 @@ package com.revival.profile
          {
             return false;
          }
+         // like EditDeckScreen.SaveDeck: a copy of the cached deck (the save rewrites amfCards in place), not the
+         // cached object itself; editing a deck built from the cached object later hung the deck screen
+         built = inventory.ConvertDeckToFullDeck(built);
          built.amfCards = [];
          for each(var id:* in aCards)
          {

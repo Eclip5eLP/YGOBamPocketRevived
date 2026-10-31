@@ -1839,3 +1839,15 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   Realm of Light, Dark Magician of Chaos, Hidden Spellbook, Helios). The fusion results 1387, 1389, 1393 stay out
   (made in duels; originally 999 DP). 44 chapter-locked entries in all. [VERIFIED emulator] account with no
   cleared chapter: still 155 cards.
+
+### 6.53 Copy Deck bug: decks it built hung the deck screen after an edit
+
+- [VERIFIED emulator] On a deck built by profile > COPY DECK, any edit + Done left the deck overview on "Loading..."
+  forever (the edit itself was saved); decks built by the game's own deck builder saved fine (same build, other
+  account). No script error (dev build with the new uncaught-error reporter, `Perf.CatchErrors`).
+- Cause [INFERRED from the code]: `DeckCopier` passed the cached deck object from ON_BUILD_DECK to
+  `UpdateFullDeck`, whose local save (`InventoryManagerDalMobile.DoUpdateFullDeckRequest:261-281`) rewrites
+  `deck.amfCards` in place; the deck builder passes a copy (`EditDeckScreen.SaveDeck` →
+  `ConvertDeckToFullDeck`). DeckCopier now does the same. [VERIFIED emulator] a deck copied with the fix, then
+  edited (card swapped) and saved: back to the overview at once. Copy Deck was never deployed, so no player has
+  a broken deck; the old test deck on account cp22312 stays broken.

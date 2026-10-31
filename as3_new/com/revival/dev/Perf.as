@@ -1,6 +1,8 @@
 package com.revival.dev
 {
+   import starling.core.Starling;
    import flash.events.Event;
+   import flash.events.UncaughtErrorEvent;
    import flash.events.IOErrorEvent;
    import flash.net.URLLoader;
    import flash.net.URLRequest;
@@ -31,6 +33,24 @@ package com.revival.dev
          catch(error:Error)
          {
          }
+      }
+
+      // Uncaught script errors (hidden in release builds) go to the dev server log as "error <message> <stack>".
+      public static function CatchErrors() : void
+      {
+         try
+         {
+            Starling.current.nativeStage.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR,OnUncaught);
+         }
+         catch(error:Error)
+         {
+         }
+      }
+
+      private static function OnUncaught(aEvent:UncaughtErrorEvent) : void
+      {
+         var e:Error = aEvent.error as Error;
+         Mark("error " + (e != null ? e.message + " " + e.getStackTrace() : String(aEvent.error)));
       }
 
       private static function Done(aEvent:Event) : void

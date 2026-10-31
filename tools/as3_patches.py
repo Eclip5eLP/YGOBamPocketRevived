@@ -1547,7 +1547,8 @@ PATCHES = {
 }
 
 # Dev only (YGO_PERF=1, never in release builds): every startup step reports its time since launch (getTimer, ms)
-# to the dev server as GET /perf?s=<step>&t=<ms>, so the server log shows how long each step takes.
+# to the dev server as GET /perf?s=<step>&t=<ms>, so the server log shows how long each step takes; uncaught script
+# errors (hidden in release builds) arrive the same way as "error <message> <stack>".
 PERF_EDITS = [
     ("""   import com.frimastudio.as3ToolKit.display.Log;
 """, """   import com.frimastudio.as3ToolKit.display.Log;
@@ -1561,6 +1562,10 @@ PERF_EDITS = [
             step.Execute();"""),
     ("""            message = "Initialization complete";""", """            message = "Initialization complete";
             Perf.Mark("init complete");"""),
+    ("""            Perf.Mark(currentStep + " " + step);
+""", """            Perf.Mark(currentStep + " " + step);
+            if(currentStep == 1) { Perf.CatchErrors(); }
+"""),
 ]
 MODULE_MANAGER = "com.frimastudio.mobile.module.StarlingModuleManagerImpl"
 PERF_MODULE_EDITS = [
