@@ -1851,3 +1851,51 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   `ConvertDeckToFullDeck`). DeckCopier now does the same. [VERIFIED emulator] a deck copied with the fix, then
   edited (card swapped) and saved: back to the overview at once. Copy Deck was never deployed, so no player has
   a broken deck; the old test deck on account cp22312 stays broken.
+
+### 6.54 Fusion, card effects ("SPECIAL"), and room for new mechanics (investigation, nothing changed)
+
+Fusion [VERIFIED code + data]:
+- Data: 9 series 2 base monsters carry `CardTemplate.fusionData` (`project/inventory/amf/FusionData.as`):
+  resultCardTemplateId plus ingredient conditions (level, card list, type, element/attribute, family/type of
+  monster), ingredientCondition = all vs any. All 9 results have card art; results have 0 hearts (no LP).
+  Naturia Beast + any Plant → Naturia Exterio; Thousand-Eyes Idol + any monster → Thousand-Eyes Restrict;
+  Blast Juggler + Machine → Cyber Saurus; Cave Dragon + Dragon → Fiend Skull Dragon; Possessed Dark Soul +
+  attribute 5 → Dark Balter; the four Six Samurai + one attribute each → the Legendary Six Samurai.
+- Duel: dropping a card on your own monster in the same channel marks them to fuse when allowed
+  (`LocalPlayerHand.WillFusionOccur`, `FusionUtil.IsFusionPossible`); at the round's fusion step
+  (`RoundHandler.LaunchFusion` → `GameMatBO.CreateFusionCard`) both ingredients are removed and the result is
+  placed in that channel, keeps immunity, fires the ON_FUSION trigger (32). The AI plans fusions too
+  (`CardGameAI.IsFusionPossible`); card loading also preloads the result's art (`CardLoadingUtil`); a fusion
+  tutorial (`FusionTutorial`, fixed decks in `EFlowHandlerList.FUSION_TUTO`) starts the first time a booster
+  gives a fusion card (`FusionCardUtils.CheckForFusionTutorialFromLoot`, save flag fusionTutorialSeen).
+- Never released: no live loot table or on-sale shop entry contained a fusion base. Now: 1354 Naturia Beast and
+  the Six Samurai are in the revived packs (loot 27/28), 1386/1388/1390/1392 in the chapter-locked card shop; the
+  results 1387/1389/1393 stay unsold (made in duels).
+- Emulator: a duel with one Thousand-Eyes Idol in the deck did not draw it in 4 rounds, so a fusion was not seen
+  on screen yet (needs a deck with several fusion pairs).
+
+Card effects [VERIFIED code + data]:
+- An effect row (`Effect.as`) = trigger (EffectTriggers, 30 kinds: round start/end conditions, card destroyed,
+  LP gained/lost, attack, damage, stat changes, fusion, ...) + target (TargetTypes, 35 kinds: channels, all
+  monsters/spells of a side, graveyards, ...) + what happens, built from six primitives only
+  (`EffectCreater.CreateEffects`): stat change (ATK/DEF with + - × ÷), life points, destroy, grant immunity,
+  break immunity, resurrect; plus flags (once per game, single activation, necro, silence, friend multiplier)
+  and master/slave links to chain rows (e.g. Winged Kuriboh LV9: destroy spells, then +500 per spell destroyed).
+- `cardEffectTypeId` (CardEffectTypes, 59 names: BOOST, CRIPPLE, SNEAK, ..., SPECIAL = 42) is only a label: the
+  duel engine never reads it; it is used by the card filters (EContextMenu) and the instant-deck card scoring
+  (EEffectCalculators). SPECIAL (281 rows) marks combinations that have no named category, e.g. Robbin' Goblin
+  (trigger LP lost + heal 300), Dark Hole (round start: destroy all + lose 2500), Mirror Force. So "special"
+  effects are built from the same primitives; a new one is a data row (with a description text).
+- Behaviour the primitives cannot express (draw cards, switch control, discard, copy an effect, ...) needs new
+  code: a new EffectBO subclass (`module/cardgame/effect/effectlist`) created by EffectCreater (patched), maybe
+  a new trigger or target, the AI scoring, and the same code on both phones for live duels (lockstep checksums).
+
+New mechanics (Synchro, Xyz) [INFERRED from the code above]:
+- "Synchro-like" with data only: fusion already allows a level condition (ingredientCardLevelId) and a type
+  condition; a pair rule like "level 4 + any Machine → X" works today. Limits: always exactly two cards, the
+  second dropped onto the first in the same channel, the result replaces them in that channel.
+- Real Synchro/Xyz (level sums, tuners, materials kept under the card and spent by effects, summoning from an
+  extra deck) need new duel code: placement rules (LocalPlayerHand), a new step in RoundHandler next to
+  LaunchFusion, AI support, visuals, deck builder rules for an extra deck, and new card data; both phones must
+  run identical code for live duels. Feasible with new classes, effort L–XL; the data model (FusionData) is the
+  natural starting point. New result cards also need art (only 155 px card pictures exist in the game data).
