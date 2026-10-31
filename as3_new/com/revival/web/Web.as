@@ -23,18 +23,21 @@ package com.revival.web
       // from where the page came from, whatever host the game server names. Falls back to aDefault.
       public static function Host(aDefault:String) : String
       {
+         var origin:String = Param("origin");
+         return origin != "" ? origin : aDefault;
+      }
+
+      // A parameter the page passes to the game (server/webgame.py PAGE: origin, boosterpacks); "" when missing.
+      public static function Param(aName:String) : String
+      {
          try
          {
-            var origin:String = String(Starling.current.nativeStage.loaderInfo.parameters.origin || "");
-            if(origin != "")
-            {
-               return origin;
-            }
+            return String(Starling.current.nativeStage.loaderInfo.parameters[aName] || "");
          }
          catch(error:Error)
          {
          }
-         return aDefault;
+         return "";
       }
 
       public static function ReadSave(aName:String) : ByteArray

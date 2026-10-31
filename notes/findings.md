@@ -1995,3 +1995,34 @@ New mechanics (Synchro, Xyz) [INFERRED from the code above]:
   extra booster packs (`EBoosterPackInfo.LoadExtraPacks` reads config/boosterpacks.json with FileStream) and world
   maps after the first (WorldMap patch checks the file) still use File; local save across reloads untested;
   production hosting (`/webgame` on the live server, https vs the game's http URLs) not started.
+
+### 6.58 Browser version: login, https, /bam on the game server, booster packs (2026-10-31)
+
+- Owner's test: the world map and chapters work in the browser (my "nodes ignore clicks" in 6.57 was a misclick
+  or a still-loading map); saves survive a reload; LOG IN hung (StageWebView, AIR-only).
+- **Login** [VERIFIED, built-in browser + dev server log]: WEB_EDITS on FacebookManagerMobile.OpenLoginWebView call
+  `com.revival.web.WebLogin.Open` (ExternalInterface → page `revivalLogin(url)`); the page shows the login page in an
+  iframe over the game (server/webgame.py PAGE). server/fakefb.py: the done page and the Cancel link post
+  `{revivalLogin: link | null}` to the parent page when framed (unchanged in the app's web view: no frame); the page
+  calls the game back (`revivalLoginDone`) → the original ProcessLogin. Test: a new account created in the frame →
+  "Login OK" on the main and the PvP connection, main screen logged in; after a page reload the game logged in by
+  itself (token in the SharedObject).
+- **https** (live site is https only): Ruffle's `upgradeToHttps` (default on) turns the game's http:// URLs into
+  https:// on an https page, so the build keeps `http://<host>` URLs. ServerComHTTP added the hard-coded port 80
+  (would give https://host:80): the web build uses the URL as is. The login frame URL is upgraded by the page.
+- **Game data version**: `Loader.BundledGameDataVersion` is baked in by build_web.py (YGO_WEB_GAMEDATA) — the APK
+  reads config/gamedata_version from its files; requests now send `&d=1.0.0` (version gate).
+- **Booster packs**: `EBoosterPackInfo.LoadExtraPacks` read config/boosterpacks.json from files; the page fetches it
+  and passes it as the `boosterpacks` parameter (`Web.Param`). [VERIFIED] Wings of Destiny and Immemorial
+  Cataclysm (with its new cover) in the browser's booster list.
+- **Serving** (`server/webgame.py`, used by the game server and tools/web_spike.py): `/bam/` page, `/bam/ruffle/`,
+  `/bam/storage/` (work/web/storage, then the server's Local Store, lower-cased), other `/bam/*` = game files;
+  path traversal refused (tests/test_webgame.py). server.py `--web-dir` (default work/web), `--ruffle-dir`
+  (work/ruffle), `--web-path` (/bam/); the page answers 404 until a web build and Ruffle are there. Ruffle `base` =
+  the page's folder, so the game's relative URLs stay under /bam/. [VERIFIED dev server] /bam → 302 /bam/, page,
+  SWF, ruffle.js, storage file 200.
+- Page layout: the game area keeps 16:9 (black bars) — on a 4:3 window the menu was cut off at the sides.
+- Note: a hidden browser pane throttles the page (background tab): the 19 MB download and loading took ~40 s
+  there; curl gets the SWF in 0.03 s.
+- Live deploy (with the release): `python tools/build_web.py --host ygo.eclip5e.com`, copy work/web and
+  work/ruffle next to the live server (or pass --web-dir/--ruffle-dir), server.py + webgame.py + fakefb.py.

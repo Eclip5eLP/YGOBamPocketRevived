@@ -81,9 +81,13 @@ CONTINUE_PAGE = HEAD + """
 <button class="link" name="action" value="switch" style="width:100%">Use another account</button>
 </form>{cancel}</main></body></html>"""
 
+# in the browser version the login page runs in a frame on the game page (tools/web_spike.py, server/webgame.py):
+# hand the link to that page (revivalLogin message) instead of navigating; in the app's web view (no frame) navigate
 DONE = HEAD + """
 <a class="btn" href="{url}">Return to the game</a></main>
-<script>window.location.href = {url_js};</script></body></html>"""
+<script>var u = {url_js};
+if (window.parent !== window) {{ window.parent.postMessage({{revivalLogin: u}}, location.origin); }}
+else {{ window.location.href = u; }}</script></body></html>"""
 
 
 # shown in the game's 800x400 invite web view: Close first, short lines
@@ -95,7 +99,8 @@ text-align:center;border-radius:6px;text-decoration:none;font-size:15px}}</style
 <body><a href="{close}">Close</a>{lines}</body></html>"""
 
 # back to the game without logging in (closes the in-app login view; in a browser it reopens the game)
-CANCEL_LINK = '<a class="link" style="display:block;text-align:center" href="{href}">Cancel</a>'
+CANCEL_LINK = ('<a class="link" style="display:block;text-align:center" href="{href}" onclick="if (window.parent !== '
+               'window) {{ window.parent.postMessage({{revivalLogin: null}}, location.origin); return false; }}">Cancel</a>')
 
 REMEMBER_COOKIE = "ygo_remember"
 

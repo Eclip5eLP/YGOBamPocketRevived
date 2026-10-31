@@ -8,7 +8,8 @@ Browser build (notes/browser_version.md): the same game as the APK plus the web-
   3. storage      (<out>/storage: our content packages extracted, i.e. what a phone unzips into app storage;
                    files the packages don't change come from the original content, Local Store, at serve time)
 
-No APK, no ADT. Serve with tools/web_spike.py (dev) — it serves <out>/game at / and storage at /storage/.
+No APK, no ADT. Served under /bam/ by server/webgame.py (the game server, or tools/web_spike.py for dev).
+--host is the site's host[:port] (live: ygo.eclip5e.com; dev: 127.0.0.1:8090).
 
 Usage: python tools/build_web.py [--host 127.0.0.1:8090] [--out work/web]
 """
@@ -59,15 +60,19 @@ def main():
     if not ORIG_SWF.exists():
         ORIG_SWF.parent.mkdir(parents=True, exist_ok=True)
         ORIG_SWF.write_bytes(zipfile.ZipFile(ROOT / "input" / "ygo.apk").read("assets/MobileGame.swf"))
+    content = ROOT / "work" / "content"
+    if not os.environ.get("YGO_KEEP_CONTENT") or not (content / "manifest.json").exists():
+        run([py, ROOT / "tools" / "build_content.py"])
+    gamedata_version = (content / "gamedata" / "gamedata_version").read_text(encoding="utf-8").strip()
+
+    # http:// URLs on purpose: on an https page Ruffle upgrades them (upgradeToHttps), on a dev page they stay
     swf = ROOT / "work" / "game_adt" / f"MobileGame_web_{args.host.replace(':', '_')}.swf"
     bytepatched = swf.with_suffix(".bytes.swf")
     run([py, ROOT / "tools" / "patch_swf.py", ORIG_SWF, bytepatched, "--fb-base", f"http://{args.host}/fb"])
     withnew = swf.with_suffix(".new.swf")
     run([py, ROOT / "tools" / "build_newclasses.py", bytepatched, withnew])
-    run([py, ROOT / "tools" / "patch_as3.py", withnew, swf], env={**os.environ, "YGO_WEB": "1"})
-    content = ROOT / "work" / "content"
-    if not os.environ.get("YGO_KEEP_CONTENT") or not (content / "manifest.json").exists():
-        run([py, ROOT / "tools" / "build_content.py"])
+    run([py, ROOT / "tools" / "patch_as3.py", withnew, swf],
+        env={**os.environ, "YGO_WEB": "1", "YGO_WEB_GAMEDATA": gamedata_version})
 
     if out.exists():
         shutil.rmtree(out)

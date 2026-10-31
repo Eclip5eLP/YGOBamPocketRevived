@@ -45,6 +45,7 @@ from accounts import AccountStore
 from content import Content, version_tuple
 from fakefb import FakeFacebook
 from rewards import Rewards
+from webgame import WebGame
 
 PVP_PATH = "/facebook/pvp/proxy.html"  # the PvP connection (mmog.xml pvpServerUrl, tools/build_game_adt.py)
 from profiles import Profiles
@@ -277,6 +278,12 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
                 self.wfile.write(body)
             return
 
+        # 0b1. Browser version (server/webgame.py)
+        web = self.server.webgame.resolve(path)
+        if web is not None:
+            self.serve_web(web, is_head)
+            return
+
         # 0b2. Fake Facebook (server/fakefb.py)
         if path.startswith("/fb/"):
             self.send_fb(self.server.fakefb.handle("GET", path, urllib.parse.parse_qs(parsed.query), {}, ip,
@@ -444,6 +451,33 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
             return
 
         self.stream_zip(zip_path, pkg_name, is_head)
+
+    def serve_web(self, web, is_head: bool):
+        kind, value = web
+        if kind == "redirect":
+            self.send_response(302)
+            self.send_header("Location", value)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+        if kind == "missing" or (kind == "page" and not self.server.webgame.available()):
+            self.send_error(404)
+            return
+        size = len(value) if kind == "page" else value.stat().st_size
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8" if kind == "page"
+                         else WebGame.content_type(value))
+        self.send_header("Cache-Control", WebGame.cache_control(kind, None if kind == "page" else value))
+        self.send_header("Content-Length", str(size))
+        self.end_headers()
+        if is_head:
+            return
+        if kind == "page":
+            self.wfile.write(value)
+            return
+        with open(value, "rb") as f:
+            while chunk := f.read(65536):
+                self.wfile.write(chunk)
 
     def stream_zip(self, zip_path: str, pkg_name: str, is_head: bool):
         ip = self.get_client_ip()
@@ -685,6 +719,9 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         self.fakefb = FakeFacebook(store, logger, Profiles(store, config.get("content_dir", ""), self.game, logger),
                                    self.game.livepvp, self.rewards)
         self.client_versions = {}  # ip -> APK version sent with the latest GetVersionRequest ("" = none)
+        # browser version (server/webgame.py, tools/build_web.py) under --web-path; off when not built
+        self.webgame = WebGame(config.get("web_dir", ""), config["local_store_dir"], config.get("ruffle_dir", ""),
+                               config.get("web_path", "/bam/"))
 
     def handle_error(self, request, client_address):
         # idle keep-alive connections time out after 30 s; log one line instead of a traceback
@@ -796,6 +833,11 @@ def main():
                         help="Accounts, tokens, saves and rsa_private.json (default: server/data)")
     parser.add_argument("--content-dir", default=str(PROJECT_ROOT / "work" / "content"),
                         help="Content overlay from tools/build_content.py (default: work/content)")
+    parser.add_argument("--web-dir", default=str(PROJECT_ROOT / "work" / "web"),
+                        help="Browser version from tools/build_web.py (default: work/web; off when missing)")
+    parser.add_argument("--ruffle-dir", default=str(PROJECT_ROOT / "work" / "ruffle"),
+                        help="Ruffle self-hosted web build for the browser version (default: work/ruffle)")
+    parser.add_argument("--web-path", default="/bam/", help="URL path of the browser version (default: /bam/)")
     parser.add_argument("--no-version-gate", action="store_true",
                         help="Allow online play for every client version even when content is present")
     parser.add_argument("--prebuild", action="store_true",
@@ -816,6 +858,9 @@ def main():
         "data_dir": os.path.abspath(os.path.expanduser(args.data_dir)),
         "content_dir": os.path.abspath(os.path.expanduser(args.content_dir)),
         "version_gate": not args.no_version_gate,
+        "web_dir": os.path.abspath(os.path.expanduser(args.web_dir)),
+        "ruffle_dir": os.path.abspath(os.path.expanduser(args.ruffle_dir)),
+        "web_path": args.web_path,
     }
 
     if args.prebuild:

@@ -1605,7 +1605,7 @@ if __import__("os").environ.get("YGO_PERF") == "1":
 # URL, and the local save is kept in a SharedObject. Edits are appended to the class's APK edits.
 def _web_import(cls):
     pkg = cls.rsplit(".", 1)[0]
-    return (f"package {pkg}\n{{\n", f"package {pkg}\n{{\n   import com.revival.web.Web;\n")
+    return (f"package {pkg}\n{{\n", f"package {pkg}\n{{\n   import com.revival.web.Web;\n   import com.revival.web.WebLogin;\n")
 
 
 def _storage_url(cls, *anchors):
@@ -1615,11 +1615,60 @@ def _storage_url(cls, *anchors):
 
 
 WEB_EDITS = {
-    # the page's origin may carry a port (dev: 127.0.0.1:8090); the game adds the hard-coded port 80 after the host
-    # (EngineServerCom), which made "host:8090:80": keep a URL that already names a port
+    # the game adds the hard-coded port 80 after the host (EngineServerCom): wrong for a dev origin with a port
+    # ("host:8090:80") and for https (Ruffle upgrades http:// to https:// on an https page, upgradeToHttps, but keeps
+    # the port). The web build's URLs are complete: use them as they are.
     SERVERCOM: [
         ("""         this.mServerUrl = param1.replace(_loc4_,_loc4_ + ":" + param2);""",
-         """         this.mServerUrl = _loc4_.indexOf(":",_loc4_.indexOf("//") + 2) != -1 ? param1 : param1.replace(_loc4_,_loc4_ + ":" + param2);"""),
+         """         this.mServerUrl = param1;"""),
+    ],
+    # game data version (sent as &d= on every request, version gate): the APK reads config/gamedata_version from
+    # its files, which Ruffle can't; build_web.py passes the version it bundles. No downloaded game data on the web.
+    LOADER: [
+        ("""         return ReadGameDataVersion(File.applicationDirectory.resolvePath("config/gamedata_version"));""",
+         f"""         return "{__import__("os").environ.get("YGO_WEB_GAMEDATA", "")}";"""),
+        ("""         return ReadGameDataVersion(File.applicationStorageDirectory.resolvePath("asset/gamedata/gamedata_version"));""",
+         """         return "";"""),
+    ],
+    # login: the login page in a frame on the web page instead of the Android web view (com.revival.web.WebLogin)
+    FB_MANAGER: [
+        _web_import(FB_MANAGER),
+        ("""      private function OpenLoginWebView(aUrl:String) : void
+      {
+""", """      private function OpenLoginWebView(aUrl:String) : void
+      {
+         if(WebLogin.Open(aUrl,this.OnWebLoginDone))
+         {
+            return;
+         }
+"""),
+        ("""      private function CloseLoginWebView() : void
+""", """      private function OnWebLoginDone(aLocation:String) : void
+      {
+         this.mListenForLoginInvoke = false;
+         this.ProcessLogin(aLocation);
+      }
+
+      private function CloseLoginWebView() : void
+"""),
+    ],
+    # extra booster packs: config/boosterpacks.json is read from files at class start-up; the page fetches it and
+    # passes it as the "boosterpacks" parameter
+    BOOSTER_INFO: [
+        _web_import(BOOSTER_INFO),
+        ("""            file = File.applicationStorageDirectory.resolvePath("asset/gamedata/config/boosterpacks.json");
+            if(!Loader.GameDataActive || !file.exists)
+            {
+               file = File.applicationDirectory.resolvePath("config/boosterpacks.json");
+            }
+            if(!file.exists)
+            {
+               return false;
+            }
+            stream = new FileStream();
+            stream.open(file,FileMode.READ);
+            list = JSON.parse(stream.readUTFBytes(stream.bytesAvailable)) as Array;
+            stream.close();""", """            list = JSON.parse(Web.Param("boosterpacks") || "[]") as Array;"""),
     ],
     # content host: the page's own origin (the game server's "cdn" may name another host or port)
     "com.frimastudio.snowstorm.project.player.PlayerManagerGT": [

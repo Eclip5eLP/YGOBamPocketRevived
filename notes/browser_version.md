@@ -1,9 +1,10 @@
 # Browser version: research notes (2026-10-30)
 
-Status (2026-10-31, evening): web build working up to the story world map (findings 6.57): title screen, offline
-play, main screen, popups, world map. Build: `python tools/build_web.py --host 127.0.0.1:8090`, serve:
-`python tools/web_spike.py`, open http://127.0.0.1:8090/. Next: world map nodes (no icons, clicks ignored),
-login without StageWebView, boosterpacks.json, save across reloads, production hosting at /webgame.
+Status (2026-10-31, late): playable in the browser at /bam/ (findings 6.57-6.58): login (frame over the game), auto
+login after reload, offline play, saves across reloads, story map, shop with the extra booster packs; https via
+Ruffle's upgradeToHttps. Served by the game server (server/webgame.py, --web-dir/--ruffle-dir/--web-path). Dev:
+`python tools/build_web.py --host 127.0.0.1:8090`, `python tools/web_spike.py`, http://127.0.0.1:8090/bam/.
+Not tested yet: a duel, live PvP in the browser, world maps after the first, the live https site.
 
 ## What the game is made of
 
