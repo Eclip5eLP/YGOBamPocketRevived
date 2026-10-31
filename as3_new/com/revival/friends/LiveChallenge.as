@@ -110,11 +110,40 @@ package com.revival.friends
          {
             if(LivePvpUtil.IsLivePvpTutoNeeded())
             {
+               // no search now: drop the challenge so a later tournament search isn't held for this friend
+               Clear();
                PopupManager.Show(new TournamentTutorialPopupData());
                return;
             }
             popup = PopupManager.Show(new TournamentDuelSearchPopupData());
             popup.addEventListener(PopupManagerEvent.POPUP_CLOSED,OnSearchClosed);
+         }
+         catch(error:Error)
+         {
+         }
+      }
+
+      private static function Ignore(aEvent:Event) : void
+      {
+      }
+
+      private static function Clear() : void
+      {
+         var loader:URLLoader = null;
+         var request:URLRequest = null;
+         var vars:URLVariables = null;
+         try
+         {
+            vars = new URLVariables();
+            vars.access_token = (FacebookProxy as FacebookManagerMobile).AccessToken;
+            vars.to = "0";
+            request = new URLRequest(FacebookURLDefaults.GRAPH_URL + "/me/revival_challenge");
+            request.method = URLRequestMethod.POST;
+            request.data = vars;
+            loader = new URLLoader();
+            loader.addEventListener(IOErrorEvent.IO_ERROR,Ignore);
+            loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,Ignore);
+            loader.load(request);
          }
          catch(error:Error)
          {

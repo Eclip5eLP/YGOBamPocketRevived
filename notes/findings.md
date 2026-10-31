@@ -1713,3 +1713,7 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
 - Note [VERIFIED code, `module/option/GameSettings.as` LoadFromSharedObject]: game settings (live PvP tutorial done,
   selected deck type, ...) reset to defaults whenever the app's install date changes, so after every APK update
   players see the live duel tutorial prompt again (original behaviour).
+- Fixes after the emulator check: the profile's LIVE DUEL read the uid after closing the popup (popup data already
+  disposed, so nothing was sent); now read first [VERIFIED emulator: "challenge: 1000000150 -> 1000000202"]. When
+  the live PvP tutorial prompt comes up instead of the search, LiveChallenge clears the challenge (to=0), so a later
+  tournament search isn't held for that friend [VERIFIED emulator: "-> 0" a second later].

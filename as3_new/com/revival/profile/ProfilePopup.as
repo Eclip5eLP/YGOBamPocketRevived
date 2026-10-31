@@ -145,8 +145,9 @@ package com.revival.profile
          }
          if(aEvent.currentTarget == this.mDuelButton)
          {
+            var uid:String = this.Uid; // closing disposes the popup data
             DispatchPopupClosedEvent();
-            LiveChallenge.Start(this.Uid);
+            LiveChallenge.Start(uid);
             return;
          }
          if(aEvent.currentTarget == this.mDeckButton)
