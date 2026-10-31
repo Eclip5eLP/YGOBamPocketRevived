@@ -75,7 +75,10 @@ class Profiles:
         inventory = {it.get("id") for it in items if it.get("itemTemplateId") == -1}
         cards = [it for it in items if it.get("containerId") in inventory and it.get("itemTemplateId", 0) > 0]
         league = save.get("league") or {}
-        deck_name = next((it.get("deckName") for it in items if it.get("isDefaultDeck") and it.get("deckName")), "")
+        # same order as Game.deck_for: the online (arena / friend duel) deck, the default deck, else the best cards
+        deck_name = ("Online deck" if self.store.get_player_data(uid, "arena_deck") else
+                     next((it.get("deckName") for it in items if it.get("isDefaultDeck") and it.get("deckName")),
+                          "Best cards (no deck set)"))
         deck = self.deck_for(uid) if self.deck_for else ""
         return {
             "uid": user["uid"],

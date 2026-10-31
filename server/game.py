@@ -319,8 +319,9 @@ class Game:
         else:
             collection = [it for it in items if it.get("itemTemplateId", 0) > 0 and "atkStat" in it]
             collection.sort(key=lambda c: -(c.get("atkStat", 0) + c.get("defStat", 0)))
-            for c in collection:
-                out += [int(c["itemTemplateId"])] * min(int(c.get("quantity", 1)), 3)
+            for c in collection:  # max 3 copies per card, even when it is spread over several save items
+                tid = int(c["itemTemplateId"])
+                out += [tid] * max(0, min(int(c.get("quantity", 1)), 3 - out.count(tid)))
             out = out[:DECK_SIZE]
         return ",".join(map(str, out))
 

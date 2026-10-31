@@ -7,6 +7,7 @@ package com.revival.profile
    import com.frimastudio.snowstorm.project.facebook.FacebookProxy;
    import com.frimastudio.snowstorm.project.fonts.EFonts;
    import com.frimastudio.snowstorm.project.popup.popups.InfoPopup;
+   import com.frimastudio.snowstorm.project.popup.PopupManager;
    import com.frimastudio.snowstorm.project.ui.ECommonButton;
    import com.frimastudio.utils.button.Scale9Button;
    import flash.display.Bitmap;
@@ -46,6 +47,12 @@ package com.revival.profile
 
       private var mEditButton:Scale9Button;
 
+      private var mDeckButton:Scale9Button;
+
+      private var mDeck:Array;
+
+      private var mDeckName:String;
+
       private var mLoader:URLLoader;
 
       private var mPictureLoader:Loader;
@@ -62,6 +69,8 @@ package com.revival.profile
          this.mLines = null;
          this.mName = null;
          this.mEditButton = null;
+         this.mDeckButton = null;
+         this.mDeck = null;
          super.Dispose();
       }
 
@@ -92,9 +101,11 @@ package com.revival.profile
       {
          var data:ProfilePopupData = mPopupData as ProfilePopupData;
          CreateBaseButton("popup_close_btn",722,3);
+         this.mDeckButton = CreateButton(ECommonButton.LIGHT_BLUE_BUTTON,new Point(330,90),data.CanEdit ? 50 : 235,410,"VIEW DECK",EFonts.HANZEL_BOLD,36,16777215);
+         this.mDeckButton.visible = false;
          if(data.CanEdit)
          {
-            this.mEditButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(330,90),235,410,"EDIT PROFILE",EFonts.HANZEL_BOLD,36,16777215);
+            this.mEditButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(330,90),420,410,"EDIT PROFILE",EFonts.HANZEL_BOLD,36,16777215);
          }
       }
 
@@ -103,6 +114,14 @@ package com.revival.profile
          if(aEvent.currentTarget == this.mEditButton)
          {
             this.OpenEditPage();
+            return;
+         }
+         if(aEvent.currentTarget == this.mDeckButton)
+         {
+            if(this.mDeck != null && this.mDeck.length > 0)
+            {
+               PopupManager.Show(new DeckViewPopupData(this.mDeckName,this.mDeck,(mPopupData as ProfilePopupData).CanEdit),false);
+            }
             return;
          }
          super.OnButtonTouch(aEvent);
@@ -170,7 +189,10 @@ package com.revival.profile
          {
             profile = JSON.parse(String(this.mLoader.data));
             this.mName.text = String(profile.name);
-            this.mLines.text = "League " + profile.league + "     Stars " + profile.stars + "\n" + "Cards: " + profile.cards_unique + " different, " + profile.cards_total + " in total\n" + "Deck: " + (profile.deck_name ? profile.deck_name + " (" + profile.deck.length + " cards)" : profile.deck.length + " cards") + (profile.created ? "\nPlaying since " + this.FormatDate(Number(profile.created)) : "");
+            this.mDeck = profile.deck as Array;
+            this.mDeckName = profile.deck_name ? String(profile.deck_name) : "DECK";
+            this.mDeckButton.visible = this.mDeck != null && this.mDeck.length > 0;
+            this.mLines.text = "Level " + profile.league + "     Stars " + profile.stars + "\n" + "Cards: " + profile.cards_unique + " different, " + profile.cards_total + " in total\n" + "Deck: " + (profile.deck_name ? profile.deck_name + " (" + profile.deck.length + " cards)" : profile.deck.length + " cards") + (profile.created ? "\nPlaying since " + this.FormatDate(Number(profile.created)) : "");
          }
          catch(error:Error)
          {

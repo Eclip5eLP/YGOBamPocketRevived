@@ -1564,3 +1564,13 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   UpdateCollectionList). [VERIFIED emulator]
 - Not done yet (profile part 2): viewing other players' profiles + "copy deck" (comes with the Friends rewrite),
   showing the deck's cards, league name instead of number.
+
+### 6.42 Profile: Level wording, read-only deck view; fallback deck fix (2026-10-31)
+
+- "League" is shown as "Level" (it is the player level shield in the HUD; save field `league.leagueTemplateId`).
+- VIEW DECK (profile) opens `DeckViewPopup` (as3_new/com/revival/profile): the deck's cards 5x3 at 0.8 scale on
+  empty slots like the deck builder, preview on the right (tap a card), full card popup from the preview (owned
+  quantity shown on your own profile). Textures through QueuedCardLoader, freed on close. [VERIFIED emulator]
+- Server: `Game.deck_for` fallback ("best cards") capped copies per save item, not per card (6x Dark Prisoner when
+  the collection had two items of it); now max 3 per card. The profile names the deck source: "Online deck"
+  (arena/friend deck), the default deck's name, or "Best cards (no deck set)". Server tests pass.
