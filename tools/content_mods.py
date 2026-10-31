@@ -7,6 +7,7 @@ import copy
 import io
 import json
 import re
+import time
 from pathlib import Path
 
 # Asset package -> directory under Local Store (server/server.py PACKAGE_PATHS, EExternalAsset.as:10-60)
@@ -360,6 +361,86 @@ def profile_icons(ctx):
         icons.append({"id": len(icons), "card": name})
     ctx.server_files["icons/icons.json"] = json.dumps(icons, indent=1).encode("utf-8")
 
+SALE_START, SALE_END = 1388534400000.0, 4102444800000.0  # 2014-01-01 .. 2100-01-01 (ms)
+SHOP_UNLOCKS = Path(__file__).resolve().parent.parent / "as3_new" / "com" / "revival" / "shop" / "ShopUnlocks.as"
+# template ids of the God cards (series 98, no English name in the data): special tournament rewards
+GOD_CARDS = {1195: "The Winged Dragon of Ra", 1196: "Obelisk the Tormentor"}
+
+
+def _shop_unlocks():
+    """{card template id: chapter} from ShopUnlocks.CHAPTERS (the client checks it, so it is the one source)."""
+    text = SHOP_UNLOCKS.read_text(encoding="utf-8")
+    table = text.split("CHAPTERS:Object = {", 1)[1].split("}", 1)[0]
+    return {int(k): int(v) for k, v in re.findall(r"(\d+)\s*:\s*(\d+)", table)}
+
+
+def revival_rewards(ctx):
+    """Former Arena reward cards and cards without a source (notes/pack_split_proposal.md, owner's choice
+    2026-10-31): card shop entries that show once a chapter is cleared (ShopUnlocks), the Arena weekly reward sets
+    and the God card milestones for the server (server/rewards.py, <content>/server/rewards.json), and names for
+    the God cards."""
+    items = {i["id"]: i for i in ctx.ace("config/ace/inventory/item_template.ace")}
+
+    def usable(tid):
+        if tid not in items:
+            return False
+        try:
+            card_art(ctx, tid)
+            return True
+        except RuntimeError:
+            return False
+
+    # card shop (group 5): DP-priced entries modelled on one that is on sale. ShopManager drops entries whose
+    # startDate..endDate does not include today (core/shop/ShopManager.as:450-474); most card shop entries carry
+    # placeholder dates around the year 3012, so only 155 of 1148 are on sale. Ours run 2014-2100.
+    shop = ctx.ace("config/ace/shop/shop.ace")
+    group = next(g for sh in shop for g in sh["shopItemGroups"] if g["id"] == 5)
+    now = time.time() * 1000
+    model = next(it for it in group["shopItem"] if it["startDate"] <= now <= it["endDate"]
+                 and it["shopItemConversions"][0]["currencyTypeId"] == -1)
+    listed = {it["itemTemplateId"] for it in group["shopItem"] if it["startDate"] <= now <= it["endDate"]}
+    next_id = 3001  # our card shop entries: 3001+ (packs use 2001+)
+    added = []
+    for tid, chapter in sorted(_shop_unlocks().items()):
+        if tid in listed or not usable(tid):
+            raise RuntimeError(f"ShopUnlocks card {tid}: already on sale in the card shop or no card art")
+        it = copy.deepcopy(model)
+        cost = 60 if items[tid]["cardRarityId"] == 4 and items[tid]["cardSerieId"] == 99 else (30 if items[tid]["cardRarityId"] == 4 else 10)
+        it.update(id=next_id, itemTemplateId=tid, startDate=type(model["startDate"])(SALE_START),
+                  endDate=type(model["endDate"])(SALE_END), leagueRequired=1)  # the chapter is the only condition
+        it["shopItemConversions"][0]["cost"] = cost
+        group["shopItem"].append(it)
+        added.append((tid, chapter, cost))
+        next_id += 1
+    print("  card shop, unlocked by chapter (card, chapter, DP):", added)
+
+    # Arena weekly reward sets: the original ARENA_REWARD bundles (type 6), grouped as in the data (consecutive
+    # bundles whose cards are a subset of the first: tiers of 3/3/3/2/1 cards), only cards that exist and have art
+    bundles = sorted((b for b in ctx.ace("config/ace/bundle/bundle_template.ace") if b["bundleTypeId"] == 6),
+                     key=lambda b: b["id"])
+    sets = []
+    for b in bundles:
+        cards = sorted({p.get("itemTemplateId") for p in b["products"] if p.get("itemTemplateId")})
+        prev = sets[-1] if sets else None
+        if prev and b["id"] == prev["bundles"][-1] + 1 and set(cards) <= set(prev["all"]) and \
+                len(cards) <= len(prev["raw"][-1]):
+            prev["bundles"].append(b["id"])
+            prev["raw"].append(cards)
+        else:
+            sets.append({"bundles": [b["id"]], "all": cards, "raw": [cards]})
+    arena = []
+    for st in sets:
+        tiers = [[c for c in tier if usable(c)] for tier in st["raw"]]
+        if any(tiers):
+            arena.append({"bundles": st["bundles"], "tiers": tiers})
+    rewards = {"arena_sets": arena, "god_cards": {"obelisk": 1196, "ra": 1195}}
+    ctx.server_files["rewards.json"] = json.dumps(rewards, indent=1).encode("utf-8")
+    print("  arena reward sets:", len(arena), [s["tiers"][0] for s in arena])
+
+    for tid, name in GOD_CARDS.items():
+        ctx.set_text("en", "inventory", f"revival_card_{tid}", name, resource_id=items[tid]["resourceNameId"])
+
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -383,6 +464,7 @@ MODS = [
     star_duel_button_text,
     wings_of_destiny,
     immemorial_cataclysm,
+    revival_rewards,
     blazing_wind,
     world_select_icon,
     mainmenu_icons,

@@ -191,6 +191,11 @@ class Teams:
                                levelTemplateId=e["level"], eliteRank=elite_rank,
                                eliteToken=e.get("eliteToken", 0))
 
+    @staticmethod
+    def rank_of(level):
+        """Tournament rank (15..1, 0 = Elite) of a TournamentLevel."""
+        return LEVELS.get(int(level["levelTemplateId"]), (15,))[0]
+
     def record_result(self, uid, won):
         """One live tournament duel result; returns the new TournamentLevel (None if not registered)."""
         with self.lock:

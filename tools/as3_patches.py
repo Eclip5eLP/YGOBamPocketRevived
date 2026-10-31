@@ -1235,8 +1235,13 @@ SHOP_CARD_VIEW_EDITS = [
    import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListUtil;
    import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListData;
    import com.revival.collection.CollectionPanel;
+   import com.revival.shop.ShopUnlocks;
    import starling.core.Starling;
 """),
+    # chapter-locked card shop entries (as3_new/com/revival/shop/ShopUnlocks.as)
+    ("""            cardTemplate = mInventoryManager.CacheLogic.GetTemplateById(shopItem.itemTemplateId) as CardTemplate;
+            if(cardTemplate != null)""", """            cardTemplate = mInventoryManager.CacheLogic.GetTemplateById(shopItem.itemTemplateId) as CardTemplate;
+            if(cardTemplate != null && ShopUnlocks.IsUnlocked(shopItem.itemTemplateId))"""),
     ("""      private var mCardScrollerDataList:Vector.<AbstractScrollerData>;
 """, """      private var mCardScrollerDataList:Vector.<AbstractScrollerData>;
 

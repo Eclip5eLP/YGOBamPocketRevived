@@ -5,6 +5,7 @@ package com.revival.friends
    import com.frimastudio.snowstorm.project.facebook.FacebookManagerMobile;
    import com.frimastudio.snowstorm.project.facebook.FacebookProxy;
    import com.frimastudio.snowstorm.project.login.YGOMLogin;
+   import com.revival.rewards.RewardInbox;
    import flash.events.Event;
    import flash.events.IOErrorEvent;
    import flash.events.SecurityErrorEvent;
@@ -33,6 +34,7 @@ package com.revival.friends
                return;
             }
             ChallengeToast.Start();
+            RewardInbox.Check();
             loader = new URLLoader();
             onDone = function(aEvent:Event):void
             {

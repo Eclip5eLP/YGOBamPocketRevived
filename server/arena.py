@@ -86,6 +86,7 @@ class Arena:
         st.setdefault("reg", {"score": 0, "victories": 0, "defeat": 0, "aiVictories": 0, "aiDefeat": 0})
         st.setdefault("weekly", {"week": week_index(), "score": 0})
         if st["weekly"]["week"] != week_index():
+            st["last_weekly"] = st["weekly"]  # the weekly rewards pay last week (server/rewards.py)
             st["weekly"] = {"week": week_index(), "score": 0}
         return st
 

@@ -3,6 +3,7 @@ package com.revival.profile
    import com.frimastudio.mobile.util.MobileUtils;
    import com.frimastudio.snowstorm.module.deckbuilder.popup.data.FullCardPopupData;
    import com.frimastudio.snowstorm.project.popup.PopupManager;
+   import com.frimastudio.snowstorm.project.fonts.EFonts;
    import com.frimastudio.snowstorm.project.popup.popups.InfoPopup;
    import com.frimastudio.utils.cardloading.QueuedCardLoader;
    import com.frimastudio.utils.cardloading.event.QueuedCardLoaderEvent;
@@ -15,6 +16,9 @@ package com.revival.profile
    import starling.events.Touch;
    import starling.events.TouchEvent;
    import starling.events.TouchPhase;
+   import starling.text.TextField;
+   import starling.utils.HAlign;
+   import starling.utils.VAlign;
 
    // Read-only deck view: the deck's cards in a 5x3 grid (like the deck builder) and a preview on the right.
    // Tap a card to preview it, tap the preview for the full card popup. Cards load through QueuedCardLoader.
@@ -78,8 +82,21 @@ package com.revival.profile
          var slot:Quad = null;
          super.Draw();
          var cards:Array = (mPopupData as DeckViewPopupData).Cards || [];
+         var message:String = (mPopupData as DeckViewPopupData).Message;
+         var text:TextField = null;
          (QueuedCardLoader as EventDispatcher).addEventListener(QueuedCardLoaderEvent.ON_CARD_LOADED,this.OnCardLoaded);
-         for(i = 0; i < 15; i++)
+         if(message)
+         {
+            text = new TextField(COLUMNS * CELL,2 * CELL - 20,message,EFonts.HANZEL_BOLD,26,7223);
+            text.hAlign = HAlign.LEFT;
+            text.vAlign = VAlign.TOP;
+            text.autoScale = true;
+            text.x = GRID_X;
+            text.y = GRID_Y + CELL + 16;
+            text.touchable = false;
+            mUiContainer.addChild(text);
+         }
+         for(i = 0; i < (message ? COLUMNS : 15); i++)
          {
             slot = new Quad(CELL - 6,CELL - 6,7223);
             slot.alpha = 0.25;

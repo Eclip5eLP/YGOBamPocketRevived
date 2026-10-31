@@ -1801,3 +1801,34 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   frame edge of the old composite. Shop package 1.1.12.
 - [VERIFIED emulator] the shop asked to download the new shop package (2.78 MB), then showed the new cover in the
   booster list next to the original series 2 covers.
+
+### 6.52 Card rewards: Arena weekly rewards, chapter-locked card shop entries, God card milestones
+
+- Card shop availability [VERIFIED code + emulator]: `ShopManager` (`core/shop/ShopManager.as:450-474`) removes
+  shop entries outside their startDate..endDate when the shop loads; buying checks the dates again
+  (`ShopManagerProject.GetShopItemByTemplateID`). Only 155 of the 1148 card shop entries are on sale (most have
+  placeholder dates around 3012). Correction of the 2026-10-31 analysis in notes/pack_split_proposal.md.
+- Chapter-locked card shop entries: `as3_new/com/revival/shop/ShopUnlocks.as` (card → chapter; chapter N = world 1
+  node with xmlNodeName N, cleared = `WorldNode.completed`, as `module/map/map/WorldMap.as:117` uses it);
+  `ShopCardView.UpdateCardList` skips locked cards (SHOP_CARD_VIEW_EDITS). `tools/content_mods.revival_rewards`
+  reads that table and adds 16 DP entries (shop item ids 3001+, dates 2014-2100, leagueRequired 1; 10 DP Ancient
+  Sorcerer, 30 Gradius, 60 for the series 99 legends). [VERIFIED emulator] account with no cleared chapter: 155
+  cards (all 16 hidden); a test build treating Ancient Sorcerer's chapter as cleared: 156 cards, Ancient Sorcerer
+  for 10 DP, bought (DP 55 → 45).
+- Arena weekly rewards (`server/rewards.py`): the original ARENA_REWARD bundles (bundle_template.ace type 6, 71
+  bundles) grouped into 10 sets with cards that exist and have art, tiers of 3/3/3/2/1 cards [VERIFIED data]. Our
+  rules [INFERRED, the original is unknown]: last week is paid once on the first inbox check after it ended,
+  set = week mod 10; ranks 1-3 tiers 1-3, ranks 4-10 tier 4, 11-25 tier 5; single-card sets ranks 1-10. Arena now
+  keeps last week's score (`last_weekly`). Data: `<content>/server/rewards.json` from the content build.
+- God cards: Obelisk the Tormentor (1196) the first time a player reaches tournament rank 10, The Winged Dragon of
+  Ra (1195) at rank 5 (`LivePvP._finish` → `Rewards.on_tournament_rank`); names added to the English inventory
+  texts (they had none).
+- Delivery: per-player reward inbox; `GET/POST /fb/graph/me/revival_rewards` (`server/fakefb.py`). Client
+  `as3_new/com/revival/rewards/RewardInbox.as` checks it when the main menu opens: adds the cards like
+  `InventoryManagerGame.ConsumeTournamentReward` (`ParseInventoryChange`), saves, shows the cards in the deck view
+  popup with a message (DeckViewPopupData.Message), confirms each reward; received ids are also kept on the device
+  (SharedObject) so a lost confirmation never adds a reward twice. [VERIFIED emulator] a granted Arena reward
+  (B.E.S. ×3) showed as "ARENA REWARD" with the three cards and the text, was confirmed on the server, and the
+  cards were in the collection (1× each).
+- `tests/test_rewards.py`: week settled once, tiers by rank, 0 points nothing, both weekly/last_weekly count,
+  milestones once each, consume once, built rewards.json sane. All 10 server test scripts pass.

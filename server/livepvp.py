@@ -82,6 +82,7 @@ class LivePvP:
         self.last_seen = {}  # uid -> time of the last PvP request
         self.presence = {}  # uid -> time of the last request on any connection (online status)
         self.next_combat = 1
+        self.rewards = None  # server/rewards.py (tournament milestones), set by server.py
 
     # --- delivery -------------------------------------------------------------------------------
     def _notify(self, uid, alias, props):
@@ -113,6 +114,8 @@ class LivePvP:
             for uid in duel.players:
                 try:
                     level = self.teams.record_result(uid, uid == winner) if duel.ranked else self.teams.level(uid)
+                    if level is not None and duel.ranked and self.rewards is not None:
+                        self.rewards.on_tournament_rank(uid, self.teams.rank_of(level))
                 except Exception:
                     self.log.exception("live pvp %s: ranking %s failed", duel.id, uid)
                     level = None

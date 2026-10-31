@@ -44,6 +44,7 @@ import amf3
 from accounts import AccountStore
 from content import Content, version_tuple
 from fakefb import FakeFacebook
+from rewards import Rewards
 
 PVP_PATH = "/facebook/pvp/proxy.html"  # the PvP connection (mmog.xml pvpServerUrl, tools/build_game_adt.py)
 from profiles import Profiles
@@ -679,8 +680,10 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         store = AccountStore(Path(config["data_dir"]))
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
         self.content = Content(config.get("content_dir", ""))
+        self.rewards = Rewards(store, config.get("content_dir", ""), logger)
+        self.game.livepvp.rewards = self.rewards
         self.fakefb = FakeFacebook(store, logger, Profiles(store, config.get("content_dir", ""), self.game, logger),
-                                   self.game.livepvp)
+                                   self.game.livepvp, self.rewards)
         self.client_versions = {}  # ip -> APK version sent with the latest GetVersionRequest ("" = none)
 
     def handle_error(self, request, client_address):

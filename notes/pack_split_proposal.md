@@ -253,3 +253,15 @@ Options for the owner (nothing implemented):
 - B. Simpler: add the 13 arena cards (minus the art-less ones), Gradius and Ancient Sorcerer to the card shop.
 - C. The God cards (1195, 1196): a special reward (e.g. reaching Elite in the tournament, or a story milestone),
   with their names added to the localization.
+
+### Correction (same day): almost none of them are on sale
+
+`core/shop/ShopManager.as:450-474` drops every shop entry whose startDate..endDate does not include today, and most
+card shop entries carry placeholder dates around the year 3012: only 155 of the 1148 card shop entries are on sale
+[VERIFIED code + emulator: the CARDS screen lists 155]. None of the 55 cards is among them, and the event packs
+that contain 18 of them (loot 16/17/24/25) have no live shop entry. So of the 55 only the 5 starter backups are
+obtainable. Group 1 above ("card shop, 30 cards") is wrong; those cards need a decision too.
+
+Implemented 2026-10-31 (owner's choice): Arena weekly rewards (server/rewards.py) + card shop entries unlocked by
+story chapter (as3_new/com/revival/shop/ShopUnlocks.as) for 502, 515, 855, 861, 863, 1006, 1056-1058, 1151,
+1280-1282, 1301-1303; God cards (1195 Ra, 1196 Obelisk) as tournament milestones. Notes 6.52.

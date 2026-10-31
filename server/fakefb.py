@@ -106,11 +106,12 @@ REMEMBER_SECONDS = 60 * 24 * 3600
 
 
 class FakeFacebook:
-    def __init__(self, store: AccountStore, logger, profiles=None, livepvp=None):
+    def __init__(self, store: AccountStore, logger, profiles=None, livepvp=None, rewards=None):
         self.store = store
         self.log = logger
         self.profiles = profiles  # server/profiles.py (pictures, revival_profile); None = default pictures only
         self.livepvp = livepvp  # server/livepvp.py (friend live duel challenges); None = no challenges
+        self.rewards = rewards  # server/rewards.py (card rewards inbox); None = no rewards
 
     # returns (status, content_type, body[, set_cookie_headers]) or None if the path is not ours
     def handle(self, method: str, path: str, query: dict, form: dict, ip: str, cookies: dict = None):
@@ -143,6 +144,8 @@ class FakeFacebook:
                 return 200, "application/json", json.dumps({"incoming": count + len(challenges),
                                                             "challenges": len(challenges),
                                                             "challengers": challengers}).encode()
+            if rest == "me/revival_rewards" and self.rewards is not None:
+                return self._rewards(method, query, form)
             if rest == "me/revival_challenge" and method == "POST":
                 return self._challenge_post(query, form)
             if rest == "me":
@@ -271,6 +274,18 @@ class FakeFacebook:
         if uid is None:
             return 200, "application/json", b'{"error":"Please log in again."}'
         return 200, "application/json", json.dumps(self.profiles.update(uid, form)).encode()
+
+    def _rewards(self, method, query, form):
+        """Card rewards inbox (as3_new/com/revival/rewards/RewardInbox.as): GET lists pending rewards, POST
+        consume=<id> removes one after the game added its cards."""
+        value = lambda key: (form.get(key) or query.get(key) or [""])[0]  # noqa: E731
+        uid = self.store.uid_for_token(value("access_token"))
+        if uid is None:
+            return 200, "application/json", json.dumps({"error": "Your login has expired. Log in again."}).encode()
+        if method == "POST":
+            ok = value("consume").isdigit() and self.rewards.consume(uid, int(value("consume")))
+            return 200, "application/json", json.dumps({"ok": bool(ok)}).encode()
+        return 200, "application/json", json.dumps({"rewards": self.rewards.pending(uid)}).encode()
 
     def _incoming_challenges(self, uid):
         friends = set(self.store.friends_of(uid))
