@@ -390,7 +390,8 @@ def revival_rewards(ctx):
         except RuntimeError:
             return False
 
-    # card shop (group 5): DP-priced entries modelled on one that is on sale. ShopManager drops entries whose
+    # card shop (group 5): the card's own entry if it has one (most have dead dates), else a new DP entry modelled
+    # on one that is on sale. ShopManager drops entries whose
     # startDate..endDate does not include today (core/shop/ShopManager.as:450-474); most card shop entries carry
     # placeholder dates around the year 3012, so only 155 of 1148 are on sale. Ours run 2014-2100.
     shop = ctx.ace("config/ace/shop/shop.ace")
@@ -404,14 +405,19 @@ def revival_rewards(ctx):
     for tid, chapter in sorted(_shop_unlocks().items()):
         if tid in listed or not usable(tid):
             raise RuntimeError(f"ShopUnlocks card {tid}: already on sale in the card shop or no card art")
-        it = copy.deepcopy(model)
-        cost = 60 if items[tid]["cardRarityId"] == 4 and items[tid]["cardSerieId"] == 99 else (30 if items[tid]["cardRarityId"] == 4 else 10)
-        it.update(id=next_id, itemTemplateId=tid, startDate=type(model["startDate"])(SALE_START),
-                  endDate=type(model["endDate"])(SALE_END), leagueRequired=1)  # the chapter is the only condition
-        it["shopItemConversions"][0]["cost"] = cost
-        group["shopItem"].append(it)
-        added.append((tid, chapter, cost))
-        next_id += 1
+        it = next((x for x in group["shopItem"] if x["itemTemplateId"] == tid), None)
+        if it is None:  # no entry yet: a new one
+            it = copy.deepcopy(model)
+            it.update(id=next_id, itemTemplateId=tid)
+            it["shopItemConversions"][0]["cost"] = 60 if items[tid]["cardSerieId"] == 99 else (
+                30 if items[tid]["cardRarityId"] == 4 else 10)
+            group["shopItem"].append(it)
+            next_id += 1
+        elif it["shopItemConversions"][0]["cost"] >= 999:  # the original "not for sale" price
+            it["shopItemConversions"][0]["cost"] = 60
+        it.update(startDate=type(model["startDate"])(SALE_START), endDate=type(model["endDate"])(SALE_END),
+                  leagueRequired=1)  # the chapter is the only condition
+        added.append((tid, chapter, it["shopItemConversions"][0]["cost"]))
     print("  card shop, unlocked by chapter (card, chapter, DP):", added)
 
     # Arena weekly reward sets: the original ARENA_REWARD bundles (type 6), grouped as in the data (consecutive

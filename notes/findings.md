@@ -1832,3 +1832,10 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   cards were in the collection (1× each).
 - `tests/test_rewards.py`: week settled once, tiers by rank, 0 points nothing, both weekly/last_weekly count,
   milestones once each, consume once, built rewards.json sane. All 10 server test scripts pass.
+- Follow-up (owner's choice): the 28 series 2 cards whose original card shop entries never went on sale (970, 975,
+  1009-1011, 1053-1055, 1137-1139, 1148, 1180-1182, 1292-1294, 1299, 1300, 1351-1353, 1386, 1388, 1390, 1392,
+  1401) are in ShopUnlocks too: their own entries get dates 2014-2100 and leagueRequired 1, original DP prices
+  (Hidden Spellbook 999 → 60); chapters 6 (rare), 12 (ultra rare), 18 (legends), 24 (Stardust Dragon/Assault Mode,
+  Realm of Light, Dark Magician of Chaos, Hidden Spellbook, Helios). The fusion results 1387, 1389, 1393 stay out
+  (made in duels; originally 999 DP). 44 chapter-locked entries in all. [VERIFIED emulator] account with no
+  cleared chapter: still 155 cards.
