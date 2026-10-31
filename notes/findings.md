@@ -1761,3 +1761,8 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   (`mmog.xml` ping_frequency) [VERIFIED code]. The challenge toast adds one small request per 15 s while logged in.
 - Server scaling note [INFERRED]: leaderboards, arena opponent picks and the Elite list scan all accounts per call
   (~25-90 ms at ~260 accounts); fine for now, worth caching if the player base grows a lot.
+- Build fix: `as3_patches.PATCHES` had two keys for MobileProjectEngine (ENGINE and the new MOBILE_ENGINE); in a
+  dict literal the later one silently replaces the earlier, so the normal build lacked the push fix (the timing
+  build lacked the 3 older engine edits instead). Merged into one list; `tools/patch_as3.py` now refuses to build
+  when a class is named twice. [VERIFIED emulator] normal build: 4 engine edits, smoke test login screen after
+  19 s (31 s without the push fix, same emulator), main menu fine after login.

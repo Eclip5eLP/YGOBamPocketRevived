@@ -31,7 +31,21 @@ def ffdec(*args):
     return res.stdout + res.stderr
 
 
+def check_unique_classes():
+    """Two PATCHES keys naming the same class: the later list silently replaces the earlier one."""
+    import ast
+    import as3_patches
+    tree = ast.parse((ROOT / "tools" / "as3_patches.py").read_text(encoding="utf-8"))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and getattr(node.targets[0], "id", "") == "PATCHES":
+            classes = [getattr(as3_patches, k.id) for k in node.value.keys if isinstance(k, ast.Name)]
+            dups = sorted({c for c in classes if classes.count(c) > 1})
+            if dups:
+                sys.exit(f"as3_patches.PATCHES names these classes twice (merge their edit lists): {dups}")
+
+
 def main():
+    check_unique_classes()
     ap = argparse.ArgumentParser()
     ap.add_argument("src")
     ap.add_argument("dst")

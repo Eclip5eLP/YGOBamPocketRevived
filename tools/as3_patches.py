@@ -1410,7 +1410,7 @@ DUEL_GROUND_EDITS = [
 # Startup: skip push notification registration. The Pushwoosh service is gone and its ANE is a stub
 # (tools/build_stub_anes.py) that never answers, so every cold start waited the full 15 s timeout
 # (MobileProjectEngine.StartPushWooshTimeout). Findings 6.49.
-MOBILE_ENGINE = "com.frimastudio.mobile.MobileProjectEngine"
+# (added to ENGINE's list below; one PATCHES entry per class, a second key would replace the first)
 MOBILE_ENGINE_EDITS = [
     ("""      private function InitPushNotification() : void
       {
@@ -1497,7 +1497,6 @@ PATCHES = {
     DUEL_GROUND: DUEL_GROUND_EDITS,
     TOURNAMENT_VIEW: TOURNAMENT_VIEW_EDITS,
     GAME_SETTINGS: GAME_SETTINGS_EDITS,
-    MOBILE_ENGINE: MOBILE_ENGINE_EDITS,
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,
@@ -1516,7 +1515,7 @@ PATCHES = {
     MAP_ACTION_BAR: MAP_ACTION_BAR_EDITS,
     LOADER: LOADER_EDITS,
     EXTERNAL_ASSET: EXTERNAL_ASSET_EDITS,
-    ENGINE: ENGINE_EDITS,
+    ENGINE: ENGINE_EDITS + MOBILE_ENGINE_EDITS,
     BOOSTER_INFO: BOOSTER_INFO_EDITS,
     INVENTORY: INVENTORY_EDITS,
     CHOOSE_DECK_UI: CHOOSE_DECK_UI_EDITS,
@@ -1558,5 +1557,5 @@ PERF_MODULE_EDITS = [
 """),
 ]
 if __import__("os").environ.get("YGO_PERF") == "1":
-    PATCHES[MOBILE_ENGINE] = MOBILE_ENGINE_EDITS + PERF_EDITS
+    PATCHES[ENGINE] = PATCHES[ENGINE] + PERF_EDITS
     PATCHES[MODULE_MANAGER] = PERF_MODULE_EDITS
