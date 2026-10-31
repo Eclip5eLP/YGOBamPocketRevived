@@ -31,6 +31,9 @@ window.RufflePlayer.config = {
   autoplay: "on", unmuteOverlay: "hidden", letterbox: "on",
   logLevel: "info", allowNetworking: "all", base: "/",
 };
+// ?renderer=webgpu | wgpu-webgl | webgl | canvas (Stage3D needs a wgpu renderer; Ruffle's default may not have it)
+const renderer = new URLSearchParams(location.search).get("renderer");
+if (renderer) window.RufflePlayer.config.preferredRenderer = renderer;
 </script>
 <script src="/ruffle/ruffle.js"></script>
 <script>

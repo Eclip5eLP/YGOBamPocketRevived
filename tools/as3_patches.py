@@ -1445,6 +1445,16 @@ PVP_COM_EDITS = [
 # defaults whenever the app's install date changed, so every update showed the live duel tutorial prompt again.
 GAME_SETTINGS = "com.frimastudio.snowstorm.module.option.GameSettings"
 GAME_SETTINGS_EDITS = [
+    # the app folder's date is AIR-only (File): a browser build (Ruffle) throws here and stopped startup
+    ("""         var appDate:String = File.applicationDirectory.creationDate.toString();""",
+     """         var appDate:String = "web";
+         try
+         {
+            appDate = File.applicationDirectory.creationDate.toString();
+         }
+         catch(dateError:Error)
+         {
+         }"""),
     ("""            this.mSharedObject.SaveValue(SHARED_OBJECT_DATE_NAME,appDate);
             options = null;""", """            this.mSharedObject.SaveValue(SHARED_OBJECT_DATE_NAME,appDate);"""),
 ]

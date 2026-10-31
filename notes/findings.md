@@ -1938,3 +1938,28 @@ New mechanics (Synchro, Xyz) [INFERRED from the code above]:
   content (live `world.zip` has only `worldmap.xml`); the WORLD button only shows with 2+ world maps in the save
   (`hud.bar.MapActionBar.AddWorldButton`, tools/as3_patches.py). The multi-map code stays: a new map ships as game data (gamedata package) + world/
   mappreview art packages, no APK, as long as it needs no new code.
+
+### 6.56 Browser version spike: the game runs in Ruffle up to the content check (2026-10-31)
+
+- Setup: Ruffle nightly 2026-10-31 self-hosted web build (`work/ruffle/`, from github.com/ruffle-rs/ruffle
+  releases, MIT/Apache), page + game files + forward to the dev server on one origin (`tools/web_spike.py`), SWF and
+  config built for that origin (`build_release.py --host 127.0.0.1:8090`). Browser: the desktop app's built-in
+  Chromium 152 (WebGPU and WebGL2 available).
+- [VERIFIED, console + screenshots] Ruffle's default renderer here is `wgpu-webgl`. Starling initialises
+  ("Display Driver: Dummy Ruffle driver" is only Ruffle's `Context3D.driverInfo` stub text) and draws: the
+  prelauncher loading screen with its progress bar, later the game's own UNEXPECTED ERROR popup (text, images,
+  dimmed background). `?renderer=webgpu` gave a black page and later hung the tab: keep wgpu-webgl.
+- [VERIFIED] Startup: the engine queue runs all 19 commands (config, encryption, ServerCom, localization, all
+  managers, all ace data; AMF typed-object warnings like `lootCategoryId` on LootShopItemTemplate are skipped by
+  Ruffle), then MobileProjectEngine steps 0-10 of 28, including the saved-login step (it called `/fb/graph/v2.0/me`).
+- Fixed on the way: `GameSettings.LoadFromSharedObject` read `File.applicationDirectory.creationDate` (AIR-only,
+  throws in Ruffle: Error #2037) and stopped startup; now in try/catch (GAME_SETTINGS_EDITS, harmless on Android).
+- [VERIFIED] Blocker: step 10, "Validate all the needed assets and download the missing one"
+  (ExternalFileControllerImpl). Ruffle's `flash.filesystem.File` is a stub (constructor, resolvePath, exists,
+  applicationStorageDirectory, nativePath all logged as stubs), so every package looks missing and installing one
+  fails → the game's error popup.
+- Next (web variant, INFERRED design): a web-only patch set where content is read by URL instead of from app
+  storage — skip the package check/download (`ExternalFileControllerImpl.ValidateAsset` → valid), and point the
+  readers of `File.applicationStorageDirectory` (CardLoadingUtil, StoryMap, asset lists, our Loader gamedata patch)
+  at `<origin>/asset/...` served from the extracted content (Local Store + overlays). Then login (StageWebView →
+  page redirect/popup) and NativeApplication no-ops. Effort: M-L.

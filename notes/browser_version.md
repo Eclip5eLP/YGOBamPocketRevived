@@ -1,13 +1,12 @@
 # Browser version: research notes (2026-10-30)
 
-Status (2026-10-31): spike started. `tools/web_spike.py` serves a Ruffle page, the game files and a forward to the
-dev server on one origin (tested: page, SWF, config and forwarded versionning.xml load). Waiting for the owner's OK
-to download Ruffle's self-hosted web build into work/ruffle/; then build the SWF for that origin
-(`build_release.py --host 127.0.0.1:8090`) and see how far startup gets. Ruffle's `playerRuntime: "air"` option
-(set in the page) enables the AIR-only classes Ruffle implements; which of File/FileStream/StageWebView/
-NativeApplication it covers is unknown until tested.
-Goal: play in a browser at e.g. `ygo.eclip5e.com/webgame`, ideally running the existing game code ("APK natively in
-the browser") so nothing has to be rewritten. Code references are to `work/as3/scripts` (decompiled MobileGame.swf).
+Status (2026-10-31): Ruffle spike run (findings 6.56). The game runs in Ruffle far enough to settle the big
+unknowns: AVM2 runs the 20 MB game, Starling/Stage3D draws (loading screen, the error popup with text and images),
+all game data (ace/AMF) loads, all managers start. It stops at startup step 10 of 28, the content package check,
+because Ruffle's `flash.filesystem.File` is a stub (never finds or writes files). Next: a web variant of the
+platform glue (below), starting with content packages loaded by URL instead of unzipped to app storage.
+Run it: `build_release.py --host 127.0.0.1:8090`, `python tools/web_spike.py`, open http://127.0.0.1:8090/
+(Ruffle in work/ruffle/, nightly 2026-10-31 self-hosted web build).
 
 ## What the game is made of
 
