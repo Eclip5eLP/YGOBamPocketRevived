@@ -1407,6 +1407,24 @@ DUEL_GROUND_EDITS = [
             }"""),
 ]
 
+# Friend live duel: the Tournament screen starts the search of a pending challenge (as3_new/com/revival/friends/
+# LiveChallenge.as; the tournament popups need this module's assets).
+TOURNAMENT_VIEW = "com.frimastudio.snowstorm.module.tournament.view.TournamentView"
+TOURNAMENT_VIEW_EDITS = [
+    ("""   import com.frimastudio.common.core.manager.ManagerA;
+""", """   import com.frimastudio.common.core.manager.ManagerA;
+   import com.revival.friends.LiveChallenge;
+"""),
+    ("""      public function InitComplete() : void
+      {
+         this.CheckTeamPointEarned();
+      }""", """      public function InitComplete() : void
+      {
+         this.CheckTeamPointEarned();
+         LiveChallenge.OnTournamentScreenReady();
+      }"""),
+]
+
 PLAYER_INFO_BAR = "com.frimastudio.snowstorm.module.hud.bar.PlayerInfoBar"
 PLAYER_INFO_BAR_EDITS = [
     ("""         this.mHudElementList.push(this.mEnergyWidget);
@@ -1457,6 +1475,7 @@ PATCHES = {
     STORY_MAP: STORY_MAP_EDITS,
     SHOP_MANAGER: SHOP_MANAGER_EDITS,
     DUEL_GROUND: DUEL_GROUND_EDITS,
+    TOURNAMENT_VIEW: TOURNAMENT_VIEW_EDITS,
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,

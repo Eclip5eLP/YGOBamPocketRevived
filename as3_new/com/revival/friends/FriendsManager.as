@@ -11,7 +11,8 @@ package com.revival.friends
    import starling.core.Starling;
 
    // Friends manager (Duel Ground > Friends button): the server's friends page (server/friends_page.py) in the
-   // in-app web view. "Profile" on the page closes it with ?view=<uid>, which opens that player's profile here.
+   // in-app web view. "Profile" on the page closes it with ?view=<uid>, which opens that player's profile here;
+   // "Live duel" / "Accept" closes it with ?challenge=<uid> (LiveChallenge).
    // The Duel Ground friend list shows changes the next time it opens. Returns false if it could not open.
    public class FriendsManager
    {
@@ -47,7 +48,11 @@ package com.revival.friends
       {
          try
          {
-            if(aResult != null && aResult.view != null && String(aResult.view).length > 0)
+            if(aResult != null && aResult.challenge != null && String(aResult.challenge).length > 0)
+            {
+               LiveChallenge.Start(String(aResult.challenge));
+            }
+            else if(aResult != null && aResult.view != null && String(aResult.view).length > 0)
             {
                PopupManager.Show(new ProfilePopupData(String(aResult.view),String(aResult.view) == String(FacebookProxy.OwnUser.uid)));
             }

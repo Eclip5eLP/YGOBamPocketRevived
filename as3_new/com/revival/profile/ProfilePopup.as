@@ -13,6 +13,7 @@ package com.revival.profile
    import com.frimastudio.snowstorm.project.engine.data.event.YGOMDataEvent;
    import com.frimastudio.snowstorm.project.ui.ECommonButton;
    import com.frimastudio.utils.button.Scale9Button;
+   import com.revival.friends.LiveChallenge;
    import flash.display.Bitmap;
    import flash.display.Loader;
    import flash.events.IOErrorEvent;
@@ -54,6 +55,8 @@ package com.revival.profile
 
       private var mCopyButton:Scale9Button;
 
+      private var mDuelButton:Scale9Button;
+
       private var mPlayerName:String = "";
 
       private var mDeck:Array;
@@ -80,6 +83,7 @@ package com.revival.profile
          this.mEditButton = null;
          this.mDeckButton = null;
          this.mCopyButton = null;
+         this.mDuelButton = null;
          this.mDeck = null;
          super.Dispose();
       }
@@ -111,17 +115,19 @@ package com.revival.profile
       {
          var data:ProfilePopupData = mPopupData as ProfilePopupData;
          CreateBaseButton("popup_close_btn",722,3);
-         this.mDeckButton = CreateButton(ECommonButton.LIGHT_BLUE_BUTTON,new Point(330,90),data.CanEdit ? 50 : 235,410,"VIEW DECK",EFonts.HANZEL_BOLD,36,16777215);
-         this.mDeckButton.visible = false;
          if(data.CanEdit)
          {
+            this.mDeckButton = CreateButton(ECommonButton.LIGHT_BLUE_BUTTON,new Point(330,90),50,410,"VIEW DECK",EFonts.HANZEL_BOLD,36,16777215);
+            this.mDeckButton.visible = false;
             this.mEditButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(330,90),420,410,"EDIT PROFILE",EFonts.HANZEL_BOLD,36,16777215);
          }
          else
          {
-            this.mDeckButton.x = 50;
-            this.mCopyButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(330,90),420,410,"COPY DECK",EFonts.HANZEL_BOLD,36,16777215);
+            this.mDeckButton = CreateButton(ECommonButton.LIGHT_BLUE_BUTTON,new Point(230,90),30,410,"VIEW DECK",EFonts.HANZEL_BOLD,30,16777215);
+            this.mDeckButton.visible = false;
+            this.mCopyButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(230,90),270,410,"COPY DECK",EFonts.HANZEL_BOLD,30,16777215);
             this.mCopyButton.visible = false;
+            this.mDuelButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(230,90),510,410,"LIVE DUEL",EFonts.HANZEL_BOLD,30,16777215);
          }
       }
 
@@ -135,6 +141,12 @@ package com.revival.profile
          if(aEvent.currentTarget == this.mCopyButton)
          {
             this.CopyDeck();
+            return;
+         }
+         if(aEvent.currentTarget == this.mDuelButton)
+         {
+            DispatchPopupClosedEvent();
+            LiveChallenge.Start(this.Uid);
             return;
          }
          if(aEvent.currentTarget == this.mDeckButton)

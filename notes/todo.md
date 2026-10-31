@@ -68,7 +68,7 @@ Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
 
 | Item | Status / plan |
 |---|---|
-| Live PvP | IN PROGRESS: part 1 (6.45: PvP path, relay + matchmaking) and part 2 (6.46: tournament ladder on win/loss, Elite list; first real duel between two emulators) done. Next: friend challenge (ReadyForCombat SendCombat/AcceptCombat). At release: change the startup message (server.py, "Live duels are coming later") once the new APK is out; consider whether rotating tournament deck rules suit a small player base (YGO_TOURNAMENT_TEMPLATE pins one template). Elite end-of-tournament rewards not handed out yet. |
+| Live PvP | DONE for the release: part 1 (6.45 PvP path, relay + matchmaking), part 2 (6.46 tournament ladder, Elite list, first real duel between two emulators), part 3 (6.47 friend live duels from the friends page and profiles, unranked). At release: change the startup message (server.py, "Live duels are coming later"); decide whether rotating tournament deck rules suit a small player base (YGO_TOURNAMENT_TEMPLATE pins one). Later: Elite end-of-tournament rewards; the tutorial prompt returns after each APK update (GameSettings reset, original behaviour; could be kept by patching). |
 | Browser version | notes/browser_version.md; Ruffle spike after the APK features. |
 | Performance | profile first: startup steps are sequential (`MobileProjectEngine.as:130-158`); candidates: content validation reads every package marker file, localization loads all 106 sections, the atlas loads, the 2 s PvP ping while idle. Measure per-step times with a temporary timing patch in the emulator, then fix the slowest. M, any time. |
 

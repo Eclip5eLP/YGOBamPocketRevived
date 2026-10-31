@@ -1683,3 +1683,33 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   levels 81 → 2 (winner) and 81 → 81 (loser). Back on the Tournament screen the winner shows the first rank-15
   token, the loser 0. Not seen: the win/lose screen itself (dismissed by my taps), surrender and disconnect on
   phones (covered by the server test).
+
+### 6.47 Live PvP part 3: friend live duels
+
+- The game's own friend-duel messages (`project/readyforcombat`: SendCombat{receiverExternalId, combatId,
+  combatTemplateId}, AcceptCombat, RefuseCombat, AcceptedCombatNotification, CombatManager) have no UI that sends
+  them in v1.11.2 [VERIFIED code: no caller of `ReadyforcombatManagerDal.DoSendCombatRequest`/`DoAcceptCombatRequest`
+  outside the DAL]; the only live duel entry is the tournament queue (6.45). So friend duels reuse that queue.
+- Design: the server pairs players on the tournament queue; a player who set a challenge
+  (`POST /fb/graph/me/revival_challenge {to}`, friends only, `server/fakefb.py _challenge_post`) is paired only with
+  that friend, and only when the friend queues with a challenge back (`server/livepvp.py` set_challenge /
+  incoming_challenges, queue entries carry the target). Challenge duels are unranked (Duel.ranked); both still get
+  PlayCombatEndNotification with their unchanged level. Cancel in the search popup (CancelTournamentMatch) drops the
+  challenge; it also expires after QUEUE_SECONDS.
+- Client (`as3_new/com/revival/friends/LiveChallenge.as`): the friends page closes with `?challenge=<uid>` ("Live
+  duel" on a friend, "Accept" on a waiting challenge), or the profile's LIVE DUEL button (others' profiles);
+  LiveChallenge posts the challenge, opens the Tournament screen (`TournamentManagerProxy.OpenTournamentModule`; the
+  search/found popups need its assets, `TournamentModule.CreateAssetList`), and `TournamentView.InitComplete`
+  (patched, TOURNAMENT_VIEW_EDITS) starts the game's own search popup → duel found popup → live duel, or the live
+  PvP tutorial first. Needs a play deck (custom default deck) but not a tournament sign-up or the tournament's deck
+  rule [VERIFIED emulator: the search popup only calls EnterTournamentQueue with GetDefaultDeck].
+- Friends page: Friends tab lists "Waiting for a live duel with you" with Accept, and shows a count on the tab;
+  `me/revival_requests` counts waiting challenges into `incoming` (main menu Friends badge) plus `challenges`.
+- [VERIFIED emulator, two emulators] friend request + accept on the in-game friends page; emulator 1 "Live duel" →
+  search popup, server "waiting, challenging <uid>"; emulator 2's Friends tab shows "Friends (1)" and the waiting
+  challenge; Accept → paired at once ("challenge"), full duel to a winner, no checksum error, winner's tournament
+  level unchanged (2). `tests/test_livepvp.py` adds: strangers can't challenge, a tournament player is not paired
+  with a challenger, badge/page show the challenge, the pairing, unranked result. All 9 server test scripts pass.
+- Note [VERIFIED code, `module/option/GameSettings.as` LoadFromSharedObject]: game settings (live PvP tutorial done,
+  selected deck type, ...) reset to defaults whenever the app's install date changes, so after every APK update
+  players see the live duel tutorial prompt again (original behaviour).

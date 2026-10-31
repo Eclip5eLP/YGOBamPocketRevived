@@ -21,7 +21,12 @@ Flow:
            a winner != 0 ends the duel.
   timeout  an opponent who sends nothing on the PvP connection for DISCONNECT_SECONDS gets reported to the other
            player as OpponentDisconnectedNotification and the duel ends.
-  result   a duel that ends with a winner (BamEnd, surrender, disconnect, or leaving it for a new search) moves both
+  challenge  friend live duels (as3_new/com/revival/friends/LiveChallenge.as): the challenger names a friend
+           (set_challenge, POST /fb/graph/me/revival_challenge) and then queues like for the tournament; a player
+           with a challenge only pairs with that friend when the friend queues with a challenge back (accepting from
+           the friends page does that), never with strangers. incoming_challenges lists who is waiting for you.
+           Challenge duels don't count for the tournament ladder.
+  result   a ranked duel that ends with a winner (BamEnd, surrender, disconnect, or leaving it for a new search) moves both
            players on the tournament ladder (Teams.record_result) and both get PlayCombatEndNotification{tournamentLevel}
            with their new level. An out-of-sync duel counts for nobody.
 """
@@ -47,10 +52,11 @@ def _card_ids(cards):
 
 
 class Duel:
-    def __init__(self, combat_id, p1, p2, decks):
+    def __init__(self, combat_id, p1, p2, decks, ranked=True):
         self.id = combat_id
         self.players = (p1, p2)
         self.decks = decks
+        self.ranked = ranked
         self.started = set()
         self.ready = {}  # uid -> (round, checksum, slotCard)
         self.ended = {}  # uid -> (checksum, winner)
@@ -66,7 +72,8 @@ class LivePvP:
         self.teams = teams
         self.log = logger
         self.lock = threading.Lock()
-        self.queue = []  # [(uid, deck ids, friends, time)]
+        self.queue = []  # [(uid, deck ids, friends, time, challenged uid or None)]
+        self.challenges = {}  # uid -> (challenged uid, time)
         self.duels = {}  # uid -> Duel
         self.outbox = {}  # uid -> [encoded notification]
         self.last_seen = {}  # uid -> time of the last PvP request
@@ -101,7 +108,7 @@ class LivePvP:
         if winner in duel.players:
             for uid in duel.players:
                 try:
-                    level = self.teams.record_result(uid, uid == winner)
+                    level = self.teams.record_result(uid, uid == winner) if duel.ranked else self.teams.level(uid)
                 except Exception:
                     self.log.exception("live pvp %s: ranking %s failed", duel.id, uid)
                     level = None
@@ -120,17 +127,24 @@ class LivePvP:
                 self._finish(old, winner=old.other(uid))
             self.queue = [q for q in self.queue if q[0] != uid]
             self._check_timeouts()
-            if not self.queue:
-                self.queue.append((uid, deck, friends, time.time()))
-                self.log.info("live pvp: %s waiting (%d cards)", uid, len(deck))
+            target, since = self.challenges.get(uid, (None, 0))
+            if target is not None and time.time() - since > QUEUE_SECONDS:
+                target = None
+            match = next((q for q in self.queue if q[4] == (str(uid) if target else None) and (target is None or str(q[0]) == target)), None)
+            if match is None:
+                self.queue.append((uid, deck, friends, time.time(), target))
+                self.log.info("live pvp: %s waiting (%d cards)%s", uid, len(deck), f", challenging {target}" if target else "")
                 return None
-            other, other_deck, other_friends, _ = self.queue.pop(0)
+            self.queue.remove(match)
+            other, other_deck, other_friends = match[0], match[1], match[2]
+            for p in (uid, other):
+                self.challenges.pop(p, None)
             combat_id = self.next_combat
             self.next_combat += 1
             first, second = (uid, other) if random.random() < 0.5 else (other, uid)
             decks = {uid: deck, other: other_deck}
             friend_counts = {uid: friends, other: other_friends}
-            duel = Duel(combat_id, first, second, decks)
+            duel = Duel(combat_id, first, second, decks, ranked=target is None)
             self.duels[uid] = self.duels[other] = duel
             combat = amf3.AMF3Object(P + "readyforcombat.amf.Combat", id=float(combat_id), senderExternalId=float(other),
                                      receiverExternalId=float(uid), dateSent=amf3.AMF3Date(time.time() * 1000),
@@ -141,12 +155,27 @@ class LivePvP:
             self._notify(other, P + "readyforcombat.amf.NewCombatNotification", {"combat": combat})
             for p in (uid, other):
                 self._notify(p, P + "livepvp.amf.StartDuelNotification", start)
-            self.log.info("live pvp %s: %s vs %s (%s starts)", combat_id, first, second, first)
+            self.log.info("live pvp %s: %s vs %s (%s starts%s)", combat_id, first, second, first, "" if duel.ranked else ", challenge")
             return combat
 
     def cancel_queue(self, uid):
         with self.lock:
             self.queue = [q for q in self.queue if q[0] != uid]
+            self.challenges.pop(uid, None)
+
+    def set_challenge(self, uid, target):
+        """The next search of uid only pairs with target (None: back to the tournament queue)."""
+        with self.lock:
+            if target:
+                self.challenges[uid] = (str(target), time.time())
+            else:
+                self.challenges.pop(uid, None)
+
+    def incoming_challenges(self, uid):
+        """Players waiting in the queue for a live duel with uid."""
+        with self.lock:
+            self._check_timeouts()
+            return [str(q[0]) for q in self.queue if q[4] == str(uid)]
 
     # --- duel -----------------------------------------------------------------------------------------
     def start_round(self, uid):

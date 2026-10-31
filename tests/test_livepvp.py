@@ -6,14 +6,20 @@ decks -> StartRound from both -> StartRoundNotification -> two rounds of BamRead
 BamEnd -> a checksum mismatch is reported -> new duel: surrender -> OpponentSurrenderedNotification ->
 cancel queue. Ranking: both register for the tournament (level 81 = rank 15, 0 tokens); the win at the end of
 round 2 moves A to level 2 and keeps B at 81 (floor), both get PlayCombatEndNotification with their new level; the
-surrender moves A on to level 3; an out-of-sync duel changes nothing. Notifications arrive on later requests (pings),
+surrender moves A on to level 3; an out-of-sync duel changes nothing.
+Friend challenge: C challenges friend D (POST /fb/graph/me/revival_challenge) and waits; a tournament player is not
+paired with C; a stranger can't challenge; D sees the challenge (badge count, friends page) and accepts by
+challenging back: C and D are paired; the duel is unranked (D's level stays 81 after winning). Notifications arrive on later requests (pings),
 as on the phones.
 
 Usage: python tests/test_livepvp.py [--base http://127.0.0.1:8087]
 """
 
 import argparse
+import json
 import sys
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -69,6 +75,49 @@ def start_duel(a, b, deck_a, deck_b):
     queue(a, deck_a)
     queue(b, deck_b)
     poll(a), poll(b)
+
+
+def challenge(player, to):
+    data = urllib.parse.urlencode({"access_token": player.token, "to": to}).encode()
+    return json.loads(urllib.request.urlopen(player.base + "/fb/graph/me/revival_challenge", data=data).read())
+
+
+def friends_page(player):
+    q = urllib.parse.urlencode({"access_token": player.token, "redirect_uri": "http://x/fb/connect/login_success.html"})
+    return urllib.request.urlopen(player.base + "/fb/dialog/revival_friends?" + q).read().decode()
+
+
+def badge(player):
+    q = urllib.parse.urlencode({"access_token": player.token})
+    return json.loads(urllib.request.urlopen(player.base + "/fb/graph/me/revival_requests?" + q).read())
+
+
+def test_challenge(base, a, deck_a, deck_b):
+    c, d, e = Player(base), Player(base), Player(base)
+    c.invite(d.uid)
+    d.invite(c.uid)
+    resp, _ = pvp(d, T + "RegisterTournamentRequest")
+    assert "error" in challenge(e, d.uid), "strangers can't challenge"
+    assert challenge(c, d.uid) == {"ok": True}
+    resp, _ = queue(c, deck_a)
+    assert resp["combat"] is None
+    resp, _ = queue(a, deck_a)
+    assert resp["combat"] is None, "a tournament player must not be paired with a challenger"
+    pvp(a, T + "CancelTournamentMatchRequest")
+    assert badge(d)["challenges"] == 1, badge(d)
+    page = friends_page(d)
+    assert "Waiting for a live duel" in page and "challenge=" + c.uid in page, page
+    assert challenge(d, c.uid) == {"ok": True}
+    resp, notes_d = queue(d, deck_b)
+    assert resp["combat"] is not None, resp
+    notes_c = poll(c)
+    assert names(notes_c) == ["NewCombatNotification", "StartDuelNotification"], names(notes_c)
+    assert {str(int(notes_d[0]["player1Id"])), str(int(notes_d[0]["player2Id"]))} == {c.uid, d.uid}
+    assert badge(d)["challenges"] == 0
+    pvp(c, L + "BamEndRequest", {"checksum": 9, "externalIdWinner": float(d.uid)})
+    _, notes_d = pvp(d, L + "BamEndRequest", {"checksum": 9, "externalIdWinner": float(d.uid)})
+    assert level_of(notes_d) == 81, "challenge duels don't count for the ladder"
+    print("friend challenge OK (private pairing, unranked)")
 
 
 def main():
@@ -138,6 +187,7 @@ def main():
     assert resp["combat"] is None, "a cancelled player must not be matched"
     pvp(b, T + "CancelTournamentMatchRequest")
     print("cancel OK")
+    test_challenge(base, a, deck_a, deck_b)
     print("ALL LIVE PVP TESTS PASSED")
 
 

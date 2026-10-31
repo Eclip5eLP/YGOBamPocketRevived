@@ -5,6 +5,9 @@ rewrite"): GET/POST /fb/dialog/revival_friends with the player's access_token.
 Tabs: Friends (remove, profile), Requests (people who added you: accept / decline; your pending requests:
 cancel), Find players (every player, 40 per page, filtered by name: add). "Profile" closes the view with ...login_success.html?view=<uid>;
 the game then opens that player's profile (as3_new/com/revival/friends).
+Live duels: "Live duel" on a friend, or "Accept" on a challenge waiting for you (top of the Friends tab), closes the
+view with ...login_success.html?challenge=<uid>; the game then searches a live duel with that friend
+(as3_new/com/revival/friends/LiveChallenge.as, server/livepvp.py challenges).
 Friendships use AccountStore (request_friend: a request to someone who requested you makes you friends;
 remove_friend: removes the friendship and pending requests both ways).
 """
@@ -36,9 +39,10 @@ PAGE_SIZE = 40
 
 
 class FriendsPage:
-    def __init__(self, store, logger):
+    def __init__(self, store, logger, livepvp=None):
         self.store = store
         self.log = logger
+        self.livepvp = livepvp
 
     def handle(self, query, form):
         value = lambda key: (form.get(key) or query.get(key) or [""])[0]  # noqa: E731
@@ -57,7 +61,8 @@ class FriendsPage:
             message = self._apply(uid, action, other)
 
         tabs = "".join(f'<a class="{"on" if key == tab else ""}" href="{html.escape(link(tab=key))}">{label}'
-                       f'{self._badge(uid) if key == "requests" else ""}</a>' for key, label in TABS)
+                       f'{self._badge(uid) if key == "requests" else self._duel_badge(uid) if key == "friends" else ""}</a>'
+                       for key, label in TABS)
         hidden = "".join(f'<input type="hidden" name="{k}" value="{html.escape(v)}">' for k, v in base.items())
         hidden += f'<input type="hidden" name="tab" value="{tab}">'
         search_hidden = hidden
@@ -65,10 +70,14 @@ class FriendsPage:
             hidden += (f'<input type="hidden" name="q" value="{html.escape(value("q"))}">'
                        f'<input type="hidden" name="page" value="{html.escape(value("page"))}">')
 
-        def row(user, *buttons):
+        def row(user, *buttons, duel=None):
             pic = f'/fb/graph/{user["uid"]}/picture'
             view = html.escape(redirect + ("&" if "?" in redirect else "?") + "request=revival_friends&view=" + user["uid"])
-            acts = "".join(f'<form method="post">{hidden}<input type="hidden" name="uid" value="{user["uid"]}">'
+            acts = ""
+            if duel:
+                challenge = redirect + ("&" if "?" in redirect else "?") + "request=revival_friends&challenge=" + user["uid"]
+                acts = f'<a class="b alt" href="{html.escape(challenge)}">{duel}</a>'
+            acts += "".join(f'<form method="post">{hidden}<input type="hidden" name="uid" value="{user["uid"]}">'
                            f'<button name="action" value="{a}" class="{cls}">{label}</button></form>'
                            for a, label, cls in buttons)
             return (f'<div class="row"><img src="{pic}" alt="" loading="lazy"><span class="n">{html.escape(user["username"])}</span>'
@@ -77,7 +86,10 @@ class FriendsPage:
         users = lambda uids: [u for u in (self.store.user_by_uid(x) for x in uids) if u]  # noqa: E731
         if tab == "friends":
             friends = sorted(users(self.store.friends_of(uid)), key=lambda u: u["username"].lower())
-            body = "".join(row(u, ("remove", "Remove", "red")) for u in friends) or \
+            waiting = users(self._challenges(uid))
+            body = ("<h3>Waiting for a live duel with you</h3>" + "".join(row(u, duel="Accept") for u in waiting)
+                    + "<h3>Friends</h3>") if waiting else ""
+            body += "".join(row(u, ("remove", "Remove", "red"), duel="Live duel") for u in friends) or \
                 '<p class="e">No friends yet. Find players in the third tab.</p>'
         elif tab == "requests":
             incoming = users(self.store.incoming_requests(uid))
@@ -123,6 +135,14 @@ class FriendsPage:
                     nav.append(f'<a class="b" href="{html.escape(link(tab="find", q=q, page=page + 1))}">Next</a>')
                 body += '<div class="nav">' + "".join(nav) + "</div>"
         return self._page(close, tabs, message, body)
+
+    def _challenges(self, uid):
+        friends = set(self.store.friends_of(uid))
+        return [u for u in (self.livepvp.incoming_challenges(uid) if self.livepvp else []) if u in friends]
+
+    def _duel_badge(self, uid):
+        n = len(self._challenges(uid))
+        return f" ({n})" if n else ""
 
     def _badge(self, uid):
         n = len(self.store.incoming_requests(uid))

@@ -106,10 +106,11 @@ REMEMBER_SECONDS = 60 * 24 * 3600
 
 
 class FakeFacebook:
-    def __init__(self, store: AccountStore, logger, profiles=None):
+    def __init__(self, store: AccountStore, logger, profiles=None, livepvp=None):
         self.store = store
         self.log = logger
         self.profiles = profiles  # server/profiles.py (pictures, revival_profile); None = default pictures only
+        self.livepvp = livepvp  # server/livepvp.py (friend live duel challenges); None = no challenges
 
     # returns (status, content_type, body[, set_cookie_headers]) or None if the path is not ours
     def handle(self, method: str, path: str, query: dict, form: dict, ip: str, cookies: dict = None):
@@ -133,7 +134,11 @@ class FakeFacebook:
             if rest == "me/revival_requests":  # main menu Friends badge (as3_new/com/revival/friends)
                 uid = self.store.uid_for_token(query.get("access_token", [""])[0])
                 count = len(self.store.incoming_requests(uid)) if uid else 0
-                return 200, "application/json", json.dumps({"incoming": count}).encode()
+                challenges = self._incoming_challenges(uid) if uid else []
+                return 200, "application/json", json.dumps({"incoming": count + len(challenges),
+                                                            "challenges": len(challenges)}).encode()
+            if rest == "me/revival_challenge" and method == "POST":
+                return self._challenge_post(query, form)
             if rest == "me":
                 return self._me(query)
             return self._graph_object(rest, query)
@@ -141,7 +146,7 @@ class FakeFacebook:
             return self._fql_friends(query or form)
         if path == "/fb/dialog/revival_friends":
             from friends_page import FriendsPage
-            return FriendsPage(self.store, self.log).handle(query, form)
+            return FriendsPage(self.store, self.log, self.livepvp).handle(query, form)
         if path == "/fb/dialog/revival_profile" and self.profiles is not None:
             from profiles import edit_dialog
             return edit_dialog(self.profiles, self.store, query, form)
@@ -260,6 +265,24 @@ class FakeFacebook:
         if uid is None:
             return 200, "application/json", b'{"error":"Please log in again."}'
         return 200, "application/json", json.dumps(self.profiles.update(uid, form)).encode()
+
+    def _incoming_challenges(self, uid):
+        friends = set(self.store.friends_of(uid))
+        return [u for u in (self.livepvp.incoming_challenges(uid) if self.livepvp else []) if u in friends]
+
+    def _challenge_post(self, query, form):
+        """Friend live duel (as3_new/com/revival/friends/LiveChallenge.as): to=<friend uid> before the search, to=0
+        to go back to the tournament queue. Friends only."""
+        value = lambda key: (form.get(key) or query.get(key) or [""])[0]  # noqa: E731
+        uid = self.store.uid_for_token(value("access_token"))
+        to = value("to")
+        if uid is None or self.livepvp is None:
+            return 200, "application/json", json.dumps({"error": "Your login has expired. Log in again."}).encode()
+        if to not in ("", "0") and to not in self.store.friends_of(uid):
+            return 200, "application/json", json.dumps({"error": "You can only challenge your friends."}).encode()
+        self.livepvp.set_challenge(uid, None if to in ("", "0") else to)
+        self.log.info("live duel challenge: %s -> %s", uid, to or "none")
+        return 200, "application/json", json.dumps({"ok": True}).encode()
 
     def _graph_object(self, rest, query):
         parts = [p for p in rest.split("/") if p]
