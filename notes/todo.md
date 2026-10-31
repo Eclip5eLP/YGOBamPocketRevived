@@ -72,13 +72,13 @@ Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
 | Browser version | PARKED 2026-10-31 (owner): works functionally but Ruffle's Stage3D is too slow (~1 ms per draw call); no better free tool (notes/browser_version.md). Revisit with a faster Ruffle; desktop AIR build is the cheap alternative for PC players. |
 | Performance | DONE (6.49): startup 25.9 s -> 11.0 s on the emulator (Pushwoosh 15 s timeout removed); screen timings measured, all under 0.8 s except Arena 2.8 s (client assets). Timing build: YGO_PERF=1. Ping loop fixed and pings reduced (6.50): idle client 900 -> 6 requests/min. Later if the player base grows: cache leaderboards / arena opponent picks on the server. |
 
-## Live server state (2026-10-31)
+## Live server state (2026-10-31, release 1.1.0)
 
-- Hotfix deployed 06:05:54 (live auto-reload 06:05:57, clean start): only `server/amf3.py` with the ping fix (6.50),
-  copied to Y:/Documents/PythonBots/YGOBamPocketRevival/server/ (backup `amf3.py.bak-before-pingfix` there). The
-  rest of the live server is still the 2026-10-29 version; everything from Collection to Live PvP (6.38-6.50)
-  ships with the next full deploy + APK. The live version has no traffic counter yet, so the live ping rate can't
-  be read from its log until the full deploy.
+- Full deploy 22:36:24 (live auto-reload 22:36:29, clean start): all 13 `server/*.py` moved in at once from a staging
+  folder, content in `work/content` (1209 files). Backup of the previous code and the player data:
+  Y:/Documents/PythonBots/YGOBamPocketRevival/backup-before-1.1.0/. Tournament deck rules rotate (owner's choice).
+- Checked: tests/live_check.py passes; fresh install of the 1.1.0 build against the live server: version check,
+  no package download, our startup text, no update notice (6.66).
 
 ## Next session (picked 2026-10-31, in this order)
 
@@ -86,7 +86,7 @@ Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
    rewards, 44 chapter-locked card shop cards, Ra/Obelisk tournament milestones (6.52); Copy Deck fix (6.53).
 2. **Fusion check in a real duel** (6.54): build a test deck with several fusion pairs and confirm a fusion on
    screen (Thousand-Eyes Idol + any monster is the easiest). Not done yet: luck of the draw.
-3. **Release prep** (big release, owner decides when): full server + content deploy, signed APK
+3. DONE 2026-10-31 (1.1.0, 6.66) **Release prep** (big release, owner decides when): full server + content deploy, signed APK
    (work/release.p12), README + changelog + GitHub release text, startup message text ("Live duels are coming
    later" → current), decide the tournament deck rule (rotation vs YGO_TOURNAMENT_TEMPLATE=5), then check the live
    traffic line after deploy.

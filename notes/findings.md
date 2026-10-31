@@ -2175,3 +2175,22 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   choosing Ancient Sorcerer shows "Picture changed." and the profile shows it. A card not owned is refused
   (tests/test_profile.py, which passes; test_friends and test_webgame pass too).
 - Deploy: the live server needs the new content build (`<content>/server/cards/`).
+
+### 6.66 Release 1.1.0: final tests, live deploy (2026-10-31)
+
+- Final tests against the dev server: all 12 scripts in tests/ pass (AMF requests, arena, friends, friends page,
+  live PvP, login, profile, rewards, teams, version gate, web game, simulate_install). Fresh offline install
+  (emulator 2, no server): Play Offline, our startup text, news popup, story map and chapter 1 screen. VERIFIED.
+- Before deploying, the new server ran on a scratch copy of the live data (80 accounts): profile, friends,
+  version gate, rewards and arena tests pass, and all 67 players with a save load their profile and picture
+  without errors. The copy was deleted afterwards. VERIFIED.
+- Live server reload (`server.py` watch_and_reload) fires 2 s after files stop changing, so a slow copy over the
+  network drive could reload a half-updated server. Deploy: content first (`work/content`, not watched), server
+  files copied to `server_staging/` and checked byte for byte, then moved into `server/` in one second. Reloaded
+  22:36:29, all 13 modules, no errors. Backup: `backup-before-1.1.0/` (code + player data).
+- Owner's choices: tournament deck rules rotate as in the original (no YGO_TOURNAMENT_TEMPLATE), version 1.1.0.
+- Signed APK `work/release/YugiohBAMPocketRevived-1.1.0.apk` (119 MB, armv8), same certificate SHA-256 as 1.0.0.
+  The same code built for x64 against the live server, fresh install on the emulator: GetVersion, versionning.xml,
+  versionvalidator, no package download, startup text without update notice. VERIFIED. Logged-in features were
+  not tried on production (no test account there, none created).
+- Release text: notes/release-1.1.0.md.

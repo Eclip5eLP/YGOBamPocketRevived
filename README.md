@@ -43,6 +43,8 @@ ever being available to players.
   save you can restore on a new phone.
 - **Everything is free**: BAM Pro is always on, every purchase costs nothing, and energy never runs out.
 - **Collection**: a menu with every card in the game, the ones you own first.
+- **Where to get a card**: a card's popup (collection or deck editor) names its source: story chapter,
+  objective, shop bundle, booster pack, Arena or tournament reward.
 - **Profiles**: use any card you own as your picture, change your name and password, see other players' profiles and their decks,
   and copy a deck you like if you own the cards.
 - **Friends menu**: search for players, a list of all players, friend requests with a "new" mark on the main
