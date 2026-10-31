@@ -18,9 +18,12 @@ Flow:
            BamReadyNotification{slotCard of the opponent}; different: ChecksumErrorNotification to both.
            BamReady{forfeit} -> the opponent gets OpponentSurrenderedNotification; the duel ends.
   end      BamEnd{checksum, externalIdWinner} from both -> BamEndNotification{winnerExternalId, redeemCode 0};
-           a winner != 0 ends the duel and both get PlayCombatEndNotification{tournamentLevel}.
+           a winner != 0 ends the duel.
   timeout  an opponent who sends nothing on the PvP connection for DISCONNECT_SECONDS gets reported to the other
            player as OpponentDisconnectedNotification and the duel ends.
+  result   a duel that ends with a winner (BamEnd, surrender, disconnect, or leaving it for a new search) moves both
+           players on the tournament ladder (Teams.record_result) and both get PlayCombatEndNotification{tournamentLevel}
+           with their new level. An out-of-sync duel counts for nobody.
 """
 
 import random
@@ -88,13 +91,21 @@ class LivePvP:
             if not duel.over and now - self.last_seen.get(other, now) > DISCONNECT_SECONDS:
                 self.log.info("live pvp %s: %s timed out", duel.id, other)
                 self._notify(uid, P + "readyforcombat.amf.OpponentDisconnectedNotification", {"opponentExternalId": float(other)})
-                self._finish(duel)
+                self._finish(duel, winner=uid)
 
-    def _finish(self, duel):
+    def _finish(self, duel, winner=None):
         duel.over = True
         for uid in duel.players:
             if self.duels.get(uid) is duel:
                 del self.duels[uid]
+        if winner in duel.players:
+            for uid in duel.players:
+                try:
+                    level = self.teams.record_result(uid, uid == winner)
+                except Exception:
+                    self.log.exception("live pvp %s: ranking %s failed", duel.id, uid)
+                    level = None
+                self._notify(uid, P + "tournament.amf.PlayCombatEndNotification", {"tournamentLevel": level})
 
     # --- queue ----------------------------------------------------------------------------------------
     def enter_queue(self, uid, req):
@@ -106,7 +117,7 @@ class LivePvP:
             if old is not None:  # a new search abandons an unfinished duel
                 self._notify(old.other(uid), P + "livepvp.amf.OpponentSurrenderedNotification",
                              {"winnerExternalId": float(old.other(uid)), "loserExternalId": float(uid)})
-                self._finish(old)
+                self._finish(old, winner=old.other(uid))
             self.queue = [q for q in self.queue if q[0] != uid]
             self._check_timeouts()
             if not self.queue:
@@ -159,7 +170,7 @@ class LivePvP:
                 self._notify(other, P + "livepvp.amf.OpponentSurrenderedNotification",
                              {"winnerExternalId": float(other), "loserExternalId": float(uid)})
                 self.log.info("live pvp %s: %s surrendered", duel.id, uid)
-                self._finish(duel)
+                self._finish(duel, winner=other)
                 return None
             duel.ready[uid] = (int(req.get("roundNumber") or 0), req.get("checksumBefore"), list(req.get("slotCard") or []))
             if set(duel.ready) != set(duel.players):
@@ -197,7 +208,5 @@ class LivePvP:
                 self._notify(p, P + "livepvp.amf.BamEndNotification", {"winnerExternalId": float(w1), "redeemCode": 0.0})
             if w1:
                 self.log.info("live pvp %s: winner %s", duel.id, w1)
-                for p in duel.players:
-                    self._notify(p, P + "tournament.amf.PlayCombatEndNotification", {"tournamentLevel": self.teams.level(p)})
-                self._finish(duel)
+                self._finish(duel, winner=next((p for p in duel.players if str(p) == str(w1)), None))
             return None

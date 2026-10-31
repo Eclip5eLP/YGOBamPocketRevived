@@ -4,7 +4,10 @@ Live PvP relay (server/livepvp.py) against a running (dev) server, two fresh acc
 A queues (waits) -> B queues (matched: combat in the response) -> both receive StartDuelNotification with both
 decks -> StartRound from both -> StartRoundNotification -> two rounds of BamReady (each gets the other's cards) and
 BamEnd -> a checksum mismatch is reported -> new duel: surrender -> OpponentSurrenderedNotification ->
-cancel queue. Notifications arrive on later requests (pings), as on the phones.
+cancel queue. Ranking: both register for the tournament (level 81 = rank 15, 0 tokens); the win at the end of
+round 2 moves A to level 2 and keeps B at 81 (floor), both get PlayCombatEndNotification with their new level; the
+surrender moves A on to level 3; an out-of-sync duel changes nothing. Notifications arrive on later requests (pings),
+as on the phones.
 
 Usage: python tests/test_livepvp.py [--base http://127.0.0.1:8087]
 """
@@ -56,12 +59,27 @@ def ready(player, round_number, checksum, cards):
                                                "roundNumber": round_number, "forfeit": False})
 
 
+def level_of(notes):
+    end = [n for n in notes if n.class_alias.endswith("PlayCombatEndNotification")]
+    assert len(end) == 1, names(notes)
+    return int(end[0]["tournamentLevel"]["levelTemplateId"])
+
+
+def start_duel(a, b, deck_a, deck_b):
+    queue(a, deck_a)
+    queue(b, deck_b)
+    poll(a), poll(b)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="http://127.0.0.1:8087")
     base = ap.parse_args().base
     a, b = Player(base), Player(base)
     deck_a, deck_b = [1460] * 3 + [1459] * 12, [91] * 3 + [93] * 12
+    for p in (a, b):
+        resp, _ = pvp(p, T + "RegisterTournamentRequest")
+        assert int(resp["tournementLevel"]["levelTemplateId"]) == 81, resp
 
     resp, notes = queue(a, deck_a)
     assert resp["combat"] is None and notes == [], (resp, notes)
@@ -89,24 +107,29 @@ def main():
         notes_a = poll(a)
         assert names(notes_b) == ["BamReadyNotification"] and names(notes_a) == ["BamReadyNotification"]
         assert notes_a[0]["slotCard"][0]["card"] == 91 and notes_b[0]["slotCard"][0]["card"] == 1460
-        pvp(a, L + "BamEndRequest", {"checksum": checksum + 5, "externalIdWinner": 0})
-        _, notes_b = pvp(b, L + "BamEndRequest", {"checksum": checksum + 5, "externalIdWinner": 0})
-        assert names(notes_b) == ["BamEndNotification"] and names(poll(a)) == ["BamEndNotification"]
-    print("2 rounds OK")
+        winner = float(a.uid) if rnd == 2 else 0
+        pvp(a, L + "BamEndRequest", {"checksum": checksum + 5, "externalIdWinner": winner})
+        _, notes_b = pvp(b, L + "BamEndRequest", {"checksum": checksum + 5, "externalIdWinner": winner})
+        notes_a = poll(a)
+        assert names(notes_b)[0] == "BamEndNotification" and names(notes_a)[0] == "BamEndNotification"
+    assert level_of(notes_a) == 2 and level_of(notes_b) == 81, (level_of(notes_a), level_of(notes_b))
+    print("2 rounds OK, A won: level 81 -> 2, B stays 81")
 
+    start_duel(a, b, deck_a, deck_b)
     ready(a, 3, 777, [])
     _, notes_b = ready(b, 3, 778, [])
     assert names(notes_b) == ["ChecksumErrorNotification"] and names(poll(a)) == ["ChecksumErrorNotification"]
-    print("checksum mismatch OK")
+    print("checksum mismatch OK (no ranking)")
 
-    queue(a, deck_a)
-    queue(b, deck_b)
-    poll(a), poll(b)
-    pvp(b, L + "BamReadyRequest", {"slotCard": [], "checksumBefore": 0, "roundNumber": 1, "forfeit": True})
+    start_duel(a, b, deck_a, deck_b)
+    _, notes_b = pvp(b, L + "BamReadyRequest", {"slotCard": [], "checksumBefore": 0, "roundNumber": 1, "forfeit": True})
     notes_a = poll(a)
-    assert names(notes_a) == ["OpponentSurrenderedNotification"], names(notes_a)
+    assert names(notes_a) == ["OpponentSurrenderedNotification", "PlayCombatEndNotification"], names(notes_a)
     assert str(int(notes_a[0]["winnerExternalId"])) == a.uid
-    print("surrender OK")
+    assert level_of(notes_a) == 3 and level_of(notes_b) == 81, (level_of(notes_a), level_of(notes_b))
+    resp, _ = pvp(a, T + "GetTournamentInfoRequest")
+    assert int(resp["tournamentLevel"]["levelTemplateId"]) == 3, resp
+    print("surrender OK, A level 3")
 
     resp, _ = queue(a, deck_a)
     assert resp["combat"] is None

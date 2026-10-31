@@ -21,8 +21,20 @@ pays the entry fee locally, then RegisterTournament -> {tournament, tournementLe
 (logic/BuyTournamentEntryFeeFlow.as:44-74, TournamentManager.as:487-503). Start level 81 = rank 15, 0 tokens
 (config/ace/tournament/tournament_level_template.ace). Get(Previous)TopTournamentLeaderboard{numberPlayers}
 -> {tournamentLevel[]} (395-434, 528-542).
+
+Ranking (live tournament duels, server/livepvp.py): each result moves the player along the game's own level chain
+(LEVELS, from tournament_level_template.ace: a win goes to levelTemplateAfter, a loss to levelTemplateBefore; -1 =
+stay, so the 0-token level of a rank is its floor). The client compares the old and new level from
+PlayCombatEndNotification{tournamentLevel} to animate a token or a new rank (module/tournament/view/TournamentView.as
+CheckNewLevelReceived, TournamentManager.ConsumeTournamentLevelNotification). Level 80 is Elite (rank 0): the token
+shown is eliteToken (module/tournament/util/TournamentUtil.as GetRank); ours counts +1 per win, -1 per loss, min 0
+(INFERRED). eliteRank = position among Elite players by eliteToken (then who got there first), 1..100, else 0; the
+elite rewards (tournament_reward_template.ace, level 80) are by eliteRank ranges 1..100, rank 0 = outside them, and
+TournamentCacheLogic.GetTournamentRewardByLevel matches non-Elite levels on eliteRank 0 too. The top leaderboard is
+the Elite list (TournamentScreenLeaderPopup), so it holds Elite players only.
 """
 
+import os
 import random
 import secrets
 import threading
@@ -38,6 +50,26 @@ START_LEVEL = {"level": 81, "rank": 15, "token": 0}
 TOURNAMENT_TEMPLATES = list(range(2, 22))
 TOURNAMENT_SECONDS = 1209600
 TOURNAMENT_EPOCH = 1_767_225_600  # 2026-01-01 00:00 UTC
+ELITE_LEVEL = 80
+ELITE_RANKED = 100
+# level id: (rank, token, level after a loss, level after a win), config/ace/tournament/tournament_level_template.ace
+LEVELS = {
+    2: (15, 1, 81, 3), 3: (15, 2, 2, 5), 5: (15, 3, 3, 7), 7: (14, 1, 62, 8), 8: (14, 2, 7, 9), 9: (14, 3, 8, 10),
+    10: (13, 1, 63, 11), 11: (13, 2, 10, 12), 12: (13, 3, 11, 13), 13: (12, 1, 64, 14), 14: (12, 2, 13, 15),
+    15: (12, 3, 14, 16), 16: (11, 1, 65, 17), 17: (11, 2, 16, 18), 18: (11, 3, 17, 19), 19: (10, 1, 66, 20),
+    20: (10, 2, 19, 21), 21: (10, 3, 20, 22), 22: (10, 4, 21, 23), 23: (9, 1, 67, 25), 25: (9, 2, 23, 26),
+    26: (9, 3, 25, 27), 27: (9, 4, 26, 28), 28: (8, 1, 68, 29), 29: (8, 2, 28, 30), 30: (8, 3, 29, 31),
+    31: (8, 4, 30, 32), 32: (7, 1, 69, 33), 33: (7, 2, 32, 34), 34: (7, 3, 33, 35), 35: (7, 4, 34, 36),
+    36: (6, 1, 70, 37), 37: (6, 2, 36, 38), 38: (6, 3, 37, 39), 39: (6, 4, 38, 40), 40: (5, 1, 71, 41),
+    41: (5, 2, 40, 42), 42: (5, 3, 41, 43), 43: (5, 4, 42, 44), 44: (5, 5, 43, 46), 46: (4, 1, 72, 47),
+    47: (4, 2, 46, 48), 48: (4, 3, 47, 49), 49: (4, 4, 48, 50), 50: (4, 5, 49, 51), 51: (3, 1, 73, 52),
+    52: (3, 2, 51, 53), 53: (3, 3, 52, 54), 54: (3, 4, 53, 55), 55: (3, 5, 54, 56), 56: (2, 1, 74, 57),
+    57: (2, 2, 56, 58), 58: (2, 3, 57, 59), 59: (2, 4, 58, 60), 60: (2, 5, 59, 61), 61: (1, 1, 75, 76),
+    62: (14, 0, -1, 7), 63: (13, 0, -1, 10), 64: (12, 0, -1, 13), 65: (11, 0, -1, 16), 66: (10, 0, -1, 19),
+    67: (9, 0, -1, 23), 68: (8, 0, -1, 28), 69: (7, 0, -1, 32), 70: (6, 0, -1, 36), 71: (5, 0, -1, 40),
+    72: (4, 0, -1, 46), 73: (3, 0, -1, 51), 74: (2, 0, -1, 56), 75: (1, 0, -1, 61), 76: (1, 2, 61, 77),
+    77: (1, 3, 76, 78), 78: (1, 4, 77, 79), 79: (1, 5, 78, 80), 80: (0, -1, -1, -1), 81: (15, 0, -1, 2)
+}
 
 
 def week_index(now=None):
@@ -125,8 +157,10 @@ class Teams:
     def tournament(self, idx=None):
         idx = tournament_index() if idx is None else idx
         start = TOURNAMENT_EPOCH + idx * TOURNAMENT_SECONDS
+        # YGO_TOURNAMENT_TEMPLATE (dev/testing only): always this template, e.g. 5 = no deck restriction
+        template = int(os.environ.get("YGO_TOURNAMENT_TEMPLATE") or TOURNAMENT_TEMPLATES[idx % len(TOURNAMENT_TEMPLATES)])
         return amf3.AMF3Object(P + "tournament.amf.Tournament",
-                               tournementTemplateId=TOURNAMENT_TEMPLATES[idx % len(TOURNAMENT_TEMPLATES)],
+                               tournementTemplateId=template,
                                timeStarted=amf3.AMF3Date(start * 1000),
                                tournamentDurationInSeconds=float(TOURNAMENT_SECONDS))
 
@@ -134,14 +168,52 @@ class Teams:
         t = self.store.get_player_data(uid, "tournament") or {}
         return t.get(str(idx))
 
-    def level(self, uid, idx=None):
+    def _elites(self, idx):
+        """Elite uids, best first: most eliteToken, then who reached Elite first."""
+        rows = []
+        for user in self.store.all_users():
+            e = self._entry(user["uid"], idx)
+            if e and e["level"] == ELITE_LEVEL:
+                rows.append((-e.get("eliteToken", 0), e.get("eliteSince", 0), user["uid"]))
+        return [r[2] for r in sorted(rows)]
+
+    def level(self, uid, idx=None, elites=None):
         idx = tournament_index() if idx is None else idx
         e = self._entry(uid, idx)
         if not e:
             return None
+        elite_rank = 0
+        if e["level"] == ELITE_LEVEL:
+            elites = self._elites(idx) if elites is None else elites
+            pos = elites.index(uid) + 1 if uid in elites else 0
+            elite_rank = pos if pos <= ELITE_RANKED else 0
         return amf3.AMF3Object(P + "tournament.amf.TournamentLevel", externalId=float(uid),
-                               levelTemplateId=e["level"], eliteRank=e.get("eliteRank", 0),
+                               levelTemplateId=e["level"], eliteRank=elite_rank,
                                eliteToken=e.get("eliteToken", 0))
+
+    def record_result(self, uid, won):
+        """One live tournament duel result; returns the new TournamentLevel (None if not registered)."""
+        with self.lock:
+            idx = tournament_index()
+            t = self.store.get_player_data(uid, "tournament") or {}
+            e = t.get(str(idx))
+            if not e:
+                return None
+            old = e["level"]
+            if old == ELITE_LEVEL:
+                e["eliteToken"] = max(0, e.get("eliteToken", 0) + (1 if won else -1))
+            else:
+                _, _, before, after = LEVELS.get(old, LEVELS[START_LEVEL["level"]])
+                new = after if won else before
+                if new > 0 and new in LEVELS:
+                    e["level"] = new
+                    e["rank"], e["token"] = LEVELS[new][0], LEVELS[new][1]
+                    if new == ELITE_LEVEL:
+                        e["eliteToken"], e["eliteSince"] = 0, time.time()
+            e["wins" if won else "losses"] = e.get("wins" if won else "losses", 0) + 1
+            self.store.set_player_data(uid, "tournament", t)
+            self.log.info("tournament uid %s %s: level %s -> %s", uid, "won" if won else "lost", old, e["level"])
+        return self.level(uid, idx)
 
     def register(self, uid):
         with self.lock:
@@ -156,10 +228,5 @@ class Teams:
 
     def leaderboard(self, count, previous=False):
         idx = tournament_index() - (1 if previous else 0)
-        rows = []
-        for user in self.store.all_users():
-            e = self._entry(user["uid"], idx)
-            if e:
-                rows.append((e.get("rank", 15), -e.get("token", 0), e.get("eliteRank", 0), user["uid"]))
-        rows.sort()
-        return [self.level(r[3], idx) for r in rows[:max(1, min(int(count or TOP), 200))]]
+        elites = self._elites(idx)
+        return [self.level(uid, idx, elites) for uid in elites[:max(1, min(int(count or TOP), 200))]]

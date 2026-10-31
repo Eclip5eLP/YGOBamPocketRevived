@@ -1650,3 +1650,36 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
 - Next (part 2): a real duel between two emulators (second AVD); tournament level changes on win/loss (today the
   level is only echoed); possibly a friend challenge entry point (ReadyForCombat SendCombat/AcceptCombat) so live
   duels aren't limited to the tournament queue.
+
+### 6.46 Live PvP part 2: tournament ranking, first real live duel between two emulators
+
+- Ladder [VERIFIED data, `config/ace/tournament/tournament_level_template.ace`]: 76 levels, each {rank, token,
+  levelTemplateBefore, levelTemplateAfter}. Start 81 = rank 15, 0 tokens. A win goes to levelTemplateAfter, a loss
+  to levelTemplateBefore; -1 = no move (the 0-token level of each rank, 62..75 and 81, is its floor). Level 80 =
+  rank 0 = Elite. Tokens per rank: 3 (ranks 15..11), 4 (10..6), 5 (5..2), rank 1 has 0..5.
+- Client [VERIFIED code]: `PlayCombatEndNotification{tournamentLevel}` is kept by
+  `TournamentManager.OnPlayCombatEndNotification` (`:511-516`); back on the Tournament screen
+  `TournamentView.CheckNewLevelReceived` compares old and new rank/token (`TournamentUtil.GetRank`: Elite shows
+  eliteToken) and animates a new rank or ±1 token. The top leaderboard is the Elite list
+  (`TournamentScreenLeaderPopup`, sorted by eliteRank). Rewards (`tournament_reward_template.ace`) match on
+  levelTemplateId and eliteRank range; Elite rewards for eliteRank 1..100, eliteRank 0 matches the 0..0 rows
+  (`TournamentCacheLogic.GetTournamentRewardByLevel:279-291`).
+- Our rules (`server/teams.py` Teams.record_result, LEVELS): win/loss moves along that chain. Elite: eliteToken
+  +1 per win, -1 per loss, min 0 [INFERRED, the original server rule is unknown]; eliteRank = position among Elite
+  players by eliteToken, then who got there first, 1..100, else 0. GetTopTournamentLeaderboard returns Elite players
+  only. `server/livepvp.py` records a result whenever a duel ends with a winner: BamEnd winner, surrender,
+  disconnect timeout, or leaving a duel for a new search (the leaver loses); both players get
+  PlayCombatEndNotification with their new level. An out-of-sync duel counts for nobody.
+- Tournament rule [VERIFIED code]: every tournament template has a deck requirement (`requirement_template.ace`:
+  type 2 card family, 3 attribute, 4 none; template 5 = no restriction). `TournamentUtil.IsDeckValid` also needs a
+  custom default deck (instant decks don't count) with at least one monster with defStat > 0
+  (`DeckRequirementData.IsDeckValid`). The live PvP tutorial is a local game setting
+  (`LivePvpUtil.IsLivePvpTutoNeeded`, EGameSettings.LIVE_PVP_TUTO_COMPLETED). Dev override:
+  `YGO_TOURNAMENT_TEMPLATE=5` makes the dev server always run the no-restriction tournament.
+- [VERIFIED emulator] Two emulators (AVD ygo on emulator-5560, AVD ygo2 on emulator-5562), each logged in to a
+  local account, signed up (5 DP), with a custom play deck, after the tutorial: LIVE DUEL on both → matched in
+  4 s, both see the opponent's name and 3600 LP, StartRound from both, 10 BamReady relayed, the opponent's cards
+  appear and fight on each phone, no checksum error, the duel ended with a winner. Server: "winner 1000000150",
+  levels 81 → 2 (winner) and 81 → 81 (loser). Back on the Tournament screen the winner shows the first rank-15
+  token, the loser 0. Not seen: the win/lose screen itself (dismissed by my taps), surrender and disconnect on
+  phones (covered by the server test).

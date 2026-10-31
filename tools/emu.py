@@ -16,6 +16,8 @@ Drive the headless Android emulator for testing (see README, Development).
   python tools/emu.py stop             shut the emulator down
 
 SDK location: env ANDROID_SDK_ROOT, default C:/Users/ultim/dev/android-sdk.
+Second emulator (live PvP tests): YGO_EMU_AVD=ygo2 YGO_EMU_SERIAL=emulator-5562 python tools/emu.py start, and the
+same YGO_EMU_SERIAL for every other command on it.
 """
 
 import os
@@ -29,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SDK = Path(os.environ.get("ANDROID_SDK_ROOT", "C:/Users/ultim/dev/android-sdk"))
 ADB = str(SDK / "platform-tools" / "adb")
 SERIAL = os.environ.get("YGO_EMU_SERIAL", "emulator-5560")
+AVD = os.environ.get("YGO_EMU_AVD", "ygo")
 PKG = "air.com.konami.ygo"
 
 
@@ -48,7 +51,7 @@ def wait_boot(timeout=180):
 
 def start():
     port = SERIAL.split("-")[-1]
-    subprocess.Popen([str(SDK / "emulator" / "emulator"), "-avd", "ygo", "-no-window", "-no-audio", "-no-boot-anim",
+    subprocess.Popen([str(SDK / "emulator" / "emulator"), "-avd", AVD, "-no-window", "-no-audio", "-no-boot-anim",
                       "-gpu", "swiftshader_indirect", "-memory", "4096", "-port", port],
                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     wait_boot()

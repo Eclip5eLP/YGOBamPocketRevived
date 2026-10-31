@@ -3,7 +3,7 @@
 Phase 3 teams + tournament registration against a running (dev) server, fresh account A:
 GetTeam 0 -> JoinTeam picks a team -> GetTeam returns it -> NewScore needs the token from GetNewScoreToken
 -> player/team info show the score -> CancelJoinTeam leaves. Tournament: level null before
-RegisterTournament, level 81 after, A on the top leaderboard.
+RegisterTournament, level 81 after, A not on the top leaderboard (Elite players only).
 
 Usage: python tests/test_teams.py [--base http://127.0.0.1:8087]
 """
@@ -52,7 +52,7 @@ def main():
     assert reg["tournementLevel"]["levelTemplateId"] == 81, reg
     assert a.amf(T + "GetTournamentInfoRequest")["tournamentLevel"]["levelTemplateId"] == 81
     top = a.amf(T + "GetTopTournamentLeaderboardRequest", {"numberPlayers": 50})["tournamentLevel"]
-    assert any(t["externalId"] == float(a.uid) for t in top), top
+    assert all(t["levelTemplateId"] == 80 for t in top) and not any(t["externalId"] == float(a.uid) for t in top), top
     prev = a.amf(T + "GetPreviousTopTournamentLeaderboardRequest", {"numberPlayers": 3})
     assert prev["exception"] is None
     print("tournament registration + leaderboards OK")
