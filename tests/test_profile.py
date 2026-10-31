@@ -3,7 +3,7 @@
 Profile API (server/profiles.py) against a running (dev) server, two fresh accounts A and B:
 preset icon list and PNGs -> A picks an icon -> A's /picture serves it -> B reads A's public profile ->
 rename (taken name refused, then OK; login with the new name works) -> password change (wrong old password
-refused, then OK; old password no longer works) -> bad token and unknown actions refused.
+refused, then OK; old password no longer works) -> edit page (web view) -> bad token and unknown actions refused.
 
 Usage: python tests/test_profile.py [--base http://127.0.0.1:8087]
 """
@@ -74,6 +74,15 @@ def main():
     assert post_profile(base, a.token, action="password", old="secret123", new="newsecret1") == {"ok": True}
     assert can_login(base, new_name, "newsecret1") and not can_login(base, new_name, "secret123")
     print("password OK")
+
+    q = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "http://x/fb/connect/login_success.html"})
+    page = get(base, "/fb/dialog/revival_profile?" + q).decode()
+    assert "Change username" in page and page.count('name="icon"') == len(icons), page[:300]
+    form = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "x", "action": "icon", "icon": "2"}).encode()
+    page = urllib.request.urlopen(base + "/fb/dialog/revival_profile", data=form).read().decode()
+    assert "Picture changed." in page and 'value="2" class="sel"' in page
+    assert "expired" in get(base, "/fb/dialog/revival_profile?access_token=bad").decode()
+    print("edit page OK")
 
     assert "error" in post_profile(base, "not-a-token", action="icon", icon="1")
     assert "error" in post_profile(base, a.token, action="delete_everything")

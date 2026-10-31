@@ -135,6 +135,9 @@ class FakeFacebook:
             return self._graph_object(rest, query)
         if path.startswith("/fb/api/method/fql."):
             return self._fql_friends(query or form)
+        if path == "/fb/dialog/revival_profile" and self.profiles is not None:
+            from profiles import edit_dialog
+            return edit_dialog(self.profiles, self.store, query, form)
         if path.startswith("/fb/dialog/apprequests"):
             return self._apprequests(query, ip)
         if path in ("/fb/logout.php", "/fb/connect/login_success.html"):

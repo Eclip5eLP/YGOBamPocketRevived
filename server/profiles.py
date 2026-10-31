@@ -9,11 +9,16 @@ password change. Served on the fake Graph API the client already talks to (serve
   POST /fb/graph/me/revival_profile          access_token + action=icon (icon=n) | rename (name=)
                                              | password (old=, new=); answers {"ok": true} or {"error": msg}
 
+  GET/POST /fb/dialog/revival_profile         edit page shown in the game's web view (EDIT PROFILE button):
+                                             picture grid, rename and password forms, Close
+
 Preset pictures are built by tools/content_mods.profile_icons into <content_dir>/server/icons/.
 """
 
+import html
 import json
 import os
+import urllib.parse
 import zlib
 
 import amf3
@@ -106,3 +111,52 @@ class Profiles:
             return {"error": str(e)}
         self.log.info("profile %s: %s", uid, action)
         return {"ok": True}
+
+
+# shown in the game's in-app web view (like the invite dialog): Close first, compact
+EDIT_PAGE = """<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{{margin:0;font-family:sans-serif;background:#0b1730;color:#eef;padding:8px;font-size:14px}}
+h2{{font-size:15px;margin:14px 0 6px}} a.close,button{{display:block;width:100%;box-sizing:border-box;padding:9px;
+background:#2d6cdf;color:#fff;text-align:center;border:0;border-radius:6px;text-decoration:none;font-size:15px}}
+input{{width:100%;box-sizing:border-box;padding:9px;margin-bottom:6px;font-size:15px;border-radius:6px;
+border:1px solid #456;background:#12244a;color:#fff}} .msg{{padding:8px;border-radius:6px;margin:8px 0;background:#1d4a2a}}
+.err{{background:#5a1d1d}} .icons{{display:flex;flex-wrap:wrap;gap:6px}} .icons button{{width:64px;height:64px;padding:0;
+background:none;border:3px solid transparent}} .icons button.sel{{border-color:#f2c200}} .icons img{{width:58px;height:58px;
+border-radius:4px}}</style></head><body><a class="close" href="{close}">Close</a>{message}
+<h2>Picture</h2><form method="post" class="icons">{hidden}<input type="hidden" name="action" value="icon">{icons}</form>
+<h2>Username</h2><form method="post">{hidden}<input type="hidden" name="action" value="rename">
+<input name="name" value="{name}" maxlength="20" autocomplete="off"><button>Change username</button></form>
+<h2>Password</h2><form method="post">{hidden}<input type="hidden" name="action" value="password">
+<input name="old" type="password" placeholder="Current password" autocomplete="current-password">
+<input name="new" type="password" placeholder="New password (6+ characters)" autocomplete="new-password">
+<button>Change password</button></form></body></html>"""
+
+
+def edit_dialog(profiles, store, query, form):
+    """The edit page for the player owning access_token; POSTs apply one change and show the page again."""
+    value = lambda key: (form.get(key) or query.get(key) or [""])[0]  # noqa: E731
+    token, redirect = value("access_token"), value("redirect_uri") or "/fb/connect/login_success.html"
+    close = redirect + ("&" if "?" in redirect else "?") + "request=revival_profile"
+    uid = store.uid_for_token(token)
+    if uid is None:
+        body = EDIT_PAGE.split("<h2>")[0].format(close=html.escape(close),
+                                                 message='<p class="msg err">Your login has expired. '
+                                                         'Log in again from the game.</p>')
+        return 200, "text/html; charset=utf-8", (body + "</body></html>").encode("utf-8")
+    message = ""
+    if form.get("action"):
+        result = profiles.update(uid, form)
+        done = {"icon": "Picture changed.", "rename": "Username changed.", "password": "Password changed."}
+        message = (f'<p class="msg err">{html.escape(result["error"])}</p>' if "error" in result else
+                   f'<p class="msg">{done.get(value("action"), "Saved.")}</p>')
+    user = store.user_by_uid(uid)
+    current = store.get_player_data(uid, "icon")
+    hidden = "".join(f'<input type="hidden" name="{k}" value="{html.escape(v)}">'
+                     for k, v in (("access_token", token), ("redirect_uri", redirect)))
+    icons = "".join(f'<button name="icon" value="{i["id"]}" class="{"sel" if i["id"] == current else ""}">'
+                    f'<img src="/fb/graph/revival_icons/{i["id"]}" alt="{html.escape(i["card"])}"></button>'
+                    for i in profiles.icon_list())
+    body = EDIT_PAGE.format(close=html.escape(close), message=message, hidden=hidden, icons=icons,
+                            name=html.escape(user["username"]))
+    return 200, "text/html; charset=utf-8", body.encode("utf-8")
