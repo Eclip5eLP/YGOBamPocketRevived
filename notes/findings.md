@@ -1788,3 +1788,16 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   error) played normally; after the duel back to 6/min per client.
 - Friends page: online players have a green dot on their picture; "offline" text removed (offline = no dot, no
   Live duel button). The dot's CSS class is `dot` (the page already uses `on` for the active tab).
+
+### 6.51 Immemorial Cataclysm cover: best effort with the game's 155 px art
+
+- All card pictures in the game data are 155x155 (`Local Store/asset/cards`, 1177 of 1184 files; the rest 143-144 px)
+  [VERIFIED]; the original series 2 covers (`shop_all_1` frames 6-10, 220x313) show a sharp cut-out monster on a
+  coloured radial background, drawn from larger art. The owner chose a best effort with the game's own art.
+- `tools/content_mods.compose_cover` rewritten: radial gradient in the pack colour, the card art upscaled (bicubic +
+  light unsharp mask) and faded at its edges with a soft oval mask, the banner from cover 9 recoloured; the shared
+  template (logo, emblem, rail with gems, frame) is the per-pixel median of covers 6-10 with a soft alpha from how
+  much the covers differ (one outlier allowed). This removed the fringe pixels around the gems and the speckled
+  frame edge of the old composite. Shop package 1.1.12.
+- [VERIFIED emulator] the shop asked to download the new shop package (2.78 MB), then showed the new cover in the
+  booster list next to the original series 2 covers.

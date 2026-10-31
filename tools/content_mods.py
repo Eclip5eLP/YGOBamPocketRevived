@@ -150,44 +150,64 @@ def card_art(ctx, template_id):
     raise RuntimeError(f"no art for card {template_id}")
 
 
-SERIES_2_COVERS = [6, 7, 8, 9]  # original series 2 covers in shop_booster_covers_00NN (same layout)
+SERIES_2_COVERS = [6, 7, 8, 9, 10]  # original series 2 covers in shop_booster_covers_00NN (same layout)
 
 
-def compose_cover(ctx, art, banner_hue, art_box=(0.5, 0.42), art_scale=1.0):
-    """A booster cover in the original style: the template shared by the series 2 covers (logo, emblem, rail with
-    rarity gems, frame) over the card art, with a banner recoloured to banner_hue (0-360).
-
-    Pixels equal in all series 2 covers are template; the rest is pack-specific (art above the banner line,
-    banner below), taken from art and from cover 7's banner respectively. art_box: art focus point (x, y)."""
+def _cover_template():
+    """Per pixel of the series 2 covers: the median colour and how template-like the pixel is (0..255): 255 where
+    the covers agree (logo, emblem, rail with rarity gems, frame), fading to 0 where they differ (each pack's art).
+    The median and the soft edge keep the anti-aliased template edges clean (notes 6.51)."""
     from PIL import Image
-    import colorsys
     covers = [atlas_frame("asset/module/shop", "shop_all_1", f"shop_booster_covers_{n:04d}").load()
               for n in SERIES_2_COVERS]
-    base_img = atlas_frame("asset/module/shop", "shop_all_1", f"shop_booster_covers_{SERIES_2_COVERS[1]:04d}")
-    w, h = base_img.size
-    banner_top = int(h * 0.71)
-    scale = max(w / art.width, banner_top / art.height) * art_scale
-    art = art.resize((int(art.width * scale) + 1, int(art.height * scale) + 1), Image.LANCZOS)
-    ox = int(min(max(art.width * art_box[0] - w / 2, 0), art.width - w))
-    oy = int(min(max(art.height * art_box[1] - banner_top / 2, 0), art.height - banner_top))
-    art_px = art.load()
-    out = base_img.copy()
-    px = out.load()
+    w, h = 220, 313
+    alpha, median = Image.new("L", (w, h)), Image.new("RGBA", (w, h))
+    ap, mp = alpha.load(), median.load()
     for y in range(h):
         for x in range(w):
             vals = [c[x, y] for c in covers]
-            if max(max(v[i] for v in vals) - min(v[i] for v in vals) for i in range(4)) <= 24:
-                continue  # template pixel
-            r, g, b, a = px[x, y]
-            if a == 0:
-                continue
-            if y < banner_top:
-                ar, ag, ab, _ = art_px[x + ox, y + oy]
-                px[x, y] = (ar, ag, ab, a)
-            else:
-                hh, ll, ss = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
-                nr, ng, nb = colorsys.hls_to_rgb(banner_hue / 360, ll, ss)
-                px[x, y] = (int(nr * 255), int(ng * 255), int(nb * 255), a)
+            mp[x, y] = med = tuple(sorted(v[i] for v in vals)[len(vals) // 2] for i in range(4))
+            d = sorted(max(abs(v[i] - med[i]) for i in range(3)) for v in vals)[-2]  # one outlier allowed
+            ap[x, y] = 255 if d <= 16 else (0 if d >= 70 else int(255 * (70 - d) / 54))
+    return median, alpha
+
+
+def compose_cover(ctx, art, banner_hue, focus=(0.5, 0.45), zoom=1.0):
+    """A booster cover in the style of the series 2 covers: the card art on a radial gradient in the pack colour,
+    faded at its edges (the originals show a cut-out monster), under the shared template, with the banner
+    recoloured to banner_hue (0-360). Card art is only 155 px (Local Store asset/cards), so the art is upscaled
+    with a light sharpen; original quality would need a larger illustration (notes 6.51)."""
+    from PIL import Image, ImageDraw, ImageFilter
+    import colorsys
+    base = atlas_frame("asset/module/shop", "shop_all_1", f"shop_booster_covers_{SERIES_2_COVERS[3]:04d}")
+    w, h = base.size
+    banner_top = int(h * 0.71)
+    layer = Image.new("RGBA", (w, h))
+    lp = layer.load()
+    cx, cy = w * 0.5, h * 0.4
+    for y in range(h):
+        for x in range(w):
+            t = min(1.0, (((x - cx) / w) ** 2 + ((y - cy) / h) ** 2) ** 0.5 * 1.9)
+            r, g, b = colorsys.hls_to_rgb(banner_hue / 360, 0.62 - 0.38 * t, 0.85)
+            lp[x, y] = (int(r * 255), int(g * 255), int(b * 255), 255)
+    size = int(205 * zoom)
+    big = art.resize((size, size), Image.BICUBIC).filter(ImageFilter.UnsharpMask(radius=1.2, percent=60, threshold=2))
+    mask = Image.new("L", (size, size), 0)
+    ImageDraw.Draw(mask).ellipse((size * 0.04, size * 0.02, size * 0.96, size * 1.05), fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(size * 0.07))
+    layer.paste(big, (int(w * 0.46 - size * focus[0]), int(banner_top * 0.58 - size * focus[1])), mask)
+    banner = base.crop((0, banner_top, w, h))
+    bp = banner.load()
+    for y in range(banner.height):
+        for x in range(w):
+            r, g, b, a = bp[x, y]
+            _, ll, ss = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+            nr, ng, nb = colorsys.hls_to_rgb(banner_hue / 360, ll, ss)
+            bp[x, y] = (int(nr * 255), int(ng * 255), int(nb * 255), a)
+    layer.paste(banner, (0, banner_top))
+    median, alpha = _cover_template()
+    out = Image.composite(median, layer, alpha)
+    out.putalpha(base.getchannel("A"))
     return out
 
 
@@ -251,10 +271,9 @@ def immemorial_cataclysm(ctx):
     notes/pack_split_proposal.md, new cover frame 11 (Poseidra, the Atlantean Dragon, ocean-teal banner)."""
     cards = _split_cards(ctx, "Immemorial Cataclysm")
     counts = create_loot_table(ctx, 27, 2001, cards)
-    cover = compose_cover(ctx, card_art(ctx, _card_by_name(ctx, "Poseidra, the Atlantean Dragon")), banner_hue=185,
-                          art_box=(0.45, 0.45))
+    cover = compose_cover(ctx, card_art(ctx, _card_by_name(ctx, "Poseidra, the Atlantean Dragon")), banner_hue=192)
     add_atlas_frames(ctx, "shop", "shop_all", "asset/list/module/shop_list.xml",
-                     {"shop_booster_covers_0011": cover}, version="1.1.10")
+                     {"shop_booster_covers_0011": cover}, version="1.1.12")
     add_booster_pack(ctx, {
         "shopItemId": 2001, "currency": "RMT", "cost": 15, "id": 11,
         "name": "PACK_5_SERIES_2", "description": "PACK_5_SERIES_2_DESC",
