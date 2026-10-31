@@ -2095,3 +2095,26 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   sending it ("live duel challenge: X -> 0"). Now: tutorial, then the friend search when it closes.
   Second try (tutorial already seen): challenge popup on the emulator, ACCEPT, paired "challenge" (unranked), duel
   played, winner recorded, emulator back on the Tournament screen with its rank unchanged.
+
+### 6.62 Owner's phone test: card sources, first fusion pack, fusion tutorial (2026-10-31)
+
+- **"Coming soon!"** (BuyCardPopup.GetCardStatus knows card shop, crafting, its booster packs, tournament themes):
+  `content_mods.card_sources` writes config/cardsources.json (458 cards): story duel rewards by chapter
+  (bundle_template NODE_REWARD/NODE_COMPLETION → storyNodeTemplateId → storynodetemplate.storyMapTemplateId →
+  world node xmlNodeName), objectives by name (QUEST_REWARD → quest_template name), shop bundles on sale (starter
+  decks, deals), Arena weekly sets and the God card milestones (rewards.json). `com.revival.shop.CardSource` reads it
+  like boosterpacks.json; the popup shows it instead of Coming soon. Card shop cards still locked by chapter
+  (ShopUnlocks) were sold by this popup: now "Clear chapter N in Story mode to buy it in the card shop."
+  Collection: the card view and the preview open this popup too (ShopCardView collection mode, CollectionPanel).
+  [VERIFIED emulator] Ancient Sorcerer → chapter 5 text; A Feather of the Phoenix → story chapter 32 + objective
+  "Star God 3".
+- **First fusion card from a pack** (original behaviour, never reached live: no fusion cards were sold):
+  ShopBoosterPackView.OnPackageConsumed skipped the opening animation (PackageBoughtPopup) when the pack held the
+  first fusion card and showed the fusion tutorial popup instead (FusionCardUtils marks it seen when shown). Now the
+  animation always plays and the tutorial popup comes when it closes.
+- **Fusion tutorial popup**: the close (X) button shared OnTouch with PLAY and started the tutorial too; X now closes.
+- **Fusion tutorial softlock**: round 2 kept BAM disabled until the player tapped the fusion icon (OnFusionZoom);
+  the text only hints at it ("Notice that if you tap on the Fusion icon…"). BAM is now enabled once the cards are
+  placed. The tutorial deck can fuse (Naturia Beast + any Beast, 4 Beasts in it). Pack/tutorial changes are not
+  emulator-tested (needs a pack that rolls a first fusion card).
+- Live duel from a new account: the phone still had the build before 6.61 (tutorial, then tournament screen).

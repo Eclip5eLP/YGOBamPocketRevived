@@ -1215,8 +1215,103 @@ SHOP_MODULE_EDITS = [
          super.Dispose();"""),
 ]
 
+# Fusion (never released by Konami, so these paths were never used; findings 6.62):
+# - a pack with the player's first fusion card skipped the opening animation and went straight to the fusion
+#   tutorial popup: the animation now always plays, the tutorial popup comes when it closes;
+# - the tutorial popup's close button started the tutorial as well (one handler for both buttons): it only closes;
+# - tutorial round 2 enabled BAM only after the player tapped the fusion icon (OnFusionZoom), which the text only
+#   hints at, so players got stuck: BAM is enabled once the cards are placed, as in the other rounds.
+BOOSTER_VIEW = "com.frimastudio.snowstorm.module.shop.view.ShopBoosterPackView"
+BOOSTER_VIEW_EDITS = [
+    ("""      private var mLootManager:ILootManagerYGO;
+""", """      private var mLootManager:ILootManagerYGO;
+
+      private var mRevivalFusionLoot:Array;
+"""),
+    ("""            if(FusionCardUtils.CheckForFusionTutorialFromLoot(aEvent.LootList))
+            {
+               return;
+            }""", """            this.mRevivalFusionLoot = aEvent.LootList;"""),
+    ("""         this.mCurrentBoosterPackDisplay.UpdateProgressBarValue();
+      }""", """         this.mCurrentBoosterPackDisplay.UpdateProgressBarValue();
+         if(this.mRevivalFusionLoot != null)
+         {
+            FusionCardUtils.CheckForFusionTutorialFromLoot(this.mRevivalFusionLoot);
+            this.mRevivalFusionLoot = null;
+         }
+      }"""),
+]
+FUSION_TUTO_POPUP = "com.frimastudio.snowstorm.project.popup.popups.FusionTutorialPopup"
+FUSION_TUTO_POPUP_EDITS = [
+    ("""      private function OnTouch(aEvent:Event) : void
+      {
+""", """      private function OnTouch(aEvent:Event) : void
+      {
+         if(aEvent.currentTarget == this.mCloseBtn)
+         {
+            DispatchPopupClosedEvent();
+            return;
+         }
+"""),
+]
+FUSION_TUTO = "com.frimastudio.snowstorm.module.cardgame.flowhandling.flowhandler.FusionTutorial"
+FUSION_TUTO_EDITS = [
+    ("""                  DisplayBubble(ECardGameStringId.FUSION_ROUND2_STEP4,null,false);
+                  return;""", """                  DisplayBubble(ECardGameStringId.FUSION_ROUND2_STEP4,null,false);"""),
+]
+
+# Card popup (Edit Deck, collection, crafting): a card shop card still locked by its chapter is not for sale yet, and
+# cards the game had no source for ("Coming soon!") say how to get them (com.revival.shop.CardSource, findings 6.62).
+BUY_CARD_POPUP = "com.frimastudio.snowstorm.module.shop.view.popup.BuyCardPopup"
+BUY_CARD_POPUP_EDITS = [
+    ("""   import starling.utils.Color;
+""", """   import starling.utils.Color;
+   import com.revival.shop.CardSource;
+   import com.revival.shop.ShopUnlocks;
+"""),
+    ("""         if(Boolean(shopItem) && !shopItem.backorder)""",
+     """         if(Boolean(shopItem) && !shopItem.backorder && ShopUnlocks.IsUnlocked(mCardVisual.CardTemplateId))"""),
+    ("""            case STATUS_INVALID:
+            default:
+               this.AddInfoText("popup_buycardpopup_comingsoon");""", """            case STATUS_INVALID:
+            default:
+               if(CardSource.Describe(mCardVisual.CardTemplateId) != null)
+               {
+                  this.AddSourceText(CardSource.Describe(mCardVisual.CardTemplateId));
+               }
+               else
+               {
+                  this.AddInfoText("popup_buycardpopup_comingsoon");
+               }"""),
+    ("""      private function AddInfoText(aLocalizationTag:String, ... args) : void""", """      private function AddSourceText(aText:String) : void
+      {
+         var infoText:TextField = new TextField(325,200,aText,EFonts.HANZEL_BOLD,26,Color.WHITE);
+         infoText.touchable = false;
+         infoText.autoScale = true;
+         infoText.vAlign = VAlign.CENTER;
+         infoText.hAlign = HAlign.CENTER;
+         infoText.x = mCardVisual.x + mCardVisual.width + 25;
+         infoText.y = mUiContainer.stage.stageHeight / 2 - infoText.height / 2;
+         mUiContainer.addChild(infoText);
+      }
+
+      private function AddInfoText(aLocalizationTag:String, ... args) : void"""),
+]
+
 SHOP_CARD_VIEW = "com.frimastudio.snowstorm.module.shop.view.ShopCardView"
 SHOP_CARD_VIEW_EDITS = [
+    # collection: a tapped card opens the card popup with its buy button / how to get it (as in Edit Deck), not the
+    # plain big card
+    ("""      private function ShowFullCardDisplay() : void
+      {
+""", """      private function ShowFullCardDisplay() : void
+      {
+         if(CollectionMode)
+         {
+            PopupManager.Show(new BuyCardPopupData(this.mCurrentEventCardTemplate.id),false);
+            return;
+         }
+"""),
     ("""         this.CreateCardCountDisplay(filterContainer);
          this.UpdateCardList();""", """         this.CreateCardCountDisplay(filterContainer);
          if(CollectionMode)
@@ -1238,6 +1333,7 @@ SHOP_CARD_VIEW_EDITS = [
    import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListData;
    import com.revival.collection.CollectionPanel;
    import com.revival.shop.ShopUnlocks;
+   import com.frimastudio.snowstorm.module.shop.view.popup.data.BuyCardPopupData;
    import starling.core.Starling;
 """),
     # chapter-locked card shop entries (as3_new/com/revival/shop/ShopUnlocks.as)
@@ -1533,6 +1629,10 @@ PATCHES = {
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,
+    BUY_CARD_POPUP: BUY_CARD_POPUP_EDITS,
+    BOOSTER_VIEW: BOOSTER_VIEW_EDITS,
+    FUSION_TUTO_POPUP: FUSION_TUTO_POPUP_EDITS,
+    FUSION_TUTO: FUSION_TUTO_EDITS,
     BUY_CARD_DISPLAY: BUY_CARD_DISPLAY_EDITS,
     MAIN_MENU_VIEW: [_no_icon("mLoginButton", "facebookIcon")] + MAIN_MENU_VIEW_EDITS,
     LOGIN_VIEW: [_no_icon("mLoginBtn", "facebookIcon"), _no_icon("mBtnLoginMini", "facebookIcon")],

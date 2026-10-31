@@ -5,7 +5,7 @@ package com.revival.collection
    import com.frimastudio.mobile.adaptativeui.scroller.event.ScrollerEvent;
    import com.frimastudio.mobile.asset.AssetManagerWrapper;
    import com.frimastudio.mobile.util.MobileUtils;
-   import com.frimastudio.snowstorm.module.deckbuilder.popup.data.FullCardPopupData;
+   import com.frimastudio.snowstorm.module.shop.view.popup.data.BuyCardPopupData;
    import com.frimastudio.snowstorm.project.inventory.amf.CardTemplate;
    import com.frimastudio.snowstorm.project.popup.PopupManager;
    import com.frimastudio.snowstorm.project.ui.EScale9Definition;
@@ -182,10 +182,8 @@ package com.revival.collection
          {
             return;
          }
-         var popupData:FullCardPopupData = new FullCardPopupData();
-         popupData.DisplayQuantity = true;
-         popupData.CardTemplateId = this.mPreviewId;
-         PopupManager.Show(popupData);
+         // the card popup with its buy button or how to get it (as in Edit Deck), not just the big card
+         PopupManager.Show(new BuyCardPopupData(this.mPreviewId),false);
       }
    }
 }

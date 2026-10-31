@@ -3,6 +3,7 @@ Content mods applied in order by tools/build_content.py. Each mod takes the buil
 (ctx.ace / ctx.raw_replace / ctx.strings) or art packages (ctx.package_file). Mods hold only our own changes.
 """
 
+import collections
 import copy
 import io
 import json
@@ -500,6 +501,73 @@ def revival_rewards(ctx):
         ctx.set_text("en", "inventory", f"revival_card_{tid}", name, resource_id=items[tid]["resourceNameId"])
 
 
+def card_sources(ctx):
+    """config/cardsources.json {card template id: "how to get it"} for the card popup (com.revival.shop.CardSource,
+    BuyCardPopup patched). The game itself only knows the card shop, crafting, its booster packs and tournament
+    themes and shows "Coming soon!" for everything else; this covers the rest: story duel rewards (first win / replays,
+    by chapter), objectives, shop bundles (starter decks, deals), Arena weekly rewards and the God card milestones
+    (server/rewards.py). Chapter-locked card shop cards are handled by the client (ShopUnlocks). Runs after
+    revival_rewards (it reads rewards.json)."""
+    now = time.time() * 1000
+    cards = {t["id"] for t in ctx.ace("config/ace/inventory/item_template.ace") if "cardRarityId" in t}
+    # chapter of a story map: the world map 1 node that opens it (ShopUnlocks counts chapters the same way)
+    chapter_of_map = {n["storyMapTemplateId"]: n["xmlNodeName"] for n in ctx.ace("config/ace/worldmap/worldnodetemplate.ace")
+                      if n.get("worldMapTemplateId") == 1}
+    map_of_node = {n["id"]: n["storyMapTemplateId"] for n in ctx.ace("config/ace/worldmap/storynodetemplate.ace")}
+    shop = ctx.ace("config/ace/shop/shop.ace")
+    on_sale = {it["id"]: g["id"] for sh in shop for g in sh["shopItemGroups"] for it in g["shopItem"]
+               if it["startDate"] <= now <= it["endDate"]}
+    found = collections.defaultdict(dict)  # card -> kind -> best value (lowest chapter, first objective name)
+    _, quest_names, _ = ctx.strings("en", "quest")
+    quest_name = {q["id"]: quest_names.get(int(q["resourceNameId"]), "") for q in ctx.ace("config/ace/quest/quest_template.ace")}
+
+    def add(card, kind, value=0):
+        if card in cards and (kind not in found[card] or value < found[card][kind]):
+            found[card][kind] = value
+
+    for b in ctx.ace("config/ace/bundle/bundle_template.ace"):
+        for p in b["products"]:
+            card = p.get("itemTemplateId")
+            if not card:
+                continue
+            kind = b["bundleTypeId"]
+            if kind in (1, 2):  # NODE_REWARD (first win of a duel), NODE_COMPLETION (replays)
+                chapter = chapter_of_map.get(map_of_node.get(b.get("storyNodeTemplateId")))
+                if chapter:
+                    add(card, "story" if kind == 1 else "replay", chapter)
+            elif kind == 4:  # QUEST_REWARD
+                add(card, "objective", quest_name.get(b.get("questTemplateId"), "") or "~")
+            elif kind == 3 and b.get("shopItemId") in on_sale:  # SHOP_BUNDLE on sale (starter decks, deals)
+                add(card, "bundle")
+    rewards = json.loads(ctx.server_files["rewards.json"])
+    for s in rewards["arena_sets"]:
+        for tier in s["tiers"]:
+            for card in tier:
+                add(card, "arena")
+    for rank, card in ((10, rewards["god_cards"]["obelisk"]), (5, rewards["god_cards"]["ra"])):
+        add(card, "god", rank)
+
+    texts = {}
+    for card, kinds in found.items():
+        lines = []
+        if "story" in kinds:
+            lines.append(f"Story mode reward: win its duel in chapter {kinds['story']}.")
+        if "replay" in kinds and "story" not in kinds:
+            lines.append(f"Story mode: can be won by replaying duels in chapter {kinds['replay']}.")
+        if "objective" in kinds:
+            name = kinds["objective"]
+            lines.append(f"Objective reward: {name}." if name != "~" else "Reward for completing an objective.")
+        if "bundle" in kinds:
+            lines.append("Comes in a deck or bundle in the shop.")
+        if "arena" in kinds:
+            lines.append("Weekly Arena reward for the top players.")
+        if "god" in kinds:
+            lines.append(f"Tournament: reach rank {kinds['god']}.")
+        texts[str(card)] = " ".join(lines[:2])
+    ctx.new_file("config/cardsources.json", json.dumps(texts, separators=(",", ":"), sort_keys=True).encode("utf-8"))
+    print(f"  card sources: {len(texts)} card(s) with a source text")
+
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -524,6 +592,7 @@ MODS = [
     wings_of_destiny,
     immemorial_cataclysm,
     revival_rewards,
+    card_sources,
     blazing_wind,
     world_select_icon,
     mainmenu_icons,
