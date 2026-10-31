@@ -1670,6 +1670,21 @@ WEB_EDITS = {
             list = JSON.parse(stream.readUTFBytes(stream.bytesAvailable)) as Array;
             stream.close();""", """            list = JSON.parse(Web.Param("boosterpacks") || "[]") as Array;"""),
     ],
+    # editable text (deck name box in the deck chooser, ComboBox): StageText is AIR-only; Ruffle could not even load
+    # the class (VerifyError StageTextInitOptions), so Edit Deck never finished loading. Same API on a TextField.
+    "com.frimastudio.mobile.display.NativeText": [
+        ("""   import flash.text.StageText;
+   import flash.text.StageTextInitOptions;
+""", """   import com.revival.web.WebStageText;
+"""),
+        ("""      private var st:StageText;""", """      private var st:WebStageText;"""),
+        ("""         var stio:StageTextInitOptions = new StageTextInitOptions(this.numberOfLines > 1);
+         this.st = new StageText(stio);""", """         this.st = new WebStageText(this.numberOfLines > 1);"""),
+    ],
+    # Stage.assignFocus / FocusDirection are AIR-only (not in Ruffle)
+    "com.frimastudio.mobile.display.combobox.ComboBox": [
+        ("""         this.mStageRef.assignFocus(null,FocusDirection.NONE);""", """         this.mStageRef.focus = null;"""),
+    ],
     # content host: the page's own origin (the game server's "cdn" may name another host or port)
     "com.frimastudio.snowstorm.project.player.PlayerManagerGT": [
         _web_import("com.frimastudio.snowstorm.project.player.PlayerManagerGT"),

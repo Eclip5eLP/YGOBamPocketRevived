@@ -30,8 +30,9 @@ PAGE = """<!doctype html>
 <title>Yugioh BAM Pocket Revived</title>
 <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
-/* the game lays itself out for a widescreen phone: keep 16:9 (black bars) instead of cutting the sides off */
-#game{width:min(100vw,177.78vh);height:min(100vh,56.25vw)}
+/* the game lays itself out once for a widescreen phone screen: a fixed 16:9 area (set by the script below, at most
+   1280x720 rendered pixels), scaled to the window with CSS; the game never sees a resize */
+#game{flex:none;transform-origin:center center}
 #loading{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:14px;background:#000;color:#cfd8e6;font:600 15px/1 system-ui,sans-serif;letter-spacing:.15em;z-index:1;
   transition:opacity .4s}
@@ -42,6 +43,7 @@ body{display:flex;align-items:center;justify-content:center}
 #login.open{display:flex}
 #login .box{position:relative;width:min(440px,94vw);height:min(600px,94vh);border-radius:10px;overflow:hidden;
   box-shadow:0 8px 40px rgba(0,0,0,.6);background:#0b1730}
+#login.wide .box{width:min(1000px,94vw);height:min(85vh,94vh)}
 #login iframe{width:100%;height:100%;border:0}
 #login .close{position:absolute;top:6px;right:8px;border:0;background:none;color:#cfd8e6;font:28px/1 system-ui;
   cursor:pointer}</style></head>
@@ -65,6 +67,19 @@ if (renderer) window.RufflePlayer.config.preferredRenderer = renderer;
 <script src="ruffle/ruffle.js"></script>
 <script>
 let player = null;
+// game area: 16:9, at most 1280x720 (rendering cost grows with the pixel count; the game's art is phone-sized)
+const gameBox = document.getElementById("game");
+// (a tab opened in the background reports a 0x0 window: then 1280x720)
+const GAME_W = innerWidth > 0 && innerHeight > 0 ? Math.round(Math.min(1280, innerWidth, innerHeight * 16 / 9)) : 1280;
+const GAME_H = Math.round(GAME_W * 9 / 16);
+gameBox.style.width = GAME_W + "px";
+gameBox.style.height = GAME_H + "px";
+function fitGame() {
+  if (innerWidth > 0 && innerHeight > 0)
+    gameBox.style.transform = "scale(" + Math.min(innerWidth / GAME_W, innerHeight / GAME_H) + ")";
+}
+fitGame();
+addEventListener("resize", fitGame);
 const fill = document.querySelector("#loading .fill");
 const setProgress = (f) => { fill.style.width = Math.round(Math.min(1, f) * 100) + "%"; };
 async function fetchGame() {
@@ -98,9 +113,16 @@ function finishLogin(link) {
 window.revivalLogin = function (url) {
   if (location.protocol === "https:") url = url.replace(/^http:/, "https:");
   loginFrame.src = url;
+  login.classList.toggle("wide", url.indexOf("/dialog/revival_") !== -1);  // friends, profile editor
   login.classList.add("open");
 };
 login.querySelector(".close").addEventListener("click", () => finishLogin(null));
+// the server's in-game pages (friends, profile editor) end on their redirect_uri, .../fb/connect/login_success.html
+loginFrame.addEventListener("load", () => {
+  let href = "";
+  try { href = loginFrame.contentWindow.location.href; } catch (e) { return; }
+  if (href.indexOf("/fb/connect/login_success.html") !== -1) finishLogin(href);
+});
 window.addEventListener("message", (e) => {
   if (e.origin === location.origin && e.data && "revivalLogin" in e.data) finishLogin(e.data.revivalLogin);
 });

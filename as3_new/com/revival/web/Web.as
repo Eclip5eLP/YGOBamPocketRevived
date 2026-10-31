@@ -1,6 +1,8 @@
 package com.revival.web
 {
+   import com.facebook.graph.core.FacebookURLDefaults;
    import flash.net.SharedObject;
+   import flash.net.URLVariables;
    import flash.utils.ByteArray;
    import starling.core.Starling;
 
@@ -25,6 +27,21 @@ package com.revival.web
       {
          var origin:String = Param("origin");
          return origin != "" ? origin : aDefault;
+      }
+
+      // URL of one of the server's in-game pages (fakefb dialogs: /revival_friends, /revival_profile), like
+      // DialogWindow.open builds it; the page closes when it reaches redirect_uri (login_success.html?...).
+      public static function DialogUrl(aMethod:String, aParams:Object) : String
+      {
+         var vars:URLVariables = new URLVariables();
+         for(var key:String in aParams)
+         {
+            vars[key] = aParams[key];
+         }
+         vars.app_id = "145583478967400";
+         vars.redirect_uri = FacebookURLDefaults.LOGIN_SUCCESS_SECUREURL;
+         vars.display = "touch";
+         return FacebookURLDefaults.GRAPH_URL.replace(/\/graph$/,"") + "/dialog" + aMethod + "?" + vars.toString();
       }
 
       // A parameter the page passes to the game (server/webgame.py PAGE: origin, boosterpacks); "" when missing.

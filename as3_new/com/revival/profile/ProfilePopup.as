@@ -14,6 +14,8 @@ package com.revival.profile
    import com.frimastudio.snowstorm.project.ui.ECommonButton;
    import com.frimastudio.utils.button.Scale9Button;
    import com.revival.friends.LiveChallenge;
+   import com.revival.web.Web;
+   import com.revival.web.WebLogin;
    import flash.display.Bitmap;
    import flash.display.Loader;
    import flash.events.IOErrorEvent;
@@ -346,6 +348,11 @@ package com.revival.profile
          var height:Number = NaN;
          try
          {
+            // browser version: the editor in a frame on the web page (no StageWebView there)
+            if(WebLogin.Open(Web.DialogUrl("/revival_profile",{"access_token":(FacebookProxy as FacebookManagerMobile).AccessToken}),this.OnWebEditClosed))
+            {
+               return;
+            }
             webView = new StageWebView();
             webView.stage = Starling.current.nativeStage;
             width = Math.min(webView.stage.stageWidth * 0.8,900);
@@ -357,6 +364,11 @@ package com.revival.profile
          {
             this.mLines.text = "The profile editor could not be opened.";
          }
+      }
+
+      private function OnWebEditClosed(aLocation:String) : void
+      {
+         this.OnEditClosed(null,null);
       }
 
       private function OnEditClosed(aResult:Object, aFail:Object) : void

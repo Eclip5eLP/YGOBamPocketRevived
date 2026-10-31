@@ -2026,3 +2026,33 @@ New mechanics (Synchro, Xyz) [INFERRED from the code above]:
   there; curl gets the SWF in 0.03 s.
 - Live deploy (with the release): `python tools/build_web.py --host ygo.eclip5e.com`, copy work/web and
   work/ruffle next to the live server (or pass --web-dir/--ruffle-dir), server.py + webgame.py + fakefb.py.
+
+### 6.59 Browser version: owner's test round (friends, profile editor, Edit Deck, layout) (2026-10-31)
+
+Owner's report: shop works but laggy; login works; profile opens but EDIT PROFILE says "could not be opened"; card
+art (decks, collection) loads very slowly; duels work but each turn is about twice as slow as the one before;
+Friends opens the old menus; Edit Deck hangs on its loading screen.
+- **Friends / profile editor** [VERIFIED friends in the built-in browser]: both are our own classes that open a
+  server page in a StageWebView (AIR-only; `new StageWebView()` throws in Ruffle → FriendsManager.Open returned
+  false → the old invite popup; ProfilePopup showed its error). In the browser they now open the page in the
+  login frame (`WebLogin.Open(Web.DialogUrl(...))`, `ExternalInterface.available` is false in AIR, so the APK
+  keeps its web view); the page closes the frame when it reaches the dialog's redirect_uri
+  (/fb/connect/login_success.html?...) and hands that URL back (query → the same OnClosed as in the app). Wide
+  frame for /dialog/revival_* pages. Friends manager opened and its Close closed the frame.
+- **Edit Deck hang** [VERIFIED]: `VerifyError #1014: Class flash.text::StageTextInitOptions could not be found` in
+  ComboBox.CreateMainTextField (deck chooser header) → `NativeText` uses AIR's StageText. Web build: NativeText
+  runs on `com.revival.web.WebStageText` (StageText's API on an input TextField); ComboBox's
+  `stage.assignFocus(null, FocusDirection.NONE)` (AIR-only) → `stage.focus = null`. Edit Deck now opens.
+  Open: the deck-name box draws white with black text, and on the test account the deck dropdown did not open
+  (the account may have no deck; not settled).
+- **AIR classes Ruffle lacks** (game imports vs. names in Ruffle's wasm): air.net.URLMonitor (declared only),
+  flash.display.FocusDirection (fixed), flash.events.LocationChangeEvent (old Facebook windows, replaced by the
+  frame), flash.filesystem.FileMode (only in replaced/skipped code), flash.text.StageText(+InitOptions) (fixed).
+- **Layout / render size**: the game lays itself out once for the screen it starts with; a later window resize
+  cut it off at the sides. The page now gives the game a fixed 16:9 area (at most 1280x720 rendered pixels, less on
+  smaller windows) and scales it to the window with CSS (clicks verified); this also caps Ruffle's rendering cost on
+  large/fullscreen windows. A tab opened in the background reports a 0x0 window at load → 1280x720 then.
+- **Speed (not fixed yet)**: card pictures load strictly one after another (QueuedCardLoaderImpl.LoadNextCard →
+  CardAssetManager.LoadCardByTemplateId, one HTTP request + decode + texture each, with setTimeout(…,1) steps in
+  starling AssetManager), which costs a few frames per card in Ruffle. The per-turn duel slowdown is unexplained.
+  Measuring needs the page in the foreground (a hidden built-in browser pane throttles timers).

@@ -1,6 +1,9 @@
 package com.revival.friends
 {
+   import com.facebook.graph.utils.FacebookDataUtils;
    import com.frimastudio.mobile.device.DeviceManager;
+   import com.revival.web.Web;
+   import com.revival.web.WebLogin;
    import com.frimastudio.snowstorm.project.facebook.FacebookManagerMobile;
    import com.frimastudio.snowstorm.project.facebook.FacebookMobile;
    import com.frimastudio.snowstorm.project.facebook.FacebookProxy;
@@ -30,6 +33,11 @@ package com.revival.friends
          var height:Number = NaN;
          try
          {
+            // browser version: the page in a frame on the web page (no StageWebView there)
+            if(WebLogin.Open(Web.DialogUrl("/revival_friends",{"access_token":(FacebookProxy as FacebookManagerMobile).AccessToken}),OnWebClosed))
+            {
+               return true;
+            }
             webView = new StageWebView();
             webView.stage = Starling.current.nativeStage;
             width = Math.min(webView.stage.stageWidth * 0.8,1000);
@@ -42,6 +50,11 @@ package com.revival.friends
          {
          }
          return false;
+      }
+
+      private static function OnWebClosed(aLocation:String) : void
+      {
+         OnClosed(aLocation != null ? FacebookDataUtils.getURLVariables(aLocation) : null,null);
       }
 
       private static function OnClosed(aResult:Object, aFail:Object) : void
