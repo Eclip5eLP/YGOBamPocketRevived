@@ -1,12 +1,9 @@
 # Browser version: research notes (2026-10-30)
 
-Status (2026-10-31): Ruffle spike run (findings 6.56). The game runs in Ruffle far enough to settle the big
-unknowns: AVM2 runs the 20 MB game, Starling/Stage3D draws (loading screen, the error popup with text and images),
-all game data (ace/AMF) loads, all managers start. It stops at startup step 10 of 28, the content package check,
-because Ruffle's `flash.filesystem.File` is a stub (never finds or writes files). Next: a web variant of the
-platform glue (below), starting with content packages loaded by URL instead of unzipped to app storage.
-Run it: `build_release.py --host 127.0.0.1:8090`, `python tools/web_spike.py`, open http://127.0.0.1:8090/
-(Ruffle in work/ruffle/, nightly 2026-10-31 self-hosted web build).
+Status (2026-10-31, evening): web build working up to the story world map (findings 6.57): title screen, offline
+play, main screen, popups, world map. Build: `python tools/build_web.py --host 127.0.0.1:8090`, serve:
+`python tools/web_spike.py`, open http://127.0.0.1:8090/. Next: world map nodes (no icons, clicks ignored),
+login without StageWebView, boosterpacks.json, save across reloads, production hosting at /webgame.
 
 ## What the game is made of
 

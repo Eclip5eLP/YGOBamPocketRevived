@@ -1597,3 +1597,153 @@ PERF_MODULE_EDITS = [
 if __import__("os").environ.get("YGO_PERF") == "1":
     PATCHES[ENGINE] = PATCHES[ENGINE] + PERF_EDITS
     PATCHES[MODULE_MANAGER] = PERF_MODULE_EDITS
+
+
+# --- Browser build only (YGO_WEB=1, tools/build_web.py; never in the APK, notes/browser_version.md) ------------
+# Ruffle has no AIR file storage (flash.filesystem.File is a stub), so: no content package check or download (the
+# content is served extracted under storage/, com.revival.web.Web.STORAGE), every app-storage path becomes that
+# URL, and the local save is kept in a SharedObject. Edits are appended to the class's APK edits.
+def _web_import(cls):
+    pkg = cls.rsplit(".", 1)[0]
+    return (f"package {pkg}\n{{\n", f"package {pkg}\n{{\n   import com.revival.web.Web;\n")
+
+
+def _storage_url(cls, *anchors):
+    """Edits replacing File.applicationStorageDirectory.url in each anchor (a unique line part) with Web.STORAGE."""
+    return [_web_import(cls)] + [(a, a.replace("File.applicationStorageDirectory.url", "Web.STORAGE"))
+                                 for a in anchors]
+
+
+WEB_EDITS = {
+    # the page's origin may carry a port (dev: 127.0.0.1:8090); the game adds the hard-coded port 80 after the host
+    # (EngineServerCom), which made "host:8090:80": keep a URL that already names a port
+    SERVERCOM: [
+        ("""         this.mServerUrl = param1.replace(_loc4_,_loc4_ + ":" + param2);""",
+         """         this.mServerUrl = _loc4_.indexOf(":",_loc4_.indexOf("//") + 2) != -1 ? param1 : param1.replace(_loc4_,_loc4_ + ":" + param2);"""),
+    ],
+    # content host: the page's own origin (the game server's "cdn" may name another host or port)
+    "com.frimastudio.snowstorm.project.player.PlayerManagerGT": [
+        _web_import("com.frimastudio.snowstorm.project.player.PlayerManagerGT"),
+        ("""         this.mPackageUrlServer = aResponse.cdn;""",
+         """         this.mPackageUrlServer = Web.Host(aResponse.cdn);"""),
+    ],
+    # no Android billing extension in the browser: a store that behaves like the APK's free billing stub
+    "com.frimastudio.mobile.apppurchase.AppPurchaseHandlerImpl": [
+        ("""package com.frimastudio.mobile.apppurchase
+{
+""", """package com.frimastudio.mobile.apppurchase
+{
+   import com.revival.web.WebStoreHandler;
+"""),
+        ("""            this.mStoreHandler = new GooglePlayHandler();""",
+         """            this.mStoreHandler = new WebStoreHandler();"""),
+    ],
+    "com.frimastudio.snowstorm.project.externalfile.ExternalFileControllerImpl": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+   import flash.utils.setTimeout;
+"""),
+        # nothing to check or download: report the files as ready (next frame, after the caller's listeners)
+        ("""      public function Init() : void
+      {
+""", """      public function Init() : void
+      {
+         setTimeout(dispatchEvent,1,new ExternalFileEvent(ExternalFileEvent.ON_FILE_READY));
+         return;
+"""),
+    ],
+    ENGINE: _storage_url(ENGINE, "var directory:String = File.applicationStorageDirectory.url;"),
+    "com.frimastudio.mobile.asset.AssetManagerWrapperImpl": [
+        _web_import("com.frimastudio.mobile.asset.AssetManagerWrapperImpl"),
+        ("""var prefix:String = File.applicationStorageDirectory.nativePath + "/";""",
+         """var prefix:String = Web.STORAGE;"""),
+        # downloaded assets are queued as File objects: URLs instead
+        ("""\n                     file = new File(path);
+                     pathList.push(file);""", """\n                     pathList.push(path);"""),
+        ("""\n                        file = new File(path);
+                        pathList.push(file);""", """\n                        pathList.push(path);"""),
+    ],
+    "com.frimastudio.mobile.asset.ExternalAssetManager": _storage_url(
+        "com.frimastudio.mobile.asset.ExternalAssetManager",
+        "aList[i] = File.applicationStorageDirectory.url + aList[i].toLowerCase();"),
+    "com.frimastudio.scrollingengine2d.main.ScrollingEngine2D": _storage_url(
+        "com.frimastudio.scrollingengine2d.main.ScrollingEngine2D",
+        'resPath = File.applicationStorageDirectory.url + "asset/misc/maplibrary/maplibrary_all";',
+        'bgPath = File.applicationStorageDirectory.url + "asset/misc/mapbackground/mapbackground_"'),
+    "com.frimastudio.snowstorm.module.cardgame.hud.BackgroundChooser": _storage_url(
+        "com.frimastudio.snowstorm.module.cardgame.hud.BackgroundChooser",
+        'return File.applicationStorageDirectory.url + "asset/misc/cardgamebg/"'),
+    "com.frimastudio.snowstorm.module.cardgame.player.OpponentPlayer": _storage_url(
+        "com.frimastudio.snowstorm.module.cardgame.player.OpponentPlayer",
+        "AI_CHARACTER_PATH:String = File.applicationStorageDirectory.url"),
+    "com.frimastudio.snowstorm.module.map.enum.EMapModuleLibrary": _storage_url(
+        "com.frimastudio.snowstorm.module.map.enum.EMapModuleLibrary",
+        "PATH_ASSET_MAP_LIBRARY:String = File.applicationStorageDirectory.url",
+        "WORLD_MAP_ASSET:String = File.applicationStorageDirectory.url"),
+    "com.frimastudio.snowstorm.module.map.map.StoryMap": _storage_url(
+        "com.frimastudio.snowstorm.module.map.map.StoryMap",
+        'LoadWorldXML(File.applicationStorageDirectory.url + "asset/world/Map"'),
+    "com.frimastudio.utils.backgroundUtil.BackgroundLoadingUtilImpl": [
+        _web_import("com.frimastudio.utils.backgroundUtil.BackgroundLoadingUtilImpl"),
+        ("""            file = File.applicationStorageDirectory.resolvePath(path);
+            this.mAssetManager.enqueue(file);""", """            this.mAssetManager.enqueue(Web.STORAGE + path);"""),
+    ],
+    # card pictures: URLs instead of File objects (Starling's AssetManager takes both)
+    "com.frimastudio.utils.cardloading.CardLoadingUtil": [
+        _web_import("com.frimastudio.utils.cardloading.CardLoadingUtil"),
+        ("""\n            file = File.applicationStorageDirectory.resolvePath(path);
+            fileList.push(file);""", """\n            fileList.push(path);"""),
+        ("""\n               file = File.applicationStorageDirectory.resolvePath(path);
+               fileList.push(file);""", """\n               fileList.push(path);"""),
+        ("""return File.applicationStorageDirectory.resolvePath(path).nativePath;""",
+         """return Web.STORAGE + path;"""),
+    ],
+    # local save: SharedObject instead of Data/JSONSave_A|B.sav; the pre-JSON PlayerInfo.sav never exists here
+    "com.frimastudio.snowstorm.project.engine.data.YGOMDataImpl": [
+        _web_import("com.frimastudio.snowstorm.project.engine.data.YGOMDataImpl"),
+        ("""         var file:File = File.applicationStorageDirectory;
+         file = file.resolvePath(path);
+         if(file != null && Boolean(file.exists))
+         {
+            ba = new ByteArray();
+            fileStream = new FileStream();
+            fileStream.open(file,FileMode.READ);
+            fileStream.readBytes(ba);
+            fileStream.close();
+            ba.uncompress();""", """         ba = Web.ReadSave("JSONSave_" + aSaveId);
+         if(ba != null)
+         {
+            ba.uncompress();"""),
+        ("""      private function LoadFromLocalData() : void
+      {
+""", """      private function LoadFromLocalData() : void
+      {
+         if(true)
+         {
+            return;
+         }
+"""),
+        ("""         file.preventBackup = true;
+         this.mGameSaveStream.open(file,FileMode.WRITE);
+         this.mGameSaveStream.writeBytes(ba);
+         this.mGameSaveStream.close();
+         file = File.applicationStorageDirectory;
+         file = file.resolvePath("./Data/PlayerInfo.sav");
+         if(file != null && Boolean(file.exists))
+         {
+            file.deleteFile();
+         }""", """         Web.WriteSave(mLatestDeviceJSONData == mDeviceJSONData_B ? "JSONSave_B" : "JSONSave_A",ba);"""),
+        ("""      public function ClearLocalData() : void
+      {
+""", """      public function ClearLocalData() : void
+      {
+         Web.DeleteSave("JSONSave_A");
+         Web.DeleteSave("JSONSave_B");
+         mDeviceJSONData_A = null;
+         mDeviceJSONData_B = null;
+"""),
+    ],
+}
+if __import__("os").environ.get("YGO_WEB") == "1":
+    for _cls, _edits in WEB_EDITS.items():
+        PATCHES[_cls] = PATCHES.get(_cls, []) + _edits

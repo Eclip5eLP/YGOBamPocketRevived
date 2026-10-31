@@ -1963,3 +1963,35 @@ New mechanics (Synchro, Xyz) [INFERRED from the code above]:
   readers of `File.applicationStorageDirectory` (CardLoadingUtil, StoryMap, asset lists, our Loader gamedata patch)
   at `<origin>/asset/...` served from the extracted content (Local Store + overlays). Then login (StageWebView →
   page redirect/popup) and NativeApplication no-ops. Effort: M-L.
+
+### 6.57 Browser build: from the content wall to the world map (2026-10-31)
+
+- **Build layout** (owner's decision): the APK is the base; `tools/build_web.py` builds the browser version from
+  the same pipeline plus web-only patches (`tools/as3_patches.py` WEB_EDITS, applied with YGO_WEB=1, never in the
+  APK) and new classes `as3_new/com/revival/web/` (unused in the APK). Output `work/web/game` (SWF + config +
+  asset, staged like the APK by `build_game_adt.stage_files`) and `work/web/storage` (our content packages
+  extracted, lower-cased); `tools/web_spike.py` serves both plus the original content (Local Store) under
+  `/storage/`, and forwards the rest to the dev server.
+- **Page**: own loading bar (the page fetches the SWF with progress and passes the bytes to Ruffle,
+  `splashScreen: false`); passes `origin` (= location.host) as a SWF parameter.
+- **Web edits** [VERIFIED in the built-in browser, Chromium 152, Ruffle nightly 2026-10-31]:
+  - `ExternalFileControllerImpl.Init`: files ready at once (no versionning file, no package check/download).
+  - App storage → `Web.STORAGE` ("storage/", relative to the page): MobileProjectEngine (fonts),
+    AssetManagerWrapperImpl (prefix + File objects → URL strings), ExternalAssetManager, ScrollingEngine2D,
+    BackgroundChooser, OpponentPlayer, EMapModuleLibrary, StoryMap, BackgroundLoadingUtilImpl, CardLoadingUtil.
+  - Local save: `Web.ReadSave/WriteSave/DeleteSave` (SharedObject `revival_web_save`) instead of
+    `Data/JSONSave_A|B.sav` (YGOMDataImpl).
+  - `ServerComHTTP.Connect` adds the hard-coded port 80 after the host (EngineServerCom): a URL that already has a
+    port is kept (dev origin 127.0.0.1:8090 became "host:8090:80" and every game request failed before sending).
+  - Store: `WebStoreHandler` (all products "Free", purchases succeed at once, like the APK's billing stub) instead
+    of GooglePlayHandler; without it startup waited forever at step 18 ("Init app purchase manager").
+  - Content host: `PlayerManagerGT` uses `Web.Host(cdn)` = the page's origin (the startup text,
+    closepopupconfig.xml, came from the server's `cdn` host, unreachable from the dev page).
+- **Result** [VERIFIED screenshots]: all 28 startup steps; title screen (LOG IN / PLAY OFFLINE), login advantages
+  popup, our startup text, main screen, the news popup, and the story world map with HUD (DP/coins), side buttons and
+  all nodes. Game requests reach the server (`POST /facebook/proxy.html` 200).
+- **Open** (next): world map nodes show without their icons/numbers and the player marker, and a node click does
+  nothing (the map module reports all 9 init commands done; cause unknown); LOG IN still uses StageWebView (AIR);
+  extra booster packs (`EBoosterPackInfo.LoadExtraPacks` reads config/boosterpacks.json with FileStream) and world
+  maps after the first (WorldMap patch checks the file) still use File; local save across reloads untested;
+  production hosting (`/webgame` on the live server, https vs the game's http URLs) not started.
