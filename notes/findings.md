@@ -2197,3 +2197,10 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
 - Published 2026-10-31: https://github.com/Eclip5eLP/YGOBamPocketRevived/releases/tag/v1.1.0 (marked latest, not a
   draft), the APK asset is 125654651 bytes like the local file, the download link answers 200. GitHub CLI 2.103.3
   installed with the owner's OK and signed in by the owner. VERIFIED.
+
+### 6.67 Edit profile: decks folded away (2026-10-31)
+
+- Owner: with many decks the online deck list filled the edit page and pushed the username and password forms far
+  down. `server/profiles.py` edit_dialog: "Automatic" and the deck in use stay visible, the other decks sit in a
+  `<details>` "Your decks (N)" that opens on tap. VERIFIED on the emulator (closed and opened) and by
+  tests/test_profile.py. Server only. Not yet deployed to the live server.

@@ -182,7 +182,8 @@ background:#12244a;border:3px solid transparent}} .icons button.sel{{border-colo
 border-radius:4px}} .pic{{display:flex;align-items:center;gap:10px}} .pic img{{width:72px;height:72px;border-radius:6px;
 border:2px solid #456}} .pic a{{flex:1;display:block;padding:9px;background:#2d6cdf;color:#fff;text-align:center;
 border-radius:6px;text-decoration:none;font-size:15px}} .hint{{color:#99a;margin:2px 0 6px;font-size:12px}} .deck{{display:flex;align-items:center;gap:8px;
-padding:4px 0}} .deck span{{flex:1}} .deck form{{margin:0}} .deck button{{width:auto;padding:7px 12px}} .deck b{{color:#f2c200}}</style></head><body><a class="close" href="{close}">Close</a>{message}
+padding:4px 0}} .deck span{{flex:1}} .deck form{{margin:0}} .deck button{{width:auto;padding:7px 12px}} .deck b{{color:#f2c200}}
+summary{{padding:9px;margin:4px 0;background:#12244a;border:1px solid #456;border-radius:6px;cursor:pointer}}</style></head><body><a class="close" href="{close}">Close</a>{message}
 <h2>Picture</h2><div class="pic"><img src="{picture}" alt=""><a href="{choose}">Choose picture</a></div>
 <h2>Online deck</h2><p class="hint">The deck friends duel against. Decks appear here after the game has saved
 online.</p>{decks}
@@ -253,13 +254,21 @@ def edit_dialog(profiles, store, query, form):
         return 200, "text/html; charset=utf-8", body.encode("utf-8")
     decks = profiles.decks(profiles.save_items(uid)) if profiles.decks else []
     chosen = store.get_player_data(uid, "defense_deck")
-    rows = []
-    for d in [{"id": "auto", "name": "Automatic (arena deck, else default deck)", "cards": None}] +             [d for d in decks if d["cards"]]:
+    def deck_row(d):
         on = (d["id"] == "auto" and chosen is None) or d["id"] == chosen
         count = "" if d["cards"] is None else f' ({len(d["cards"])} cards)'
         button = "<b>In use</b>" if on else (f'<form method="post">{hidden}<input type="hidden" name="action" value="deck">'
                                             f'<button name="deck" value="{d["id"]}">Use</button></form>')
-        rows.append(f'<div class="deck"><span>{html.escape(d["name"])}{count}</span>{button}</div>')
+        return f'<div class="deck"><span>{html.escape(d["name"])}{count}</span>{button}</div>'
+
+    # Automatic and the deck in use stay visible; the other decks fold away so many decks don't push the
+    # username and password forms off the page
+    decks = [d for d in decks if d["cards"]]
+    rows = [deck_row({"id": "auto", "name": "Automatic (arena deck, else default deck)", "cards": None})]
+    rows += [deck_row(d) for d in decks if d["id"] == chosen]
+    others = [deck_row(d) for d in decks if d["id"] != chosen]
+    if others:
+        rows.append(f'<details><summary>Your decks ({len(others)})</summary>{"".join(others)}</details>')
     picture = f"/fb/graph/{uid}/picture?t={int(time.time())}"
     body = EDIT_PAGE.format(close=html.escape(close), message=message, hidden=hidden, picture=picture,
                             choose=html.escape(main + "&view=picture"), decks="".join(rows),
