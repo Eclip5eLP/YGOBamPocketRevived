@@ -1525,3 +1525,17 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   hash in work/newclasses/) and inserts the library's DoABC tags before the game's first ShowFrame. With no
   `as3_new/` files it copies the SWF unchanged (current state; the collection needed no new class). Checked with a
   sample class: compiled, merged, listed by FFDec in the output SWF.
+
+### 6.40 Collection layout like Edit Deck (first new AS3 classes) (2026-10-31)
+
+- New classes in `as3_new/com/revival/collection/` (merged by tools/build_newclasses.py; first real use):
+  `CollectionPanel` (layout), `CollectionScroller` (OptimizedScroller of columns; queues/frees card textures through
+  QueuedCardLoader like CardScroller), `CollectionColumn` (3 small cards at 0.86 scale, owned count under each,
+  unowned at 45 % opacity; remembers which card was touched), `CollectionColumnData`.
+- Layout: 3-row grid scrolling horizontally on the left (cards sorted by name, filled column by column), shop
+  slider under it, preview pane on the right (shop item frame + FullCardVisual at 0.6). Tap a small card → preview;
+  tap the preview → FullCardPopup with the owned quantity. Filters and the "owned / shown" count as before (6.39).
+- Hooked in `ShopCardView` collection mode (`CreateCollectionPanel`, try/catch): if the panel can't be built the
+  previous shop-style list is shown instead (it is created anyway and only hidden).
+- [VERIFIED emulator] grid, preview, popup, fast fling across the list (textures load), "My Cards Only" (5 / 5),
+  smoke fresh + upgrade.

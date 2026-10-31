@@ -1146,15 +1146,54 @@ SHOP_MODULE_EDITS = [
 
 SHOP_CARD_VIEW = "com.frimastudio.snowstorm.module.shop.view.ShopCardView"
 SHOP_CARD_VIEW_EDITS = [
+    ("""         this.CreateCardCountDisplay(filterContainer);
+         this.UpdateCardList();""", """         this.CreateCardCountDisplay(filterContainer);
+         if(CollectionMode)
+         {
+            this.CreateCollectionPanel(cardListContainer);
+         }
+         this.UpdateCardList();"""),
+    ("""         this.mCardCountText = null;
+""", """         this.mCardCountText = null;
+         if(this.mCollectionPanel != null)
+         {
+            this.mCollectionPanel.removeFromParent(true);
+            this.mCollectionPanel = null;
+         }
+"""),
     ("""   import com.frimastudio.utils.cardfiltering.CardFiltering;
 """, """   import com.frimastudio.utils.cardfiltering.CardFiltering;
    import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListUtil;
    import com.frimastudio.snowstorm.project.inventory.util.CardTemplateListData;
+   import com.revival.collection.CollectionPanel;
+   import starling.core.Starling;
 """),
     ("""      private var mCardScrollerDataList:Vector.<AbstractScrollerData>;
 """, """      private var mCardScrollerDataList:Vector.<AbstractScrollerData>;
 
       public static var CollectionMode:Boolean = false;
+
+      private var mCollectionPanel:CollectionPanel;
+
+      // New layout (as3_new/com/revival/collection): grid + preview pane. On any error the shop list stays.
+      private function CreateCollectionPanel(aShopList:Element) : void
+      {
+         try
+         {
+            this.mCollectionPanel = new CollectionPanel(width,Starling.current.stage.stageHeight * 0.17);
+            addChild(this.mCollectionPanel);
+            aShopList.visible = false;
+         }
+         catch(error:Error)
+         {
+            if(this.mCollectionPanel != null)
+            {
+               this.mCollectionPanel.removeFromParent(true);
+               this.mCollectionPanel = null;
+            }
+            aShopList.visible = true;
+         }
+      }
 
       private function CollectionText(aKey:String, aFallback:String) : String
       {
@@ -1177,7 +1216,15 @@ SHOP_CARD_VIEW_EDITS = [
                owned++;
             }
          }
-         this.mShopCardScroller.dataProvider = this.mCardScrollerDataList.concat();
+         if(this.mCollectionPanel != null)
+         {
+            this.mShopCardScroller.dataProvider = new Vector.<AbstractScrollerData>();
+            this.mCollectionPanel.SetCards(this.mCardTemplateList,data.QuantityList);
+         }
+         else
+         {
+            this.mShopCardScroller.dataProvider = this.mCardScrollerDataList.concat();
+         }
          this.mCardCountText.text = owned + " / " + this.mCardTemplateList.length;
       }
 """),

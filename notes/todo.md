@@ -119,7 +119,7 @@ feature ships on a proven release path.
 5. DONE (6.39: top row holds 6 buttons, room for Profile in the bottom row) **Main menu relayout (S-M).** Room for Profile and Collection (two more buttons; 4+... grid or a second row).
 6. DONE (6.39, collection mode of the shop card view, no new screen needed) **Collection menu (L).** Read-only browser (new classes), reuses deck builder scroller/filters; owned vs
    missing, how to obtain.
-6b. **Collection layout like Edit Deck (M), requested 2026-10-30, researched, not implemented.**
+6b. DONE (6.40) **Collection layout like Edit Deck (M), requested 2026-10-30.**
    Wanted: card preview pane on the right; on the left a horizontally scrollable list of small cards (owned count,
    unowned semi-transparent); tap a small card → shown in the preview pane; tap the preview → the usual full card
    popup (FullCardPopupData, as in the shop).
