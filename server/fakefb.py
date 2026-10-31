@@ -106,9 +106,10 @@ REMEMBER_SECONDS = 60 * 24 * 3600
 
 
 class FakeFacebook:
-    def __init__(self, store: AccountStore, logger):
+    def __init__(self, store: AccountStore, logger, profiles=None):
         self.store = store
         self.log = logger
+        self.profiles = profiles  # server/profiles.py (pictures, revival_profile); None = default pictures only
 
     # returns (status, content_type, body[, set_cookie_headers]) or None if the path is not ours
     def handle(self, method: str, path: str, query: dict, form: dict, ip: str, cookies: dict = None):
@@ -127,6 +128,8 @@ class FakeFacebook:
             # the client asks for versioned Graph paths, e.g. /fb/graph/v2.0/me (seen on device)
             if re.match(r"^v\d+\.\d+/", rest):
                 rest = rest.split("/", 1)[1]
+            if rest == "me/revival_profile" and method == "POST" and self.profiles is not None:
+                return self._profile_post(query, form)
             if rest == "me":
                 return self._me(query)
             return self._graph_object(rest, query)
@@ -241,12 +244,30 @@ class FakeFacebook:
             return 200, "application/json", json.dumps(err).encode()
         return 200, "application/json", json.dumps(self._user_json(user)).encode()
 
+    def _profile_post(self, query, form):
+        token = (form.get("access_token") or query.get("access_token") or [""])[0]
+        uid = self.store.uid_for_token(token)
+        if uid is None:
+            return 200, "application/json", b'{"error":"Please log in again."}'
+        return 200, "application/json", json.dumps(self.profiles.update(uid, form)).encode()
+
     def _graph_object(self, rest, query):
         parts = [p for p in rest.split("/") if p]
         if not parts:
             return 404, "application/json", b'{"error":{"message":"not found"}}'
+        if parts[0] == "revival_icons" and self.profiles is not None:
+            if len(parts) == 1:
+                return 200, "application/json", json.dumps(self.profiles.icon_list()).encode()
+            png = self.profiles.icon_png(parts[1])
+            return (200, "image/png", png) if png else (404, "application/json", b'{"error":{"message":"not found"}}')
         if len(parts) >= 2 and parts[1] == "picture":
-            return 200, "image/png", DEFAULT_PICTURE
+            png = self.profiles.picture(parts[0]) if self.profiles is not None and parts[0].isdigit() else None
+            return 200, "image/png", png or DEFAULT_PICTURE
+        if len(parts) >= 2 and parts[1] == "revival_profile" and self.profiles is not None:
+            profile = self.profiles.public(parts[0]) if parts[0].isdigit() else None
+            if profile is None:
+                return 404, "application/json", b'{"error":{"message":"Unknown user"}}'
+            return 200, "application/json", json.dumps(profile).encode()
         user = self.store.user_by_uid(parts[0])
         if user is None and bot_name(parts[0]):  # arena practice bots (server/arena.py)
             user = {"uid": parts[0], "username": bot_name(parts[0])}

@@ -83,6 +83,36 @@ class AccountStore:
             raise AccountError("Wrong username or password")
         return user
 
+    def rename(self, uid: str, new_name: str) -> dict:
+        """Change a player's username (same rules as register, case-insensitively unique). The uid stays, so
+        friends, saves and leaderboards keep working."""
+        if not USERNAME_RE.match(new_name or ""):
+            raise AccountError("Username must be 3-20 characters: letters, digits, _ . -")
+        with self.lock:
+            old_key = next((k for k, u in self.accounts["users"].items() if u["uid"] == str(uid)), None)
+            if old_key is None:
+                raise AccountError("Unknown player")
+            new_key = new_name.lower()
+            if new_key != old_key and new_key in self.accounts["users"]:
+                raise AccountError("This username is already taken")
+            user = self.accounts["users"].pop(old_key)
+            user["username"] = new_name
+            self.accounts["users"][new_key] = user
+            self._store("accounts.json", self.accounts)
+            return user
+
+    def change_password(self, uid: str, old_password: str, new_password: str) -> None:
+        user = self.user_by_uid(uid)
+        if user is None:
+            raise AccountError("Unknown player")
+        self.authenticate(user["username"], old_password)
+        if len(new_password or "") < 6 or len(new_password) > 128:
+            raise AccountError("Password must be 6-128 characters")
+        with self.lock:
+            salt = secrets.token_bytes(16)
+            user["salt"], user["hash"] = salt.hex(), self._hash(new_password, salt)
+            self._store("accounts.json", self.accounts)
+
     def user_by_uid(self, uid: str) -> Optional[dict]:
         for user in self.accounts["users"].values():
             if user["uid"] == str(uid):

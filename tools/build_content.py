@@ -44,6 +44,7 @@ class Context:
         self.string_edits = {}  # (lang, section) -> (section object, by_key, by_id, key_ids)
         self.new_files = {}    # path -> bytes, files that are not in the APK
         self.replaced = {}     # path -> bytes, plain (non-.ace) APK files replaced as a whole
+        self.server_files = {}  # path -> bytes, files for the server only (<out>/server/<path>)
         self.boosterpacks = []  # config/boosterpacks.json entries (content_mods.add_booster_pack)
         self.packages = {}     # package -> {relative path: bytes} overlay files
         self.package_versions = {}
@@ -157,6 +158,9 @@ def main():
             mod(ctx)
         changed = ctx.changed_files()
 
+    for path, data in ctx.server_files.items():
+        (out / "server" / path).parent.mkdir(parents=True, exist_ok=True)
+        (out / "server" / path).write_bytes(data)
     version = cfg["gamedata_version"]
     gd = out / "gamedata"
     files = {path: data for path, data in changed.items()}

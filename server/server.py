@@ -44,6 +44,7 @@ import amf3
 from accounts import AccountStore
 from content import Content, version_tuple
 from fakefb import FakeFacebook
+from profiles import Profiles
 from game import COOKIE, Game
 
 logger = logging.getLogger("YGOServer")
@@ -636,9 +637,9 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         self.config = config
         self.package_locks = {pkg: threading.Lock() for pkg in PACKAGE_PATHS}
         store = AccountStore(Path(config["data_dir"]))
-        self.fakefb = FakeFacebook(store, logger)
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
         self.content = Content(config.get("content_dir", ""))
+        self.fakefb = FakeFacebook(store, logger, Profiles(store, config.get("content_dir", ""), self.game.deck_for, logger))
         self.client_versions = {}  # ip -> APK version sent with the latest GetVersionRequest ("" = none)
 
     def handle_error(self, request, client_address):

@@ -310,6 +310,37 @@ def mainmenu_icons(ctx):
         ctx.set_text(lang, "mainmenu", "mainmenu_collection_text", collection)
         ctx.set_text(lang, "mainmenu", "mainmenu_profile_text", profile_text)
 
+
+PROFILE_ICON_CARDS = [
+    "Dark Magician", "Blue-Eyes White Dragon", "Red-Eyes B. Dragon", "Dark Magician Girl", "Kuriboh",
+    "Summoned Skull", "Celtic Guardian", "Gaia The Fierce Knight", "Time Wizard", "Harpie Lady", "Jinzo",
+    "Mystical Elf", "Baby Dragon", "Flame Swordsman", "Black Luster Soldier", "Buster Blader", "Cyber Dragon",
+    "Elemental HERO Neos", "Winged Kuriboh", "Poseidra, the Atlantean Dragon", "Dark Prisoner", "Air Eater",
+    "Exodia the Forbidden One", "Thousand Dragon", "Curse of Dragon", "Giant Soldier of Stone",
+]
+
+
+def profile_icons(ctx):
+    """Preset profile pictures (server only, served at /fb/graph/<uid>/picture and /fb/graph/revival_icons/<n>):
+    square crops of card art, 128 px. Names that are not in the card list are skipped; icons.json lists
+    {id, card} in order (id = position, stable as long as the list only grows at the end)."""
+    import io
+    from PIL import Image
+    icons = []
+    for name in PROFILE_ICON_CARDS:
+        try:
+            art = card_art(ctx, _card_by_name(ctx, name))
+        except RuntimeError:
+            continue
+        side = min(art.width, art.height)
+        left, top = (art.width - side) // 2, (art.height - side) // 2
+        icon = art.crop((left, top, left + side, top + side)).resize((128, 128), Image.LANCZOS).convert("RGB")
+        buf = io.BytesIO()
+        icon.save(buf, "PNG")
+        ctx.server_files[f"icons/{len(icons)}.png"] = buf.getvalue()
+        icons.append({"id": len(icons), "card": name})
+    ctx.server_files["icons/icons.json"] = json.dumps(icons, indent=1).encode("utf-8")
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -336,5 +367,6 @@ MODS = [
     blazing_wind,
     world_select_icon,
     mainmenu_icons,
+    profile_icons,
     write_boosterpacks,
 ]
