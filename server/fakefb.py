@@ -22,7 +22,7 @@ Flow (client code references in work/as3):
      in-game StageWebView (FacebookManagerMobile.InviteFriends, DialogWindow.as). Each invite is a
      friend request; inviting someone who already invited you makes you friends. The page's Close
      link goes to redirect_uri (LOGIN_SUCCESS_URL), which closes the web view.
-  6. Pictures: <fb>/graph/<id>/picture (AbstractFacebook.as:235-238).
+  6. Pictures: <fb>/graph/<id>/picture (AbstractFacebook.as:235-238), PNG or JPEG (a card the player chose).
 """
 
 import html
@@ -321,9 +321,13 @@ class FakeFacebook:
                 return 200, "application/json", json.dumps(self.profiles.icon_list()).encode()
             png = self.profiles.icon_png(parts[1])
             return (200, "image/png", png) if png else (404, "application/json", b'{"error":{"message":"not found"}}')
+        if parts[0] == "revival_cards" and len(parts) == 2 and self.profiles is not None:
+            jpg = self.profiles.card_jpg(parts[1])
+            return (200, "image/jpeg", jpg) if jpg else (404, "application/json", b'{"error":{"message":"not found"}}')
         if len(parts) >= 2 and parts[1] == "picture":
-            png = self.profiles.picture(parts[0]) if self.profiles is not None and parts[0].isdigit() else None
-            return 200, "image/png", png or DEFAULT_PICTURE
+            img = self.profiles.picture(parts[0]) if self.profiles is not None and parts[0].isdigit() else None
+            img = img or DEFAULT_PICTURE
+            return 200, "image/jpeg" if img[:2] == b"\xff\xd8" else "image/png", img
         if len(parts) >= 2 and parts[1] == "revival_profile" and self.profiles is not None:
             profile = self.profiles.public(parts[0]) if parts[0].isdigit() else None
             if profile is None:

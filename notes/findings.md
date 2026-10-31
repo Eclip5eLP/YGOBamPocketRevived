@@ -2155,3 +2155,23 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   measured with installed tools only: Pillow `optimize` on PNGs about 1% smaller, max deflate on PNG/XML 6 KB,
   identical files in the APK under 1 MB. Not applied; the content is already well compressed. Bigger lossless
   gains would need new tools (oxipng, jpegtran), not installed. INFERRED: a few MB at most.
+
+### 6.65 Profile picture: any card the player owns, chosen on a second page (2026-10-31)
+
+- Owner's request: instead of the always-open preset grid, a button opens a second page listing every card the
+  player owns (collection or deck); its pictures load lazily.
+- Server only, no APK change: the EDIT PROFILE page is the server's HTML (`server/profiles.py` edit_dialog,
+  opened by `as3_new/com/revival/profile/ProfilePopup.as` OpenEditPage), and every player picture in the game is
+  `/fb/graph/<uid>/picture` (`server/fakefb.py` _graph_object). VERIFIED.
+- Pictures: `tools/content_mods.py` card_icons writes a 128 px JPEG of every card with art (1176 cards, 12 MB) plus
+  `cards.json` {template id: name} into `<content>/server/cards/` (server only, not in the APK).
+- `server/profiles.py`: owned_cards = card template ids in the player's online save (all containers, so
+  collection and decks), action=card (refused for a card not owned) stored as player data `icon_card`; picture()
+  prefers it, then the older preset `icon`. Edit page: current picture + "Choose picture" (`view=picture`):
+  search field, one button per card name (5 names exist as two templates with the same picture), `img data-src`
+  loaded by an IntersectionObserver (all at once where there is none). New route `/fb/graph/revival_cards/<id>`;
+  /picture is sent as image/jpeg or image/png by its bytes.
+- VERIFIED on the emulator (dev server): edit page shows picture + button, chooser lists the 10 owned cards,
+  choosing Ancient Sorcerer shows "Picture changed." and the profile shows it. A card not owned is refused
+  (tests/test_profile.py, which passes; test_friends and test_webgame pass too).
+- Deploy: the live server needs the new content build (`<content>/server/cards/`).

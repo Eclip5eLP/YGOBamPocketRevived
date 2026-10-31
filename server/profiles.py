@@ -4,20 +4,26 @@ password change. Served on the fake Graph API the client already talks to (serve
 
   GET  /fb/graph/revival_icons               [{"id": n, "card": name}, ...] preset pictures
   GET  /fb/graph/revival_icons/<n>           preset picture n (PNG, 128 px)
-  GET  /fb/graph/<uid>/picture               the player's chosen preset, else the default picture
+  GET  /fb/graph/revival_cards/<id>          card picture (JPEG, 128 px) of card template <id>
+  GET  /fb/graph/<uid>/picture               the player's chosen card (or older preset), else the default picture
   GET  /fb/graph/<uid>/revival_profile       public profile (anyone may view)
-  POST /fb/graph/me/revival_profile          access_token + action=icon (icon=n) | rename (name=)
+  POST /fb/graph/me/revival_profile          access_token + action=card (card=<template id, owned>) | icon (icon=n)
+                                             | rename (name=)
                                              | password (old=, new=); answers {"ok": true} or {"error": msg}
 
   GET/POST /fb/dialog/revival_profile         edit page shown in the game's web view (EDIT PROFILE button):
-                                             picture grid, rename and password forms, Close
+                                             current picture + Choose picture (view=picture: the cards in the
+                                             player's online save, pictures load as they scroll in), online deck,
+                                             rename and password forms, Close
 
-Preset pictures are built by tools/content_mods.profile_icons into <content_dir>/server/icons/.
+Card pictures are built by tools/content_mods.card_icons into <content_dir>/server/cards/, the older preset
+pictures by tools/content_mods.profile_icons into <content_dir>/server/icons/.
 """
 
 import html
 import json
 import os
+import time
 import urllib.parse
 import zlib
 
@@ -29,6 +35,8 @@ class Profiles:
     def __init__(self, store, content_dir, game, logger):
         self.store = store
         self.icons_dir = os.path.join(content_dir or "", "server", "icons")
+        self.cards_dir = os.path.join(content_dir or "", "server", "cards")
+        self._card_names = None
         self.deck_source = game.deck_source if game else None  # uid -> (label, [template ids])
         self.is_online = game.livepvp.is_online if game else None  # profile LIVE DUEL button
         self.decks = game.save_decks if game else None
@@ -52,8 +60,39 @@ class Profiles:
         except OSError:
             return None
 
+    def card_names(self):
+        """{template id (str): name} of the cards that have a picture."""
+        if self._card_names is None:
+            try:
+                with open(os.path.join(self.cards_dir, "cards.json"), encoding="utf-8") as f:
+                    self._card_names = json.load(f)
+            except (OSError, ValueError):
+                return {}
+        return self._card_names
+
+    def card_jpg(self, template_id):
+        if not str(template_id).isdigit() or str(int(template_id)) not in self.card_names():
+            return None
+        try:
+            with open(os.path.join(self.cards_dir, f"{int(template_id)}.jpg"), "rb") as f:
+                return f.read()
+        except OSError:
+            return None
+
+    def owned_cards(self, uid):
+        """Template ids of the cards in the player's online save (collection and decks) that have a picture."""
+        names = self.card_names()
+        items = self.save_items(uid) if self.save_items else []
+        return {int(it["itemTemplateId"]) for it in items
+                if str(it.get("itemTemplateId", 0)) in names and int(it.get("quantity", 1) or 1) > 0}
+
     def picture(self, uid):
-        """PNG of the player's preset picture, or None for the default."""
+        """Image bytes (JPEG or PNG) of the player's card or preset picture, or None for the default."""
+        card = self.store.get_player_data(uid, "icon_card")
+        if card is not None:
+            jpg = self.card_jpg(card)
+            if jpg is not None:
+                return jpg
         icon = self.store.get_player_data(uid, "icon")
         return self.icon_png(icon) if icon is not None else None
 
@@ -99,11 +138,17 @@ class Profiles:
         action = (form.get("action") or [""])[0]
         value = lambda key: (form.get(key) or [""])[0]  # noqa: E731
         try:
-            if action == "icon":
+            if action == "card":
+                card = value("card")
+                if not card.isdigit() or int(card) not in self.owned_cards(uid):
+                    raise AccountError("You don't own that card (cards count once the game has saved online).")
+                self.store.set_player_data(uid, "icon_card", int(card))
+            elif action == "icon":
                 n = value("icon")
                 if self.icon_png(n) is None:
                     raise AccountError("Unknown picture")
                 self.store.set_player_data(uid, "icon", int(n))
+                self.store.set_player_data(uid, "icon_card", None)
             elif action == "rename":
                 self.store.rename(uid, value("name").strip())
             elif action == "password":
@@ -133,10 +178,12 @@ background:#2d6cdf;color:#fff;text-align:center;border:0;border-radius:6px;text-
 input{{width:100%;box-sizing:border-box;padding:9px;margin-bottom:6px;font-size:15px;border-radius:6px;
 border:1px solid #456;background:#12244a;color:#fff}} .msg{{padding:8px;border-radius:6px;margin:8px 0;background:#1d4a2a}}
 .err{{background:#5a1d1d}} .icons{{display:flex;flex-wrap:wrap;gap:6px}} .icons button{{width:64px;height:64px;padding:0;
-background:none;border:3px solid transparent}} .icons button.sel{{border-color:#f2c200}} .icons img{{width:58px;height:58px;
-border-radius:4px}} .hint{{color:#99a;margin:2px 0 6px;font-size:12px}} .deck{{display:flex;align-items:center;gap:8px;
+background:#12244a;border:3px solid transparent}} .icons button.sel{{border-color:#f2c200}} .icons img{{width:58px;height:58px;
+border-radius:4px}} .pic{{display:flex;align-items:center;gap:10px}} .pic img{{width:72px;height:72px;border-radius:6px;
+border:2px solid #456}} .pic a{{flex:1;display:block;padding:9px;background:#2d6cdf;color:#fff;text-align:center;
+border-radius:6px;text-decoration:none;font-size:15px}} .hint{{color:#99a;margin:2px 0 6px;font-size:12px}} .deck{{display:flex;align-items:center;gap:8px;
 padding:4px 0}} .deck span{{flex:1}} .deck form{{margin:0}} .deck button{{width:auto;padding:7px 12px}} .deck b{{color:#f2c200}}</style></head><body><a class="close" href="{close}">Close</a>{message}
-<h2>Picture</h2><form method="post" class="icons">{hidden}<input type="hidden" name="action" value="icon">{icons}</form>
+<h2>Picture</h2><div class="pic"><img src="{picture}" alt=""><a href="{choose}">Choose picture</a></div>
 <h2>Online deck</h2><p class="hint">The deck friends duel against. Decks appear here after the game has saved
 online.</p>{decks}
 <h2>Username</h2><form method="post">{hidden}<input type="hidden" name="action" value="rename">
@@ -145,6 +192,28 @@ online.</p>{decks}
 <input name="old" type="password" placeholder="Current password" autocomplete="current-password">
 <input name="new" type="password" placeholder="New password (6+ characters)" autocomplete="new-password">
 <button>Change password</button></form></body></html>"""
+
+
+PICTURE_PAGE = """<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>{style}</style></head><body><a class="close" href="{back}">Back</a>
+<h2>Choose picture</h2><p class="hint">Any card you own, in your collection or a deck ({count} cards). New cards count
+once the game has saved online.</p><input id="find" placeholder="Search by card name" autocomplete="off">
+<form method="post" action="{main}" class="icons">{hidden}<input type="hidden" name="action" value="card">{cards}</form>
+<script>
+var imgs = [].slice.call(document.querySelectorAll("img[data-src]"));
+function show(img) {{ if (img.dataset.src) {{ img.src = img.dataset.src; img.removeAttribute("data-src"); }} }}
+var io = window.IntersectionObserver ? new IntersectionObserver(function (es) {{
+  es.forEach(function (e) {{ if (e.isIntersecting) {{ show(e.target); io.unobserve(e.target); }} }});
+}}, {{rootMargin: "200px"}}) : null;
+imgs.forEach(function (img) {{ io ? io.observe(img) : show(img); }});
+document.getElementById("find").oninput = function () {{
+  var q = this.value.toLowerCase();
+  [].forEach.call(document.querySelectorAll(".icons button"), function (b) {{
+    b.style.display = b.title.toLowerCase().indexOf(q) < 0 ? "none" : "";
+  }});
+}};
+</script></body></html>"""
 
 
 def edit_dialog(profiles, store, query, form):
@@ -161,17 +230,27 @@ def edit_dialog(profiles, store, query, form):
     message = ""
     if form.get("action"):
         result = profiles.update(uid, form)
-        done = {"icon": "Picture changed.", "rename": "Username changed.", "password": "Password changed.",
+        done = {"card": "Picture changed.", "icon": "Picture changed.", "rename": "Username changed.", "password": "Password changed.",
                 "deck": "Online deck changed."}
         message = (f'<p class="msg err">{html.escape(result["error"])}</p>' if "error" in result else
                    f'<p class="msg">{done.get(value("action"), "Saved.")}</p>')
     user = store.user_by_uid(uid)
-    current = store.get_player_data(uid, "icon")
+    main = "/fb/dialog/revival_profile?" + urllib.parse.urlencode({"access_token": token, "redirect_uri": redirect})
     hidden = "".join(f'<input type="hidden" name="{k}" value="{html.escape(v)}">'
                      for k, v in (("access_token", token), ("redirect_uri", redirect)))
-    icons = "".join(f'<button name="icon" value="{i["id"]}" class="{"sel" if i["id"] == current else ""}">'
-                    f'<img src="/fb/graph/revival_icons/{i["id"]}" alt="{html.escape(i["card"])}"></button>'
-                    for i in profiles.icon_list())
+    if value("view") == "picture" and not form.get("action"):
+        names, current = profiles.card_names(), store.get_player_data(uid, "icon_card")
+        owned = {}  # name -> template id: a few cards exist as two templates with the same name and picture
+        for c in sorted(profiles.owned_cards(uid)):
+            owned.setdefault(names[str(c)], c)
+        chosen = names.get(str(current))
+        cards = "".join(f'<button name="card" value="{c}" title="{html.escape(name)}"'
+                        f'{" class=sel" if name == chosen else ""}><img data-src="/fb/graph/revival_cards/{c}" alt="">'
+                        f'</button>' for name, c in sorted(owned.items(), key=lambda nc: nc[0].lower()))
+        style = EDIT_PAGE.split("<style>", 1)[1].split("</style>", 1)[0].replace("{{", "{").replace("}}", "}")
+        body = PICTURE_PAGE.format(style=style, back=html.escape(main), main=html.escape(main), hidden=hidden,
+                                   count=len(owned), cards=cards or '<p class="hint">No cards yet.</p>')
+        return 200, "text/html; charset=utf-8", body.encode("utf-8")
     decks = profiles.decks(profiles.save_items(uid)) if profiles.decks else []
     chosen = store.get_player_data(uid, "defense_deck")
     rows = []
@@ -181,6 +260,8 @@ def edit_dialog(profiles, store, query, form):
         button = "<b>In use</b>" if on else (f'<form method="post">{hidden}<input type="hidden" name="action" value="deck">'
                                             f'<button name="deck" value="{d["id"]}">Use</button></form>')
         rows.append(f'<div class="deck"><span>{html.escape(d["name"])}{count}</span>{button}</div>')
-    body = EDIT_PAGE.format(close=html.escape(close), message=message, hidden=hidden, icons=icons, decks="".join(rows),
+    picture = f"/fb/graph/{uid}/picture?t={int(time.time())}"
+    body = EDIT_PAGE.format(close=html.escape(close), message=message, hidden=hidden, picture=picture,
+                            choose=html.escape(main + "&view=picture"), decks="".join(rows),
                             name=html.escape(user["username"]))
     return 200, "text/html; charset=utf-8", body.encode("utf-8")

@@ -415,6 +415,32 @@ def profile_icons(ctx):
         icons.append({"id": len(icons), "card": name})
     ctx.server_files["icons/icons.json"] = json.dumps(icons, indent=1).encode("utf-8")
 
+
+def card_icons(ctx):
+    """Profile pictures from any card the player owns (server only, served at /fb/graph/revival_cards/<id> and as
+    /fb/graph/<uid>/picture): square crops of every card's art, 128 px JPEG, and cards/cards.json
+    {template id: name} for the picture chooser. The preset pictures (profile_icons) stay for players who
+    picked one before."""
+    import io
+    from PIL import Image
+    _, by_id, _ = ctx.strings("en", "inventory")
+    names = {}
+    for t in ctx.ace("config/ace/inventory/item_template.ace"):
+        if "cardRarityId" not in t:
+            continue
+        try:
+            art = card_art(ctx, t["id"])
+        except RuntimeError:
+            continue
+        side = min(art.width, art.height)
+        left, top = (art.width - side) // 2, (art.height - side) // 2
+        icon = art.crop((left, top, left + side, top + side)).resize((128, 128), Image.LANCZOS).convert("RGB")
+        buf = io.BytesIO()
+        icon.save(buf, "JPEG", quality=85)
+        ctx.server_files[f"cards/{t['id']}.jpg"] = buf.getvalue()
+        names[str(t["id"])] = by_id.get(int(t["resourceNameId"])) or GOD_CARDS.get(t["id"]) or f"Card {t['id']}"
+    ctx.server_files["cards/cards.json"] = json.dumps(names, indent=0, sort_keys=True).encode("utf-8")
+
 SALE_START, SALE_END = 1388534400000.0, 4102444800000.0  # 2014-01-01 .. 2100-01-01 (ms)
 SHOP_UNLOCKS = Path(__file__).resolve().parent.parent / "as3_new" / "com" / "revival" / "shop" / "ShopUnlocks.as"
 # template ids of the God cards (series 98, no English name in the data): special tournament rewards
@@ -597,5 +623,6 @@ MODS = [
     world_select_icon,
     mainmenu_icons,
     profile_icons,
+    card_icons,
     write_boosterpacks,
 ]

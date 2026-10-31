@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """
 Profile API (server/profiles.py) against a running (dev) server, two fresh accounts A and B:
-preset icon list and PNGs -> A picks an icon -> A's /picture serves it -> B reads A's public profile ->
+preset icon list and PNGs (older picture choice, still served) -> A picks an icon -> A's /picture serves it ->
+B reads A's public profile ->
 rename (taken name refused, then OK; login with the new name works) -> password change (wrong old password
-refused, then OK; old password no longer works) -> edit page (web view) -> bad token and unknown actions refused.
+refused, then OK; old password no longer works) -> edit page (web view) and card picture chooser (a card the
+player does not own is refused; choosing an owned card needs an online save, tested in the app) -> bad token and
+unknown actions refused.
 
 Usage: python tests/test_profile.py [--base http://127.0.0.1:8087]
 """
@@ -77,10 +80,15 @@ def main():
 
     q = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "http://x/fb/connect/login_success.html"})
     page = get(base, "/fb/dialog/revival_profile?" + q).decode()
-    assert "Change username" in page and page.count('name="icon"') == len(icons), page[:300]
-    form = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "x", "action": "icon", "icon": "2"}).encode()
+    # pictures: only a Choose picture link on the edit page; the chooser lists the owned cards (none: no save yet)
+    assert "Change username" in page and "Choose picture" in page and 'name="card"' not in page, page[:300]
+    chooser = get(base, "/fb/dialog/revival_profile?" + q + "&view=picture").decode()
+    assert "Search by card name" in chooser and "No cards yet." in chooser and 'name="card"' not in chooser
+    assert get(base, "/fb/graph/revival_cards/10")[:2] == b"\xff\xd8"
+    assert "error" in post_profile(base, b.token, action="card", card="10")  # not owned
+    form = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "x", "action": "card", "card": "10"}).encode()
     page = urllib.request.urlopen(base + "/fb/dialog/revival_profile", data=form).read().decode()
-    assert "Picture changed." in page and 'value="2" class="sel"' in page
+    assert "own that card" in page and "Choose picture" in page
     assert "expired" in get(base, "/fb/dialog/revival_profile?access_token=bad").decode()
     assert "Online deck" in page and "Automatic" in page
     form = urllib.parse.urlencode({"access_token": b.token, "redirect_uri": "x", "action": "deck", "deck": "12345"}).encode()
