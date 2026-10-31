@@ -100,8 +100,8 @@ CROSSDOMAIN_XML = b"""<?xml version="1.0"?>
 # (AndroidIAB is the free billing emulator from tools/build_stub_anes.py; no billing code in the APK).
 CLOSE_POPUP_CONFIG_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
 <content transactionDate="12/31/2099 16:00:00 UTC-0700" closeDate="08/31/2016 16:00:00 UTC-0700">
-	<en><![CDATA[Yugioh BAM Pocket Revived: a free, fan-run revival, not affiliated with Konami.<br><br>LOG IN to play online: online save, friends, Arena and Teams. Live duels are coming later.<br><br>All purchases are free, including BAM Pro.<br><br>github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e]]></en>
-	<fr><![CDATA[Yugioh BAM Pocket Revived : une renaissance gratuite g\xc3\xa9r\xc3\xa9e par des fans, non affili\xc3\xa9e \xc3\xa0 Konami.<br><br>Connectez-vous pour jouer en ligne : sauvegarde en ligne, amis, Ar\xc3\xa8ne et \xc3\x89quipes. Les duels en direct arrivent plus tard.<br><br>Tous les achats sont gratuits, BAM Pro compris.<br><br>github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e]]></fr>
+	<en><![CDATA[Yugioh BAM Pocket Revived: a free, fan-run revival, not affiliated with Konami.<br><br>LOG IN to play online: online save, friends, Arena, Teams, tournaments and live duels against your friends.<br><br>All purchases are free, including BAM Pro.<br><br>github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e]]></en>
+	<fr><![CDATA[Yugioh BAM Pocket Revived : une renaissance gratuite g\xc3\xa9r\xc3\xa9e par des fans, non affili\xc3\xa9e \xc3\xa0 Konami.<br><br>Connectez-vous pour jouer en ligne : sauvegarde en ligne, amis, Ar\xc3\xa8ne, \xc3\x89quipes, tournois et duels en direct contre vos amis.<br><br>Tous les achats sont gratuits, BAM Pro compris.<br><br>github.com/Eclip5eLP/YGOBamPocketRevived<br>By Eclip5e]]></fr>
 </content>
 """
 
