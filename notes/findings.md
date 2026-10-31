@@ -2194,3 +2194,6 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   versionvalidator, no package download, startup text without update notice. VERIFIED. Logged-in features were
   not tried on production (no test account there, none created).
 - Release text: notes/release-1.1.0.md.
+- Published 2026-10-31: https://github.com/Eclip5eLP/YGOBamPocketRevived/releases/tag/v1.1.0 (marked latest, not a
+  draft), the APK asset is 125654651 bytes like the local file, the download link answers 200. GitHub CLI 2.103.3
+  installed with the owner's OK and signed in by the owner. VERIFIED.
