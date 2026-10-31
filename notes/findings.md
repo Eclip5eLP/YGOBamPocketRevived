@@ -1574,3 +1574,22 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
 - Server: `Game.deck_for` fallback ("best cards") capped copies per save item, not per card (6x Dark Prisoner when
   the collection had two items of it); now max 3 per card. The profile names the deck source: "Online deck"
   (arena/friend deck), the default deck's name, or "Best cards (no deck set)". Server tests pass.
+
+### 6.43 Friends manager (search, requests, remove, view profiles) (2026-10-31)
+
+- Server `server/friends_page.py` (`/fb/dialog/revival_friends`, routed in fakefb.py): tabs Friends (Profile,
+  Remove), Requests ("Added you": Accept / Decline; "Sent by you": Cancel; tab shows the incoming count), Find
+  players (name search, prefix matches first, max 30; Add / Cancel / already friends). Pictures from
+  `/fb/graph/<uid>/picture` (profile presets). Uses AccountStore.request_friend / remove_friend (remove also clears
+  pending requests both ways). tests/test_friends_page.py; all 8 server tests pass.
+- Client: the Duel Ground's ADD FRIENDS button opens it in the in-app web view (`as3_new/com/revival/friends/
+  FriendsManager`, DuelGroundModule patch); if the web view can't open, the old invite popup is shown. "Profile"
+  closes the view with `?view=<uid>` and opens `ProfilePopup` read-only (EDIT PROFILE only on your own).
+  The Duel Ground friend list itself updates the next time it opens (reloading the module from inside itself would
+  break its Back history).
+- [VERIFIED emulator] request from a helper account shown under "Requests (1)" with its picture → Accept → listed
+  under Friends → Profile → friend's read-only profile.
+- Empty decks read "Deck: No deck yet" instead of "(0 cards)".
+- Still open from the Friends item: choosing the online defense deck (today the last arena deck), "copy deck" on a
+  friend's profile, pending-request badge on the main menu Friends button, the old Facebook-style invite list
+  (kept as fallback).

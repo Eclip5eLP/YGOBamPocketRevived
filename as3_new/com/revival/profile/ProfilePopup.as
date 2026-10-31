@@ -192,7 +192,7 @@ package com.revival.profile
             this.mDeck = profile.deck as Array;
             this.mDeckName = profile.deck_name ? String(profile.deck_name) : "DECK";
             this.mDeckButton.visible = this.mDeck != null && this.mDeck.length > 0;
-            this.mLines.text = "Level " + profile.league + "     Stars " + profile.stars + "\n" + "Cards: " + profile.cards_unique + " different, " + profile.cards_total + " in total\n" + "Deck: " + (profile.deck_name ? profile.deck_name + " (" + profile.deck.length + " cards)" : profile.deck.length + " cards") + (profile.created ? "\nPlaying since " + this.FormatDate(Number(profile.created)) : "");
+            this.mLines.text = "Level " + profile.league + "     Stars " + profile.stars + "\n" + "Cards: " + profile.cards_unique + " different, " + profile.cards_total + " in total\n" + "Deck: " + (profile.deck.length == 0 ? (profile.deck_name ? profile.deck_name : "none") : (profile.deck_name ? profile.deck_name + " (" + profile.deck.length + " cards)" : profile.deck.length + " cards")) + (profile.created ? "\nPlaying since " + this.FormatDate(Number(profile.created)) : "");
          }
          catch(error:Error)
          {

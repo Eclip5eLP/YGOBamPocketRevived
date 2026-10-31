@@ -80,6 +80,8 @@ class Profiles:
                      next((it.get("deckName") for it in items if it.get("isDefaultDeck") and it.get("deckName")),
                           "Best cards (no deck set)"))
         deck = self.deck_for(uid) if self.deck_for else ""
+        if not deck:
+            deck_name = "No deck yet"
         return {
             "uid": user["uid"],
             "name": user["username"],

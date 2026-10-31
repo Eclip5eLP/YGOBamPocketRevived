@@ -1388,6 +1388,20 @@ BUY_CARD_DISPLAY_EDITS = [
          this.mFullCardVisual.alpha = ShopCardView.CollectionMode && (mScrollerData as CardScrollerData).Quantity <= 0 ? 0.45 : 1;"""),
 ]
 
+# Friends manager: the Duel Ground's add-friend button opens the new friends page (as3_new/com/revival/friends)
+# instead of the old invite list; if the web view cannot open, the old popup is shown.
+DUEL_GROUND = "com.frimastudio.snowstorm.module.duelground.DuelGroundModule"
+DUEL_GROUND_EDITS = [
+    ("""   import com.frimastudio.mobile.module.EStarlingModuleDefinition;
+""", """   import com.frimastudio.mobile.module.EStarlingModuleDefinition;
+   import com.revival.friends.FriendsManager;
+"""),
+    ("""            PopupManagerUtil.ShowInviteFriendsPopup();""", """            if(!FriendsManager.Open())
+            {
+               PopupManagerUtil.ShowInviteFriendsPopup();
+            }"""),
+]
+
 PLAYER_INFO_BAR = "com.frimastudio.snowstorm.module.hud.bar.PlayerInfoBar"
 PLAYER_INFO_BAR_EDITS = [
     ("""         this.mHudElementList.push(this.mEnergyWidget);
@@ -1437,6 +1451,7 @@ PATCHES = {
     TRY_AGAIN_POPUP: TRY_AGAIN_POPUP_EDITS,
     STORY_MAP: STORY_MAP_EDITS,
     SHOP_MANAGER: SHOP_MANAGER_EDITS,
+    DUEL_GROUND: DUEL_GROUND_EDITS,
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,
