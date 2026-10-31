@@ -1737,3 +1737,27 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   date changed [VERIFIED code]; patched (GAME_SETTINGS_EDITS) to keep them (missing keys still get defaults).
   [VERIFIED emulator] after installing the new APK the live duel went straight to the search (tutorial done
   before), and the startup "Breaking news" popup did not repeat.
+
+### 6.49 Performance: startup and screen timings
+
+- Tooling: builds with `YGO_PERF=1` (dev only; `tools/as3_patches.py` PERF_EDITS / PERF_MODULE_EDITS,
+  `as3_new/com/revival/dev/Perf.as`) report each startup step (`MobileProjectEngine.ProcessNextStep`) and each screen
+  change (`StarlingModuleManagerImpl.ChangeModule` → `OnModuleReady`) as `GET /perf?s=<name>&t=<ms since launch>`;
+  read them from the dev server log. Release builds don't contain it.
+- Startup [VERIFIED emulator, cold start, logged in]: 25.9 s to "Initialization complete", of which 15.0 s was
+  "Initialize PushNotification": the Pushwoosh service is gone, our stub ANE never answers, and
+  `MobileProjectEngine.StartPushWooshTimeout` waits a fixed `Timer(15000,1)`. So every player waited 15 s on every
+  cold start, on any phone. Patched `InitPushNotification` to skip registration (MOBILE_ENGINE_EDITS): startup now
+  11.0 s on the emulator. Remaining larger steps: prelauncher images 2.0 s, generic popup assets 1.0 s, automated
+  login 1.76 s (several round trips plus client-side encryption; the server answers each in 1-2 ms), store data
+  1.25 s (stub IAB, needed for the "Free" prices), transitions 0.26 s; asset steps are bound by the emulator's
+  software GPU.
+- Screens [VERIFIED emulator, ms from ChangeModule to ready]: main menu 13-30, collection 232, shop 231, edit deck
+  339, crafting 385, friends 318, tournament 333, story map 772, arena 2789. Arena's server calls take ~120 ms
+  (GetDuelArena 80-90 ms on the first call, then cached; leaderboard ~25 ms with ~260 accounts); the rest is the
+  client loading arena assets. Not changed.
+- Idle network: the PvP connection pings every 2 s only in PvP mode (search popup to duel end:
+  `YGOMPvPLoginImpl.EnterPvpMode/ExitPvpMode`, `MobileEngineServerComPvp.SetPvpPingFrequency`), otherwise every 10 s
+  (`mmog.xml` ping_frequency) [VERIFIED code]. The challenge toast adds one small request per 15 s while logged in.
+- Server scaling note [INFERRED]: leaderboards, arena opponent picks and the Elite list scan all accounts per call
+  (~25-90 ms at ~260 accounts); fine for now, worth caching if the player base grows a lot.

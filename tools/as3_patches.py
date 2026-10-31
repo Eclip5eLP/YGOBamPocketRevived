@@ -1407,6 +1407,18 @@ DUEL_GROUND_EDITS = [
             }"""),
 ]
 
+# Startup: skip push notification registration. The Pushwoosh service is gone and its ANE is a stub
+# (tools/build_stub_anes.py) that never answers, so every cold start waited the full 15 s timeout
+# (MobileProjectEngine.StartPushWooshTimeout). Findings 6.49.
+MOBILE_ENGINE = "com.frimastudio.mobile.MobileProjectEngine"
+MOBILE_ENGINE_EDITS = [
+    ("""      private function InitPushNotification() : void
+      {
+         if(DeviceManager.GetInstance().IsMobile == false || true == false)""", """      private function InitPushNotification() : void
+      {
+         if(true)"""),
+]
+
 # Game settings (tutorials done, selected deck type, sound, ...) survive APK updates: the original reset them to
 # defaults whenever the app's install date changed, so every update showed the live duel tutorial prompt again.
 GAME_SETTINGS = "com.frimastudio.snowstorm.module.option.GameSettings"
@@ -1485,6 +1497,7 @@ PATCHES = {
     DUEL_GROUND: DUEL_GROUND_EDITS,
     TOURNAMENT_VIEW: TOURNAMENT_VIEW_EDITS,
     GAME_SETTINGS: GAME_SETTINGS_EDITS,
+    MOBILE_ENGINE: MOBILE_ENGINE_EDITS,
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,
@@ -1512,3 +1525,38 @@ PATCHES = {
     NEW_APP_UPDATE: NEW_APP_UPDATE_EDITS,
     VERSION_UNAVAILABLE: VERSION_UNAVAILABLE_EDITS,
 }
+
+# Dev only (YGO_PERF=1, never in release builds): every startup step reports its time since launch (getTimer, ms)
+# to the dev server as GET /perf?s=<step>&t=<ms>, so the server log shows how long each step takes.
+PERF_EDITS = [
+    ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+   import com.revival.dev.Perf;
+"""),
+    ("""            Log.Report("MobileProjectEngine/ProcessNextStep",message,Log.INFO);
+            this.UpdateProgressBar();
+            step.Execute();""", """            Log.Report("MobileProjectEngine/ProcessNextStep",message,Log.INFO);
+            Perf.Mark(currentStep + " " + step);
+            this.UpdateProgressBar();
+            step.Execute();"""),
+    ("""            message = "Initialization complete";""", """            message = "Initialization complete";
+            Perf.Mark("init complete");"""),
+]
+MODULE_MANAGER = "com.frimastudio.mobile.module.StarlingModuleManagerImpl"
+PERF_MODULE_EDITS = [
+    ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+   import com.revival.dev.Perf;
+"""),
+    ("""         Log.Report("StarlingModuleManagerImpl/ChangeModule","Changing main module to :: " + aModuleDefinition.Name,Log.INFO);
+""", """         Log.Report("StarlingModuleManagerImpl/ChangeModule","Changing main module to :: " + aModuleDefinition.Name,Log.INFO);
+         Perf.Mark("open " + aModuleDefinition.Name);
+"""),
+    ("""         this.mCurrentMainModule.removeEventListener(StarlingModuleEvent.MODULE_READY,this.OnModuleReady);
+""", """         this.mCurrentMainModule.removeEventListener(StarlingModuleEvent.MODULE_READY,this.OnModuleReady);
+         Perf.Mark("ready " + this.mMainModuleDefinition.Name);
+"""),
+]
+if __import__("os").environ.get("YGO_PERF") == "1":
+    PATCHES[MOBILE_ENGINE] = MOBILE_ENGINE_EDITS + PERF_EDITS
+    PATCHES[MODULE_MANAGER] = PERF_MODULE_EDITS
