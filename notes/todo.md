@@ -139,7 +139,27 @@ feature ships on a proven release path.
    (ShopModule.CreateAssetList: add EAssetListDefinition for the deck builder only in collection mode) or the
    screen hosted in the deck builder module instead; decide after reading DeckBuilderModule. Fail safe: if the
    new screen throws while building, fall back to the current collection view.
-7. **Profile (L), then Friends rewrite (L).** Server endpoints first (tests), then the screens; profile icons fix the
+7. **Profile (L), then Friends rewrite (L).**
+   Profile research (2026-10-31), for the next session:
+   - Transport: the client already talks to `<host>/fb/graph/...` (FacebookURLDefaults.GRAPH_URL, rewritten by
+     patch_swf.py) with its access token (`FacebookManagerMobile.AccessToken`, :541). Put the profile API there:
+     `GET /fb/graph/<uid>/revival_profile` (public, for viewing others) and `POST /fb/graph/me/revival_profile`
+     (`access_token`, action = icon | rename | password). Handled in `server/fakefb.py._graph_object`.
+   - Picture: `_graph_object` returns DEFAULT_PICTURE for `<uid>/picture` (:248); serve the chosen preset icon
+     instead. Every player picture in the game already loads from there (AbstractFacebook.as:235-238).
+   - Icon presets: generate ~24 PNGs at build time (e.g. card-art crops of iconic monsters via
+     content_mods.card_art) into work/content/server/icons/, loaded by the server from --content-dir.
+   - Rename: AccountStore keys users by lowercase username (accounts.py:59-75); rename = re-key + uniqueness check
+     with the same USERNAME_RE; uid stays (friends, saves, leaderboards are uid-based). Password change: verify old
+     with `authenticate`, new salt + PBKDF2.
+   - Stats from the online save (ace.loads → JSON): `league.leagueTemplateId`/`totalExperience`,
+     `worldMapArray[].totalStarCompleted`, cards = `items` with containerId == the inventory container
+     (itemTemplateId -1 row) → unique owned count; decks: not present in a fresh save, find where decks are stored
+     (deck containers) before building "copy deck".
+   - Client: a new popup class in as3_new (like the collection classes), opened from a PROFILE main menu button
+     (icon/label already shipped: mainmenu_profile_icon / mainmenu_profile_text); offline → button greyed like
+     Friends. Tests in tests/test_profile.py first.
+ Server endpoints first (tests), then the screens; profile icons fix the
    blue placeholder avatars.
 8. **Release 1.2.0**, then Live PvP, then the browser spike. Performance profiling and cover art when convenient.
 
