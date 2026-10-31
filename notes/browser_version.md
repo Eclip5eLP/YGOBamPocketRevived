@@ -1,10 +1,12 @@
 # Browser version: research notes (2026-10-30)
 
-Status (2026-10-31, late): playable in the browser at /bam/ (findings 6.57-6.58): login (frame over the game), auto
-login after reload, offline play, saves across reloads, story map, shop with the extra booster packs; https via
-Ruffle's upgradeToHttps. Served by the game server (server/webgame.py, --web-dir/--ruffle-dir/--web-path). Dev:
-`python tools/build_web.py --host 127.0.0.1:8090`, `python tools/web_spike.py`, http://127.0.0.1:8090/bam/.
-Not tested yet: a duel, live PvP in the browser, world maps after the first, the live https site.
+Status (2026-10-31, night): PARKED by the owner's decision — release without a browser version for now.
+The web build works functionally (findings 6.57-6.60) but Ruffle's Stage3D costs ~1 ms per draw call, so card
+screens and duels run at ~5-16 fps. Research of alternatives (below, "Alternatives checked 2026-10-31") found nothing
+better that a free fan project can use. Everything stays in place and separate from the APK (tools/build_web.py,
+WEB_EDITS, as3_new/com/revival/web, server/webgame.py → /bam/ answers 404 while no web build is deployed); revisit
+when Ruffle's Stage3D path gets faster (rebuild with a newer Ruffle, measure with /bam/?stats=1 and the profiling
+build).
 
 ## What the game is made of
 
@@ -75,3 +77,19 @@ Not tested yet: a duel, live PvP in the browser, world maps after the first, the
   collection menus) carries over to a Ruffle build automatically; only platform glue differs.
 - The version gate needs a web client version (`v=`/`d=`) like the APK; the web build would report its own.
 - Live PvP over HTTP polling works the same in a browser.
+
+## Alternatives checked 2026-10-31 (owner asked whether Ruffle is the right tool)
+- **Ruffle** (current): the only free, maintained option that runs the SWF itself. Stage3D works but ~1 ms per
+  draw call on the web (wgpu over WebGL; its WebGPU renderer hung the page here). The big wgpu refactor (PR #24947,
+  merged 2026-10-21, already in our nightly) batches the normal display-list renderer, not Stage3D.
+- **CheerpX for Flash** (Leaning Technologies): runs the real Flash Player in WebAssembly, JIT and GPU Stage3D
+  since v35 (2023), current v44 (2026-10-21). Commercial: yearly per-organisation subscription, plus a Flash Player
+  redistribution licence negotiated with Harman; free tier only for evaluation. Not usable for a free revival.
+  It also emulates Flash Player, not AIR, so the same AIR replacements would be needed.
+- **Lightspark**: native player with Stage3D work, no maintained WebAssembly/browser build.
+- **HARMAN AIR WebAssembly target**: talked about, not released.
+- **Streaming the real APK** (redroid containers + scrcpy/WebRTC, e.g. ws-scrcpy, scws, webscreen): unmodified game
+  at native speed, but about 0.5-1 GB RAM plus CPU per concurrent player on the server — not affordable on the shared
+  Linux server.
+- **Rewrite to HTML5** (OpenFL/Haxe Starling port or a new engine): months of work.
+- Not a browser, but cheap and fast: **desktop build** (same SWF with the AIR SDK for Windows/macOS, option D above).
