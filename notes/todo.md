@@ -82,20 +82,17 @@ Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
 
 ## Next session (picked 2026-10-31, in this order)
 
-1. **Cover art quality**: researched 2026-10-31. Every card picture in the game is 155x155
-   (`Local Store/asset/cards`, 1177 of 1184 files); the original series 2 covers use sharp cut-out monsters at
-   about twice that size on a coloured radial background. Within the game data the best possible is a soft
-   upscale (scratch test: gradient background, faded art, soft template mask, which fixes the gem/frame edge
-   fringes). Original quality needs a higher-resolution illustration from outside the game (network access:
-   owner's decision) and a hand-cut monster.
-2. **55 unassigned cards**: analysed 2026-10-31 (end of `notes/pack_split_proposal.md`): 35 are already
-   obtainable (card shop, starter backups); 13 were Arena season rewards (need options A/B there); 5 have no
-   source (Gradius, Ancient Sorcerer, Ra, Obelisk + one expired quest). Waiting for the owner's choice.
+1. DONE 2026-10-31: Immemorial Cataclysm cover (best effort with 155 px art, 6.51); card rewards: Arena weekly
+   rewards, 44 chapter-locked card shop cards, Ra/Obelisk tournament milestones (6.52); Copy Deck fix (6.53).
+2. **Fusion check in a real duel** (6.54): build a test deck with several fusion pairs and confirm a fusion on
+   screen (Thousand-Eyes Idol + any monster is the easiest). Not done yet: luck of the draw.
 3. **Release prep** (big release, owner decides when): full server + content deploy, signed APK
    (work/release.p12), README + changelog + GitHub release text, startup message text ("Live duels are coming
    later" → current), decide the tournament deck rule (rotation vs YGO_TOURNAMENT_TEMPLATE=5), then check the live
    traffic line after deploy.
-4. Smaller follow-ups when convenient: Elite end-of-tournament rewards and weekly team rewards (both not handed out
+4. Possible new features (owner's choice, investigated in 6.54): new effects built from the existing primitives
+   are data-only; new effect kinds or Synchro/Xyz need new duel code (L–XL).
+5. Smaller follow-ups when convenient: Elite end-of-tournament rewards and weekly team rewards (both not handed out
    yet, `server/teams.py`); server caching of leaderboards / arena picks if players grow; browser version spike
    (`notes/browser_version.md`); more world maps (art needed).
 
