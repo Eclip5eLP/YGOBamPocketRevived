@@ -22,13 +22,15 @@ STAGE = ROOT / "work" / "game_adt" / "stage"
 
 PAGE = b"""<!doctype html>
 <html><head><meta charset="utf-8"><title>BAM Pocket web spike</title>
-<style>html,body{margin:0;height:100%;background:#000}#game{width:100vw;height:100vh}</style></head>
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#game{width:100vw;height:100vh}</style></head>
 <body><div id="game"></div>
 <script>
 window.RufflePlayer = window.RufflePlayer || {};
 window.RufflePlayer.config = {
   playerRuntime: "air",      // the game is an AIR app: enables Ruffle's AIR-only classes where it has them
   autoplay: "on", unmuteOverlay: "hidden", letterbox: "on",
+  splashScreen: false,       // no Ruffle loading animation: the game's own loading screen follows right away
+  backgroundColor: "#000000", contextMenu: "off",
   logLevel: "info", allowNetworking: "all", base: "/",
 };
 // ?renderer=webgpu | wgpu-webgl | webgl | canvas (Stage3D needs a wgpu renderer; Ruffle's default may not have it)

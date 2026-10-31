@@ -64,6 +64,14 @@ Run it: `build_release.py --host 127.0.0.1:8090`, `python tools/web_spike.py`, o
    /webgame by server.py with the game data and content packages).
 3. If Stage3D is the blocker: decide between B (few players) and D (desktop) as interim options.
 
+## Build layout (decided 2026-10-31)
+- The Android APK stays the base. The web build is a second build from the same pipeline: the same SWF patches
+  plus a web-only patch set (applied only for the web target, like YGO_PERF), so web fixes never touch the APK.
+  Output is the SWF + config + page (no ADT/APK packaging).
+- Only fixes that are harmless on Android and make the shared code safer go in the base (e.g. the GameSettings
+  date read in try/catch, 6.56).
+- Page: Ruffle splash screen off (`splashScreen: false`), black background, no context menu, no scrollbars.
+
 ## Interactions with other planned work
 - Everything we add to the APK through tools/as3_patches.py and game data (packs, world maps, profile, friends,
   collection menus) carries over to a Ruffle build automatically; only platform glue differs.
