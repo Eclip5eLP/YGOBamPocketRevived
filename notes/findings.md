@@ -2203,4 +2203,4 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
 - Owner: with many decks the online deck list filled the edit page and pushed the username and password forms far
   down. `server/profiles.py` edit_dialog: "Automatic" and the deck in use stay visible, the other decks sit in a
   `<details>` "Your decks (N)" that opens on tap. VERIFIED on the emulator (closed and opened) and by
-  tests/test_profile.py. Server only. Not yet deployed to the live server.
+  tests/test_profile.py. Server only. Deployed to the live server 2026-10-31 (auto-reload, backup of the replaced file in backup-before-1.1.0/).
