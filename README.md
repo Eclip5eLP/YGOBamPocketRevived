@@ -23,15 +23,55 @@ new community server instead of Konami's servers and Facebook. Not affiliated wi
   decks, friend help in duels.
 - Arena: daily opponents (friends first), win streak bonuses, statistics, weekly and all-time leaderboards.
 - Teams: join one of the 20 teams, earn team score in the Arena.
-- Tournament: sign up and leaderboards.
+- Tournament: live duels against other players, a ranking ladder up to Elite, leaderboards.
 - All purchases are free, including BAM Pro. No real money can ever be charged: the build contains no
   payment code.
 
 **Not yet**
-- Live duels against other players (real-time PvP) and tournament matches, which are live duels.
-- Weekly team reward payouts.
+- Weekly team reward payouts and Elite end-of-tournament rewards.
 
-New friends show up after restarting the game (the game loads its friend list at login).
+---
+
+## New Features
+
+Everything below is new in the revival. The original game never had it, or had it in its files without it
+ever being available to players.
+
+### Added
+- **Accounts without Facebook**: your own username and password, a login page inside the game, and an online
+  save you can restore on a new phone.
+- **Everything is free**: BAM Pro is always on, every purchase costs nothing, and energy never runs out.
+- **Collection**: a menu with every card in the game, the ones you own first.
+- **Profiles**: picture presets, change your name and password, see other players' profiles and their decks,
+  and copy a deck you like if you own the cards.
+- **Friends menu**: search for players, a list of all players, friend requests with a "new" mark on the main
+  menu, remove friends, and a green dot on friends who are online.
+- **Friend live duels**: challenge an online friend to a real-time duel from the friends menu or their profile.
+  Challenges pop up in the game wherever you are.
+- **Tournament ranking**: live duels move you up and down the ranks to Elite; the Elite leaderboard shows the
+  top 100.
+- **Card rewards**: weekly Arena rewards for the top 25 players, Obelisk the Tormentor at tournament rank 10
+  and The Winged Dragon of Ra at rank 5.
+- **More cards in the shop**: 44 cards that were never on sale unlock in the card shop as you clear story
+  chapters.
+- **Delete decks** from the deck chooser.
+- **Faster and lighter**: the game starts about 15 seconds faster, uses far less network traffic, and keeps your
+  settings when you install an update.
+- **New content by download**: new cards, booster packs and game data arrive from the server, without a new
+  APK.
+- **Fixes**: the map no longer jumps back after you drag it, and the shop no longer shows the server popup
+  every time.
+
+### Re-added (in the game files, never released)
+- **Booster packs**: *Wings of Destiny*, *Blazing Wind* and *Immemorial Cataclysm*, the three series 2 packs
+  the original game never sold. *Immemorial Cataclysm* got a new cover.
+- **Cards**: about 280 finished cards, mostly series 2, that were in the data but could not be obtained (the
+  game showed them as "Coming soon"). They are now in those packs, in the card shop by chapter, or Arena and
+  tournament rewards.
+- **The God cards**: Obelisk the Tormentor and The Winged Dragon of Ra, which had no name and no way to get
+  them.
+- **Arena rewards**: the original weekly Arena reward card sets, which the old server never handed out on
+  mobile.
 
 ---
 

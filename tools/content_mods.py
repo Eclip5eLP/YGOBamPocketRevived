@@ -17,7 +17,11 @@ PACKAGE_DIRS = {
     "mappreview": "asset/misc/mappreview/",
     "hud": "asset/module/hud/",
     "mainmenu": "asset/module/mainmenu/",
+    # pictures of new cards only (add_card); unpacks into asset/cards/ next to series1/series2 (EExternalAsset
+    # SERIES3, tools/as3_patches.py). None: no original files to start from.
+    "series3": None,
 }
+NEW_CARDS_VERSION = "1.0.0"  # series3 package version: raise it whenever a card picture is added or changed
 
 
 def free_bam_pro(ctx):
@@ -145,10 +149,59 @@ def card_art(ctx, template_id):
             path = assets[link["assetId"]]["path"]
             path = path[:path.rfind(".")]
             path = (path if "_1" in path else path + "_1") + ".jpg"
+            new = ctx.packages.get("series3", {}).get(path)
+            if new is not None:
+                return Image.open(io.BytesIO(new)).convert("RGBA")
             f = LOCAL_STORE / "asset" / "cards" / path
             if f.exists():
                 return Image.open(f).convert("RGBA")
     raise RuntimeError(f"no art for card {template_id}")
+
+
+NEW_CARD_NAME_IDS = 20_000_000_000_000  # name resource id of a new card = this + its template id
+
+
+def add_card(ctx, template_id, base_template_id, name, scan, **fields):
+    """A new card: a copy of an existing card (stats, effects, rarity...) with its own id, name and picture.
+
+    scan is an official card scan (full card); its art box becomes the card picture (tools/card_art.py) in the
+    series3 package. fields override template fields (atkStat, defStat, cardLevel, cardRarityId,
+    cardElementId, cardFamilyId, cardSerieId...). Effects are copied with new effect ids (they are unique in the
+    data); their texts stay those of the base card. Returns the new template."""
+    from PIL import Image
+    import card_art as cutter
+    templates = ctx.ace("config/ace/inventory/item_template.ace")
+    if any(t["id"] == template_id for t in templates):
+        raise RuntimeError(f"card template {template_id} exists")
+    base = next(t for t in templates if t["id"] == base_template_id)
+    card = copy.deepcopy(base)
+    next_effect = max(e["effect"]["id"] for t in templates for e in (t.get("effects") or [])) + 1
+    for e in card.get("effects") or []:
+        e["effect"]["id"] = next_effect
+        next_effect += 1
+    card.update(id=template_id, resourceNameId=type(base["resourceNameId"])(NEW_CARD_NAME_IDS + template_id),
+                fusionData=None, fusionResult=False, cardNumber=0, **fields)
+    templates.append(card)
+    for lang in ("en", "fr"):
+        ctx.set_text(lang, "inventory", str(NEW_CARD_NAME_IDS + template_id), name,
+                     resource_id=NEW_CARD_NAME_IDS + template_id)
+
+    picture = f"revival{template_id}_1"
+    assets = ctx.ace("config/ace/representation/asset.ace")
+    links = ctx.ace("config/ace/representation/item_template_to_asset.ace")
+    # rows are typed AMF objects (ace.AceObject with the game's class alias): copy one of the base card's, a plain
+    # dict would reach the game as an untyped Object and break every card list that resolves pictures
+    base_link = next(x for x in links if x["itemTemplateId"] == base_template_id)
+    asset = copy.deepcopy(next(a for a in assets if a["id"] == base_link["assetId"]))
+    asset.update(id=max(a["id"] for a in assets) + 1, path=f"{picture}.swf")
+    assets.append(asset)
+    link = copy.deepcopy(base_link)
+    link.update(id=max(x["id"] for x in links) + 1, itemTemplateId=template_id, assetId=asset["id"])
+    links.append(link)
+    buf = io.BytesIO()
+    cutter.game_picture(cutter.cut_art(Image.open(scan))).save(buf, "JPEG", quality=90)
+    ctx.package_file("series3", f"{picture}.jpg", buf.getvalue(), NEW_CARDS_VERSION)
+    return card
 
 
 SERIES_2_COVERS = [6, 7, 8, 9, 10]  # original series 2 covers in shop_booster_covers_00NN (same layout)

@@ -176,12 +176,13 @@ def main():
 
     for name, overlay in ctx.packages.items():
         pver = ctx.package_versions[name]
-        src = LOCAL_STORE / content_mods.PACKAGE_DIRS[name]
         pfiles = {}
-        for f in src.rglob("*"):
-            rel = f.relative_to(src).as_posix()
-            if f.is_file() and "version" not in f.name:
-                pfiles[rel] = f.read_bytes()
+        if content_mods.PACKAGE_DIRS[name] is not None:  # None: a new package, only our files
+            src = LOCAL_STORE / content_mods.PACKAGE_DIRS[name]
+            for f in src.rglob("*"):
+                rel = f.relative_to(src).as_posix()
+                if f.is_file() and "version" not in f.name:
+                    pfiles[rel] = f.read_bytes()
         pfiles.update(overlay)
         pfiles[f"{name}_version"] = pver.encode("utf-8")
         zname = f"zips/{name}-{pver}.zip"

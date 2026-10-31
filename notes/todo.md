@@ -90,8 +90,12 @@ Left open (the 25 DP Pro reward is dropped on purpose, owner's decision):
    (work/release.p12), README + changelog + GitHub release text, startup message text ("Live duels are coming
    later" → current), decide the tournament deck rule (rotation vs YGO_TOURNAMENT_TEMPLATE=5), then check the live
    traffic line after deploy.
-4. Possible new features (owner's choice, investigated in 6.54): new effects built from the existing primitives
-   are data-only; new effect kinds or Synchro/Xyz need new duel code (L–XL).
+4. **New mechanics: Synchro and Xyz** (owner wants them, after the release; investigated in 6.54). New duel code
+   (L–XL): material rules (level totals + tuner / same-level materials), Xyz materials kept under the card, an
+   extra deck or a fusion-like summon from the hand, AI support, deck builder rules, tutorial text. Cheap first
+   step: data-only "fusion-style" Synchro/Xyz through the existing fusion conditions (level/type). New cards need
+   art: official card scans cut to the art box (tools/card_art.py, 6.55). New effects built from the existing
+   primitives are data-only; new effect kinds need new duel code.
 5. Smaller follow-ups when convenient: Elite end-of-tournament rewards and weekly team rewards (both not handed out
    yet, `server/teams.py`); server caching of leaderboards / arena picks if players grow; browser version spike
    (`notes/browser_version.md`); more world maps (art needed).

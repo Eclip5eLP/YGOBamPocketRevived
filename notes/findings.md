@@ -1899,3 +1899,42 @@ New mechanics (Synchro, Xyz) [INFERRED from the code above]:
   LaunchFusion, AI support, visuals, deck builder rules for an extra deck, and new card data; both phones must
   run identical code for live duels. Feasible with new classes, effort L–XL; the data model (FusionData) is the
   natural starting point. New result cards also need art (only 155 px card pictures exist in the game data).
+
+### 6.55 New cards from official scans; series3 card package; test world removed (2026-10-31)
+
+- **Art box** [VERIFIED, 6 scans measured]: on the 421x614 card scans (YGOPRODeck's size) the art of a normal
+  (non-Pendulum) card is x 49-371, y 111-433 (323x323), inside a grey bevel frame (columns 44-48 / 372-377, rows
+  106-110 / 434-437). Identical on Cicada King, Veiler, Zeus, Nibiru, Ash, Apollousa. The game's own pictures
+  (Local Store `asset/cards`, 155x155) are the full art box too. `tools/card_art.py` cuts the box by these ratios
+  and scales to 155x155 (LANCZOS, JPEG q90); refuses images that are not card-shaped. On the 813x1185 scan the
+  same ratios give a cut that matches YGOPRODeck's own `cards_cropped` image (mean difference ~5/255, JPEG noise).
+  Pendulum cards (wider art box) are not handled.
+- **Card download script** (owner's `dl/YGOCardDl.py`, not in the repo) [VERIFIED 2026-10-31, one card]: the API
+  `db.ygoprodeck.com/api/v7/cardinfo.php` still answers; the image host it uses,
+  `storage.googleapis.com/ygoprodeck.com/pics/<id>.jpg`, returns 403. Current URLs (from the API's `card_images`):
+  `images.ygoprodeck.com/images/cards/<id>.jpg` (813x1185), `cards_small/`, and `cards_cropped/<id>.jpg` (art
+  only, 624x624). Changing `self.imgapi` to the first fixes the script.
+- **New card package `series3`** [VERIFIED emulator]: `EExternalAsset.SERIES3` ("series3", `asset/cards/`,
+  tools/as3_patches.py EXTERNAL_ASSET_EDITS) holds only the pictures of new cards, so adding a card downloads a few
+  KB instead of a new 27 MB series2 zip. Package install only writes files (`ExternalFileControllerImpl
+  .SaveFileOnDevice`), so it shares `asset/cards/` with series1/2 safely; a package the server's versionning.xml
+  does not list is skipped (`ValidateAsset`: `assetData != null`), so the APK works with servers or content without
+  it. The server serves it from the content manifest (`content.package_zip`, no PACKAGE_PATHS entry needed);
+  `build_content` packages with `PACKAGE_DIRS[name] = None` contain only overlay files. Version:
+  `content_mods.NEW_CARDS_VERSION`.
+- **`content_mods.add_card(ctx, id, base_id, name, scan, **fields)`**: copies a card template (new effect ids,
+  fusion data cleared), name resource id 20000000000000 + id (en + fr), an `Asset` + `ItemTemplateToAsset` row
+  (path `revival<id>_1.swf` → `asset/cards/revival<id>_1.jpg`), and the cut picture in series3.
+  - Bug found on the way [VERIFIED emulator]: rows appended as plain dicts are encoded as untyped AMF objects; the
+    card shop then stopped after its first card (no pictures, no card count). The rows must be `ace.AceObject`
+    copies of an existing row (class alias `...representation.amf.Asset` / `ItemTemplateToAsset`). Any new row
+    of an existing ace table: deepcopy a real row.
+- Test (`YGO_TEST_CONTENT=1`, `tools/content_test_mods.test_new_card`): "Number 3: Cicada King" (template 9001,
+  copy of Insect Soldiers of the Sky, level 3, 600/1250) for 1 DP in the card shop. [VERIFIED emulator] the game
+  asked for 0.01 MB of extra content, wrote `revival9001_1.jpg` + `series3_version`, and the card shop listed 156
+  cards with Cicada King showing its cut art and name.
+- Card scans live in `content/card_scans/` (git-ignored: Konami art), or `YGO_CARD_SCANS`.
+- **Test world 2 removed**: `second_world_map` was only applied with YGO_TEST_CONTENT and never reached the live
+  content (live `world.zip` has only `worldmap.xml`); the WORLD button only shows with 2+ world maps in the save
+  (`hud.bar.MapActionBar.AddWorldButton`, tools/as3_patches.py). The multi-map code stays: a new map ships as game data (gamedata package) + world/
+  mappreview art packages, no APK, as long as it needs no new code.

@@ -135,6 +135,8 @@ EXTERNAL_ASSET_EDITS = [
 """, """      public static const FONT:EExternalAsset = new EExternalAsset(mId++,"font","asset/font/");
 
       public static const GAMEDATA:EExternalAsset = new EExternalAsset(mId++,"gamedata","asset/gamedata/");
+
+      public static const SERIES3:EExternalAsset = new EExternalAsset(mId++,"series3","asset/cards/");
 """),
 ]
 
