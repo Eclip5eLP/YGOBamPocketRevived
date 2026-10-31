@@ -272,6 +272,12 @@ class Game:
             self.livepvp.bam_end(s.uid, req)
         return amf3.encode_typed_object(P + "livepvp.amf.BamEndResponse", {"exception": None})
 
+    def touch(self, ctx):
+        """Any request of a logged-in player marks them online (friends page, profiles: live duel buttons)."""
+        s = self.find_session(ctx["ext_id"], ctx["cookie"])
+        if s and s.uid:
+            self.livepvp.touch(s.uid)
+
     def pvp_notifications(self, ctx):
         """Queued live PvP notifications for the player of a PvP-connection request (server.py appends them)."""
         s = self.find_session(ctx["ext_id"], ctx["cookie"])

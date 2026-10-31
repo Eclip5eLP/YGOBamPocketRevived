@@ -105,6 +105,9 @@ def test_challenge(base, a, deck_a, deck_b):
     assert resp["combat"] is None, "a tournament player must not be paired with a challenger"
     pvp(a, T + "CancelTournamentMatchRequest")
     assert badge(d)["challenges"] == 1, badge(d)
+    assert badge(d)["challengers"] == [{"uid": c.uid, "name": c.name}], badge(d)
+    profile = json.loads(urllib.request.urlopen(base + "/fb/graph/" + d.uid + "/revival_profile").read())
+    assert profile["online"] is True, profile
     page = friends_page(d)
     assert "Waiting for a live duel" in page and "challenge=" + c.uid in page, page
     assert challenge(d, c.uid) == {"ok": True}

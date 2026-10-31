@@ -39,6 +39,7 @@ import amf3
 
 P = "com.frimastudio.snowstorm.project."
 DISCONNECT_SECONDS = 45
+ONLINE_SECONDS = 40  # the game pings its main connection every 10 s while it runs (mmog.xml ping_frequency)
 QUEUE_SECONDS = 600
 
 
@@ -77,6 +78,7 @@ class LivePvP:
         self.duels = {}  # uid -> Duel
         self.outbox = {}  # uid -> [encoded notification]
         self.last_seen = {}  # uid -> time of the last PvP request
+        self.presence = {}  # uid -> time of the last request on any connection (online status)
         self.next_combat = 1
 
     # --- delivery -------------------------------------------------------------------------------
@@ -113,6 +115,13 @@ class LivePvP:
                     self.log.exception("live pvp %s: ranking %s failed", duel.id, uid)
                     level = None
                 self._notify(uid, P + "tournament.amf.PlayCombatEndNotification", {"tournamentLevel": level})
+
+    # --- online status ----------------------------------------------------------------------------
+    def touch(self, uid):
+        self.presence[str(uid)] = time.time()
+
+    def is_online(self, uid):
+        return time.time() - self.presence.get(str(uid), 0) < ONLINE_SECONDS
 
     # --- queue ----------------------------------------------------------------------------------------
     def enter_queue(self, uid, req):

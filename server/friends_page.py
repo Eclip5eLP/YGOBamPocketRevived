@@ -30,7 +30,7 @@ font-size:13px;text-decoration:none;display:inline-block}} .alt{{background:#3a8
 .msg{{padding:8px;border-radius:6px;margin:8px 0;background:#1d4a2a}} .err{{background:#5a1d1d}}
 .search{{display:flex;gap:6px}} .search input{{flex:1;padding:8px;font-size:15px;border-radius:6px;border:1px solid #456;
 background:#12244a;color:#fff}} p.e{{color:#99a;margin:10px 4px}} h3{{font-size:13px;color:#aac;margin:12px 4px 2px}}
-.nav{{display:flex;justify-content:space-between;align-items:center;margin:10px 0}}</style>
+.off{{color:#778;font-size:12px}} .nav{{display:flex;justify-content:space-between;align-items:center;margin:10px 0}}</style>
 </head><body><a class="close" href="{close}">Close</a>
 <div class="tabs">{tabs}</div>{message}{body}</body></html>"""
 
@@ -70,10 +70,10 @@ class FriendsPage:
             hidden += (f'<input type="hidden" name="q" value="{html.escape(value("q"))}">'
                        f'<input type="hidden" name="page" value="{html.escape(value("page"))}">')
 
-        def row(user, *buttons, duel=None):
+        def row(user, *buttons, duel=None, status=None):
             pic = f'/fb/graph/{user["uid"]}/picture'
             view = html.escape(redirect + ("&" if "?" in redirect else "?") + "request=revival_friends&view=" + user["uid"])
-            acts = ""
+            acts = f'<span class="off">{status}</span>' if status else ""
             if duel:
                 challenge = redirect + ("&" if "?" in redirect else "?") + "request=revival_friends&challenge=" + user["uid"]
                 acts = f'<a class="b alt" href="{html.escape(challenge)}">{duel}</a>'
@@ -89,7 +89,10 @@ class FriendsPage:
             waiting = users(self._challenges(uid))
             body = ("<h3>Waiting for a live duel with you</h3>" + "".join(row(u, duel="Accept") for u in waiting)
                     + "<h3>Friends</h3>") if waiting else ""
-            body += "".join(row(u, ("remove", "Remove", "red"), duel="Live duel") for u in friends) or \
+            online = self.livepvp.is_online if self.livepvp else (lambda _: False)
+            friends.sort(key=lambda u: not online(u["uid"]))  # online friends first
+            body += "".join(row(u, ("remove", "Remove", "red"), duel="Live duel" if online(u["uid"]) else None,
+                                status=None if online(u["uid"]) else "offline") for u in friends) or \
                 '<p class="e">No friends yet. Find players in the third tab.</p>'
         elif tab == "requests":
             incoming = users(self.store.incoming_requests(uid))

@@ -135,8 +135,12 @@ class FakeFacebook:
                 uid = self.store.uid_for_token(query.get("access_token", [""])[0])
                 count = len(self.store.incoming_requests(uid)) if uid else 0
                 challenges = self._incoming_challenges(uid) if uid else []
+                # challengers: the in-game challenge toast (as3_new/com/revival/friends/ChallengeToast.as)
+                challengers = [{"uid": u["uid"], "name": u["username"]}
+                               for u in (self.store.user_by_uid(x) for x in challenges) if u]
                 return 200, "application/json", json.dumps({"incoming": count + len(challenges),
-                                                            "challenges": len(challenges)}).encode()
+                                                            "challenges": len(challenges),
+                                                            "challengers": challengers}).encode()
             if rest == "me/revival_challenge" and method == "POST":
                 return self._challenge_post(query, form)
             if rest == "me":
@@ -280,6 +284,8 @@ class FakeFacebook:
             return 200, "application/json", json.dumps({"error": "Your login has expired. Log in again."}).encode()
         if to not in ("", "0") and to not in self.store.friends_of(uid):
             return 200, "application/json", json.dumps({"error": "You can only challenge your friends."}).encode()
+        if to not in ("", "0") and not self.livepvp.is_online(to) and to not in self.livepvp.incoming_challenges(uid):
+            return 200, "application/json", json.dumps({"error": "Your friend is offline right now."}).encode()
         self.livepvp.set_challenge(uid, None if to in ("", "0") else to)
         self.log.info("live duel challenge: %s -> %s", uid, to or "none")
         return 200, "application/json", json.dumps({"ok": True}).encode()

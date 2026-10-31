@@ -32,6 +32,7 @@ package com.revival.friends
             {
                return;
             }
+            ChallengeToast.Start();
             loader = new URLLoader();
             onDone = function(aEvent:Event):void
             {

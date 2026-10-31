@@ -64,10 +64,10 @@ def main():
     assert a.name in filtered and b.name not in filtered
     import json
     count = json.loads(urllib.request.urlopen(f"{base}/fb/graph/me/revival_requests?access_token={a.token}").read())
-    assert count == {"incoming": 0, "challenges": 0}, count
+    assert count == {"incoming": 0, "challenges": 0, "challengers": []}, count
     page(base, c, "POST", tab="find", action="add", uid=a.uid)
     count = json.loads(urllib.request.urlopen(f"{base}/fb/graph/me/revival_requests?access_token={a.token}").read())
-    assert count == {"incoming": 1, "challenges": 0}, count
+    assert count == {"incoming": 1, "challenges": 0, "challengers": []}, count
     print("list all + filter + request count OK")
 
     expired = urllib.request.urlopen(base + URL + "?access_token=bad").read().decode()

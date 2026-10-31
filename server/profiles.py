@@ -30,6 +30,7 @@ class Profiles:
         self.store = store
         self.icons_dir = os.path.join(content_dir or "", "server", "icons")
         self.deck_source = game.deck_source if game else None  # uid -> (label, [template ids])
+        self.is_online = game.livepvp.is_online if game else None  # profile LIVE DUEL button
         self.decks = game.save_decks if game else None
         self.save_items = game.save_items if game else None
         self.log = logger
@@ -90,6 +91,7 @@ class Profiles:
             "deck_name": deck_name,
             "deck": deck_cards,
             "created": user.get("created", 0),
+            "online": bool(self.is_online and self.is_online(uid)),
         }
 
     # --- changes by the player ------------------------------------------------------------------------

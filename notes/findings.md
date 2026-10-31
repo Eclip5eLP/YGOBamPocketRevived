@@ -1717,3 +1717,23 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   disposed, so nothing was sent); now read first [VERIFIED emulator: "challenge: 1000000150 -> 1000000202"]. When
   the live PvP tutorial prompt comes up instead of the search, LiveChallenge clears the challenge (to=0), so a later
   tournament search isn't held for that friend [VERIFIED emulator: "-> 0" a second later].
+
+### 6.48 Online status, challenge toast, settings kept across updates
+
+- Online status: the game pings its main connection every 10 s while running [VERIFIED data, `config/mmog.xml`
+  ping_frequency 10000]. The server marks a player online on any request of theirs (`Game.touch`, `server.py`
+  after each AMF request) and online = seen in the last 40 s (`livepvp.ONLINE_SECONDS`). Friends page: online
+  friends first with "Live duel", others show "offline" without it; profile JSON has `online`, and the profile's
+  LIVE DUEL button only shows when true; `revival_challenge` refuses offline friends unless they are already
+  waiting for you. [VERIFIED emulator] a running friend shows "Live duel"; after force-stopping the game on that
+  emulator and ~50 s, it shows "offline".
+- Challenge toast (`as3_new/com/revival/friends/ChallengeToast.as`, started with the main menu Friends badge):
+  polls `me/revival_requests` every 15 s while logged in and not in a duel (now also returns
+  `challengers [{uid, name}]`); a new challenger shows a bar at the top of any screen, "<name> challenges you to a
+  live duel!" with ACCEPT (LiveChallenge.Start: challenge back → paired at once) and LATER, hidden after 30 s,
+  each challenge shown once. [VERIFIED emulator] toast on the Tournament screen and on the main menu; ACCEPT →
+  duel started ("live pvp 5 ... challenge"); a surrender on one phone ended it on the other.
+- Settings across APK updates: `GameSettings.LoadFromSharedObject` dropped all saved settings when the app's install
+  date changed [VERIFIED code]; patched (GAME_SETTINGS_EDITS) to keep them (missing keys still get defaults).
+  [VERIFIED emulator] after installing the new APK the live duel went straight to the search (tutorial done
+  before), and the startup "Breaking news" popup did not repeat.

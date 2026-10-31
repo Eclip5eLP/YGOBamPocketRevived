@@ -128,6 +128,7 @@ package com.revival.profile
             this.mCopyButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(230,90),270,410,"COPY DECK",EFonts.HANZEL_BOLD,30,16777215);
             this.mCopyButton.visible = false;
             this.mDuelButton = CreateButton(ECommonButton.GREEN_BUTTON,new Point(230,90),510,410,"LIVE DUEL",EFonts.HANZEL_BOLD,30,16777215);
+            this.mDuelButton.visible = false; // only while the player is online (profile.online)
          }
       }
 
@@ -230,6 +231,10 @@ package com.revival.profile
             if(this.mCopyButton != null)
             {
                this.mCopyButton.visible = this.mDeckButton.visible;
+            }
+            if(this.mDuelButton != null)
+            {
+               this.mDuelButton.visible = profile.online == true;
             }
             this.mLines.text = "Level " + profile.league + "     Stars " + profile.stars + "\n" + "Cards: " + profile.cards_unique + " different, " + profile.cards_total + " in total\n" + "Deck: " + (profile.deck.length == 0 ? (profile.deck_name ? profile.deck_name : "none") : (profile.deck_name ? profile.deck_name + " (" + profile.deck.length + " cards)" : profile.deck.length + " cards")) + (profile.created ? "\nPlaying since " + this.FormatDate(Number(profile.created)) : "");
          }

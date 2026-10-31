@@ -1407,6 +1407,14 @@ DUEL_GROUND_EDITS = [
             }"""),
 ]
 
+# Game settings (tutorials done, selected deck type, sound, ...) survive APK updates: the original reset them to
+# defaults whenever the app's install date changed, so every update showed the live duel tutorial prompt again.
+GAME_SETTINGS = "com.frimastudio.snowstorm.module.option.GameSettings"
+GAME_SETTINGS_EDITS = [
+    ("""            this.mSharedObject.SaveValue(SHARED_OBJECT_DATE_NAME,appDate);
+            options = null;""", """            this.mSharedObject.SaveValue(SHARED_OBJECT_DATE_NAME,appDate);"""),
+]
+
 # Friend live duel: the Tournament screen starts the search of a pending challenge (as3_new/com/revival/friends/
 # LiveChallenge.as; the tournament popups need this module's assets).
 TOURNAMENT_VIEW = "com.frimastudio.snowstorm.module.tournament.view.TournamentView"
@@ -1476,6 +1484,7 @@ PATCHES = {
     SHOP_MANAGER: SHOP_MANAGER_EDITS,
     DUEL_GROUND: DUEL_GROUND_EDITS,
     TOURNAMENT_VIEW: TOURNAMENT_VIEW_EDITS,
+    GAME_SETTINGS: GAME_SETTINGS_EDITS,
     MAIN_MENU_MODULE: MAIN_MENU_MODULE_EDITS,
     SHOP_MODULE: SHOP_MODULE_EDITS,
     SHOP_CARD_VIEW: SHOP_CARD_VIEW_EDITS,

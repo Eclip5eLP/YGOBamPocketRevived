@@ -621,6 +621,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         if not request_objects:
             logger.warning("[%s] Empty or unparsable request array received", ip)
 
+        self.server.game.touch(ctx)
         # live PvP notifications ride on responses of the PvP connection (server/livepvp.py)
         if pvp and not refused:
             responses.extend(self.server.game.pvp_notifications(ctx))
