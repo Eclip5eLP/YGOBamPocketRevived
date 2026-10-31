@@ -1056,10 +1056,43 @@ SHOP_MANAGER_EDITS = [
 # menu. The flag is cleared when the shop module closes. The button is only added if its icon and label can be
 # built (new main menu atlas page, content_mods.mainmenu_icons); otherwise the menu stays as it was.
 MAIN_MENU_VIEW_EDITS = [
+    ("""         bottomButtonBar.addChild(this.mTournamentButton);
+""", """         bottomButtonBar.addChild(this.mTournamentButton);
+         this.AddProfileButton(bottomButtonBar);
+"""),
+    ("""         this.mTournamentButton.filter = tournamentColor;""", """         this.mTournamentButton.filter = tournamentColor;
+         if(this.mProfileButton != null)
+         {
+            this.mProfileButton.filter = gameColor;
+         }"""),
     ("""      private var mCraftingButton:Scale9Button;
 """, """      private var mCraftingButton:Scale9Button;
 
       private var mCollectionButton:Scale9Button;
+
+      private var mProfileButton:Scale9Button;
+
+      public function get ProfileButton() : Scale9Button
+      {
+         return this.mProfileButton;
+      }
+
+      private function AddProfileButton(aBar:Element) : void
+      {
+         try
+         {
+            this.mProfileButton = this.CreateMainMenuButton("mainmenu_profile");
+            aBar.addChild(this.mProfileButton);
+         }
+         catch(error:Error)
+         {
+            if(this.mProfileButton != null)
+            {
+               this.mProfileButton.removeFromParent(true);
+               this.mProfileButton = null;
+            }
+         }
+      }
 
       public function get CollectionButton() : Scale9Button
       {
@@ -1094,6 +1127,11 @@ MAIN_MENU_VIEW_EDITS = [
             this.mCollectionButton.removeFromParent(true);
             this.mCollectionButton = null;
          }
+         if(this.mProfileButton != null)
+         {
+            this.mProfileButton.removeFromParent(true);
+            this.mProfileButton = null;
+         }
 """),
 ]
 
@@ -1102,6 +1140,8 @@ MAIN_MENU_MODULE_EDITS = [
     ("""   import com.frimastudio.mobile.module.EStarlingModuleDefinition;
 """, """   import com.frimastudio.mobile.module.EStarlingModuleDefinition;
    import com.frimastudio.snowstorm.module.shop.view.ShopCardView;
+   import com.revival.profile.ProfilePopupData;
+   import com.frimastudio.snowstorm.project.facebook.FacebookProxy;
 """),
     ("""         this.mUi.CraftingButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
 """, """         this.mUi.CraftingButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
@@ -1109,12 +1149,20 @@ MAIN_MENU_MODULE_EDITS = [
          {
             this.mUi.CollectionButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
          }
+         if(this.mUi.ProfileButton != null)
+         {
+            this.mUi.ProfileButton.addEventListener(Event.TRIGGERED,this.OnTouchHandler);
+         }
 """),
     ("""         this.mUi.CraftingButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
 """, """         this.mUi.CraftingButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
          if(this.mUi.CollectionButton != null)
          {
             this.mUi.CollectionButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
+         }
+         if(this.mUi.ProfileButton != null)
+         {
+            this.mUi.ProfileButton.removeEventListener(Event.TRIGGERED,this.OnTouchHandler);
          }
 """),
     ("""            case this.mUi.ShopButton:
@@ -1125,6 +1173,22 @@ MAIN_MENU_MODULE_EDITS = [
             case this.mUi.CollectionButton:
                ShopCardView.CollectionMode = true;
                this.ChangeModule(EStarlingModuleDefinition.SHOP);
+               break;
+            case this.mUi.ProfileButton:
+               if(!YGOMLogin.IsLogguedIn())
+               {
+                  PopupManagerUtil.ShowLoginRequiredPopup();
+               }
+               else
+               {
+                  try
+                  {
+                     PopupManager.Show(new ProfilePopupData(FacebookProxy.OwnUser.uid,true));
+                  }
+                  catch(error:Error)
+                  {
+                  }
+               }
                break;"""),
 ]
 
@@ -1206,6 +1270,24 @@ SHOP_CARD_VIEW_EDITS = [
          var i:int = 0;
          var owned:int = 0;
          var data:CardTemplateListData = CardTemplateListUtil.GenerateCardTemplateDataList(FilterModule.MyCardOnly,FilterModule.TournamentCardOnly,this.mSelectedFilterDisplay.ActiveFilterList,this.SortCardByName);
+         var ownedTemplates:Vector.<CardTemplate> = new Vector.<CardTemplate>();
+         var ownedQuantities:Vector.<int> = new Vector.<int>();
+         var missingTemplates:Vector.<CardTemplate> = new Vector.<CardTemplate>();
+         var missingQuantities:Vector.<int> = new Vector.<int>();
+         for(i = 0; i < data.CardTemplateList.length; i++)
+         {
+            if(data.QuantityList[i] > 0)
+            {
+               ownedTemplates.push(data.CardTemplateList[i]);
+               ownedQuantities.push(data.QuantityList[i]);
+            }
+            else
+            {
+               missingTemplates.push(data.CardTemplateList[i]);
+               missingQuantities.push(data.QuantityList[i]);
+            }
+         }
+         data = new CardTemplateListData(ownedTemplates.concat(missingTemplates),ownedQuantities.concat(missingQuantities));
          this.mCardTemplateList = data.CardTemplateList;
          this.mCardScrollerDataList.length = 0;
          for(i = 0; i < this.mCardTemplateList.length; i++)

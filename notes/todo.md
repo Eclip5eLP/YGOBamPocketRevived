@@ -139,7 +139,7 @@ feature ships on a proven release path.
    (ShopModule.CreateAssetList: add EAssetListDefinition for the deck builder only in collection mode) or the
    screen hosted in the deck builder module instead; decide after reading DeckBuilderModule. Fail safe: if the
    new screen throws while building, fall back to the current collection view.
-7. **Profile (L), then Friends rewrite (L).**
+7. Profile part 1 DONE (6.41: own profile, presets, rename, password). Part 2 with Friends: other players' profiles, copy deck, deck cards, league names. **Profile (L), then Friends rewrite (L).**
    Profile research (2026-10-31), for the next session:
    - Transport: the client already talks to `<host>/fb/graph/...` (FacebookURLDefaults.GRAPH_URL, rewritten by
      patch_swf.py) with its access token (`FacebookManagerMobile.AccessToken`, :541). Put the profile API there:

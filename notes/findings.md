@@ -1539,3 +1539,28 @@ All in `tools/as3_patches.py` (section "Quick fixes"), emulator-tested (x64 buil
   previous shop-style list is shown instead (it is created anyway and only hidden).
 - [VERIFIED emulator] grid, preview, popup, fast fling across the list (textures load), "My Cards Only" (5 / 5),
   smoke fresh + upgrade.
+
+### 6.41 Profile (own profile, picture presets, rename, password); collection owned-first (2026-10-31)
+
+- Server (`server/profiles.py`, routed by `server/fakefb.py` on the fake Graph API the client already uses):
+  `revival_icons` (14 presets: card-art crops from content_mods.profile_icons → `<content>/server/icons/`),
+  `<uid>/picture` (chosen preset, else the old default), `<uid>/revival_profile` (public JSON: name, picture,
+  league, experience, stars, unique/total cards from the online save, deck = Game.deck_for, account creation),
+  `POST me/revival_profile` (icon | rename | password) and `/fb/dialog/revival_profile` (edit page for the in-app
+  web view). AccountStore.rename (uid unchanged, case-insensitive uniqueness) and change_password (old password
+  required). tests/test_profile.py; all server tests pass.
+- Client (new classes `as3_new/com/revival/profile/`): `ProfilePopup` (InfoPopup subclass via
+  `ProfilePopupData.PopupClass`) loads the JSON and picture with URLLoader/Loader from
+  `FacebookURLDefaults.GRAPH_URL`; network errors only show a message. EDIT PROFILE opens the edit page with
+  `FacebookMobile.dialog("/revival_profile", ...)` (same StageWebView path as the invite dialog; Close returns
+  to login_success, which closes the view), then reloads. Native text input was avoided on purpose (StageText
+  positioning under Starling); the web page handles keyboard input.
+- PROFILE button in the multiplayer row (`MainMenuView.AddProfileButton`, try/catch; greyed offline like
+  Friends; offline tap → login-required popup).
+- [VERIFIED emulator] profile opens with live stats; picture picked in the web view ("Picture changed."), Close
+  → profile shows the new picture. Not yet run in the emulator: rename/password through the web view (server
+  side covered by tests).
+- Collection: owned cards first, then unowned, name order kept inside both groups (ShopCardView
+  UpdateCollectionList). [VERIFIED emulator]
+- Not done yet (profile part 2): viewing other players' profiles + "copy deck" (comes with the Friends rewrite),
+  showing the deck's cards, league name instead of number.
