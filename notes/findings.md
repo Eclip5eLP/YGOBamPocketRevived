@@ -2082,3 +2082,16 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   Interaction on heavy screens is still ~16 fps (the per-draw-call cost).
 - Not measured yet: a duel turn by turn (owner: each turn about twice as slow) — `?stats=1` shows whether the draw
   call count grows per turn.
+
+### 6.61 Release prep: dev build on a phone, first friend challenge of a new account was dropped (2026-10-31)
+
+- Dev setup: `build_release.py --host 192.168.178.20 --app-id com.konami.ygo.dev --name "BAM Revived (dev)"`
+  (package air.com.konami.ygo.dev, side by side with the real app); dev server `--host 0.0.0.0 --port 80
+  --cdn-host 192.168.178.20`, emulators via `adb reverse tcp:80 tcp:80`. Startup text now names tournaments and
+  live duels. Dev-only quirk: an emulator asks GetVersion through adb reverse (127.0.0.1) but loads the popup over
+  the LAN address, so the per-IP update notice showed; a phone (one address) is not affected.
+- Bug [VERIFIED owner's phone + emulator]: LiveChallenge.OnTournamentScreenReady cleared the pending challenge
+  when the live PvP tutorial showed, so every new account's first friend challenge was cancelled a second after
+  sending it ("live duel challenge: X -> 0"). Now: tutorial, then the friend search when it closes.
+  Second try (tutorial already seen): challenge popup on the emulator, ACCEPT, paired "challenge" (unranked), duel
+  played, winner recorded, emulator back on the Tournament screen with its rank unchanged.

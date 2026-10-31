@@ -110,17 +110,37 @@ package com.revival.friends
          {
             if(LivePvpUtil.IsLivePvpTutoNeeded())
             {
-               // no search now: drop the challenge so a later tournament search isn't held for this friend
-               Clear();
-               PopupManager.Show(new TournamentTutorialPopupData());
+               // first live duel of this account: the tutorial, then the search (dropping the challenge here
+               // cancelled every first challenge of a new account)
+               popup = PopupManager.Show(new TournamentTutorialPopupData());
+               popup.addEventListener(PopupManagerEvent.POPUP_CLOSED,OnTutorialClosed);
                return;
             }
-            popup = PopupManager.Show(new TournamentDuelSearchPopupData());
-            popup.addEventListener(PopupManagerEvent.POPUP_CLOSED,OnSearchClosed);
+            ShowSearch();
          }
          catch(error:Error)
          {
+            Clear();
          }
+      }
+
+      private static function OnTutorialClosed(aEvent:PopupManagerEvent) : void
+      {
+         (aEvent.currentTarget as Popup).removeEventListener(PopupManagerEvent.POPUP_CLOSED,OnTutorialClosed);
+         try
+         {
+            ShowSearch();
+         }
+         catch(error:Error)
+         {
+            Clear();
+         }
+      }
+
+      private static function ShowSearch() : void
+      {
+         var popup:Popup = PopupManager.Show(new TournamentDuelSearchPopupData());
+         popup.addEventListener(PopupManagerEvent.POPUP_CLOSED,OnSearchClosed);
       }
 
       private static function Ignore(aEvent:Event) : void
