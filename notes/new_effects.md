@@ -85,7 +85,9 @@ Ordered by how many Series 3/4 cards would use them.
 | Stardust / Junk / Synchron | 75 | yes (2026-11-01) |
 | Red Dragon Archfiend | 34 | yes (2026-11-01) |
 | Black Rose | 26 | yes (2026-11-01) |
-| Ice Barrier | 42 | |
-| T.G. | 33 | |
-| Koa'ki Meiru | 36 | |
+| Ice Barrier | 42 | yes (2026-11-01) |
+| T.G. | 33 | yes (2026-11-01) |
+| Koa'ki Meiru | 36 | yes (2026-11-01) |
 | Standalone | 331 | |
+
+Archetype cards waiting for an approved new effect (`effect_idea`): ON 16, LEVEL 14, MATERIAL 9, REBIRTH 8, GUARDIAN 6, IMMUNE 2, BOOST 1 (56 cards).

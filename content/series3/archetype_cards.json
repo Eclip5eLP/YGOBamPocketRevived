@@ -2244,7 +2244,12 @@
   "def": 200,
   "attribute": "WATER",
   "race": "Sea Serpent",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE ALL 500"
+  ],
+  "effect_note": "opponent's monsters lose 500 ATK/DEF; copies a Level",
+  "effect_idea": "LEVEL SET"
  },
  {
   "id": 23950192,
@@ -2256,7 +2261,11 @@
   "def": 0,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL LV 4 & More MONSTERS 300"
+  ],
+  "effect_note": "Level 4+ monsters can't attack"
  },
  {
   "id": 90311614,
@@ -2268,7 +2277,11 @@
   "def": 800,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SHOCK 500"
+  ],
+  "effect_note": "attacks directly next to small monsters"
  },
  {
   "id": 9396662,
@@ -2280,7 +2293,12 @@
   "def": 400,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL WATER MONSTERS 200"
+  ],
+  "effect_note": "makes tokens and raises its Level",
+  "effect_idea": "LEVEL UP"
  },
  {
   "id": 82498947,
@@ -2292,7 +2310,11 @@
   "def": 1600,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL 400"
+  ],
+  "effect_note": "stronger monsters can't attack"
  },
  {
   "id": 56704140,
@@ -2304,7 +2326,11 @@
   "def": 1200,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "can't be attacked by one Attribute"
  },
  {
   "id": 32991027,
@@ -2316,7 +2342,11 @@
   "def": 1200,
   "attribute": "WATER",
   "race": "Winged Beast",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL WATER MONSTERS 300"
+  ],
+  "effect_note": "locks the opponent's GY; Ice Barrier support"
  },
  {
   "id": 60161788,
@@ -2328,7 +2358,11 @@
   "def": 500,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FAREWELL 500"
+  ],
+  "effect_note": "draws when destroyed by battle"
  },
  {
   "id": 50088247,
@@ -2340,7 +2374,11 @@
   "def": 400,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT WATER MONSTERS"
+  ],
+  "effect_note": "tributes itself to revive an Ice Barrier"
  },
  {
   "id": 27527047,
@@ -2352,7 +2390,11 @@
   "def": 1600,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE ALL WATER MONSTERS"
+  ],
+  "effect_note": "Ice Barrier monsters can't be targeted"
  },
  {
   "id": 43256007,
@@ -2364,7 +2406,12 @@
   "def": 300,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL WATER MONSTERS 200"
+  ],
+  "effect_note": "summons a big Ice Barrier; lowers a Level by 2",
+  "effect_idea": "LEVEL DOWN 2"
  },
  {
   "id": 38528901,
@@ -2376,7 +2423,12 @@
   "def": 800,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "SELF-DESTRUCT"
+  ],
+  "effect_note": "tributes itself to destroy a WATER monster"
  },
  {
   "id": 18482591,
@@ -2388,7 +2440,11 @@
   "def": 1000,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BREAK ALL SPELLS IMMUNITY"
+  ],
+  "effect_note": "Spells must be Set a turn first"
  },
  {
   "id": 59546528,
@@ -2400,7 +2456,11 @@
   "def": 900,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "returns Set Spells/Traps to the hand"
  },
  {
   "id": 53535814,
@@ -2412,7 +2472,11 @@
   "def": 900,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BLOODLUST 500"
+  ],
+  "effect_note": "500 more LP loss when the opponent pays LP"
  },
  {
   "id": 92065772,
@@ -2424,7 +2488,11 @@
   "def": 1800,
   "attribute": "WATER",
   "race": "Insect",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 300"
+  ],
+  "effect_note": "blocks a monster zone"
  },
  {
   "id": 20700531,
@@ -2436,7 +2504,11 @@
   "def": 1000,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "not destroyed by battle with 1900+ ATK monsters"
  },
  {
   "id": 18319762,
@@ -2448,7 +2520,11 @@
   "def": 1000,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WATER MONSTERS"
+  ],
+  "effect_note": "summons an Ice Barrier Tuner; stops Tribute Summons"
  },
  {
   "id": 64926005,
@@ -2460,7 +2536,12 @@
   "def": 1500,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FRAGILE",
+   "FAREWELL 800"
+  ],
+  "effect_note": "destroyed and draws when changed to Defense"
  },
  {
   "id": 44308317,
@@ -2472,7 +2553,11 @@
   "def": 1800,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE ALL 200"
+  ],
+  "effect_note": "locks the opponent's positions"
  },
  {
   "id": 73061465,
@@ -2484,7 +2569,11 @@
   "def": 2000,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "Spells can't be activated"
  },
  {
   "id": 50032342,
@@ -2496,7 +2585,11 @@
   "def": 1600,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HEAL 500"
+  ],
+  "effect_note": "sends an Ice Barrier to draw"
  },
  {
   "id": 81825063,
@@ -2508,7 +2601,12 @@
   "def": 400,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY SPELL",
+   "SHOCK 400"
+  ],
+  "effect_note": "banishes Spells/Traps; extra attacks"
  },
  {
   "id": 41090784,
@@ -2520,7 +2618,11 @@
   "def": 2200,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE ALL WATER MONSTERS"
+  ],
+  "effect_note": "Ice Barrier monsters survive Spells/Traps"
  },
  {
   "id": 81275309,
@@ -2532,7 +2634,11 @@
   "def": 2300,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BREAK IMMUNITY ALL"
+  ],
+  "effect_note": "monster effects need a discard or are negated"
  },
  {
   "id": 53921056,
@@ -2544,7 +2650,11 @@
   "def": 2000,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT WATER MONSTERS"
+  ],
+  "effect_note": "revives an Ice Barrier every End Phase"
  },
  {
   "id": 88494899,
@@ -2556,7 +2666,11 @@
   "def": 1600,
   "attribute": "WATER",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "one Spell/Trap per turn for the opponent"
  },
  {
   "id": 9056100,
@@ -2568,7 +2682,11 @@
   "def": 1000,
   "attribute": "WATER",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST ALL WATER MONSTERS 300"
+  ],
+  "effect_note": "extra Ice Barrier summon"
  },
  {
   "id": 50321796,
@@ -2580,7 +2698,12 @@
   "def": 1400,
   "attribute": "WATER",
   "race": "Sea Serpent",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "BACKFIRE 300"
+  ],
+  "effect_note": "discards to bounce cards"
  },
  {
   "id": 70583986,
@@ -2592,7 +2715,11 @@
   "def": 1400,
   "attribute": "WATER",
   "race": "Beast",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300 +"
+  ],
+  "effect_note": "+500 ATK per card it returns"
  },
  {
   "id": 65749035,
@@ -2604,7 +2731,12 @@
   "def": 1700,
   "attribute": "WATER",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "discards up to 2 to destroy up to 2"
  },
  {
   "id": 65424481,
@@ -2616,7 +2748,12 @@
   "def": 1000,
   "attribute": "WATER",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "banishes 2 cards when Synchro Summoned",
+  "effect_idea": "ON SYNCHRO: DESTROY MONSTER + DESTROY SPELL"
  },
  {
   "id": 70980824,
@@ -2628,7 +2765,13 @@
   "def": 2000,
   "attribute": "WATER",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE ALL 700",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "banishes 3 cards when Synchro Summoned; brings back Trishula",
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS"
  },
  {
   "id": 15661378,
@@ -2640,7 +2783,13 @@
   "def": 2000,
   "attribute": "WATER",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY MONSTER",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "banishes cards when Fusion Summoned",
+  "effect_idea": "ON FUSION: DESTROY MONSTER + DESTROY SPELL"
  },
  {
   "id": 43582229,
@@ -2652,7 +2801,12 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WATER MONSTERS",
+   "IMMUNE ALL WATER MONSTERS"
+  ],
+  "effect_note": "revives an Ice Barrier; they are unaffected"
  },
  {
   "id": 64990807,
@@ -2664,7 +2818,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "RESURRECT WATER MONSTERS"
+  ],
+  "effect_note": "destroys a card and summons an Ice Barrier"
  },
  {
   "id": 84206435,
@@ -2676,7 +2835,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT AQUA MONSTER"
+  ],
+  "effect_note": "searches an Ice Barrier"
  },
  {
   "id": 10691144,
@@ -2688,7 +2851,11 @@
   "def": null,
   "attribute": null,
   "race": "Quick-Play",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "banishes the opponent's cards back"
  },
  {
   "id": 17197110,
@@ -2700,7 +2867,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SACRIFICE MONSTER",
+   "RESURRECT WATER MONSTERS"
+  ],
+  "effect_note": "tributes Ice Barriers to summon others"
  },
  {
   "id": 35380371,
@@ -2712,7 +2884,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "bounces an Extra Deck monster"
  },
  {
   "id": 34293667,
@@ -2724,7 +2900,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE 1500",
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "attacker's ATK becomes 0, effects negated"
  },
  {
   "id": 6075533,
@@ -2736,7 +2917,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY MONSTER",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "banishes cards per Ice Barrier Synchro"
  },
  {
   "id": 64910482,
@@ -2748,7 +2934,11 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "T.G. Synchros from the hand; searches when destroyed"
  },
  {
   "id": 94350039,
@@ -2760,7 +2950,11 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Zombie",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 600"
+  ],
+  "effect_note": "summons itself, a T.G. monster loses 1000 ATK"
  },
  {
   "id": 74627016,
@@ -2772,7 +2966,11 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Insect",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL 100"
+  ],
+  "effect_note": "leaves a token after a T.G. Synchro"
  },
  {
   "id": 1315120,
@@ -2784,7 +2982,12 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "COURAGE 500"
+  ],
+  "effect_note": "summons itself when only the opponent has monsters",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 37300735,
@@ -2796,7 +2999,12 @@
   "def": 1200,
   "attribute": "WIND",
   "race": "Winged Beast",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "500 damage when used as Synchro material",
+  "effect_idea": "MATERIAL: HURT OPPONENT 500"
  },
  {
   "id": 11234702,
@@ -2808,7 +3016,12 @@
   "def": 500,
   "attribute": "WATER",
   "race": "Sea Serpent",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives a T.G.; changes a Level by 1",
+  "effect_idea": "LEVEL UP 1"
  },
  {
   "id": 48633301,
@@ -2820,7 +3033,12 @@
   "def": 300,
   "attribute": "WIND",
   "race": "Dinosaur",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summons itself next to a T.G.; searches when destroyed",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 30348744,
@@ -2832,7 +3050,11 @@
   "def": 800,
   "attribute": "WATER",
   "race": "Fish",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SHOCK 500"
+  ],
+  "effect_note": "attacks directly"
  },
  {
   "id": 77392987,
@@ -2844,7 +3066,11 @@
   "def": 600,
   "attribute": "FIRE",
   "race": "Pyro",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "tributes a T.G. to summon another"
  },
  {
   "id": 64898834,
@@ -2856,7 +3082,11 @@
   "def": 1300,
   "attribute": "EARTH",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "summons a small T.G. Tuner"
  },
  {
   "id": 66733743,
@@ -2868,7 +3098,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Zombie",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "banishes itself so a T.G. survives",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 293542,
@@ -2880,7 +3115,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Beast-Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RAGE 200"
+  ],
+  "effect_note": "summons itself after a small Special Summon; searches when destroyed",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 36687247,
@@ -2892,7 +3132,12 @@
   "def": 800,
   "attribute": "EARTH",
   "race": "Beast",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 400"
+  ],
+  "effect_note": "+400 ATK when attacking; searches when destroyed",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 32480825,
@@ -2904,7 +3149,11 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "Synchro Summons during the opponent's turn"
  },
  {
   "id": 62560742,
@@ -2916,7 +3165,11 @@
   "def": 300,
   "attribute": "WIND",
   "race": "Insect",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "revives a Synchro's materials"
  },
  {
   "id": 90953320,
@@ -2928,7 +3181,12 @@
   "def": 1800,
   "attribute": "DARK",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HEAL 500"
+  ],
+  "effect_note": "draws whenever a Synchro is summoned",
+  "effect_idea": "ON SYNCHRO SUMMON: HEAL 500"
  },
  {
   "id": 68989420,
@@ -2940,7 +3198,12 @@
   "def": 1900,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "revives T.G. monsters when Synchro Summoned",
+  "effect_idea": "ON SYNCHRO: RESURRECT MONSTERS"
  },
  {
   "id": 24943456,
@@ -2952,7 +3215,12 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SHOCK 400",
+   "FAREWELL 500"
+  ],
+  "effect_note": "piercing; draws when destroyed"
  },
  {
   "id": 99937842,
@@ -2964,7 +3232,11 @@
   "def": 2200,
   "attribute": "LIGHT",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SOOTHE 500"
+  ],
+  "effect_note": "Synchro Summons during the opponent's turn"
  },
  {
   "id": 98558751,
@@ -2976,7 +3248,13 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL",
+   "FAREWELL 500"
+  ],
+  "effect_note": "destroys a Spell/Trap when Synchro Summoned; draws when destroyed",
+  "effect_idea": "ON SYNCHRO: DESTROY SPELL"
  },
  {
   "id": 63180841,
@@ -2988,7 +3266,12 @@
   "def": 2500,
   "attribute": "WIND",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "IMMUNE",
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "negates targeting effects"
  },
  {
   "id": 51447164,
@@ -3000,7 +3283,12 @@
   "def": 2200,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "negates Spells/Traps on itself; banishes"
  },
  {
   "id": 95973569,
@@ -3012,7 +3300,12 @@
   "def": 4000,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY MONSTER",
+   "IMMUNE"
+  ],
+  "effect_note": "banishes Extra Deck monsters"
  },
  {
   "id": 97836203,
@@ -3024,7 +3317,12 @@
   "def": 4000,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SNEAK",
+   "IMMUNE"
+  ],
+  "effect_note": "negates a Summon and destroys it"
  },
  {
   "id": 54573517,
@@ -3036,7 +3334,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL MACHINES 300"
+  ],
+  "effect_note": "T.G. monsters become Machines; extra summon"
  },
  {
   "id": 28189908,
@@ -3048,7 +3350,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "searches 2 T.G. monsters"
  },
  {
   "id": 11264180,
@@ -3060,7 +3366,11 @@
   "def": null,
   "attribute": null,
   "race": "Quick-Play",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "halves a T.G. to destroy a Spell/Trap"
  },
  {
   "id": 58258899,
@@ -3072,7 +3382,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST ALL 300"
+  ],
+  "effect_note": "+300 ATK per T.G. monster"
  },
  {
   "id": 93138457,
@@ -3084,7 +3398,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE 1000",
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "negates an attack, summons a T.G."
  },
  {
   "id": 2339825,
@@ -3096,7 +3415,12 @@
   "def": null,
   "attribute": null,
   "race": "Counter",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY SPELL",
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "negates and destroys"
  },
  {
   "id": 40253382,
@@ -3108,7 +3432,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives a T.G. Synchro after a battle win"
  },
  {
   "id": 76641981,
@@ -3120,7 +3448,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 800",
+   "BOOST 800"
+  ],
+  "effect_note": "switches control of two monsters"
  },
  {
   "id": 3868277,
@@ -3132,7 +3465,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "shuffles 3 T.G. monsters back, draws 2"
  },
  {
   "id": 80925836,
@@ -3144,7 +3481,12 @@
   "def": 800,
   "attribute": "WIND",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 200",
+   "CRIPPLE ALL DARK MONSTERS 300"
+  ],
+  "effect_note": "core upkeep; negates LIGHT and DARK monster effects"
  },
  {
   "id": 31692182,
@@ -3156,7 +3498,11 @@
   "def": 1900,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BREAK IMMUNITY ALL"
+  ],
+  "effect_note": "negates all other monster effects"
  },
  {
   "id": 68809475,
@@ -3168,7 +3514,12 @@
   "def": 2200,
   "attribute": "WIND",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 200",
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "core upkeep; summons itself when you draw a core"
  },
  {
   "id": 39037517,
@@ -3180,7 +3531,12 @@
   "def": 1500,
   "attribute": "EARTH",
   "race": "Insect",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "CRIPPLE ALL DARK MONSTERS 400"
+  ],
+  "effect_note": "core upkeep; LIGHT/DARK summons go to Defense"
  },
  {
   "id": 80367387,
@@ -3192,7 +3548,12 @@
   "def": 200,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "SHOCK 500"
+  ],
+  "effect_note": "core upkeep; piercing, attacks again"
  },
  {
   "id": 32314730,
@@ -3204,7 +3565,12 @@
   "def": 1300,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "core upkeep; gets a core back after a battle win"
  },
  {
   "id": 12435193,
@@ -3216,7 +3582,12 @@
   "def": 1600,
   "attribute": "WIND",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "BREAK IMMUNITY ALL DARK MONSTERS"
+  ],
+  "effect_note": "core upkeep; no LIGHT/DARK Special Summons"
  },
  {
   "id": 41201555,
@@ -3228,7 +3599,12 @@
   "def": 1300,
   "attribute": "FIRE",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "BOOST ALL PLANTS 300"
+  ],
+  "effect_note": "core upkeep; Plant support"
  },
  {
   "id": 54520292,
@@ -3240,7 +3616,12 @@
   "def": 1200,
   "attribute": "WATER",
   "race": "Aqua",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "core upkeep; discards to destroy a Special Summoned monster"
  },
  {
   "id": 14309486,
@@ -3252,7 +3633,12 @@
   "def": 1200,
   "attribute": "EARTH",
   "race": "Rock",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "SNEAK"
+  ],
+  "effect_note": "core upkeep; tributes itself to stop a Summon"
  },
  {
   "id": 19642889,
@@ -3264,7 +3650,12 @@
   "def": 1600,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "core upkeep; negates LIGHT/DARK monsters it battles"
  },
  {
   "id": 74576482,
@@ -3276,7 +3667,12 @@
   "def": 1200,
   "attribute": "WATER",
   "race": "Sea Serpent",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "core upkeep; destroys a face-down card"
  },
  {
   "id": 80839052,
@@ -3288,7 +3684,11 @@
   "def": 1600,
   "attribute": "EARTH",
   "race": "Rock",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "searches a core"
  },
  {
   "id": 95204084,
@@ -3300,7 +3700,11 @@
   "def": 1200,
   "attribute": "WIND",
   "race": "Winged Beast",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "returns a core to destroy Special Summoned monsters"
  },
  {
   "id": 30936186,
@@ -3312,7 +3716,12 @@
   "def": 1500,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 300",
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "core upkeep; summons a Koa'ki Meiru"
  },
  {
   "id": 95090813,
@@ -3324,7 +3733,12 @@
   "def": 1200,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 200",
+   "OSMOSIS 500"
+  ],
+  "effect_note": "core upkeep; equips a monster and takes its ATK"
  },
  {
   "id": 5817857,
@@ -3336,7 +3750,13 @@
   "def": 1700,
   "attribute": "EARTH",
   "race": "Zombie",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 400",
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "core upkeep; protects Koa'ki Meiru monsters",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 10060427,
@@ -3348,7 +3768,12 @@
   "def": 2200,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 400",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "core upkeep; destroys a monster"
  },
  {
   "id": 65026212,
@@ -3360,7 +3785,12 @@
   "def": 2500,
   "attribute": "WIND",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 500",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "core upkeep; destroys a card each turn"
  },
  {
   "id": 72258771,
@@ -3372,7 +3802,12 @@
   "def": 2100,
   "attribute": "FIRE",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "FEEBLE 500",
+   "DRAIN 400"
+  ],
+  "effect_note": "core upkeep; not destroyed by effects, draws"
  },
  {
   "id": 59385322,
@@ -3384,7 +3819,12 @@
   "def": null,
   "attribute": null,
   "race": "Equip",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys LIGHT/DARK monsters it battles"
  },
  {
   "id": 13997673,
@@ -3396,7 +3836,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "discards to draw 2"
  },
  {
   "id": 36560997,
@@ -3408,7 +3852,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST ALL 500"
+  ],
+  "effect_note": "Koa'ki Meiru monsters gain 500 ATK"
  },
  {
   "id": 30770156,
@@ -3420,7 +3868,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "discards to search a core"
  },
  {
   "id": 81994591,
@@ -3432,7 +3884,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT SPELL",
+   "IMMUNE ALL"
+  ],
+  "effect_note": "searches; Koa'ki Meiru can't be destroyed"
  },
  {
   "id": 20457551,
@@ -3444,7 +3901,11 @@
   "def": null,
   "attribute": null,
   "race": "Equip",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 400"
+  ],
+  "effect_note": "battling monsters lose Level x 100 ATK"
  },
  {
   "id": 63018036,
@@ -3456,7 +3917,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT SPELLS"
+  ],
+  "effect_note": "sends a core to the GY"
  },
  {
   "id": 53039326,
@@ -3468,7 +3933,11 @@
   "def": null,
   "attribute": null,
   "race": "Field",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "searches a Koa'ki Meiru when one is destroyed"
  },
  {
   "id": 46089249,
@@ -3480,7 +3949,13 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "HURT OPPONENT 1000",
+   "BACKFIRE 1000"
+  ],
+  "effect_note": "destroys a monster, both players take 1000"
  },
  {
   "id": 99002135,
@@ -3492,7 +3967,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "summons a small Koa'ki Meiru"
  },
  {
   "id": 58990631,
@@ -3504,7 +3983,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys a summoned 1000+ ATK monster"
  },
  {
   "id": 18517177,
@@ -3516,7 +3999,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys cards while the opponent has more monsters"
  },
  {
   "id": 8057630,
@@ -3528,7 +4015,12 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTER",
+   "BACKFIRE 500"
+  ],
+  "effect_note": "revives a Koa'ki Meiru; damage when it is destroyed"
  },
  {
   "id": 34545235,
@@ -3540,7 +4032,11 @@
   "def": null,
   "attribute": null,
   "race": "Counter",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "negates and destroys a Spell/Trap"
  },
  {
   "id": 55117418,
@@ -3552,7 +4048,12 @@
   "def": null,
   "attribute": null,
   "race": "Counter",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "negates and destroys an effect monster"
  },
  {
   "id": 11596936,
@@ -3564,6 +4065,10 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "ANNIHILATE SPELLS"
+  ],
+  "effect_note": "destroys all face-down Spells/Traps"
  }
 ]
