@@ -108,9 +108,13 @@ def add_atlas_frames(ctx, package, atlas, list_path, frames, version, first_page
     frames: {frame name: PIL image}. The page is added to the module's asset list (asset/list/..., game data)
     and shipped in the module's package (version = new package version). first_page: list name of the original
     page when it is not <atlas>_1 (e.g. hud_all). subdir: the atlas folder inside the package (common: "common/").
-    Frames go in columns at most 2048 px high (the largest texture the game's GPU profile takes)."""
+    Frames go in columns at most 2048 px high (the largest texture the game's GPU profile takes). Several calls for
+    the same atlas add up (the page is rebuilt with all frames so far)."""
     first_page = first_page or f"{atlas}_1"
     from PIL import Image
+    pages = ctx.__dict__.setdefault("atlas_pages", {})
+    frames = {**pages.get((package, atlas), {}), **frames}
+    pages[(package, atlas)] = frames
     pad, max_height = 2, 2048
     places, x, y, column_width = {}, pad, pad, 0
     for name, img in sorted(frames.items()):
@@ -339,7 +343,7 @@ def immemorial_cataclysm(ctx):
     counts = create_loot_table(ctx, 27, 2001, cards)
     cover = compose_cover(ctx, card_art(ctx, _card_by_name(ctx, "Poseidra, the Atlantean Dragon")), banner_hue=192)
     add_atlas_frames(ctx, "shop", "shop_all", "asset/list/module/shop_list.xml",
-                     {"shop_booster_covers_0011": cover}, version="1.1.12")
+                     {"shop_booster_covers_0011": cover}, version=SHOP_VERSION)
     add_booster_pack(ctx, {
         "shopItemId": 2001, "currency": "RMT", "cost": 15, "id": 11,
         "name": "PACK_5_SERIES_2", "description": "PACK_5_SERIES_2_DESC",
@@ -605,16 +609,16 @@ def card_sources(ctx):
     print(f"  card sources: {len(texts)} card(s) with a source text")
 
 
-COMMON_VERSION = "1.1.10"  # common package (original 1.1.9): raise when its overlay changes
+COMMON_VERSION = "1.1.11"  # common package (original 1.1.9): raise when its overlay changes
 
-# Synchro/Xyz frame colours: the fusion pictures' brightness mapped onto dark..light (summon_frames)
+# Synchro/Xyz frame colours: the fusion pictures' brightness mapped onto dark..light (common_frames)
 SUMMON_TINTS = {
     "synchro": {"frame": ("#77777d", "#ffffff"), "preview": ("#9a9aa0", "#ffffff"), "bar": ("#000000", "#a9a9b0")},
     "xyz": {"frame": ("#050506", "#5c5c66"), "preview": ("#55555e", "#d2d2da"), "bar": ("#000000", "#3e3e48")},
 }
 
 
-def summon_frames(ctx):
+def common_frames(ctx):
     """White (Synchro) and black (Xyz) versions of the fusion card pictures, as a second common atlas page. Names:
     the fusion picture's with "fusion" -> "synchro"/"xyz" (com.revival.summon.Summon.FrameName); the bar under the
     art becomes frames 2/3 of common_card_template_bar_bottom (FullCardVisual patch). The beige text box of the big
@@ -647,8 +651,120 @@ def summon_frames(ctx):
         frames[f"common_cardtemplate_card_{kind}_0000"] = tint(big, t["frame"], keep_beige=True)
         frames[f"common_{kind}_preview_card_background_0000"] = tint(preview, t["preview"])
         frames[f"common_card_template_bar_bottom_000{n}"] = tint(bar, t["bar"])
+    frames.update(series3_rarity_icons())
     add_atlas_frames(ctx, "common", "common_all", "asset/list/common/common_list.xml", frames,
                      version=COMMON_VERSION, subdir="common/")
+    for lang, text in (("en", "Series 3"), ("fr", "Série 3")):
+        ctx.set_text(lang, "card_filtering", "SERIES_3_FILTER", text)
+
+
+# Series 3 rarity icons, frames 12-15 of common_rarity_all (CardRarityUtil patch): hexagons in the colours of the
+# series 1/2 icons (common, rare, ultra rare, legend), 42x45 like the originals' untrimmed frame
+SERIES3_ICON_COLOURS = [("#e8e8ea", "#c4c4c8", "#9a9aa0"), ("#f7a8c6", "#d9628f", "#8f2f55"),
+                        ("#a6c8ff", "#4f7ff0", "#2a30bf"), ("#ffe9a0", "#f2c23c", "#b8800f")]
+
+
+def hexagon_gem(size, colours, ring="#ffffff"):
+    """A series 3 gem: white-rimmed hexagon, light top facets, dark bottom facets (size x size, transparent)."""
+    import math
+    from PIL import Image, ImageDraw
+    light, mid, dark = colours
+    scale = 4  # drawn large, then scaled down for smooth edges
+    img = Image.new("RGBA", (size * scale, size * scale), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    c, r = size * scale / 2, size * scale * 0.48
+    hexagon = [(c + r * math.cos(math.radians(60 * k + 30)), c + r * math.sin(math.radians(60 * k + 30)))
+               for k in range(6)]
+    d.polygon(hexagon, fill=ring)
+    inner = [(c + (x - c) * 0.74, c + (y - c) * 0.74) for x, y in hexagon]
+    d.polygon(inner, fill=mid)
+    d.polygon([inner[3], inner[4], inner[5], (c, c)], fill=light)  # top facets
+    d.polygon([inner[0], inner[1], inner[2], (c, c)], fill=dark)   # bottom facets
+    return img.resize((size, size), Image.LANCZOS)
+
+
+def _sparkle(width, height):
+    """The light blue sparkle of the series 2 legend icon (its top right corner, gold gem pixels removed)."""
+    sparkle = atlas_frame("asset/common/common", "common_all_1", "common_rarity_all_0007")
+    corner = sparkle.crop((sparkle.width - 22, 0, sparkle.width, 20))
+    px = corner.load()
+    for yy in range(corner.height):
+        for xx in range(corner.width):
+            if px[xx, yy][0] > px[xx, yy][2] + 10:
+                px[xx, yy] = (0, 0, 0, 0)
+    return corner.resize((width, height))
+
+
+def series3_rarity_icons():
+    from PIL import Image
+    icons = {}
+    for n, colours in enumerate(SERIES3_ICON_COLOURS):
+        icon = Image.new("RGBA", (42, 45), (0, 0, 0, 0))
+        icon.alpha_composite(hexagon_gem(32, colours), (4, 12))
+        if n == 3:  # the legend icons carry a sparkle at the top right
+            icon.alpha_composite(_sparkle(22, 20), (42 - 22, 0))
+        icons[f"common_rarity_all_{12 + n:04d}"] = icon
+    return icons
+
+
+SHOP_VERSION = "1.1.13"  # shop package (original 1.1.9)
+
+# Starter deck cover (common_starterdeck_covers_NNNN, 219x318, StarterDeck.as:47): the window that shows the monster
+# and the label plate drawn over it, measured on cover 6 (Blue-Eyes)
+DECK_COVER_WINDOW = (26, 64, 194, 282)
+DECK_COVER_PLATE = (48, 259, 170, 297)
+
+
+def compose_deck_cover(art, hue):
+    """A starter deck cover from card art: cover 6 with its cyan recoloured to `hue` (0-360), the art filling the
+    window, the label plate redrawn on top."""
+    from PIL import Image
+    base = atlas_frame("asset/common/common", "common_all_1", "common_starterdeck_covers_0006")
+    hsv = base.convert("RGB").convert("HSV")
+    h, s, v = hsv.split()
+    shift = int((hue - 180) * 255 / 360)  # cover 6 is cyan (~180 deg)
+    h = h.point(lambda x: (x + shift) % 256)
+    cover = Image.merge("HSV", (h, s, v)).convert("RGBA")
+    cover.putalpha(base.getchannel("A"))
+    left, top, right, bottom = DECK_COVER_WINDOW
+    w, h2 = right - left, bottom - top
+    side = min(art.width, art.height * w // h2)
+    crop = art.crop(((art.width - side) // 2, 0, (art.width + side) // 2, min(art.height, side * h2 // w)))
+    cover.paste(crop.convert("RGBA").resize((w, h2), Image.LANCZOS), (left, top))
+    cover.alpha_composite(_plate(base, shift), DECK_COVER_PLATE[:2])
+    return cover
+
+
+def _plate(base, shift):
+    from PIL import Image
+    plate = base.crop(DECK_COVER_PLATE)
+    h, s, v = plate.convert("RGB").convert("HSV").split()
+    out = Image.merge("HSV", (h.point(lambda x: (x + shift) % 256), s, v)).convert("RGBA")
+    out.putalpha(plate.getchannel("A"))
+    return out
+
+
+def series3_shop_art(ctx):
+    """Shop art for series 3 booster packs (frame = series - 1, BuyBoosterPackShopDisplay / ShopCollectionView):
+    shop_booster_rarities_0002 (the four rarity gems, 2x2 like the series 2 frame) and shop_booster_series_icon_0002
+    (the gold laurel badge with a gold hexagon), plus the "Series 3" pack label."""
+    from PIL import Image
+    shop = "asset/module/shop"
+    rarities = Image.new("RGBA", (209, 226), (0, 0, 0, 0))
+    for n, colours in enumerate(SERIES3_ICON_COLOURS):  # same grid as series 2's frame: 2 per row
+        rarities.alpha_composite(hexagon_gem(88, colours), (8 + (n % 2) * 112, 10 + (n // 2) * 112))
+    rarities.alpha_composite(_sparkle(40, 36), (165, 116))
+    badge = atlas_frame(shop, "shop_all_1", "shop_booster_series_icon_0001").copy()
+    px = badge.load()
+    for yy in range(badge.height):  # clear the pentagon in the middle, keep the laurels
+        for xx in range(38, 84):
+            px[xx, yy] = (0, 0, 0, 0)
+    badge.alpha_composite(hexagon_gem(48, ("#fff1b0", "#f2c23c", "#b8800f"), ring="#8a5a00"), (37, 4))
+    add_atlas_frames(ctx, "shop", "shop_all", "asset/list/module/shop_list.xml",
+                     {"shop_booster_rarities_0002": rarities, "shop_booster_series_icon_0002": badge},
+                     version=SHOP_VERSION)
+    for lang, text in (("en", "Series 3"), ("fr", "Série 3")):
+        ctx.set_text(lang, "shop", "shop_booster_serie3", text)
 
 
 # Synchro/Xyz rules, written to config/summons.json (com.revival.summon.Summon):
@@ -693,6 +809,67 @@ def write_summons(ctx):
     ctx.server_files["result_cards.json"] = json.dumps(results).encode("utf-8")
 
 
+STARTER_DECK_SHOP_GROUP = 11  # shop.ace group of the starter decks (ShopItemGroupEnum.STARTER_DECK)
+STARTER_DECK_MODEL = 775      # original starter deck shop item, copied for new decks (bundle 1688 = its 15 cards)
+
+
+def add_starter_deck(ctx, deck, cover):
+    """A prebuilt deck in the shop (EStarterPack data patch, tools/as3_patches.py STARTER_PACK_EDITS).
+
+    deck: {"id", "shopItemId", "bundleId", "cards" (15 template ids), "cost" (DP), "frame" (cover frame, 7+),
+    "name", "description", "contents" (texts), "chapter" (completing it offers the deck in the contextual deck popup;
+    0 = no popup), "worth" (DP value shown in that popup), "quest" (quest that unlocks it in the shop; 0 = always)}.
+    cover: PIL image (compose_deck_cover). Adds the shop item (copy of 775), the shop bundle with one product per
+    card (copy of bundle 1688), the texts (shop section), the cover frame (common atlas page 2) and the
+    config/starterdecks.json entry."""
+    if len(deck["cards"]) != 15:
+        raise RuntimeError(f"starter deck {deck['name']}: {len(deck['cards'])} cards, needs 15")
+    items = {i["id"] for i in ctx.ace("config/ace/inventory/item_template.ace")}
+    if set(deck["cards"]) - items:
+        raise RuntimeError(f"starter deck {deck['name']}: unknown cards {set(deck['cards']) - items}")
+    group, base = next((g, i) for g, i in _shop_items(ctx) if i["id"] == STARTER_DECK_MODEL)
+    if any(i["id"] == deck["shopItemId"] for _, i in _shop_items(ctx)):
+        raise RuntimeError(f"shop item {deck['shopItemId']} already exists")
+    item = copy.deepcopy(base)
+    item["id"] = deck["shopItemId"]
+    item["shopItemConversions"][0]["cost"] = deck["cost"]
+    group["shopItem"].append(item)
+    bundles = ctx.ace("config/ace/bundle/bundle_template.ace")
+    model = next(b for b in bundles if b.get("shopItemId") == STARTER_DECK_MODEL)
+    bundle = copy.deepcopy(model)
+    next_product = max(p["id"] for b in bundles for p in (b.get("products") or [])) + 1
+    bundle["id"], bundle["shopItemId"] = deck["bundleId"], deck["shopItemId"]
+    if any(b["id"] == deck["bundleId"] for b in bundles):
+        raise RuntimeError(f"bundle {deck['bundleId']} already exists")
+    products = []
+    for n, card in enumerate(deck["cards"]):
+        product = copy.deepcopy(model["products"][0])
+        product.update(id=next_product + n, itemTemplateId=card, quantity=1)
+        products.append(product)
+    bundle["products"] = products
+    bundles.append(bundle)
+    key = f"shop_starterdeck_revival{deck['id']}"
+    for lang in ("en", "fr"):
+        ctx.set_text(lang, "shop", f"{key}_name", deck["name"])
+        ctx.set_text(lang, "shop", f"{key}_description", deck["description"])
+        ctx.set_text(lang, "shop", f"{key}_contents", deck["contents"])
+        ctx.set_text(lang, "shop", f"{key}_unlock", deck.get("unlock_text", ""))
+    add_atlas_frames(ctx, "common", "common_all", "asset/list/common/common_list.xml",
+                     {f"common_starterdeck_covers_{deck['frame']:04d}": cover}, version=COMMON_VERSION,
+                     subdir="common/")
+    ctx.starterdecks.append({"id": deck["id"], "name": f"{key}_name", "description": f"{key}_description",
+                             "contents": f"{key}_contents", "unlock": f"{key}_unlock", "cards": deck["cards"],
+                             "bonus": [], "cost": deck["cost"], "shopItemId": deck["shopItemId"],
+                             "frame": deck["frame"], "chapter": deck.get("chapter", 0),
+                             "worth": deck.get("worth", 0), "quest": deck.get("quest", 0)})
+
+
+def write_starterdecks(ctx):
+    """config/starterdecks.json (EStarterPack.LoadExtraDecks), when a mod added decks."""
+    if ctx.starterdecks:
+        ctx.new_file("config/starterdecks.json", json.dumps(ctx.starterdecks, separators=(",", ":")).encode("utf-8"))
+
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -723,7 +900,9 @@ MODS = [
     mainmenu_icons,
     profile_icons,
     card_icons,
-    summon_frames,
+    common_frames,
+    series3_shop_art,
     write_summons,  # test mods (YGO_TEST_CONTENT) run right before this one (build_content.py)
+    write_starterdecks,
     write_boosterpacks,
 ]

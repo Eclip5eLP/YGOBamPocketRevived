@@ -2520,6 +2520,159 @@ SUMMON_EDITS = {
 for _cls, _edits in SUMMON_EDITS.items():
     PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
 
+# --- Series 3 (notes/content_patch_series3.md, part A) ---------------------------------------------------------
+# A third card series: enum value, rarity icons (frames 12-15 of common_rarity_all, hexagons drawn by
+# tools/content_mods.py common_frames; frames 8-11 are the Arena crowns, so series 3 can't use the series formula)
+# and the SERIES filter entry. (DeckUtil.IsSeriesEnabledForDeck, the "15 cards of the series" rule, has no caller:
+# the original game never enforced cardSerieLimit; it only shows an icon and filters instant decks.)
+SERIES3_EDITS = {
+    "com.frimastudio.snowstorm.project.inventory.enumeration.CardSeries": [
+        ("""      public static const SERIE_2:CardSeries = new CardSeries(2,9753995277998,"SERIE_2","Second serie of card");
+""", """      public static const SERIE_2:CardSeries = new CardSeries(2,9753995277998,"SERIE_2","Second serie of card");
+
+      public static const SERIE_3:CardSeries = new CardSeries(3,0,"SERIE_3","Third serie of card");
+"""),
+    ],
+    "com.frimastudio.utils.rendering.card.enum.CardRarityUtil": [
+        ("""         var rarity:int = Math.max(aRarity - 1,0);
+""", """         var rarity:int = Math.max(aRarity - 1,0);
+         if(aSeries == 3)
+         {
+            return rarity + (NBR_SERIE + 1) * NBR_ICONS_PER_SERIE;
+         }
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.filter.enum.EContextMenu": [
+        ("""new SubMenuItem("SERIES_2_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_2.Id])));""",
+         """new SubMenuItem("SERIES_2_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_2.Id])),new SubMenuItem("SERIES_3_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_3.Id])));"""),
+    ],
+}
+for _cls, _edits in SERIES3_EDITS.items():
+    PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
+
+# --- Prebuilt (starter) decks from data (notes/content_patch_series3.md, part B) ------------------------------
+# The 8 decks are code (EStarterPack). Extra decks come from config/starterdecks.json (game data, like
+# boosterpacks.json): [{"id", "name", "description", "contents", "unlock" (text keys of the shop section), "cards",
+# "bonus", "cost", "shopItemId", "frame" (cover frame), "chapter" (chapter whose completion offers it with the
+# contextual deck popup; 0 = none), "worth", "quest" (quest that unlocks it in the shop; 0 = always on sale)}]. The shop lists the STARTER_DECK shop item group and finds the deck by
+# shop item id; buying builds it from the shop item's bundle (content side: tools/content_mods.py
+# add_starter_deck). GetStarterDeckByCardList is rewritten: recompiling the class from FFDec's source would leave
+# its labelled loop broken (same as EBoosterPackInfo, findings 6.64).
+STARTER_PACK = "com.frimastudio.snowstorm.module.shop.view.enum.EStarterPack"
+STARTER_PACK_EDITS = [
+    ("""   import com.frimastudio.snowstorm.project.inventory.amf.Card;
+""", """   import com.frimastudio.snowstorm.project.inventory.amf.Card;
+   import flash.filesystem.File;
+   import flash.filesystem.FileMode;
+   import flash.filesystem.FileStream;
+   import flash.utils.getDefinitionByName;
+"""),
+    ("""Vector.<int>([775,770,771,771,772,772,773,773,773,774,774,776,776,777,778]),Vector.<int>([]),0,-1,7,0);
+""", """Vector.<int>([775,770,771,771,772,772,773,773,773,774,774,776,776,777,778]),Vector.<int>([]),0,-1,7,0);
+
+      private static const mExtraDecksLoaded:Boolean = LoadExtraDecks();
+
+      private static function IntVector(aList:Array) : Vector.<int>
+      {
+         var out:Vector.<int> = new Vector.<int>();
+         for each(var value:* in aList)
+         {
+            out.push(int(value));
+         }
+         return out;
+      }
+
+      private static function LoadExtraDecks() : Boolean
+      {
+         var file:File = null;
+         var stream:FileStream = null;
+         var list:Array = null;
+         var deck:Object = null;
+         try
+         {
+            file = File.applicationStorageDirectory.resolvePath("asset/gamedata/config/starterdecks.json");
+            // Loader.GameDataActive is added by tools/as3_patches.py; looked up by name (same recompile batch)
+            if(!getDefinitionByName("com.frimastudio.as3ToolKit.net.Loader")["GameDataActive"] || !file.exists)
+            {
+               file = File.applicationDirectory.resolvePath("config/starterdecks.json");
+            }
+            if(!file.exists)
+            {
+               return false;
+            }
+            stream = new FileStream();
+            stream.open(file,FileMode.READ);
+            list = JSON.parse(stream.readUTFBytes(stream.bytesAvailable)) as Array;
+            stream.close();
+            for each(deck in list)
+            {
+               if(GetStarterPackByShopItemId(int(deck.shopItemId)) == null)
+               {
+                  new EStarterPack(int(deck.id),String(deck.name),String(deck.description),String(deck.contents),String(deck.unlock),IntVector(deck.cards),IntVector(deck.bonus),int(deck.cost),int(deck.shopItemId),int(deck.frame),int(deck.chapter),int(deck.worth),int(deck.quest));
+               }
+            }
+         }
+         catch(error:Error)
+         {
+            return false;
+         }
+         return true;
+      }
+"""),
+]
+STARTER_PACK_EDITS.append(("""         loop0:
+         for each(eStarterPack in mList)
+         {
+            totalCardInADeck = 15;
+            var _loc8_:int = 0;
+            var _loc9_:* = eStarterPack.CardTemplateIdList;
+            loop1:
+            while(true)
+            {
+               for each(aId in _loc9_)
+               {
+                  for each(card in aCardList)
+                  {
+                     if(aId == card.itemTemplateId)
+                     {
+                        totalCardInADeck--;
+                        if(totalCardInADeck <= 0)
+                        {
+                           break loop1;
+                        }
+                     }
+                  }
+               }
+               continue loop0;
+            }
+            return eStarterPack;
+         }""", """         for each(eStarterPack in mList)
+         {
+            totalCardInADeck = 15;
+            for each(aId in eStarterPack.CardTemplateIdList)
+            {
+               for each(card in aCardList)
+               {
+                  if(aId == card.itemTemplateId)
+                  {
+                     totalCardInADeck--;
+                  }
+               }
+            }
+            if(totalCardInADeck <= 0)
+            {
+               return eStarterPack;
+            }
+         }"""))
+PATCHES[STARTER_PACK] = PATCHES.get(STARTER_PACK, []) + STARTER_PACK_EDITS
+# A deck with no unlock quest (quest id 0, data decks without "quest") is always on sale; the original asked the
+# quest manager, which reports quest 0 as not completed, so such a deck would stay locked.
+BUY_STARTER_DECK = "com.frimastudio.snowstorm.module.shop.display.BuyStarterDeckShopDisplay"
+PATCHES[BUY_STARTER_DECK] = PATCHES.get(BUY_STARTER_DECK, []) + [
+    ("""         this.mIsLocked = !questManager.IsQuestCompleted(this.mStarterDeckInfo.QuestTemplateIdNeeded);""",
+     """         this.mIsLocked = this.mStarterDeckInfo.QuestTemplateIdNeeded != 0 && !questManager.IsQuestCompleted(this.mStarterDeckInfo.QuestTemplateIdNeeded);"""),
+]
+
 # Browser profiling (YGO_WEB_PROFILE=1 on top of YGO_WEB, dev only): Starling's per-frame logic vs. drawing, and
 # rendered (non-bitmap-font) text, reported to the page every 2 s (com.revival.web.WebProf).
 WEB_PROFILE_EDITS = {

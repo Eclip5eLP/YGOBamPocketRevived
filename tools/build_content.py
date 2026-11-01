@@ -46,6 +46,7 @@ class Context:
         self.replaced = {}     # path -> bytes, plain (non-.ace) APK files replaced as a whole
         self.server_files = {}  # path -> bytes, files for the server only (<out>/server/<path>)
         self.boosterpacks = []  # config/boosterpacks.json entries (content_mods.add_booster_pack)
+        self.starterdecks = []  # config/starterdecks.json entries (content_mods.add_starter_deck)
         self.packages = {}     # package -> {relative path: bytes} overlay files
         self.package_versions = {}
 

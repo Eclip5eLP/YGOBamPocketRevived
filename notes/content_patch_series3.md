@@ -30,8 +30,10 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
 2. Rarity icon: `CardRarityUtil.GetRarityIconFrame` = rarity + (series-1) x 4, series > 2 lands on the Arena icons
    (`NBR_SERIE` = 2). Needs 4 new icon frames (recolour of the series 2 set) and the frame math patched. VERIFIED
 3. Card filter menu: `EContextMenu.SERIES` lists Series 1 and 2 only; add Series 3. VERIFIED
-4. Deck rule for series-limited chapters: `DeckUtil.IsSeriesEnabledForDeck` checks series 2 only (15 cards of the
-   series); add series 3. VERIFIED
+4. Deck rule for series-limited chapters: `DeckUtil.IsSeriesEnabledForDeck` / `IsAllSeriesEnabledForDeck` (15 cards
+   of the series) have **no caller**: the original game never enforced `cardSerieLimit`; it only shows a restriction
+   icon in the duel popup and limits instant decks to the series. Enforcing a limit (decision 4) = new code (block
+   the duel button when the play deck breaks it). VERIFIED (grep: no call sites)
 5. Series 2 is BAM Pro gated in the shop (`BuyCardShopDisplay`, `BuyCardPopup`, `ContextualCardPopup`); BAM Pro is
    free (content mod `free_bam_pro`), so no change needed. VERIFIED
 
@@ -94,3 +96,18 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
 2. Card list (decision 1) -> cards, Synchro/Xyz rules, packs, decks.
 3. World 2 chapters with the cards (decisions 2-7).
 4. One APK (1.2.0) + content release: Synchro/Xyz + World 2 + Series 3.
+
+## Progress
+
+- 2026-11-01 part A (code, not yet tested in the emulator): `CardSeries.SERIE_3`, rarity icon frames 12-15
+  (`CardRarityUtil` patch; hexagon gems drawn by `content_mods.series3_rarity_icons`, common atlas page 2), "Series 3"
+  filter entry (`EContextMenu`, text `card_filtering/SERIES_3_FILTER`), shop pack art for series 3
+  (`shop_booster_rarities_0002`, `shop_booster_series_icon_0002`, text `shop/shop_booster_serie3`;
+  `content_mods.series3_shop_art`).
+- Part B (code, building): `EStarterPack` reads `config/starterdecks.json`; `content_mods.add_starter_deck` (shop item
+  copy of 775, bundle with the 15 cards, texts, cover) and `compose_deck_cover` (cover 6 recoloured, card art in the
+  window). Decks without an unlock quest are on sale at once (`BuyStarterDeckShopDisplay` patch). Cover frames must be
+  numbered without gaps: originals 0-6, new decks 7+ (the original series 2 free deck refers to frame 7, which never
+  existed; it will now show the first new cover).
+- `add_atlas_frames` accumulates frames per atlas across mods (one page 2 per atlas).
+- Found [VERIFIED code]: `DeckUtil.IsSeriesEnabledForDeck` has no caller (series limits were never enforced).

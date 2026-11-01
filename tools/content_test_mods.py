@@ -13,7 +13,7 @@ import os
 import time
 from pathlib import Path
 
-from content_mods import SALE_END, SALE_START, SUMMONS, add_card
+from content_mods import SALE_END, SALE_START, SUMMONS, add_card, add_starter_deck, compose_deck_cover
 
 ROOT = Path(__file__).resolve().parent.parent
 SCANS = Path(os.environ.get("YGO_CARD_SCANS", ROOT / "content" / "card_scans"))
@@ -104,4 +104,19 @@ def test_summons(ctx):
         group["shopItem"].append(it)
 
 
-MODS = [test_new_card, test_summons]
+def test_starter_deck(ctx):
+    """A data starter deck in the shop (EStarterPack data patch): the Synchro/Xyz test cards, 1 DP, cover composed
+    from Stardust Dragon's art. Frame 7: cover frames must be numbered without gaps (the game takes the n-th texture
+    of common_starterdeck_covers), and 0-6 are the originals."""
+    if not (CARD_PICS / "cardinfo.json").is_file():
+        return
+    from PIL import Image
+    add_starter_deck(ctx, {
+        "id": 101, "shopItemId": 3931, "bundleId": 9601, "cost": 1, "frame": 7,
+        "cards": [9101, 9101, 9101, 317, 317, 317, 319, 319, 319, 473, 473, 473, 262, 262, 262],
+        "name": "Synchro Test Deck", "description": "Test deck for Synchro and Xyz summons.",
+        "contents": "3 Junk Synchron\n12 Level 4 monsters",
+    }, compose_deck_cover(Image.open(_card_picture("Stardust Dragon")), hue=210))
+
+
+MODS = [test_new_card, test_summons, test_starter_deck]
