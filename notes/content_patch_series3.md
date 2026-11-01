@@ -126,3 +126,34 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
   info text, the layout chapter's preview picture), VISIT loads chapter 60 on chapter 34's background with our intro
   story text. World 2 looks like World 1 because the world map's hexagons and paths are painted into its background
   picture (backgroundWorld/backgroundWorld2): a real World 2 needs its own background art (decision 6).
+
+## Owner decisions (2026-11-01, second round)
+
+1. Series 3 about the size of Series 2 (567). Proposal of archetypes and standalone cards to choose from:
+   notes/series3_card_proposal.md (Synchro/5D's and Xyz/ZEXAL era, ~1300 archetype cards + ~1100 standalone).
+2. World 2 about the size of World 1; its chapter order may start elsewhere on the map.
+3. World 2 opens after World 1's last Alba Litora main chapter (chapter 24).
+4. Series limit enforced on World 2 (Series 3 decks only): `com.revival.map.SeriesRule`, checked in
+   `StoryMap.EnergyCostNode` before a duel costs energy; popup names the number of off-series cards.
+5. One free starter deck from a treasure node in World 2's first chapter (like series 2's in Tropica chapter 2,
+   template 34, node 3), the other decks bought in the shop.
+6. Art: reuse existing art (backgrounds, previews, portraits).
+7. Story written by me in the game's style.
+- Extra: objective (quest) DP rewards below 10 DP now pay 10 DP (`content_mods.objective_dp`, 198 rewards).
+
+## World 1 structure [VERIFIED asset/world/worldmap.xml, world_map texts]
+
+- Alba Litora: main chapters 1-24 (story maps 2-25) + 8 side chapters 5.1, 8.1, 10.1, 11.1, 16.1, 20.1, 22.1, 23.1
+  (story maps 26-33), each opened by its main chapter.
+- Tropica City: numbering restarts: main chapters 1-8 (story maps 34-41) + 7 side chapters 2.1, 2.2, 6.1, 6.2, 7.1,
+  7.2, 8.1 (story maps 44, 47, 48, 50, 51, 58, 59). Tropica opens after Alba Litora chapter 15 (world node 33
+  UnlockByNodeId 15), not 24.
+- 47 chapters in all. World 2 numbering: to decide whether its first chapter is "25." (continuing Alba Litora) or
+  "1." (like Tropica restarting).
+- Series 2 limit on Tropica [VERIFIED data]: the chapter layouts embedded in storymaptemplate.ace mark chapters
+  (story maps) 34-37, 40, 41, 47, 50, 51, 58 as cardSerieLimit 2, but the downloaded layout files the game actually
+  loads (asset/world/Map<N>_level1.xml, StoryMap.CreateContent) say 0 for all of them, so the final game showed no
+  limit there. Where a limit was set, the original only showed an icon and limited instant decks; custom decks were
+  never checked.
+- Deck covers: art clipped to the window's bevelled bottom (DECK_COVER_WINDOW_SHAPE), bottom band redrawn as the
+  original's trapezoid, plate pasted with its own shape only.

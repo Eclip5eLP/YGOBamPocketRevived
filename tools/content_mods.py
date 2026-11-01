@@ -542,6 +542,24 @@ def revival_rewards(ctx):
         ctx.set_text("en", "inventory", f"revival_card_{tid}", name, resource_id=items[tid]["resourceNameId"])
 
 
+OBJECTIVE_MIN_DP = 10
+
+
+def objective_dp(ctx):
+    """Objective (quest) rewards of less than 10 DP pay 10 DP (owner's wish; originally 188 objectives paid 1 DP and
+    10 paid 2-6). Rewards are bundle_template rows of type 4 (BundleQuestTemplate), product currency -1 = DP; the
+    objective texts don't state amounts, the reward popup reads the bundle."""
+    changed = 0
+    for bundle in ctx.ace("config/ace/bundle/bundle_template.ace"):
+        if bundle["bundleTypeId"] != 4:
+            continue
+        for product in bundle.get("products") or []:
+            if product.get("currencyTypeId") == -1 and 0 < product.get("quantity", 0) < OBJECTIVE_MIN_DP:
+                product["quantity"] = OBJECTIVE_MIN_DP
+                changed += 1
+    print(f"  objective DP rewards raised to {OBJECTIVE_MIN_DP}: {changed}")
+
+
 def card_sources(ctx):
     """config/cardsources.json {card template id: "how to get it"} for the card popup (com.revival.shop.CardSource,
     BuyCardPopup patched). The game itself only knows the card shop, crafting, its booster packs and tournament
@@ -609,7 +627,7 @@ def card_sources(ctx):
     print(f"  card sources: {len(texts)} card(s) with a source text")
 
 
-COMMON_VERSION = "1.1.11"  # common package (original 1.1.9): raise when its overlay changes
+COMMON_VERSION = "1.1.12"  # common package (original 1.1.9): raise when its overlay changes
 
 # Synchro/Xyz frame colours: the fusion pictures' brightness mapped onto dark..light (common_frames)
 SUMMON_TINTS = {
@@ -712,6 +730,8 @@ SHOP_VERSION = "1.1.13"  # shop package (original 1.1.9)
 # Starter deck cover (common_starterdeck_covers_NNNN, 219x318, StarterDeck.as:47): the window that shows the monster
 # and the label plate drawn over it, measured on cover 6 (Blue-Eyes)
 DECK_COVER_WINDOW = (26, 64, 194, 282)
+DECK_COVER_WINDOW_SHAPE = [(26, 64), (194, 64), (194, 268), (188, 275), (32, 275), (26, 268)]
+DECK_COVER_PLATE_SHAPE = [(53, 262), (165, 262), (169, 266), (169, 293), (165, 297), (53, 297), (49, 293), (49, 266)]
 DECK_COVER_PLATE = (48, 259, 170, 297)
 
 
@@ -730,15 +750,24 @@ def compose_deck_cover(art, hue):
     w, h2 = right - left, bottom - top
     side = min(art.width, art.height * w // h2)
     crop = art.crop(((art.width - side) // 2, 0, (art.width + side) // 2, min(art.height, side * h2 // w)))
-    cover.paste(crop.convert("RGBA").resize((w, h2), Image.LANCZOS), (left, top))
-    # dark bands behind the "15 Cards" (top) and "Chapter x - y" (bottom) labels, as on the original covers
     from PIL import ImageDraw
+    # the window's bottom corners are bevelled: the art is clipped to that shape (DECK_COVER_WINDOW_SHAPE)
+    mask = Image.new("L", (w, h2), 0)
+    ImageDraw.Draw(mask).polygon([(x - left, y - top) for x, y in DECK_COVER_WINDOW_SHAPE], fill=255)
+    cover.paste(crop.convert("RGBA").resize((w, h2), Image.LANCZOS), (left, top), mask)
+    # dark bands behind the "15 Cards" (top) and "Chapter x - y" (bottom) labels, as on the original covers: a
+    # trapezoid narrow at its top, as wide as the window at the label plate
     shade = Image.new("RGBA", cover.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(shade)
     d.polygon([(52, 64), (166, 64), (148, 86), (70, 86)], fill=(0, 0, 0, 150))
-    d.polygon([(66, 236), (152, 236), (172, 262), (46, 262)], fill=(0, 0, 0, 150))
+    d.polygon([(62, 239), (157, 239), (194, 263), (194, 268), (188, 275), (32, 275), (26, 268), (26, 263)],
+              fill=(0, 0, 0, 150))
     cover.alpha_composite(shade)
-    cover.alpha_composite(_plate(base, shift), DECK_COVER_PLATE[:2])
+    plate_mask = Image.new("L", cover.size, 0)  # only the plate itself, not the window around it
+    ImageDraw.Draw(plate_mask).polygon(DECK_COVER_PLATE_SHAPE, fill=255)
+    plate = Image.new("RGBA", cover.size, (0, 0, 0, 0))
+    plate.paste(_plate(base, shift), DECK_COVER_PLATE[:2])
+    cover.paste(plate, (0, 0), plate_mask)
     return cover
 
 
@@ -871,8 +900,8 @@ def add_starter_deck(ctx, deck, cover):
                              "worth": deck.get("worth", 0), "quest": deck.get("quest", 0)})
 
 
-WORLD_VERSION = "1.1.10"       # world package (original 1.1.9): layouts of new chapters and world maps
-MAPPREVIEW_VERSION = "1.1.7"   # mappreview package (original 1.1.6): chapter preview pictures
+WORLD_VERSION = "1.1.11"       # world package (original 1.1.9): layouts of new chapters and world maps
+MAPPREVIEW_VERSION = "1.1.8"   # mappreview package (original 1.1.6): chapter preview pictures
 WORLDMAP_DIR = "config/ace/worldmap/"
 
 
@@ -980,6 +1009,9 @@ def add_chapter(ctx, chapter, world_map, layout, name, info, intro, outro, duels
             ctx.set_text(lang, f"map_{chapter - 1:03d}", key, text)
         ctx.set_text(lang, "map", f"WORLD_NODE_INFO_MAP_ID_{chapter - 1}", info)
         ctx.set_text(lang, "world_map", f"NAME_CHAPTER{chapter - 1}", name)
+        if series_limit:  # restriction note in the duel/world node popups (original text exists for series 2 only)
+            ctx.set_text(lang, "map", f"TOOLTIP_CARD_SERIES_LIMITATION_{series_limit}",
+                         f"Series {series_limit} Cards Only")
     return world_node_id
 
 
@@ -1042,6 +1074,7 @@ def write_boosterpacks(ctx):
 
 MODS = [
     free_bam_pro,
+    objective_dp,
     settings_github_text,
     star_duel_button_text,
     wings_of_destiny,

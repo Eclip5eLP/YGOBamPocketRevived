@@ -132,7 +132,7 @@ def test_world2(ctx):
     duels[4].update(text="I am the World 2 test boss. Behold my Xyz!", aixyz=True, dp=800)
     add_chapter(ctx, 60, 2, layout=34, name="W2-1. Test Chapter", info="Test chapter on World 2",
                 intro="Welcome to World 2. This is a test chapter.", outro="You cleared the World 2 test chapter.",
-                duels=duels, treasures=[[9101, 9101], [9111], [9121], [9122]])
+                duels=duels, treasures=[[9101, 9101], [9111], [9121], [9122]], series_limit=3)
 
 
 MODS = [test_new_card, test_summons, test_starter_deck, test_world2]

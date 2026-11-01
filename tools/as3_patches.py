@@ -2665,6 +2665,26 @@ STARTER_PACK_EDITS.append(("""         loop0:
             }
          }"""))
 PATCHES[STARTER_PACK] = PATCHES.get(STARTER_PACK, []) + STARTER_PACK_EDITS
+# Series limit (cardSerieLimit of a chapter layout): a duel on such a chapter needs a play deck of that series
+# (com.revival.map.SeriesRule); checked before the duel costs energy. Ambush duels (random encounters) are not checked.
+STORY_MAP = "com.frimastudio.snowstorm.module.map.map.StoryMap"
+PATCHES[STORY_MAP] = PATCHES.get(STORY_MAP, []) + [
+    ("""   import com.frimastudio.common.core.manager.ManagerA;
+""", """   import com.frimastudio.common.core.manager.ManagerA;
+   import com.revival.map.SeriesRule;
+"""),
+    ("""      private function EnergyCostNode(aXmlNode:XMLNode) : void
+      {
+""", """      private function EnergyCostNode(aXmlNode:XMLNode) : void
+      {
+         if(aXmlNode is DuelNode && SeriesRule.Blocks(CardSeriesLimit))
+         {
+            this.RemoveBlocker();
+            return;
+         }
+"""),
+]
+
 # A deck with no unlock quest (quest id 0, data decks without "quest") is always on sale; the original asked the
 # quest manager, which reports quest 0 as not completed, so such a deck would stay locked.
 BUY_STARTER_DECK = "com.frimastudio.snowstorm.module.shop.display.BuyStarterDeckShopDisplay"
