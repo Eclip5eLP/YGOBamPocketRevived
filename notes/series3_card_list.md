@@ -1,4 +1,7 @@
-# Series 3 card list, draft (2026-11-01)
+# Series 3 card list (2026-11-01)
+
+**577 cards: the 246 archetype cards below (all kept, owner's choice, including the later prints) + 331
+standalone 5D's-era cards** (end of this file; `content/series3/standalone_cards.json`), next to Series 2's 567.
 
 Archetypes: Stardust / Junk / Synchron, Red Dragon Archfiend (with Resonators), Black Rose, Ice Barrier, T.G.,
 Koa'ki Meiru. Machine-readable copy: `content/series3/archetype_cards.json` (YGOPRODeck ids, kinds, real stats).
@@ -308,4 +311,40 @@ Without them: 157 cards. Series 3 then needs about 320-410 standalone cards from
 | Reckoned Power | Trap |  |  |  | yes |
 
 36 cards, 1 only in later sets.
+
+
+## Standalone cards (331)
+
+Chosen from cards printed in the 5D's core boosters (TDGS-EXVC), not in an archetype, not in the game: all 28
+Synchro, 39 Tuners, 5 Fusion, 2 Ritual; 164 other monsters spread over levels 1-12; 55 spells, 38 traps. Cards whose
+real effect maps onto the game's effect pieces (destroy, damage, life points, ATK up/down, revive, protection) were
+preferred: 258 of 331. Any card can be swapped.
+
+### Synchro (28)
+
+Sun Dragon Inti (Lv8), Black-Winged Dragon (Lv8), Nitro Warrior (Lv7), Doomkaiser Dragon (Lv6), Exploder Dragonwing (Lv7), Ancient Fairy Dragon (Lv7), Arcanite Magician (Lv7), Turbo Cannon (Lv3), Shooting Star Dragon (Lv10), Black Brutdrago (Lv8), Trident Dragion (Lv10), Lightning Tricorn (Lv8), Dark Strike Fighter (Lv7), Light End Dragon (Lv8), Explosive Magician (Lv6), Moon Dragon Quilla (Lv6), Voltic Bicorn (Lv7), Revived King Ha Des (Lv6), Drill Warrior (Lv6), Psychic Nightmare (Lv6), Underground Arachnid (Lv6), Tempest Magician (Lv6), Thunder Unicorn (Lv5), Ancient Sacred Wyvern (Lv7), Vortex the Whirlwind (Lv5), Turbo Warrior (Lv6), Zeman the Ape King (Lv7), Queen of Thorns (Lv6)
+
+### Tuner (39)
+
+Egotistical Ape (Lv5), Turbo Rocket (Lv2), Fire Ant Ascator (Lv3), Spore (Lv1), Snyffus (Lv1), Trap Eater (Lv4), Delta Flyer (Lv3), Night's End Sorcerer (Lv2), Nettles (Lv2), Sword Master (Lv3), Dread Dragon (Lv2), Top Runner (Lv4), Cherry Inmato (Lv2), Comrade Swordsman of Landstar (Lv3), Elephun (Lv2), Counselor Lily (Lv3), Sinister Sprocket (Lv1), Sunny Pixie (Lv1), Key Mouse (Lv1), Attack Gainer (Lv1), Emissary from Pandemonium (Lv7), Royal Swamp Eel (Lv4), Krebons (Lv2), Dark Tinker (Lv2), Debris Dragon (Lv4), Synchro Magnet (Lv3), Mental Seeker (Lv3), Jutte Fighter (Lv2), Torapart (Lv2), Esper Girl (Lv2), Supay (Lv1), Deep Sea Diva (Lv2), Hanewata (Lv1), Black Salvo (Lv3), Glow-Up Bulb (Lv1), Mind Master (Lv1), Copy Plant (Lv1), Effect Veiler (Lv1), Uni-Horned Familiar (Lv2)
+
+### Fusion (5)
+
+Ultimate Axon Kicker (Lv10), Supreme Arcanite Magician (Lv10), Chimera the Flying Mythical Beast (Lv6), Dragon Knight Draco-Equiste (Lv10), Multiple Piece Golem (Lv7)
+
+### Ritual (2)
+
+Divine Grace - Northwemko (Lv7), Garlandolf, King of Destruction (Lv7)
+
+### Monster (164)
+
+Black Potan (Lv1), Mecha Bunny (Lv2), Pursuit Chaser (Lv3), Dark Hunter (Lv4), Summon Reactor SK (Lv5), Psychic Emperor (Lv6), Ancient Crimson Ape (Lv7), Ice Queen (Lv8), White Potan (Lv1), Playful Possum (Lv2), Mermaid Archer (Lv3), Hardened Armed Dragon (Lv4), Handcuffs Dragon (Lv5), Strong Wind Dragon (Lv6), Greed Quasar (Lv7), Fiendish Engine Omega (Lv8), Buster Blaster (Lv1), Damage Eater (Lv2), Spell Reactor RE (Lv3), Zombie Mammoth (Lv4), Gigastone Omega (Lv5), Ido the Supreme Magical Force (Lv6), Puppet King (Lv7), Montage Dragon (Lv8), Cursed Fig (Lv1), Necro Defender (Lv2), Mine Mole (Lv3), Apocatequil (Lv4), Final Psychic Ogre (Lv5), Power Giant (Lv6), Yellow Baboon, Archer of the Forest (Lv7), White Night Dragon (Lv8), Dark Bug (Lv1), Shield Wing (Lv2), Shield Warrior (Lv3), Catoblepas and the Witch of Fate (Lv4), Prime Material Falcon (Lv5), Yamato-no-Kami (Lv6), King of the Beasts (Lv7), Dark Voltanis (Lv8), Evil Thorn (Lv1), Tree Otter (Lv2), Trigon (Lv3), Max Warrior (Lv4), Memory Crush King (Lv5), Il Blud (Lv6), Red Ogre (Lv7), Light and Darkness Dragon (Lv8), Mirror Ladybug (Lv1), Doppelwarrior (Lv2), Hedge Guard (Lv3), Battlestorm (Lv4), Salvage Warrior (Lv5), Brain Golem (Lv6), Zeta Reticulant (Lv7), Splendid Venus (Lv8), Moja (Lv1), Needle Ball (Lv2), Oyster Meister (Lv3), Energy Bravery (Lv4), Oracle of the Sun (Lv5), Ambitious Gofer (Lv6), Ice Master (Lv8), Dark Spider (Lv1), Noisy Gnat (Lv2), Seed of Flame (Lv3), Maiden of Macabre (Lv4), Tethys, Goddess of Light (Lv5), Tiger Dragon (Lv6), The Dark Creator (Lv8), Darksea Float (Lv1), Ally Salvo (Lv2), Fairy Archer (Lv3), Bone Crusher (Lv4), Power Invader (Lv5), Storm Caller (Lv6), Clear Vice Dragon (Lv8), Synchro Soldier (Lv1), Horseytail (Lv2), Oshaleon (Lv3), Card Guard (Lv4), Big Piece Golem (Lv5), Gaap the Divine Soldier (Lv6), Kasha (Lv8), Turbo Booster (Lv1), Oilman (Lv2), Rai-Mei (Lv3), Stygian Street Patrol (Lv4), Divine Dragon Aquabizarre (Lv5), Knight of the Red Lotus (Lv6), Sauropod Brachion (Lv8), Level Eater (Lv1), Power Supplier (Lv2), Serene Psychic Witch (Lv3), Spyder Spider (Lv4), Majioshaleon (Lv5), Dragon Queen of Tragic Endings (Lv6), Bee List Soldier (Lv1), Relinquished Spider (Lv2), Woodland Archer (Lv3), Jade Knight (Lv4), The Tricky (Lv5), Akz, the Pumer (Lv6), Kinka-byo (Lv1), Wall of Ivy (Lv2), Spined Gillman (Lv3), Vice Berserker (Lv4), Earthquake Giant (Lv5), Mother Spider (Lv6), Kuribon (Lv1), Bicular (Lv2), Monoceros (Lv3), Trap Reactor Y FI (Lv4), Berfomet (Lv5), Izanagi (Lv6), A/D Changer (Lv1), Card Breaker (Lv2), Second Booster (Lv3), Viser Des (Lv4), Turret Warrior (Lv5), Minoan Centaur (Lv6), Cosmic Compass (Lv1), Dark Verger (Lv2), Dash Warrior (Lv3), Ghost Gardna (Lv4), Scary Moth (Lv6), Needle Soldier (Lv1), Dark Desertapir (Lv2), Tricular (Lv3), Zero Gardna (Lv4), Puppet Master (Lv6), Unicycular (Lv1), Phoenixian Seed (Lv2), Mind Protector (Lv3), Rai-Jin (Lv4), Battle Fader (Lv1), Quillbolt Hedgehog (Lv2), Inmato (Lv3), Skull Conductor (Lv4), Darksea Rescue (Lv1), Synchro Fusionist (Lv2), Gonogo (Lv3), Cactus Fighter (Lv4), Droll & Lock Bird (Lv1), Psi-Beast (Lv2), Botanical Girl (Lv3), Power Breaker (Lv4), Mystic Piper (Lv1), Extra Veiler (Lv2), Lock Cat (Lv3), Gigantic Cephalotus (Lv4), Swift Scarecrow (Lv1), Magicat (Lv2), Small Piece Golem (Lv3), Anarchist Monk Ranshin (Lv4), Testudo erat Numen (Lv1), Necro Linker (Lv2), Tour Guide From the Underworld (Lv3), Rockstone Warrior (Lv4), Scanner (Lv1), Totem Dragon (Lv2), Spellstone Sorcerer Karood (Lv3), Biofalcon (Lv4), Silent Strider (Lv2)
+
+### Spell (55)
+
+Axe of Fools, Cursed Bill, Electromagnetic Shield, Emergency Assistance, Fighting Spirit, Molting Escape, Orb of Yasaka, Pestilence, Pyramid of Wonders, Raging Mad Plants, Rocket Pilder, Silver Wing, Temple of the Sun, The Fountain in the Sky, The World Tree, Ancient Forest, Arcane Barrier, Assault Armor, Beast Rage, Break! Draw!, Clear World, Cursed Armaments, Darkworld Shackles, Domino Effect, Double Cyclone, Dragon Laser, ESP Amplifier, Everliving Underworld Cannon, Faustian Bargain, Fragrance Storm, Gemini Spark, Hydro Pressure Cannon, Makiu, the Magical Mist, Miracle Fertilizer, Miracle Synchro Fusion, Mirror of Yata, Out of the Blue, Paralyzing Chain, Power Pickaxe, Prevention Star, Psychokinesis, Release Restraint Wave, Ritual Cage, Ritual of Destruction, Savage Colosseum, Seed Cannon, Solidarity, Spirit Burner, Spiritual Forest, Summoning Curse, Super Solar Nutrient, Supremacy Berry, Telekinetic Power Well, Token Sundae, Unstable Evolution
+
+### Trap (38)
+
+Ebon Arrow, Fake Explosion, Overdoom Line, Token Stampede, Blossom Bombardment, Bone Temple Block, Destruct Potion, Gemini Booster, Guard Mines, Horn of the Phantom Beast, Howl of the Wild, Plant Food Chain, Psi-Curse, Safe Zone, Trap of the Imperial Tomb, Barrier Wave, Brain Hazard, Broken Blocker, Call of the Reaper, Chain Whirlwind, Darkfall, Depth Amulet, Desperate Tag, Fairy Wind, Fiendish Chain, Fish Depth Charge, Full House, Gemini Counter, Graceful Revival, Gravity Collapse, Ivy Shackles, Judgment of Thunder, Lair Wire, Lineage of Destruction, Meteor Flare, Mind Over Matter, Miracle Locus, Miracle's Wake
 

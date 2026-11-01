@@ -1,0 +1,4597 @@
+[
+ {
+  "id": 39823987,
+  "name": "Sun Dragon Inti",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 8,
+  "atk": 3000,
+  "def": 2800,
+  "attribute": "LIGHT",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 9012916,
+  "name": "Black-Winged Dragon",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 8,
+  "atk": 2800,
+  "def": 1600,
+  "attribute": "DARK",
+  "race": "Dragon",
+  "effect_hints": [
+   "burn",
+   "weaken"
+  ]
+ },
+ {
+  "id": 18013090,
+  "name": "Nitro Warrior",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2800,
+  "def": 1800,
+  "attribute": "FIRE",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 6021033,
+  "name": "Doomkaiser Dragon",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2400,
+  "def": 1500,
+  "attribute": "FIRE",
+  "race": "Zombie",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 40529384,
+  "name": "Exploder Dragonwing",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2400,
+  "def": 1600,
+  "attribute": "DARK",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 25862681,
+  "name": "Ancient Fairy Dragon",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2100,
+  "def": 3000,
+  "attribute": "LIGHT",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "heal"
+  ]
+ },
+ {
+  "id": 31924889,
+  "name": "Arcanite Magician",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 400,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 13574687,
+  "name": "Turbo Cannon",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 3,
+  "atk": 0,
+  "def": 0,
+  "attribute": "FIRE",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 24696097,
+  "name": "Shooting Star Dragon",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 10,
+  "atk": 3300,
+  "def": 2500,
+  "attribute": "WIND",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 96029574,
+  "name": "Black Brutdrago",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 8,
+  "atk": 3000,
+  "def": 2600,
+  "attribute": "FIRE",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 39402797,
+  "name": "Trident Dragion",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 10,
+  "atk": 3000,
+  "def": 2800,
+  "attribute": "FIRE",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 49389523,
+  "name": "Lightning Tricorn",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 8,
+  "atk": 2800,
+  "def": 2000,
+  "attribute": "LIGHT",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 32646477,
+  "name": "Dark Strike Fighter",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2600,
+  "def": 1800,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 25132288,
+  "name": "Light End Dragon",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 8,
+  "atk": 2600,
+  "def": 2100,
+  "attribute": "LIGHT",
+  "race": "Dragon",
+  "effect_hints": [
+   "weaken"
+  ]
+ },
+ {
+  "id": 33413279,
+  "name": "Explosive Magician",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2500,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 66818682,
+  "name": "Moon Dragon Quilla",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2500,
+  "def": 2000,
+  "attribute": "DARK",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 13995824,
+  "name": "Voltic Bicorn",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2500,
+  "def": 2000,
+  "attribute": "LIGHT",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 5309481,
+  "name": "Revived King Ha Des",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2450,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Zombie",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 3429238,
+  "name": "Drill Warrior",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2400,
+  "def": 2000,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 7582066,
+  "name": "Psychic Nightmare",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2400,
+  "def": 1800,
+  "attribute": "WIND",
+  "race": "Psychic",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 63465535,
+  "name": "Underground Arachnid",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2400,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Insect",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 63101919,
+  "name": "Tempest Magician",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2200,
+  "def": 1400,
+  "attribute": "DARK",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 77506119,
+  "name": "Thunder Unicorn",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 5,
+  "atk": 2200,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Beast",
+  "effect_hints": [
+   "weaken"
+  ]
+ },
+ {
+  "id": 25958491,
+  "name": "Ancient Sacred Wyvern",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2100,
+  "def": 2000,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 25373678,
+  "name": "Vortex the Whirlwind",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 5,
+  "atk": 2100,
+  "def": 700,
+  "attribute": "WIND",
+  "race": "Winged Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 46195773,
+  "name": "Turbo Warrior",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2500,
+  "def": 1500,
+  "attribute": "WIND",
+  "race": "Warrior",
+  "effect_hints": []
+ },
+ {
+  "id": 22858242,
+  "name": "Zeman the Ape King",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 7,
+  "atk": 2500,
+  "def": 1800,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": []
+ },
+ {
+  "id": 45500495,
+  "name": "Queen of Thorns",
+  "group": "Standalone",
+  "kind": "Synchro",
+  "level": 6,
+  "atk": 2200,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Plant",
+  "effect_hints": []
+ },
+ {
+  "id": 96914272,
+  "name": "Egotistical Ape",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 5,
+  "atk": 1200,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "boost",
+   "weaken",
+   "revive"
+  ]
+ },
+ {
+  "id": 6142213,
+  "name": "Turbo Rocket",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 0,
+  "def": 0,
+  "attribute": "WIND",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "burn",
+   "protect"
+  ]
+ },
+ {
+  "id": 78275321,
+  "name": "Fire Ant Ascator",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 700,
+  "def": 1300,
+  "attribute": "EARTH",
+  "race": "Insect",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 11747708,
+  "name": "Spore",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 400,
+  "def": 800,
+  "attribute": "WIND",
+  "race": "Plant",
+  "effect_hints": [
+   "boost",
+   "revive"
+  ]
+ },
+ {
+  "id": 35448319,
+  "name": "Snyffus",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 13821299,
+  "name": "Trap Eater",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 4,
+  "atk": 1900,
+  "def": 1600,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 57568840,
+  "name": "Delta Flyer",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 1500,
+  "def": 900,
+  "attribute": "WIND",
+  "race": "Dragon",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 36107810,
+  "name": "Night's End Sorcerer",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 1300,
+  "def": 400,
+  "attribute": "DARK",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 19505896,
+  "name": "Nettles",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 1200,
+  "def": 400,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 81336148,
+  "name": "Sword Master",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 1200,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 51925772,
+  "name": "Dread Dragon",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 1100,
+  "def": 400,
+  "attribute": "FIRE",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 53623827,
+  "name": "Top Runner",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 4,
+  "atk": 1100,
+  "def": 800,
+  "attribute": "WIND",
+  "race": "Machine",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 525110,
+  "name": "Cherry Inmato",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 700,
+  "def": 400,
+  "attribute": "DARK",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 83602069,
+  "name": "Comrade Swordsman of Landstar",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 500,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 88845345,
+  "name": "Elephun",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 500,
+  "def": 300,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 5519829,
+  "name": "Counselor Lily",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 400,
+  "def": 1500,
+  "attribute": "EARTH",
+  "race": "Fairy",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 61632317,
+  "name": "Sinister Sprocket",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 400,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 73837870,
+  "name": "Sunny Pixie",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 300,
+  "def": 400,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "heal"
+  ]
+ },
+ {
+  "id": 135598,
+  "name": "Key Mouse",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 31175914,
+  "name": "Attack Gainer",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "weaken"
+  ]
+ },
+ {
+  "id": 42685062,
+  "name": "Emissary from Pandemonium",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 7,
+  "atk": 2600,
+  "def": 1800,
+  "attribute": "EARTH",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 37953640,
+  "name": "Royal Swamp Eel",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 4,
+  "atk": 1700,
+  "def": 1200,
+  "attribute": "WATER",
+  "race": "Fish",
+  "effect_hints": []
+ },
+ {
+  "id": 59575539,
+  "name": "Krebons",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 1200,
+  "def": 400,
+  "attribute": "DARK",
+  "race": "Psychic",
+  "effect_hints": []
+ },
+ {
+  "id": 76614003,
+  "name": "Dark Tinker",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 1000,
+  "def": 1300,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 14943837,
+  "name": "Debris Dragon",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 4,
+  "atk": 1000,
+  "def": 2000,
+  "attribute": "WIND",
+  "race": "Dragon",
+  "effect_hints": []
+ },
+ {
+  "id": 50702124,
+  "name": "Synchro Magnet",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 1000,
+  "def": 600,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 36565699,
+  "name": "Mental Seeker",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 800,
+  "def": 600,
+  "attribute": "EARTH",
+  "race": "Psychic",
+  "effect_hints": []
+ },
+ {
+  "id": 60410769,
+  "name": "Jutte Fighter",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 700,
+  "def": 900,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": []
+ },
+ {
+  "id": 83370323,
+  "name": "Torapart",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 600,
+  "def": 600,
+  "attribute": "DARK",
+  "race": "Warrior",
+  "effect_hints": []
+ },
+ {
+  "id": 99070951,
+  "name": "Esper Girl",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 500,
+  "def": 300,
+  "attribute": "EARTH",
+  "race": "Psychic",
+  "effect_hints": []
+ },
+ {
+  "id": 78552773,
+  "name": "Supay",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 300,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 78868119,
+  "name": "Deep Sea Diva",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 200,
+  "def": 400,
+  "attribute": "WATER",
+  "race": "Sea Serpent",
+  "effect_hints": []
+ },
+ {
+  "id": 20450925,
+  "name": "Hanewata",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 200,
+  "def": 300,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": []
+ },
+ {
+  "id": 88671720,
+  "name": "Black Salvo",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 3,
+  "atk": 100,
+  "def": 1100,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 67441435,
+  "name": "Glow-Up Bulb",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": []
+ },
+ {
+  "id": 96782886,
+  "name": "Mind Master",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 100,
+  "def": 200,
+  "attribute": "LIGHT",
+  "race": "Psychic",
+  "effect_hints": []
+ },
+ {
+  "id": 66457407,
+  "name": "Copy Plant",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "WIND",
+  "race": "Plant",
+  "effect_hints": []
+ },
+ {
+  "id": 97268402,
+  "name": "Effect Veiler",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 22318971,
+  "name": "Uni-Horned Familiar",
+  "group": "Standalone",
+  "kind": "Tuner",
+  "level": 2,
+  "atk": 0,
+  "def": 1000,
+  "attribute": "LIGHT",
+  "race": "Beast",
+  "effect_hints": []
+ },
+ {
+  "id": 40101111,
+  "name": "Ultimate Axon Kicker",
+  "group": "Standalone",
+  "kind": "Fusion",
+  "level": 10,
+  "atk": 2900,
+  "def": 1700,
+  "attribute": "LIGHT",
+  "race": "Psychic",
+  "effect_hints": [
+   "destroy",
+   "heal",
+   "protect"
+  ]
+ },
+ {
+  "id": 21113684,
+  "name": "Supreme Arcanite Magician",
+  "group": "Standalone",
+  "kind": "Fusion",
+  "level": 10,
+  "atk": 1400,
+  "def": 2800,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 4796100,
+  "name": "Chimera the Flying Mythical Beast",
+  "group": "Standalone",
+  "kind": "Fusion",
+  "level": 6,
+  "atk": 2100,
+  "def": 1800,
+  "attribute": "WIND",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 14017402,
+  "name": "Dragon Knight Draco-Equiste",
+  "group": "Standalone",
+  "kind": "Fusion",
+  "level": 10,
+  "atk": 3200,
+  "def": 2000,
+  "attribute": "WIND",
+  "race": "Dragon",
+  "effect_hints": []
+ },
+ {
+  "id": 71628381,
+  "name": "Multiple Piece Golem",
+  "group": "Standalone",
+  "kind": "Fusion",
+  "level": 7,
+  "atk": 2600,
+  "def": 1300,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": []
+ },
+ {
+  "id": 61757117,
+  "name": "Divine Grace - Northwemko",
+  "group": "Standalone",
+  "kind": "Ritual",
+  "level": 7,
+  "atk": 2700,
+  "def": 1200,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 30646525,
+  "name": "Garlandolf, King of Destruction",
+  "group": "Standalone",
+  "kind": "Ritual",
+  "level": 7,
+  "atk": 2500,
+  "def": 1400,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 76218643,
+  "name": "Black Potan",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 200,
+  "def": 100,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "heal",
+   "protect"
+  ]
+ },
+ {
+  "id": 10110717,
+  "name": "Mecha Bunny",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 800,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 27870033,
+  "name": "Pursuit Chaser",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 600,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 19357125,
+  "name": "Dark Hunter",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1600,
+  "def": 400,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "boost",
+   "weaken"
+  ]
+ },
+ {
+  "id": 89493368,
+  "name": "Summon Reactor SK",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2000,
+  "def": 1400,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "burn",
+   "revive"
+  ]
+ },
+ {
+  "id": 77600660,
+  "name": "Psychic Emperor",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2400,
+  "def": 1000,
+  "attribute": "LIGHT",
+  "race": "Psychic",
+  "effect_hints": [
+   "heal",
+   "revive"
+  ]
+ },
+ {
+  "id": 50781944,
+  "name": "Ancient Crimson Ape",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": 2600,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy",
+   "heal"
+  ]
+ },
+ {
+  "id": 14462257,
+  "name": "Ice Queen",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2900,
+  "def": 2100,
+  "attribute": "WATER",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 98024118,
+  "name": "White Potan",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 200,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": [
+   "destroy",
+   "burn",
+   "protect"
+  ]
+ },
+ {
+  "id": 69529567,
+  "name": "Playful Possum",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 800,
+  "def": 600,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 4252828,
+  "name": "Mermaid Archer",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1200,
+  "def": 200,
+  "attribute": "WATER",
+  "race": "Sea Serpent",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 68473226,
+  "name": "Hardened Armed Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1500,
+  "def": 800,
+  "attribute": "EARTH",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "revive",
+   "protect"
+  ]
+ },
+ {
+  "id": 97904474,
+  "name": "Handcuffs Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1800,
+  "def": 1800,
+  "attribute": "WIND",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "weaken"
+  ]
+ },
+ {
+  "id": 23770284,
+  "name": "Strong Wind Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2400,
+  "def": 1000,
+  "attribute": "WIND",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 50263751,
+  "name": "Greed Quasar",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": -1,
+  "def": -1,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 82556058,
+  "name": "Fiendish Engine Omega",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2800,
+  "def": 2000,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 63676256,
+  "name": "Buster Blaster",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "weaken"
+  ]
+ },
+ {
+  "id": 60741115,
+  "name": "Damage Eater",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 100,
+  "def": 800,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "burn",
+   "boost"
+  ]
+ },
+ {
+  "id": 15175429,
+  "name": "Spell Reactor RE",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1200,
+  "def": 900,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 43642620,
+  "name": "Zombie Mammoth",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1900,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Zombie",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 79080761,
+  "name": "Gigastone Omega",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1000,
+  "def": 2300,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 35984222,
+  "name": "Ido the Supreme Magical Force",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2200,
+  "def": 800,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 3167573,
+  "name": "Puppet King",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": 2800,
+  "def": 2600,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 23303072,
+  "name": "Montage Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": -1,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Dragon",
+  "effect_hints": [
+   "boost",
+   "revive"
+  ]
+ },
+ {
+  "id": 18489208,
+  "name": "Cursed Fig",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 200,
+  "def": 200,
+  "attribute": "WATER",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 77700347,
+  "name": "Necro Defender",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 0,
+  "def": 800,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 94079037,
+  "name": "Mine Mole",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1000,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 41158734,
+  "name": "Apocatequil",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1800,
+  "def": 1200,
+  "attribute": "LIGHT",
+  "race": "Thunder",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 87622767,
+  "name": "Final Psychic Ogre",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2200,
+  "def": 1700,
+  "attribute": "EARTH",
+  "race": "Psychic",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 7025445,
+  "name": "Power Giant",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2200,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": [
+   "weaken",
+   "revive"
+  ]
+ },
+ {
+  "id": 65303664,
+  "name": "Yellow Baboon, Archer of the Forest",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": 2600,
+  "def": 1800,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 79473793,
+  "name": "White Night Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 3000,
+  "def": 2500,
+  "attribute": "WATER",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 44341034,
+  "name": "Dark Bug",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "DARK",
+  "race": "Insect",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 28859794,
+  "name": "Shield Wing",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 0,
+  "def": 900,
+  "attribute": "WIND",
+  "race": "Winged Beast",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 95360850,
+  "name": "Shield Warrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 800,
+  "def": 1600,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 54360049,
+  "name": "Catoblepas and the Witch of Fate",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1800,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 1287123,
+  "name": "Prime Material Falcon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2200,
+  "def": 800,
+  "attribute": "WIND",
+  "race": "Winged Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 82841979,
+  "name": "Yamato-no-Kami",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2200,
+  "def": 1200,
+  "attribute": "DARK",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 67757079,
+  "name": "King of the Beasts",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": 2500,
+  "def": 800,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 65282484,
+  "name": "Dark Voltanis",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2800,
+  "def": 1400,
+  "attribute": "DARK",
+  "race": "Fairy",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 85431040,
+  "name": "Evil Thorn",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 300,
+  "attribute": "DARK",
+  "race": "Plant",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 71759912,
+  "name": "Tree Otter",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 1200,
+  "def": 100,
+  "attribute": "WATER",
+  "race": "Beast",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 48568432,
+  "name": "Trigon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 500,
+  "def": 1700,
+  "attribute": "FIRE",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 94538053,
+  "name": "Max Warrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1800,
+  "def": 800,
+  "attribute": "WIND",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 75675029,
+  "name": "Memory Crush King",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2000,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 70595331,
+  "name": "Il Blud",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2100,
+  "def": 800,
+  "attribute": "DARK",
+  "race": "Zombie",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 68722455,
+  "name": "Red Ogre",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": 2800,
+  "def": 2100,
+  "attribute": "EARTH",
+  "race": "Zombie",
+  "effect_hints": []
+ },
+ {
+  "id": 47297616,
+  "name": "Light and Darkness Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2800,
+  "def": 2400,
+  "attribute": "LIGHT",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 45358284,
+  "name": "Mirror Ladybug",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "LIGHT",
+  "race": "Insect",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 53855409,
+  "name": "Doppelwarrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 800,
+  "def": 800,
+  "attribute": "DARK",
+  "race": "Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 59042331,
+  "name": "Hedge Guard",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 0,
+  "def": 2100,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 69695704,
+  "name": "Battlestorm",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1700,
+  "def": 1000,
+  "attribute": "DARK",
+  "race": "Winged Beast",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 41705642,
+  "name": "Salvage Warrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1900,
+  "def": 1600,
+  "attribute": "WATER",
+  "race": "Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 17313545,
+  "name": "Brain Golem",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2500,
+  "def": 1800,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 64382839,
+  "name": "Zeta Reticulant",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 7,
+  "atk": 2400,
+  "def": 2100,
+  "attribute": "DARK",
+  "race": "Fairy",
+  "effect_hints": []
+ },
+ {
+  "id": 5645210,
+  "name": "Splendid Venus",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2800,
+  "def": 2400,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": [
+   "weaken"
+  ]
+ },
+ {
+  "id": 94878265,
+  "name": "Moja",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 94230224,
+  "name": "Needle Ball",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 750,
+  "def": 700,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 83239739,
+  "name": "Oyster Meister",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1600,
+  "def": 200,
+  "attribute": "WATER",
+  "race": "Fish",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 72631243,
+  "name": "Energy Bravery",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1700,
+  "def": 1200,
+  "attribute": "LIGHT",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 42280216,
+  "name": "Oracle of the Sun",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1000,
+  "def": 2000,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 41224658,
+  "name": "Ambitious Gofer",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2400,
+  "def": 100,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 32750510,
+  "name": "Ice Master",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2500,
+  "def": 2000,
+  "attribute": "WATER",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 81759748,
+  "name": "Dark Spider",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Insect",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 45620686,
+  "name": "Noisy Gnat",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 700,
+  "def": 300,
+  "attribute": "EARTH",
+  "race": "Insect",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 38041940,
+  "name": "Seed of Flame",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1600,
+  "def": 1200,
+  "attribute": "FIRE",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 84055227,
+  "name": "Maiden of Macabre",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1700,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 87148330,
+  "name": "Tethys, Goddess of Light",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2400,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": []
+ },
+ {
+  "id": 10097168,
+  "name": "Tiger Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2400,
+  "def": 1800,
+  "attribute": "EARTH",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 92719314,
+  "name": "The Dark Creator",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 2300,
+  "def": 3000,
+  "attribute": "DARK",
+  "race": "Thunder",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 70054514,
+  "name": "Darksea Float",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 300,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 59482302,
+  "name": "Ally Salvo",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 400,
+  "def": 300,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 48742406,
+  "name": "Fairy Archer",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 600,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 37675138,
+  "name": "Bone Crusher",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1600,
+  "def": 200,
+  "attribute": "EARTH",
+  "race": "Zombie",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 18842395,
+  "name": "Power Invader",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2200,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 15935204,
+  "name": "Storm Caller",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2300,
+  "def": 2000,
+  "attribute": "WIND",
+  "race": "Psychic",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 97811903,
+  "name": "Clear Vice Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": -1,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Dragon",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 79796561,
+  "name": "Synchro Soldier",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 82994509,
+  "name": "Horseytail",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 400,
+  "def": 500,
+  "attribute": "WIND",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 71519605,
+  "name": "Oshaleon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 800,
+  "attribute": "WATER",
+  "race": "Reptile",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 4694209,
+  "name": "Card Guard",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1600,
+  "def": 500,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 25247218,
+  "name": "Big Piece Golem",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2100,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": []
+ },
+ {
+  "id": 37955049,
+  "name": "Gaap the Divine Soldier",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2200,
+  "def": 2000,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 52512994,
+  "name": "Kasha",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": -1,
+  "def": 1000,
+  "attribute": "EARTH",
+  "race": "Zombie",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 60187739,
+  "name": "Turbo Booster",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 31768112,
+  "name": "Oilman",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 400,
+  "def": 400,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 63223467,
+  "name": "Rai-Mei",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 1200,
+  "attribute": "LIGHT",
+  "race": "Thunder",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 13521194,
+  "name": "Stygian Street Patrol",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1600,
+  "def": 1200,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 67964209,
+  "name": "Divine Dragon Aquabizarre",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2100,
+  "def": 1500,
+  "attribute": "WATER",
+  "race": "Sea Serpent",
+  "effect_hints": []
+ },
+ {
+  "id": 46237548,
+  "name": "Knight of the Red Lotus",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2100,
+  "def": 1800,
+  "attribute": "FIRE",
+  "race": "Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 41753322,
+  "name": "Sauropod Brachion",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 8,
+  "atk": 1500,
+  "def": 3000,
+  "attribute": "EARTH",
+  "race": "Dinosaur",
+  "effect_hints": []
+ },
+ {
+  "id": 57421866,
+  "name": "Level Eater",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 600,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Insect",
+  "effect_hints": []
+ },
+ {
+  "id": 55063681,
+  "name": "Power Supplier",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 400,
+  "def": 400,
+  "attribute": "EARTH",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 98358303,
+  "name": "Serene Psychic Witch",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Psychic",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 80637190,
+  "name": "Spyder Spider",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1500,
+  "def": 1000,
+  "attribute": "EARTH",
+  "race": "Insect",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 67211766,
+  "name": "Majioshaleon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2000,
+  "def": 800,
+  "attribute": "WATER",
+  "race": "Reptile",
+  "effect_hints": []
+ },
+ {
+  "id": 80513550,
+  "name": "Dragon Queen of Tragic Endings",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 1900,
+  "def": 2600,
+  "attribute": "DARK",
+  "race": "Dragon",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 1474910,
+  "name": "Bee List Soldier",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 500,
+  "def": 400,
+  "attribute": "WIND",
+  "race": "Insect",
+  "effect_hints": []
+ },
+ {
+  "id": 54248491,
+  "name": "Relinquished Spider",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 300,
+  "def": 500,
+  "attribute": "EARTH",
+  "race": "Insect",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 9848939,
+  "name": "Woodland Archer",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 1300,
+  "attribute": "EARTH",
+  "race": "Beast-Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 44364207,
+  "name": "Jade Knight",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1000,
+  "def": 1800,
+  "attribute": "LIGHT",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 14778250,
+  "name": "The Tricky",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 2000,
+  "def": 1200,
+  "attribute": "WIND",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 38837163,
+  "name": "Akz, the Pumer",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 1500,
+  "def": 1000,
+  "attribute": "EARTH",
+  "race": "Beast-Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 45452224,
+  "name": "Kinka-byo",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 400,
+  "def": 200,
+  "attribute": "DARK",
+  "race": "Beast",
+  "effect_hints": []
+ },
+ {
+  "id": 30069398,
+  "name": "Wall of Ivy",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 300,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 42463414,
+  "name": "Spined Gillman",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1300,
+  "def": 0,
+  "attribute": "WATER",
+  "race": "Sea Serpent",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 43014054,
+  "name": "Vice Berserker",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1000,
+  "def": 1000,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "burn",
+   "boost"
+  ]
+ },
+ {
+  "id": 61864793,
+  "name": "Earthquake Giant",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1600,
+  "def": 2100,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": []
+ },
+ {
+  "id": 17021204,
+  "name": "Mother Spider",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2300,
+  "def": 1200,
+  "attribute": "DARK",
+  "race": "Insect",
+  "effect_hints": []
+ },
+ {
+  "id": 47432275,
+  "name": "Kuribon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 300,
+  "def": 200,
+  "attribute": "LIGHT",
+  "race": "Fairy",
+  "effect_hints": []
+ },
+ {
+  "id": 83392426,
+  "name": "Bicular",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 200,
+  "def": 200,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 58807980,
+  "name": "Monoceros",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1000,
+  "def": 1000,
+  "attribute": "LIGHT",
+  "race": "Beast",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 52286175,
+  "name": "Trap Reactor Y FI",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 800,
+  "def": 1800,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 77207191,
+  "name": "Berfomet",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1400,
+  "def": 1800,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 6544078,
+  "name": "Izanagi",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 2200,
+  "def": 1000,
+  "attribute": "WIND",
+  "race": "Fairy",
+  "effect_hints": []
+ },
+ {
+  "id": 96146814,
+  "name": "A/D Changer",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "LIGHT",
+  "race": "Warrior",
+  "effect_hints": []
+ },
+ {
+  "id": 51047350,
+  "name": "Card Breaker",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 100,
+  "def": 900,
+  "attribute": "LIGHT",
+  "race": "Warrior",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 88032368,
+  "name": "Second Booster",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1000,
+  "def": 500,
+  "attribute": "FIRE",
+  "race": "Machine",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 56043447,
+  "name": "Viser Des",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 500,
+  "def": 1200,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 88559132,
+  "name": "Turret Warrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 5,
+  "atk": 1200,
+  "def": 2000,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": []
+ },
+ {
+  "id": 43708640,
+  "name": "Minoan Centaur",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 1800,
+  "def": 1000,
+  "attribute": "EARTH",
+  "race": "Beast-Warrior",
+  "effect_hints": []
+ },
+ {
+  "id": 27450400,
+  "name": "Cosmic Compass",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 300,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 50164989,
+  "name": "Dark Verger",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 0,
+  "def": 1000,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 34257001,
+  "name": "Dash Warrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 600,
+  "def": 1200,
+  "attribute": "WIND",
+  "race": "Warrior",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 59965151,
+  "name": "Ghost Gardna",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 0,
+  "def": 1900,
+  "attribute": "DARK",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "weaken"
+  ]
+ },
+ {
+  "id": 68087897,
+  "name": "Scary Moth",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 1800,
+  "def": 2300,
+  "attribute": "WIND",
+  "race": "Insect",
+  "effect_hints": []
+ },
+ {
+  "id": 17841097,
+  "name": "Needle Soldier",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 70187958,
+  "name": "Dark Desertapir",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 1100,
+  "def": 300,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": []
+ },
+ {
+  "id": 20797524,
+  "name": "Tricular",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 300,
+  "def": 300,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 93816465,
+  "name": "Zero Gardna",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 0,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 41442341,
+  "name": "Puppet Master",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 6,
+  "atk": 0,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 57308711,
+  "name": "Unicycular",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 100,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 96553688,
+  "name": "Phoenixian Seed",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 800,
+  "def": 0,
+  "attribute": "FIRE",
+  "race": "Plant",
+  "effect_hints": []
+ },
+ {
+  "id": 85060248,
+  "name": "Mind Protector",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 0,
+  "def": 2200,
+  "attribute": "LIGHT",
+  "race": "Psychic",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 37829468,
+  "name": "Rai-Jin",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": -1,
+  "def": 1000,
+  "attribute": "LIGHT",
+  "race": "Thunder",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 19665973,
+  "name": "Battle Fader",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 23571046,
+  "name": "Quillbolt Hedgehog",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 800,
+  "def": 800,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 39703254,
+  "name": "Inmato",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1400,
+  "def": 800,
+  "attribute": "DARK",
+  "race": "Plant",
+  "effect_hints": []
+ },
+ {
+  "id": 62782218,
+  "name": "Skull Conductor",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 2000,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Zombie",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 34659866,
+  "name": "Darksea Rescue",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 15839054,
+  "name": "Synchro Fusionist",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 800,
+  "def": 600,
+  "attribute": "DARK",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 59797187,
+  "name": "Gonogo",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1350,
+  "def": 1600,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": []
+ },
+ {
+  "id": 74440055,
+  "name": "Cactus Fighter",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1900,
+  "def": 400,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 94145021,
+  "name": "Droll & Lock Bird",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "WIND",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 46291010,
+  "name": "Psi-Beast",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 700,
+  "def": 500,
+  "attribute": "EARTH",
+  "race": "Psychic",
+  "effect_hints": []
+ },
+ {
+  "id": 84824601,
+  "name": "Botanical Girl",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1300,
+  "def": 1100,
+  "attribute": "WATER",
+  "race": "Plant",
+  "effect_hints": []
+ },
+ {
+  "id": 6903857,
+  "name": "Power Breaker",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1900,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Warrior",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 14198496,
+  "name": "Mystic Piper",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 32391566,
+  "name": "Extra Veiler",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 600,
+  "def": 200,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 52346240,
+  "name": "Lock Cat",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1200,
+  "def": 1000,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effect_hints": []
+ },
+ {
+  "id": 82116191,
+  "name": "Gigantic Cephalotus",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1850,
+  "def": 700,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 18964575,
+  "name": "Swift Scarecrow",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 25531465,
+  "name": "Magicat",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 600,
+  "def": 500,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 22754505,
+  "name": "Small Piece Golem",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1100,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": []
+ },
+ {
+  "id": 58324930,
+  "name": "Anarchist Monk Ranshin",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1800,
+  "def": 100,
+  "attribute": "EARTH",
+  "race": "Spellcaster",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 74952447,
+  "name": "Testudo erat Numen",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": 0,
+  "def": 1800,
+  "attribute": "WATER",
+  "race": "Aqua",
+  "effect_hints": []
+ },
+ {
+  "id": 44236692,
+  "name": "Necro Linker",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 600,
+  "def": 0,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 10802915,
+  "name": "Tour Guide From the Underworld",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 1000,
+  "def": 600,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effect_hints": []
+ },
+ {
+  "id": 51987571,
+  "name": "Rockstone Warrior",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1800,
+  "def": 1600,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 75198893,
+  "name": "Scanner",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 1,
+  "atk": -1,
+  "def": -1,
+  "attribute": "LIGHT",
+  "race": "Machine",
+  "effect_hints": []
+ },
+ {
+  "id": 564541,
+  "name": "Totem Dragon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 400,
+  "def": 200,
+  "attribute": "EARTH",
+  "race": "Dragon",
+  "effect_hints": []
+ },
+ {
+  "id": 20630765,
+  "name": "Spellstone Sorcerer Karood",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 3,
+  "atk": 800,
+  "def": 1900,
+  "attribute": "LIGHT",
+  "race": "Spellcaster",
+  "effect_hints": []
+ },
+ {
+  "id": 74130411,
+  "name": "Biofalcon",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 4,
+  "atk": 1700,
+  "def": 1200,
+  "attribute": "LIGHT",
+  "race": "Machine",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 18235577,
+  "name": "Silent Strider",
+  "group": "Standalone",
+  "kind": "Monster",
+  "level": 2,
+  "atk": 300,
+  "def": 700,
+  "attribute": "EARTH",
+  "race": "Insect",
+  "effect_hints": []
+ },
+ {
+  "id": 19578592,
+  "name": "Axe of Fools",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "burn",
+   "boost"
+  ]
+ },
+ {
+  "id": 46967601,
+  "name": "Cursed Bill",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 91107093,
+  "name": "Electromagnetic Shield",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 24019261,
+  "name": "Emergency Assistance",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 6178850,
+  "name": "Fighting Spirit",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 95784434,
+  "name": "Molting Escape",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 74115234,
+  "name": "Orb of Yasaka",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy",
+   "heal"
+  ]
+ },
+ {
+  "id": 62472614,
+  "name": "Pestilence",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "burn",
+   "boost"
+  ]
+ },
+ {
+  "id": 66835946,
+  "name": "Pyramid of Wonders",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 95507060,
+  "name": "Raging Mad Plants",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Quick-Play",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 27863269,
+  "name": "Rocket Pilder",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 25231813,
+  "name": "Silver Wing",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 91468551,
+  "name": "Temple of the Sun",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "boost",
+   "revive"
+  ]
+ },
+ {
+  "id": 92223641,
+  "name": "The Fountain in the Sky",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "heal"
+  ]
+ },
+ {
+  "id": 5973663,
+  "name": "The World Tree",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 87624166,
+  "name": "Ancient Forest",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Field",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 17896384,
+  "name": "Arcane Barrier",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 88190790,
+  "name": "Assault Armor",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 9999961,
+  "name": "Beast Rage",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 63851864,
+  "name": "Break! Draw!",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 33900648,
+  "name": "Clear World",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Field",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 98867329,
+  "name": "Cursed Armaments",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "weaken"
+  ]
+ },
+ {
+  "id": 83584898,
+  "name": "Darkworld Shackles",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 32663969,
+  "name": "Domino Effect",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 75652080,
+  "name": "Double Cyclone",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Quick-Play",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 29228350,
+  "name": "Dragon Laser",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Quick-Play",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 84653834,
+  "name": "ESP Amplifier",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Quick-Play",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 31467372,
+  "name": "Everliving Underworld Cannon",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 68396778,
+  "name": "Faustian Bargain",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 69584564,
+  "name": "Fragrance Storm",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 33846209,
+  "name": "Gemini Spark",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Quick-Play",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 12174035,
+  "name": "Hydro Pressure Cannon",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 27827272,
+  "name": "Makiu, the Magical Mist",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 44887817,
+  "name": "Miracle Fertilizer",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 36484016,
+  "name": "Miracle Synchro Fusion",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 1200843,
+  "name": "Mirror of Yata",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 79718768,
+  "name": "Out of the Blue",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 79707116,
+  "name": "Paralyzing Chain",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 90246973,
+  "name": "Power Pickaxe",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 94303232,
+  "name": "Prevention Star",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 32180819,
+  "name": "Psychokinesis",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 98847704,
+  "name": "Release Restraint Wave",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 25796442,
+  "name": "Ritual Cage",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 52913738,
+  "name": "Ritual of Destruction",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Ritual",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 32391631,
+  "name": "Savage Colosseum",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Field",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 81524977,
+  "name": "Seed Cannon",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 86780027,
+  "name": "Solidarity",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 50418970,
+  "name": "Spirit Burner",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 69112325,
+  "name": "Spiritual Forest",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 61650133,
+  "name": "Summoning Curse",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 28529976,
+  "name": "Super Solar Nutrient",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 98380593,
+  "name": "Supremacy Berry",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "heal"
+  ]
+ },
+ {
+  "id": 28741524,
+  "name": "Telekinetic Power Well",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Quick-Play",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 52971673,
+  "name": "Token Sundae",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 62991886,
+  "name": "Unstable Evolution",
+  "group": "Standalone",
+  "kind": "Spell",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Equip",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 88341502,
+  "name": "Ebon Arrow",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "burn",
+   "weaken"
+  ]
+ },
+ {
+  "id": 41234315,
+  "name": "Fake Explosion",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "revive",
+   "protect"
+  ]
+ },
+ {
+  "id": 87046457,
+  "name": "Overdoom Line",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "boost",
+   "revive"
+  ]
+ },
+ {
+  "id": 14342283,
+  "name": "Token Stampede",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "boost",
+   "protect"
+  ]
+ },
+ {
+  "id": 13438207,
+  "name": "Blossom Bombardment",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 47778083,
+  "name": "Bone Temple Block",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 18739764,
+  "name": "Destruct Potion",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "heal"
+  ]
+ },
+ {
+  "id": 18096222,
+  "name": "Gemini Booster",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 88928798,
+  "name": "Guard Mines",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 21350571,
+  "name": "Horn of the Phantom Beast",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 97922283,
+  "name": "Howl of the Wild",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 54451023,
+  "name": "Plant Food Chain",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "boost"
+  ]
+ },
+ {
+  "id": 16678947,
+  "name": "Psi-Curse",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "burn"
+  ]
+ },
+ {
+  "id": 38296564,
+  "name": "Safe Zone",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy",
+   "protect"
+  ]
+ },
+ {
+  "id": 80955168,
+  "name": "Trap of the Imperial Tomb",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy",
+   "revive"
+  ]
+ },
+ {
+  "id": 96700602,
+  "name": "Barrier Wave",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 39531794,
+  "name": "Brain Hazard",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 60930169,
+  "name": "Broken Blocker",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 45133463,
+  "name": "Call of the Reaper",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 22205600,
+  "name": "Chain Whirlwind",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 30127518,
+  "name": "Darkfall",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "revive"
+  ]
+ },
+ {
+  "id": 8279188,
+  "name": "Depth Amulet",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 34149830,
+  "name": "Desperate Tag",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 73507661,
+  "name": "Fairy Wind",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 50078509,
+  "name": "Fiendish Chain",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 58873391,
+  "name": "Fish Depth Charge",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 45178472,
+  "name": "Full House",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 81601517,
+  "name": "Gemini Counter",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Counter",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 98273947,
+  "name": "Graceful Revival",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 7811875,
+  "name": "Gravity Collapse",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Counter",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 14730606,
+  "name": "Ivy Shackles",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Continuous",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 85080048,
+  "name": "Judgment of Thunder",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 81128478,
+  "name": "Lair Wire",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 29307554,
+  "name": "Lineage of Destruction",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 56856951,
+  "name": "Meteor Flare",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "burn"
+  ]
+ },
+ {
+  "id": 59718521,
+  "name": "Mind Over Matter",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Counter",
+  "effect_hints": [
+   "destroy"
+  ]
+ },
+ {
+  "id": 97168905,
+  "name": "Miracle Locus",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "boost"
+  ]
+ },
+ {
+  "id": 21636650,
+  "name": "Miracle's Wake",
+  "group": "Standalone",
+  "kind": "Trap",
+  "level": null,
+  "atk": null,
+  "def": null,
+  "attribute": null,
+  "race": "Normal",
+  "effect_hints": [
+   "destroy"
+  ]
+ }
+]
