@@ -2241,3 +2241,7 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   `fusionResult` templates (InventoryManagerGame l.146, InstantDeckUtils l.37, EndGamePopup l.205) [VERIFIED];
   gaps: deck builder list (EditDeckScreen l.274 lists every template with its count) and the server's best-cards
   fallback deck (server/game.py deck_source) [VERIFIED]; selling them is an open choice (ShopSellView l.219).
+- 2026-11-01 third round [notes/synchro_xyz.md section 10]: Synchro/Xyz cards show in Collection and Sell only.
+  AI: Synchro allowed, Xyz off by default; per-duel opt-in. Story duel settings come from map node properties via
+  `XMLNode.GetDuelData` (l.243-268) into `DuelData` [VERIFIED], so two new node properties (`aixyz`, `aiextra`
+  list) can carry the boss settings in content [INFERRED].

@@ -216,3 +216,28 @@ In the duel:
 
 So the owner's balance idea works without breaking the deck/collection mechanics: one client patch (deck builder
 list), one server fix (best-cards fallback), and a decision on selling.
+
+## 10. Owner decisions, third round (2026-11-01)
+
+- Synchro/Xyz cards **show** in the Collection and the **sell** menu. They **don't show** anywhere else that
+  builds or fills a deck: deck builder card list, instant decks, the server's strongest-cards deck.
+- **AI**: by default an AI opponent may Synchro (from all results that fit) but **not Xyz**. Optional per-duel
+  settings allow Xyz, and/or give an exact list of the Synchro/Xyz results it may make (balancing, bosses).
+
+### Where the AI settings go
+
+Story duels (incl. bosses) are configured by map node properties in the map XML (content, server-side):
+`XMLNode.GetDuelData` (`snowstorm/module/map/node/XMLNode.as` l.243-268) reads `deckid`, `aimissratio`,
+`powerupid`, `characterid`, ... into `DuelData` (`snowstorm/module/map/node/DuelData.as`), which the duel gets
+as `DuelInfo`. VERIFIED. Proposal (INFERRED, names to fix when building):
+
+| Node property | Default (missing) | Meaning |
+|---|---|---|
+| `aixyz` | 0 | 1 = the AI may make Xyz monsters |
+| `aiextra` | empty | comma-separated card ids: the AI may make **only** these Synchro/Xyz results (an Xyz in the list counts as allowed even without `aixyz`) |
+
+Both become two new `DuelData` fields (copied in `DuelData.Clone`, l.~177) that the AI's rule check reads
+(`CardGameAI.IsFusionPossible`, l.323, and the AI's picker choice). Other duel kinds keep the default (Synchro yes,
+Xyz no): arena (`ArenaModule` l.733), friend decks (`DuelGroundModule` l.449), tournaments, duel stars. They can get
+the same two settings later if wanted (arena data comes from the server, so the server could send them).
+Live duels have no AI: both players pick for themselves (only owned cards).
