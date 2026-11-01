@@ -196,3 +196,17 @@ Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter
 - 2026-11-01: owner confirmed the split (Series 3 = Synchro archetypes, Series 4 = Xyz archetypes). Series 4 support
   added (enum SERIE_4, rarity frames 16-19 as octagon gems, filter entry, shop pack art frames 3); gems are drawn by
   `content_mods.series_gem` (Series 3 hexagon, Series 4 octagon). Draft Series 3 list: notes/series3_card_list.md.
+
+## Card effects for Series 3/4 (plan, 2026-11-01)
+
+- BAM effects are named keywords with an amount and a fixed rules text, e.g. BOOST 300 ("Your Monster gains Power."),
+  CRIPPLE ALL 200, SHOCK 500, SNEAK, IMMUNE, GROWTH, RESURRECT DRAGON, BOOST ALL WARRIORS 500, NECRO ..., FUSION - X
+  [VERIFIED item_template.ace + inventory texts: 940 distinct effect texts, ~200 keywords; the original effects are
+  simplified versions of the real card texts]. A new card copies an existing effect row of its keyword (texts come
+  with it); a missing amount = a copied row with a new modifier and a new name text.
+- `tools/effect_mapper.py`: suggests 1-2 keywords from a card's real text (destroy, damage, life points, ATK up/down,
+  revive, protection, negate; amounts from the text). Prototype result: right for many (Thorn of Malice -> BOOST 600,
+  TGX300 -> BOOST ALL 300), wrong for others (Koa'ki Meiru Drago destroys itself -> mapped to DESTROY MONSTER). So:
+  mapper suggestions + a hand review of every card, archetype by archetype, written into the card data
+  (`content/series3/*.json` gets an `effects` field), then `add_card` builds them.
+- Synchro/Xyz monsters can also get material effects (needs/cost/perMaterial/attach, notes/synchro_xyz.md).
