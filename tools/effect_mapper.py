@@ -9,6 +9,7 @@ card's real text and picks keywords: rules below, first matches win (max 2 per c
 rounded to the 100s the game uses.
 
     python tools/effect_mapper.py content/series3/archetype_cards.json [N]   prints N suggestions
+    python tools/effect_mapper.py --check content/series3/archetype_cards.json   checks reviewed keywords
 """
 import json
 import re
@@ -64,7 +65,40 @@ def suggest(card):
     return out
 
 
+def keyword_catalog():
+    """Names of every effect keyword in the original data (item_template.ace effect rows, English texts)."""
+    import zipfile
+    from build_content import INPUT_APK, Context
+    ctx = Context(zipfile.ZipFile(INPUT_APK))
+    _, by_id, _ = ctx.strings("en", "inventory")
+    return {by_id.get(int(e["effect"]["resourceNameId"]), "").strip()
+            for t in ctx.ace("config/ace/inventory/item_template.ace") for e in t.get("effects") or []} - {""}
+
+
+def _family(name):
+    """BOOST ALL MACHINES 200 -> BOOST ALL MACHINES N; BOOST 300 + -> BOOST N +."""
+    return re.sub(r"\s*\d+\s*(\+)?\s*$", lambda m: " N" + (" +" if m.group(1) else ""), name.strip())
+
+
+def check(path):
+    """Reviewed cards' effects: existing keyword, a new amount of one, or a new target of one (e.g. BOOST ALL
+    PLANTS 200: BOOST ALL <race> exists). Prints everything that is not an existing keyword."""
+    names = keyword_catalog()
+    families = {_family(n) for n in names}
+    targets = {re.sub(r"^(BOOST ALL|CRIPPLE ALL|IMMUNE ALL|RESURRECT) .*", r"\1", f) for f in families}
+    for c in json.load(open(path, encoding="utf-8")):
+        for e in c.get("effects", []):
+            if e in names:
+                continue
+            kind = ("new amount" if _family(e) in families else
+                    "new target" if e.split(" ")[0] + " " + e.split(" ")[1] in targets else "UNKNOWN")
+            print(f"{kind:10s} {e:36s} {c['name']}")
+
+
 def main():
+    if sys.argv[1] == "--check":
+        sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
+        return check(sys.argv[2])
     cards = json.load(open(sys.argv[1], encoding="utf-8"))
     n = int(sys.argv[2]) if len(sys.argv) > 2 else 20
     real = {c["id"]: c for c in json.load(open(ROOT_CARDINFO, encoding="utf-8"))}

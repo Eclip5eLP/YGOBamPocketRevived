@@ -10,6 +10,22 @@ TargetTypes.as, Operators.as; rows in config/ace/inventory/item_template.ace). K
 name/description texts of a row. So some "new" effects are only a new combination of existing pieces (data only),
 others need engine code.
 
+## Approved by the owner (todo, 2026-11-01)
+
+To build (code or data, whichever each needs); the review already uses these names in `effect_idea`:
+
+- [ ] **ON SYNCHRO / ON XYZ / ON FUSION: X** - "When this Monster is Synchro/Xyz/Fusion Summoned, X." (A1 below)
+- [ ] **MATERIAL: X** - "When this card is used for a Summon, the new Monster gets X." (B1)
+- [ ] **LEVEL UP n / LEVEL DOWN n / LEVEL SET n** - Level for Synchro totals and Xyz ranks, this Round. (B2)
+- [ ] **REBIRTH** - "When this Monster is destroyed, it is shuffled back into your Deck." (B3)
+- [ ] **GUARDIAN** - "When another of your cards would be destroyed, this Monster is destroyed instead." (B4)
+- [ ] **BOOST ALL SYNCHROS / XYZ / FUSIONS** (plus IMMUNE/CRIPPLE variants where cards need them) - target filter
+  on the summon kind. (B6)
+- [ ] **ON SYNCHRO SUMMON / ON XYZ SUMMON / ON FUSION SUMMON: X** - "Every time you Synchro Summon, X." on any of
+  your cards in play (a Spell or another Monster). (B10)
+
+Not approved for now: DRAW, BANISH, CLEAVE, PIERCE (cards keep their existing-keyword effects).
+
 ## A. Data only (new rows from existing engine pieces; need an emulator test)
 
 | Effect | Text (game style) | How | Cards |
@@ -52,13 +68,23 @@ Ordered by how many Series 3/4 cards would use them.
 10. **ON ANY SYNCHRO** - "Every time you Synchro Summon, ..." on a Spell or other monster. Probably ON_FUSION with
     the player as dispatcher filter; may be data only (test). Cards: Synchronized Realm.
 
+## Review rules learned
+
+- Whole-board keywords (ANNIHILATE MONSTERS, SACRIFICE ALL MONSTERS) are only on spells in the original data, on
+  trigger CARD_ATTACK (11) of the card itself [VERIFIED item_template.ace: Raigeki, Crystal Raigeki, Heavy Storm]. On a
+  monster that trigger fires on every attack, so board-wipe monsters (Black Rose Dragon, Hot Red Dragon Archfiend,
+  Tyrant Red Dragon Archfiend) get a strong CRIPPLE ALL now and the wipe as ON SYNCHRO once that exists.
+- `python tools/effect_mapper.py --check content/series3/archetype_cards.json` lists every keyword that is not in the
+  original data: a new amount (BOOST ALL MACHINES 200) or a new target (BOOST ALL PLANTS 200) is a copied row with a
+  new modifier or family filter and a new name text; UNKNOWN must not happen.
+
 ## Review progress
 
 | Group | Cards | Reviewed |
 |---|---|---|
 | Stardust / Junk / Synchron | 75 | yes (2026-11-01) |
-| Red Dragon Archfiend | 34 | |
-| Black Rose | 26 | |
+| Red Dragon Archfiend | 34 | yes (2026-11-01) |
+| Black Rose | 26 | yes (2026-11-01) |
 | Ice Barrier | 42 | |
 | T.G. | 33 | |
 | Koa'ki Meiru | 36 | |

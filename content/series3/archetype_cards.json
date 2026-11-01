@@ -198,8 +198,7 @@
   "effects": [
    "BOOST 300"
   ],
-  "effect_note": "draws when used for a Nitro Synchro",
-  "effect_idea": "MATERIAL: DRAW 1"
+  "effect_note": "draws when used for a Nitro Synchro"
  },
  {
   "id": 57458399,
@@ -232,8 +231,7 @@
   "effects": [
    "SHOCK 400"
   ],
-  "effect_note": "Warriors deal piercing damage",
-  "effect_idea": "PIERCE"
+  "effect_note": "Warriors deal piercing damage"
  },
  {
   "id": 1006081,
@@ -415,7 +413,8 @@
    "RESURRECT DRAGON",
    "SPIRIT PROTECTION"
   ],
-  "effect_note": "revives Stardust Dragon when destroyed; protects a Dragon Synchro"
+  "effect_note": "revives Stardust Dragon when destroyed; protects a Dragon Synchro",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 91262474,
@@ -463,7 +462,8 @@
   "effects": [
    "IMMUNE ALL WARRIORS"
   ],
-  "effect_note": "your Warrior Synchros can't be targeted"
+  "effect_note": "your Warrior Synchros can't be targeted",
+  "effect_idea": "IMMUNE ALL SYNCHROS"
  },
  {
   "id": 11069680,
@@ -658,7 +658,8 @@
   "effects": [
    "POWER REDISTRIBUTION 800"
   ],
-  "effect_note": "from the GY, a Synchro gains 800 ATK"
+  "effect_note": "from the GY, a Synchro gains 800 ATK",
+  "effect_idea": "BOOST ALL SYNCHROS 800"
  },
  {
   "id": 34492631,
@@ -690,8 +691,7 @@
   "effects": [
    "HEAL 500"
   ],
-  "effect_note": "draws a card when Synchro Summoned",
-  "effect_idea": "ON SYNCHRO: DRAW 1"
+  "effect_note": "draws a card when Synchro Summoned"
  },
  {
   "id": 37675907,
@@ -707,7 +707,8 @@
   "effects": [
    "GROWTH"
   ],
-  "effect_note": "sends Synchrons to the GY to change Level"
+  "effect_note": "sends Synchrons to the GY to change Level",
+  "effect_idea": "LEVEL UP / LEVEL DOWN"
  },
  {
   "id": 37474917,
@@ -740,7 +741,7 @@
    "BOOST 300 +"
   ],
   "effect_note": "gains the ATK of your small monsters (per ally)",
-  "effect_idea": "ON SYNCHRO: BOOST per Level 2 or lower ally"
+  "effect_idea": "ON SYNCHRO: BOOST 300 + (per Level 2 or lower ally)"
  },
  {
   "id": 37993923,
@@ -790,8 +791,7 @@
   "effects": [
    "CRIPPLE ALL 300"
   ],
-  "effect_note": "draws; attacks every Special Summoned monster",
-  "effect_idea": "CLEAVE"
+  "effect_note": "draws; attacks every Special Summoned monster"
  },
  {
   "id": 42810973,
@@ -807,8 +807,7 @@
   "effects": [
    "SNEAK"
   ],
-  "effect_note": "banishes a monster until the End Phase",
-  "effect_idea": "BANISH"
+  "effect_note": "banishes a monster until the End Phase"
  },
  {
   "id": 59771339,
@@ -859,7 +858,7 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys a card per non-Tuner material",
-  "effect_idea": "ON SYNCHRO: DESTROY per material"
+  "effect_idea": "ON SYNCHRO: DESTROY MONSTER (per non-Tuner material)"
  },
  {
   "id": 16327715,
@@ -1093,7 +1092,8 @@
   "effects": [
    "RESURRECT DRAGON"
   ],
-  "effect_note": "summons a Stardust monster"
+  "effect_note": "summons a Stardust monster",
+  "effect_idea": "LEVEL UP 1 / LEVEL DOWN 1"
  },
  {
   "id": 89181369,
@@ -1143,7 +1143,7 @@
    "HURT OPPONENT 500"
   ],
   "effect_note": "500 damage per Synchro Summon",
-  "effect_idea": "ON SYNCHRO (any): HURT OPPONENT 500"
+  "effect_idea": "ON SYNCHRO SUMMON: HURT OPPONENT 500"
  },
  {
   "id": 56294501,
@@ -1241,7 +1241,8 @@
   "effects": [
    "IMMUNE ALL DRAGONS"
   ],
-  "effect_note": "revives a tributed Stardust; it can't be destroyed by battle"
+  "effect_note": "revives a tributed Stardust; it can't be destroyed by battle",
+  "effect_idea": "IMMUNE ALL SYNCHROS"
  },
  {
   "id": 89127526,
@@ -1253,7 +1254,12 @@
   "def": 800,
   "attribute": "LIGHT",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "discards itself so a Tuner survives battle",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 13764881,
@@ -1265,7 +1271,11 @@
   "def": 100,
   "attribute": "LIGHT",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "summons a Resonator while a Synchro is on the field"
  },
  {
   "id": 60832978,
@@ -1277,7 +1287,11 @@
   "def": 0,
   "attribute": "FIRE",
   "race": "Fiend",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL 100"
+  ],
+  "effect_note": "makes a monster a Tuner"
  },
  {
   "id": 40159926,
@@ -1289,7 +1303,12 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "COURAGE 500"
+  ],
+  "effect_note": "summons itself against Extra Deck monsters, copies their Level",
+  "effect_idea": "LEVEL SET"
  },
  {
   "id": 77360173,
@@ -1301,7 +1320,11 @@
   "def": 100,
   "attribute": "DARK",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "summons itself next to a Synchro; fetches a Resonator"
  },
  {
   "id": 34761841,
@@ -1313,7 +1336,11 @@
   "def": 300,
   "attribute": "DARK",
   "race": "Fiend",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "COURAGE 500"
+  ],
+  "effect_note": "summons itself when you have no monsters"
  },
  {
   "id": 40583194,
@@ -1325,7 +1352,11 @@
   "def": 500,
   "attribute": "WATER",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "your attacker can't be targeted"
  },
  {
   "id": 40975574,
@@ -1337,7 +1368,11 @@
   "def": 200,
   "attribute": "FIRE",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HEAL 1000"
+  ],
+  "effect_note": "gains LP equal to a monster's ATK"
  },
  {
   "id": 98396890,
@@ -1349,7 +1384,11 @@
   "def": 400,
   "attribute": "DARK",
   "race": "Fiend",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "searches a Red Dragon Archfiend Spell/Trap"
  },
  {
   "id": 77087109,
@@ -1361,7 +1400,11 @@
   "def": 600,
   "attribute": "EARTH",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "not destroyed once per turn"
  },
  {
   "id": 5780210,
@@ -1373,7 +1416,11 @@
   "def": 600,
   "attribute": "WIND",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 400"
+  ],
+  "effect_note": "summons itself next to a Level 8+ Synchro"
  },
  {
   "id": 97021916,
@@ -1385,7 +1432,11 @@
   "def": 300,
   "attribute": "DARK",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "not destroyed by battle once per turn"
  },
  {
   "id": 83445539,
@@ -1397,7 +1448,11 @@
   "def": 300,
   "attribute": "DARK",
   "race": "Fiend",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summons itself, extra Resonator summon"
  },
  {
   "id": 13708425,
@@ -1409,7 +1464,12 @@
   "def": 1300,
   "attribute": "FIRE",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "its Synchro gains 300 ATK",
+  "effect_idea": "MATERIAL: BOOST 300"
  },
  {
   "id": 62991792,
@@ -1421,7 +1481,13 @@
   "def": 200,
   "attribute": "FIRE",
   "race": "Fiend",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER",
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "searches a Fiend; banishes itself to save a card",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 45313993,
@@ -1433,7 +1499,11 @@
   "def": 2200,
   "attribute": "FIRE",
   "race": "Fiend",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RAGE 300"
+  ],
+  "effect_note": "joins a Resonator summon at half ATK"
  },
  {
   "id": 77336644,
@@ -1445,7 +1515,13 @@
   "def": 2500,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SHARED FATE ALL",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "destroys all other monsters after attacking; revives Red Dragon Archfiend",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 66141736,
@@ -1457,7 +1533,12 @@
   "def": 1600,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives a Resonator when Synchro Summoned",
+  "effect_idea": "ON SYNCHRO: RESURRECT MONSTER"
  },
  {
   "id": 76547525,
@@ -1469,7 +1550,11 @@
   "def": 2000,
   "attribute": "FIRE",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys the strongest monster"
  },
  {
   "id": 39765958,
@@ -1481,7 +1566,12 @@
   "def": 2000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL 700"
+  ],
+  "effect_note": "destroys all other Attack Position monsters",
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS"
  },
  {
   "id": 70902743,
@@ -1493,7 +1583,12 @@
   "def": 2000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "FEEBLE ALL 300"
+  ],
+  "effect_note": "destroys Defense monsters; destroys your monsters that didn't attack"
  },
  {
   "id": 80666118,
@@ -1505,7 +1600,12 @@
   "def": 2500,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "destroys weaker Special Summoned monsters, 500 each"
  },
  {
   "id": 9753964,
@@ -1517,7 +1617,12 @@
   "def": 2500,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BREAK IMMUNITY",
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "negates a card; revives a Tuner"
  },
  {
   "id": 36857073,
@@ -1529,7 +1634,12 @@
   "def": 3000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT DRAGON",
+   "DRAIN 300"
+  ],
+  "effect_note": "revives Red Dragon Archfiend; summons Tuners on damage"
  },
  {
   "id": 67030233,
@@ -1541,7 +1651,12 @@
   "def": 3000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE",
+   "OSMOSIS 1000"
+  ],
+  "effect_note": "not destroyed by effects; takes a monster's ATK"
  },
  {
   "id": 16172067,
@@ -1553,7 +1668,13 @@
   "def": 3000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL 900",
+   "BREAK IMMUNITY ALL"
+  ],
+  "effect_note": "destroys all other cards; negates and destroys",
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS"
  },
  {
   "id": 62242678,
@@ -1565,7 +1686,13 @@
   "def": 3500,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "locks the opponent when Synchro Summoned",
+  "effect_idea": "ON SYNCHRO: BREAK IMMUNITY ALL"
  },
  {
   "id": 97489701,
@@ -1577,7 +1704,12 @@
   "def": 3000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "NECRO BOOST 200",
+   "IMMUNE"
+  ],
+  "effect_note": "+500 ATK per Tuner in the GY; not destroyed by effects"
  },
  {
   "id": 59593925,
@@ -1589,7 +1721,12 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys a card each time a Resonator is Synchro material",
+  "effect_idea": "ON SYNCHRO SUMMON: DESTROY MONSTER"
  },
  {
   "id": 23008320,
@@ -1601,7 +1738,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "searches a Resonator"
  },
  {
   "id": 8559524,
@@ -1613,7 +1754,11 @@
   "def": null,
   "attribute": null,
   "race": "Quick-Play",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "discards a Resonator, searches a Level 4 Fiend"
  },
  {
   "id": 15576074,
@@ -1625,7 +1770,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "returns 2 Resonators, searches a Level 4"
  },
  {
   "id": 41197012,
@@ -1637,7 +1786,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT LV 4 MONSTERS"
+  ],
+  "effect_note": "revives 2 Resonators next to a Dragon Synchro"
  },
  {
   "id": 92936364,
@@ -1649,7 +1802,12 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE ALL 300",
+   "BREAK IMMUNITY ALL"
+  ],
+  "effect_note": "monsters lose ATK and their effects"
  },
  {
   "id": 26118970,
@@ -1661,7 +1819,12 @@
   "def": 1800,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "as material, summons a Rose Dragon",
+  "effect_idea": "MATERIAL: RESURRECT DRAGON"
  },
  {
   "id": 2986553,
@@ -1673,7 +1836,11 @@
   "def": 1000,
   "attribute": "DARK",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE ALL PLANTS"
+  ],
+  "effect_note": "Plants can't be attacked; summons a Plant"
  },
  {
   "id": 1557341,
@@ -1685,7 +1852,11 @@
   "def": 600,
   "attribute": "FIRE",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SHOCK 300"
+  ],
+  "effect_note": "300 more damage on battle damage"
  },
  {
   "id": 17720747,
@@ -1697,7 +1868,11 @@
   "def": 1200,
   "attribute": "DARK",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "draws; destroyed if it's not a monster"
  },
  {
   "id": 89252157,
@@ -1709,7 +1884,11 @@
   "def": 800,
   "attribute": "EARTH",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "banishes itself to summon a Plant"
  },
  {
   "id": 51852507,
@@ -1721,7 +1900,11 @@
   "def": 100,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "negates and destroys a Trap"
  },
  {
   "id": 44125452,
@@ -1733,7 +1916,11 @@
   "def": 1200,
   "attribute": "WIND",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SOOTHE 300"
+  ],
+  "effect_note": "summons itself when searched"
  },
  {
   "id": 75252099,
@@ -1745,7 +1932,11 @@
   "def": 1500,
   "attribute": "WIND",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "summons 2 Plant Tuners when destroyed"
  },
  {
   "id": 98884569,
@@ -1757,7 +1948,11 @@
   "def": 1200,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "revives Black Rose Dragon or a Plant when destroyed"
  },
  {
   "id": 12469386,
@@ -1769,7 +1964,12 @@
   "def": 1300,
   "attribute": "DARK",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "revives itself when a big Plant is destroyed",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 96385345,
@@ -1781,7 +1981,11 @@
   "def": 200,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 400"
+  ],
+  "effect_note": "tributes itself for a Plant; searches a big Plant"
  },
  {
   "id": 23087070,
@@ -1793,7 +1997,11 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST ALL PLANTS 200"
+  ],
+  "effect_note": "counts as 2 Tributes for a Plant"
  },
  {
   "id": 12213463,
@@ -1805,7 +2013,11 @@
   "def": 1000,
   "attribute": "DARK",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "summons a Rose Dragon"
  },
  {
   "id": 41160533,
@@ -1817,7 +2029,11 @@
   "def": 1200,
   "attribute": "EARTH",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SHOCK 300"
+  ],
+  "effect_note": "extra attacks, 300 damage per Plant destroyed"
  },
  {
   "id": 31986288,
@@ -1829,7 +2045,11 @@
   "def": 1500,
   "attribute": "DARK",
   "race": "Plant",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "POWER REDISTRIBUTION 600"
+  ],
+  "effect_note": "two 1200 ATK tokens when destroyed"
  },
  {
   "id": 53325667,
@@ -1841,7 +2061,12 @@
   "def": 2400,
   "attribute": "DARK",
   "race": "Plant",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT SPELL",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "searches Black Garden; revives a Dragon Synchro"
  },
  {
   "id": 4290468,
@@ -1853,7 +2078,11 @@
   "def": 2000,
   "attribute": "WIND",
   "race": "Plant",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 1000"
+  ],
+  "effect_note": "halves a monster's ATK"
  },
  {
   "id": 73580471,
@@ -1865,7 +2094,12 @@
   "def": 1800,
   "attribute": "FIRE",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL 700"
+  ],
+  "effect_note": "destroys all cards when Synchro Summoned; ATK to 0",
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS + SACRIFICE ALL MONSTERS"
  },
  {
   "id": 33698022,
@@ -1877,7 +2111,12 @@
   "def": 1800,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "returns a Special Summoned monster to the hand",
+  "effect_idea": "ON SYNCHRO: DESTROY MONSTER"
  },
  {
   "id": 32485271,
@@ -1889,7 +2128,11 @@
   "def": 1800,
   "attribute": "DARK",
   "race": "Plant",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL PLANTS 300"
+  ],
+  "effect_note": "no effect (Fusion of Feral Imp + Snakeyashi)"
  },
  {
   "id": 71645242,
@@ -1901,7 +2144,12 @@
   "def": null,
   "attribute": null,
   "race": "Field",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL 500",
+   "HEAL OPPONENT 300"
+  ],
+  "effect_note": "halves summoned monsters' ATK, gives the opponent a token"
  },
  {
   "id": 53503015,
@@ -1913,7 +2161,12 @@
   "def": null,
   "attribute": null,
   "race": "Quick-Play",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SACRIFICE MONSTER",
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "sends your monster to the GY to draw or search"
  },
  {
   "id": 45247637,
@@ -1925,7 +2178,12 @@
   "def": null,
   "attribute": null,
   "race": "Equip",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 800",
+   "BOOST 800"
+  ],
+  "effect_note": "takes control of a monster"
  },
  {
   "id": 65079854,
@@ -1937,7 +2195,12 @@
   "def": null,
   "attribute": null,
   "race": "Equip",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 600",
+   "CRIPPLE 600"
+  ],
+  "effect_note": "+600 ATK; the attacked monster loses 600"
  },
  {
   "id": 84335863,
@@ -1949,7 +2212,11 @@
   "def": null,
   "attribute": null,
   "race": "Field",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "summons a Rose Dragon or Plant when you have no monsters"
  },
  {
   "id": 99092624,
@@ -1961,7 +2228,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "HEAL 800"
+  ],
+  "effect_note": "summons 800/800 Rose Tokens"
  },
  {
   "id": 70703416,
