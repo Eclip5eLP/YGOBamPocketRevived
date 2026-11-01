@@ -673,6 +673,13 @@ def write_summons(ctx):
     for effect_id, rule in SUMMONS["effects"].items():
         if effect_id not in effect_ids or set(rule) - {"needs", "cost", "perMaterial", "attach"}:
             raise RuntimeError(f"summons: bad material effect {effect_id}: {rule}")
+    # every card list starts from CardFiltering.FilterCardTemplateList, which drops cards without a shop item: a
+    # Synchro/Xyz card without one would never show in the Collection or the sell menu (a backorder item is enough)
+    shop = {i["itemTemplateId"] for _, i in _shop_items(ctx)}
+    results = {x["id"] for x in SUMMONS["xyz"]}
+    results |= {r for levels in SUMMONS["synchro"].values() for rs in levels.values() for r in rs}
+    if results - shop:
+        raise RuntimeError(f"summons: no shop item for {sorted(results - shop)}")
     for x in SUMMONS["xyz"]:
         if items[x["id"]]["cardLevel"] != x["rank"]:
             raise RuntimeError(f"summons: Xyz {x['id']} level {items[x['id']]['cardLevel']} != rank {x['rank']}")

@@ -2112,6 +2112,10 @@ SUMMON_EDITS = {
 """ + SUMMON_IMPORT),
         ("""            aCard.Skin.FaceUpSkin.DisplayFusedAnim(baseCard.FusionInfo.resultCardTemplateId);""",
          """            aCard.Skin.FaceUpSkin.DisplayFusedAnim(Summon.Result(this,aCard));"""),
+        ("""            this.mIngredientCardList = savedState.IngredientCardList;
+""", """            this.mIngredientCardList = savedState.IngredientCardList;
+            Summon.ShowMaterials(this);
+"""),
     ],
     "com.frimastudio.snowstorm.module.cardgame.round.RoundHandler": [
         ("""   import com.frimastudio.mobile.util.event.StarlingListener;
@@ -2147,8 +2151,10 @@ SUMMON_EDITS = {
                Summon.OnLocalPair(cardOnMat,aCurrentDraggedCard);
                fused = true;"""),
     ],
-    # Live-duel move: [slot, card, (second card), (-picked result)]. Also fixes the original sending the card already
-    # on the field instead of the card dropped on it (the other phone then played the wrong card).
+    # Live-duel move: [slot, card, (second card), (-result)]. The result is always sent, not only a pick: this phone
+    # lists only owned results, the other phone every result the rules allow, so with one owned result of two they
+    # would summon different cards. Also fixes the original sending the card already on the field instead of the
+    # card dropped on it (the other phone then played the wrong card).
     "com.frimastudio.snowstorm.module.cardgame.player.hand.PlayerHandBO": [
         ("""   import com.frimastudio.as3ToolKit.display.IUpdatable;
 """, """   import com.frimastudio.as3ToolKit.display.IUpdatable;
@@ -2164,7 +2170,7 @@ SUMMON_EDITS = {
         ("""      private function AddCardToPlacedLivePvP(aCardSlot:CardSlot, aCard:CardBO) : void
 """, """      private function AddSummonChoice(aCard:CardBO) : void
       {
-         var choice:int = Summon.Choice(aCard);
+         var choice:int = Summon.Result(aCard,aCard.CardToFuseWith);
          if(choice != 0 && this.mCardsPlacedArray.length > 0)
          {
             (this.mCardsPlacedArray[this.mCardsPlacedArray.length - 1] as Array).push(-choice);
@@ -2251,6 +2257,68 @@ SUMMON_EDITS = {
         ("""         this.mMonsterMaskQuad.color = IsFusionCard ? 4865697 : 11216906;""",
          """         this.mMonsterMaskQuad.color = IsFusionCard ? (SummonKind == Summon.SYNCHRO ? 10526880 : (SummonKind == Summon.XYZ ? 2631720 : 4865697)) : 11216906;"""),
         ("""               return FUSION_CARD_BACKGROUND;""", """               return Summon.FrameName(FUSION_CARD_BACKGROUND,SummonKind);"""),
+        # Xyz material count, top left of the card in the duel (Summon.ShowMaterials)
+        ("""      private var mAttackTxt:TextField;
+""", """      private var mAttackTxt:TextField;
+
+      private var mMaterialBack:Quad;
+
+      private var mMaterialTxt:TextField;
+
+      public function RevivalMaterials(aCount:int) : void
+      {
+         if(this.mMaterialTxt == null)
+         {
+            this.mMaterialBack = new Quad(46,26,0);
+            this.mMaterialBack.alpha = 0.7;
+            this.mMaterialBack.x = 17;
+            this.mMaterialBack.y = 17;
+            this.mMaterialBack.touchable = false;
+            this.mMaterialTxt = new TextField(46,26,"",EFonts.HANZEL_BOLD,20,16777215);
+            this.mMaterialTxt.x = 17;
+            this.mMaterialTxt.y = 17;
+            this.mMaterialTxt.touchable = false;
+         }
+         this.mMaterialTxt.text = "x" + aCount;
+         addChild(this.mMaterialBack);
+         addChild(this.mMaterialTxt);
+      }
+"""),
+        ("""         if(IsMonsterCard)
+         {
+            this.mAttackTxt.text = AssociatedCardData.Attack.toString();
+         }
+""", """         if(IsMonsterCard)
+         {
+            this.mAttackTxt.text = AssociatedCardData.Attack.toString();
+         }
+         if(this.mMaterialTxt != null)
+         {
+            addChild(this.mMaterialBack);
+            addChild(this.mMaterialTxt);
+         }
+"""),
+        ("""      override public function dispose() : void
+      {
+         if(this.mFusionIcon != null)""", """      override public function dispose() : void
+      {
+         if(this.mMaterialTxt != null)
+         {
+            this.mMaterialBack.removeFromParent(true);
+            this.mMaterialTxt.removeFromParent(true);
+            this.mMaterialBack = null;
+            this.mMaterialTxt = null;
+         }
+         if(this.mFusionIcon != null)"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.player.gamemat.GameMatBO": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+""" + SUMMON_IMPORT),
+        ("""         this.AddCardToIngredientList(cardBO,aCard2);
+""", """         this.AddCardToIngredientList(cardBO,aCard2);
+         Summon.ShowMaterials(cardBO);
+"""),
     ],
     "com.frimastudio.utils.rendering.card.DetailedCardVisual": [
         ("""   import com.frimastudio.as3ToolKit.display.Log;
@@ -2276,6 +2344,9 @@ SUMMON_EDITS = {
             this.mBackgroundSummon = null;
          }
 """),
+        ("""         this.mCardTypeTxtField.text = cardTypeText;
+""", """         this.mCardTypeTxtField.text = cardTypeText + Summon.TypeSuffix(mCardTemplate != null ? mCardTemplate.id : 0);
+"""),
         ("""               mBackground = this.mBackgroundFusion;""",
          """               mBackground = SummonKind != 0 ? this.SummonBackground() : this.mBackgroundFusion;"""),
         ("""      override protected function DisplayBackground() : void
@@ -2291,6 +2362,13 @@ SUMMON_EDITS = {
             }
             this.mBackgroundSummon = AssetManagerWrapper.GetImage(name);
             this.mBackgroundSummonName = name;
+         }
+         if(this.mBackgroundFusion != null)  // views scale their frames (HalfFullCardVisual: sell menu)
+         {
+            this.mBackgroundSummon.scaleX = this.mBackgroundFusion.scaleX;
+            this.mBackgroundSummon.scaleY = this.mBackgroundFusion.scaleY;
+            this.mBackgroundSummon.x = this.mBackgroundFusion.x;
+            this.mBackgroundSummon.y = this.mBackgroundFusion.y;
          }
          return this.mBackgroundSummon;
       }

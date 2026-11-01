@@ -54,9 +54,9 @@ TEST_SUMMON_CARDS = [  # (id, name, base template, fields)
     (9112, "Stardust Dragon", 262, dict(cardLevel=7, atkStat=2500, defStat=2000, fusionResult=True)),
     (9113, "Black Rose Dragon", 262, dict(cardLevel=7, atkStat=2400, defStat=1800, cardElementId=4, fusionResult=True)),
     # the Xyz copy Tomozaurus (653): "At Round End, your Monster's Power doubles." (material effects below)
-    (9121, "Number 39: Utopia", 653, dict(cardLevel=4, atkStat=1250, defStat=2000, cardElementId=6, cardFamilyId=20,
+    (9121, "Number 39: Utopia", 653, dict(cardLevel=4, atkStat=3000, defStat=2000, cardElementId=6, cardFamilyId=20,
                                           fusionResult=True)),
-    (9122, "Heroic Champion - Excalibur", 653, dict(cardLevel=4, atkStat=1000, defStat=2000, cardElementId=6,
+    (9122, "Heroic Champion - Excalibur", 653, dict(cardLevel=4, atkStat=2500, defStat=2000, cardElementId=6,
                                                     cardFamilyId=20, fusionResult=True)),
 ]
 TEST_SUMMON_SHOP_ITEMS = 3911  # first shop item id; one 1 DP shop entry per test card

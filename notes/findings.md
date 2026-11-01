@@ -2272,3 +2272,16 @@ YGOCardDl.py download), server/game.py result_cards.
   dead result sends its 2 materials to the graveyard.
 - Not verified yet: material effects (cost/needs/perMaterial/attach) in a duel, live duels, AI making Synchro,
   Collection/sell listing of owned results, story map aixyz/aiextra.
+- 2026-11-01 review + second test round:
+  - Fixed: live-duel move now always carries the result (Summon.Result), not only a picker choice: the local phone
+    lists owned results, the other phone all rule results, so a single owned result of two could diverge.
+    perMaterial effects need >= 1 material (a multiply by 0 killed the card). write_summons refuses results without
+    a shop item (CardFiltering drops them from every list). New frames copy the fusion frame's scale/position
+    (HalfFullCardVisual, sell menu, drew a full-size frame). Type line "<type> / Tuner|Synchro|Xyz", Xyz material
+    count "xN" on the duel card (DuelCard.RevivalMaterials; set on summon, material effect, undo).
+  - [VERIFIED emulator] Collection lists owned Synchro (white) / Xyz (black) cards, big preview correct; sell menu
+    lists them; fusion (Thousand-Eyes Idol + monster -> Restrict) still works with the new pairing code.
+  - [VERIFIED two emulators, live friend duel] Synchro picker in a live duel ("Dragon / Synchro" type line), picked
+    Black Rose Dragon, duel to a winner, server: no "out of sync" (checksums and winners agree on both phones).
+  - Not verified yet: material effects in a duel (the test Xyz never survived to round end; friend/arena duels used
+    up for the day), Xyz in a live duel, AI making Synchro, story aixyz/aiextra.

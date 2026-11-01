@@ -317,12 +317,6 @@ package com.revival.summon
          return candidates[0];
       }
 
-      // The pick of a pair, for the live-duel move (0: none stored)
-      public static function Choice(aCard:CardBO) : int
-      {
-         return aCard != null ? int(sChoice[aCard]) : 0;
-      }
-
       // CardLoadingUtil.CardFileListFromCardTemplateIdList (patched): a duel preloads the pictures of its decks' cards
       // and of their fusion results; a result card is created in the round without waiting for its picture. Also
       // load what a card can become: a Tuner's Synchros, the Xyz of its level, and the Xyz of those results' levels.
@@ -364,6 +358,33 @@ package com.revival.summon
             }
          }
          return ids;
+      }
+
+      // Type line of a card view (DetailedCardVisual patch): "Warrior / Tuner", "Dragon / Synchro", "Warrior / Xyz"
+      public static function TypeSuffix(aTemplateId:int) : String
+      {
+         if(IsTuner(aTemplateId))
+         {
+            return " / Tuner";
+         }
+         return Kind(aTemplateId) == SYNCHRO ? " / Synchro" : (Kind(aTemplateId) == XYZ ? " / Xyz" : "");
+      }
+
+      // Material count on an Xyz in the duel (DuelCard.RevivalMaterials, added by tools/as3_patches.py after this
+      // class is compiled). Called when the card is made, when a material effect changes it, and on undo.
+      public static function ShowMaterials(aCard:CardBO) : void
+      {
+         if(aCard == null || Kind(aCard.CardTemplateId) != XYZ)
+         {
+            return;
+         }
+         try
+         {
+            Object(aCard.Skin.FaceUpSkin)["RevivalMaterials"](MaterialCount(aCard));
+         }
+         catch(error:Error)
+         {
+         }
       }
 
       // --- Material effects (summons.json "effects": {"<effect id>": rule}) ---------------------------------------
@@ -411,7 +432,8 @@ package com.revival.summon
          {
             return true;
          }
-         return MaterialCount(EffectCard(aEffect)) >= Math.max(int(rule.needs),int(rule.cost));
+         // perMaterial needs one: with none, a "x materials" amount would be 0 (a multiply would zero the ATK)
+         return MaterialCount(EffectCard(aEffect)) >= Math.max(int(rule.needs),int(rule.cost),rule.perMaterial ? 1 : 0);
       }
 
       // EffectHandler.ResolveEffect (patched): the effect worked; pay its cost / take its materials
@@ -453,6 +475,7 @@ package com.revival.summon
             }
             card.IngredientCardList = list;
          }
+         ShowMaterials(card);
       }
 
       // EffectHandler.ResolveStatModifier / ResolveHealthEffect (patched): the amount, times the materials
