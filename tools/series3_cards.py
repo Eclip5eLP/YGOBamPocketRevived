@@ -16,7 +16,9 @@ Per card (fields of the reviewed data):
   shop           a backorder card shop item (every card list skips cards without one, content_mods.write_summons)
 Synchro rules (content_mods.SUMMONS): from the real material lines: '"Junk Synchron" + ...' only with that Tuner,
 "1 Tuner Synchro Monster + ..." with the Synchro Tuners, anything else with every Tuner; level total = the Synchro's
-level. Fusion monsters get no recipe yet (their materials are not all Series 3 cards).
+level. Fusion recipes (FUSIONS): like the original game, on one material (template fusionData: the other material
+matched by card list, Type or Attribute) with a "FUSION - ..." text row on it; materials that were only Series 1
+cards (Feral Imp, Snakeyashi, Gazelle) have Series 3 copies, Medium Piece Golem is new ("fusion_material" in data).
 """
 
 import copy
@@ -265,6 +267,44 @@ def _synchro_rules(cards, ids, info):
     return rules
 
 
+# result: (material holding the recipe, partner: {"cards": [names]} / {"family": id} / {"element": id}, partner text)
+# Generic real recipes ("1 Dragon Synchro + 1 Warrior") are two cards here: one named Synchro plus the generic partner.
+FUSIONS = {
+    "Rose Spectre of Dunn": ("Snakeyashi", {"cards": ["Feral Imp"]}, "Feral Imp"),
+    "Chimera the Flying Mythical Beast": ("Berfomet", {"cards": ["Gazelle the King of Mythical Beasts"]},
+                                          "Gazelle the King of Mythical Beasts"),
+    "Multiple Piece Golem": ("Big Piece Golem", {"cards": ["Medium Piece Golem"]}, "Medium Piece Golem"),
+    "Ultimate Axon Kicker": ("Psychic Nightmare", {"family": 13}, "a Psychic Monster"),
+    "Supreme Arcanite Magician": ("Arcanite Magician", {"family": 18}, "a Spellcaster"),
+    "Dragon Knight Draco-Equiste": ("Stardust Dragon", {"family": 20}, "a Warrior"),
+    "Trishula, the Dragon of Icy Imprisonment": ("Gungnir, Dragon of the Ice Barrier", {"element": 2},
+                                                 "a WATER Monster"),
+}
+
+
+def _fusions(ctx, rows, ids):
+    templates = {t["id"]: t for t in ctx.ace("config/ace/inventory/item_template.ace")}
+    model = next(t["fusionData"] for t in templates.values() if t.get("fusionData"))
+    next_id = max(t["fusionData"]["id"] for t in templates.values() if t.get("fusionData")) + 1
+    for result, (base, partner, partner_text) in FUSIONS.items():
+        card = templates[ids[base]]
+        if card.get("fusionData"):
+            raise RuntimeError(f"series3: {base} already holds a fusion recipe")
+        data = copy.deepcopy(model)
+        data.update(id=next_id, cardTemplateId=ids[base], resultCardTemplateId=ids[result], ingredientCardTypeId=1,
+                    ingredientElementId=partner.get("element", 0), ingredientFamilyId=partner.get("family", 0),
+                    ingredientCardLevelId=0, ingredientCondition=True,
+                    ingredientCardTemplateList=[ids[n] for n in partner.get("cards", [])])
+        next_id += 1
+        card["fusionData"] = data
+        row = rows.copy(next(m[1] for m in rows.rows if m[0] == "FUSION - MONSTER"))  # text only
+        rows.set_texts(row, f"FUSION - {result}", f"Fuse with {partner_text} to create {result}.")
+        row["displayOrder"] = 0
+        card["effects"].insert(0, row)
+        for order, r in enumerate(card["effects"], 1):
+            r["displayOrder"] = order
+
+
 def build(ctx):
     if not (CARD_PICS / "cardinfo.json").is_file():
         print("  no", CARD_PICS / "cardinfo.json", "- Series 3 cards skipped")
@@ -311,6 +351,7 @@ def build(ctx):
         item.update(id=FIRST_SHOP_ITEM + n, itemTemplateId=template_id, backorder=True,
                     startDate=type(model["startDate"])(cm.SALE_START), endDate=type(model["endDate"])(cm.SALE_END))
         group["shopItem"].append(item)
+    _fusions(ctx, rows, ids)
     for tuner, totals in _synchro_rules(cards, ids, info).items():
         cm.SUMMONS["synchro"].setdefault(tuner, {})
         for total, results in totals.items():

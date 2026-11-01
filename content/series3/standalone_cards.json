@@ -6458,5 +6458,79 @@
   "effect_note": "revives a monster destroyed this turn",
   "single_use": true,
   "rarity": 1
+ },
+ {
+  "id": 41392891,
+  "name": "Feral Imp",
+  "level": 4,
+  "atk": 1300,
+  "def": 1400,
+  "attribute": "DARK",
+  "race": "Fiend",
+  "effects": [
+   "SORROW 500",
+   "SHOCK 1000"
+  ],
+  "effect_note": "Fusion material of Rose Spectre of Dunn; Series 1 card's effects",
+  "rarity": 3,
+  "group": "Standalone",
+  "kind": "Monster",
+  "fusion_material": true,
+  "effect_hints": []
+ },
+ {
+  "id": 29802344,
+  "name": "Snakeyashi",
+  "level": 4,
+  "atk": 1000,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Plant",
+  "effects": [
+   "DRAIN 200",
+   "CRIPPLE ALL 200"
+  ],
+  "effect_note": "Fusion material of Rose Spectre of Dunn (+ Feral Imp); Series 1 card's effects",
+  "rarity": 3,
+  "group": "Standalone",
+  "kind": "Monster",
+  "fusion_material": true,
+  "effect_hints": []
+ },
+ {
+  "id": 5818798,
+  "name": "Gazelle the King of Mythical Beasts",
+  "level": 4,
+  "atk": 1500,
+  "def": 1200,
+  "attribute": "EARTH",
+  "race": "Beast",
+  "effects": [
+   "BOOST ALL EARTH MONSTERS 200"
+  ],
+  "effect_note": "Fusion material of Chimera the Flying Mythical Beast; Series 1 card: EARTH +200",
+  "rarity": 2,
+  "group": "Standalone",
+  "kind": "Monster",
+  "fusion_material": true,
+  "effect_hints": []
+ },
+ {
+  "id": 58843503,
+  "name": "Medium Piece Golem",
+  "level": 4,
+  "atk": 1600,
+  "def": 0,
+  "attribute": "EARTH",
+  "race": "Rock",
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "summons Small Piece Golem next to Big Piece Golem; Fusion material of Multiple Piece Golem",
+  "rarity": 1,
+  "group": "Standalone",
+  "kind": "Monster",
+  "fusion_material": true,
+  "effect_hints": []
  }
 ]

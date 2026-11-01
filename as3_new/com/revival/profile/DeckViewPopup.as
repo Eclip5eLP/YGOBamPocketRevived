@@ -87,12 +87,12 @@ package com.revival.profile
          (QueuedCardLoader as EventDispatcher).addEventListener(QueuedCardLoaderEvent.ON_CARD_LOADED,this.OnCardLoaded);
          if(message)
          {
-            text = new TextField(COLUMNS * CELL,2 * CELL - 20,message,EFonts.HANZEL_BOLD,26,7223);
+            text = new TextField(COLUMNS * CELL,cards.length > 2 * COLUMNS ? CELL - 10 : 2 * CELL - 20,message,EFonts.HANZEL_BOLD,26,7223);
             text.hAlign = HAlign.LEFT;
             text.vAlign = VAlign.TOP;
             text.autoScale = true;
             text.x = GRID_X;
-            text.y = GRID_Y + CELL + 16;
+            text.y = GRID_Y + Math.max(1,Math.ceil(Math.min(cards.length,15) / COLUMNS)) * CELL + 16;  // below the cards (rewards: up to 15)
             text.touchable = false;
             mUiContainer.addChild(text);
          }

@@ -51,7 +51,8 @@ def wait_boot(timeout=180):
 
 def start():
     port = SERIAL.split("-")[-1]
-    subprocess.Popen([str(SDK / "emulator" / "emulator"), "-avd", AVD, "-no-window", "-no-audio", "-no-boot-anim",
+    window = [] if os.environ.get("YGO_EMU_WINDOW") else ["-no-window"]  # YGO_EMU_WINDOW=1: a visible window to play in
+    subprocess.Popen([str(SDK / "emulator" / "emulator"), "-avd", AVD, *window, "-no-audio", "-no-boot-anim",
                       "-gpu", "swiftshader_indirect", "-memory", "4096", "-port", port],
                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     wait_boot()

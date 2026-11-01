@@ -141,6 +141,11 @@ def test_new_effects(ctx):
                "When this Monster is destroyed, its materials are shuffled back into your Deck.",
                rule={"rebirth": True}, trigger="none", resurrect=False)
     SUMMONS["test"]["draw"] = [262, 9101, 473, 317, 317, 319, 9101]
+    if os.environ.get("YGO_SERIES3"):  # picker paging: the test Junk Synchron also makes the real level 7 Synchros
+        import series3_cards
+        cards = series3_cards.load_cards()
+        SUMMONS["synchro"][9101][7] += [series3_cards.FIRST_ID + n for n, c in enumerate(cards)
+                                        if c["kind"] == "Synchro" and c["level"] == 7]
 
 
 def test_starter_deck(ctx):
