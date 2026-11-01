@@ -162,3 +162,34 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
   play deck has 12 cards from other series") and the duel doesn't start. Dev note: a changed package must get a new
   version, or a device that has the same version installed keeps its old files (world 1.1.11, common 1.1.12,
   mappreview 1.1.8 now).
+
+## Owner decisions (2026-11-01, third round)
+
+- World 2's first chapter is numbered **25** (continuing Alba Litora's 1-24).
+- **Series 4** planned as World 2 part 2 (like Tropica City is World 1 part 2).
+- Chosen archetypes for Series 3 + 4 (counts = cards not yet in the game, notes/series3_card_proposal.md):
+
+| Archetype | Cards | Era / summon |
+|---|---|---|
+| Stardust / Junk / Synchron | 75 | 5D's, Synchro |
+| Red Dragon Archfiend (+ Resonators) | 34 | 5D's, Synchro |
+| Black Rose / Rose Dragon | 26 | 5D's, Synchro |
+| Ice Barrier | 42 | 5D's, Synchro |
+| T.G. | 33 | 5D's, Synchro |
+| Koa'ki Meiru | 36 | 5D's (no Synchro) |
+| Utopia / Numbers / ZW | 58 | ZEXAL, Xyz |
+| Photon / Galaxy | 33 | ZEXAL, Xyz |
+| Madolche | 26 | ZEXAL, Xyz |
+| Mermail / Atlantean | 26 | ZEXAL, Xyz |
+| Ghostrick | 37 | ZEXAL, Xyz |
+| Sylvan | 20 | ZEXAL, Xyz |
+
+Proposed split (to confirm): **Series 3 = the six 5D's archetypes (246 cards, Synchro)**, filled to ~570 with
+standalone 5D's-era cards (pool: 28 Synchro, 39 Tuners, 239 monsters, 120 spells, 146 traps). **Series 4 = the six
+ZEXAL archetypes (200 cards, Xyz)**, filled with standalone ZEXAL-era cards (66 Xyz, 17 Synchro, 11 Tuners, 213
+monsters, 91 spells, 107 traps). World 2 part 1 then teaches Synchro, part 2 Xyz, the way Tropica brought Series 2.
+Archetypes need not be taken whole (later prints such as Stardust Sifr Divine Dragon can be left out).
+
+World 2 shape (proposal, mirrors World 1): part 1 = main chapters 25-48 + 8 side chapters (x.1) with Series 3 limit;
+part 2 = 8 main + 7 side chapters with Series 4 limit, opened from part 1 like Tropica opens from Alba Litora 15.
+Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter entry, shop pack art).
