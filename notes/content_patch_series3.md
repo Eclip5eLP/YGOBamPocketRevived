@@ -157,3 +157,8 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
   never checked.
 - Deck covers: art clipped to the window's bevelled bottom (DECK_COVER_WINDOW_SHAPE), bottom band redrawn as the
   original's trapezoid, plate pasted with its own shape only.
+- [VERIFIED emulator] Test chapter with cardSerieLimit 3: the duel popup shows the restriction icons with "Series 3
+  Cards Only" (new text `map/TOOLTIP_CARD_SERIES_LIMITATION_3`); DUEL with a mixed play deck shows our popup ("Your
+  play deck has 12 cards from other series") and the duel doesn't start. Dev note: a changed package must get a new
+  version, or a device that has the same version installed keeps its old files (world 1.1.11, common 1.1.12,
+  mappreview 1.1.8 now).
