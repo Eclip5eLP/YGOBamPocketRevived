@@ -23,7 +23,7 @@ PACKAGE_DIRS = {
     # SERIES3, tools/as3_patches.py). None: no original files to start from.
     "series3": None,
 }
-NEW_CARDS_VERSION = "1.0.1"  # series3 package version: raise it whenever a card picture is added or changed
+NEW_CARDS_VERSION = "1.0.2"  # series3 package version: raise it whenever a card picture is added or changed
 
 
 def free_bam_pro(ctx):

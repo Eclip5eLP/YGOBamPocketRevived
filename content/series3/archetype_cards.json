@@ -14,7 +14,8 @@
    "CRIPPLE 300"
   ],
   "effect_note": "changes an opponent's monster's position as material",
-  "effect_idea": "MATERIAL: CRIPPLE ALL 300"
+  "effect_idea": "MATERIAL: CRIPPLE ALL 300",
+  "rarity": 1
  },
  {
   "id": 86784733,
@@ -31,7 +32,8 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "banishes itself to save your monsters",
-  "effect_idea": "LEVEL UP 1"
+  "effect_idea": "LEVEL UP 1",
+  "rarity": 1
  },
  {
   "id": 9742784,
@@ -48,7 +50,8 @@
    "RESURRECT WARRIOR"
   ],
   "effect_note": "fetches a Junk (Warrior), revives itself",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 1
  },
  {
   "id": 39520293,
@@ -65,7 +68,8 @@
    "IMMUNE"
   ],
   "effect_note": "its Synchro can't be destroyed by battle",
-  "effect_idea": "MATERIAL: IMMUNE"
+  "effect_idea": "MATERIAL: IMMUNE",
+  "rarity": 1
  },
  {
   "id": 56897896,
@@ -82,7 +86,8 @@
    "BOOST ALL LV 1 MONSTERS 300"
   ],
   "effect_note": "other materials count as Level 1",
-  "effect_idea": "LEVEL SET 1"
+  "effect_idea": "LEVEL SET 1",
+  "rarity": 1
  },
  {
   "id": 67270095,
@@ -99,7 +104,8 @@
    "CRIPPLE 300",
    "RAGE 300"
   ],
-  "effect_note": "turns the target to defence; summons when you take damage"
+  "effect_note": "turns the target to defence; summons when you take damage",
+  "rarity": 1
  },
  {
   "id": 15310033,
@@ -115,7 +121,8 @@
   "effects": [
    "COURAGE 500"
   ],
-  "effect_note": "summons itself when you have no monsters"
+  "effect_note": "summons itself when you have no monsters",
+  "rarity": 1
  },
  {
   "id": 77202120,
@@ -132,7 +139,8 @@
    "BOOST 700",
    "BACKFIRE 700"
   ],
-  "effect_note": "summons itself, then you take 700 damage"
+  "effect_note": "summons itself, then you take 700 damage",
+  "rarity": 1
  },
  {
   "id": 19642774,
@@ -149,7 +157,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "as material, summons a Level 2 or lower monster",
-  "effect_idea": "MATERIAL: RESURRECT MONSTER"
+  "effect_idea": "MATERIAL: RESURRECT MONSTER",
+  "rarity": 1
  },
  {
   "id": 25148255,
@@ -165,7 +174,8 @@
   "effects": [
    "RESURRECT WARRIORS"
   ],
-  "effect_note": "revives a Junk monster and Synchros with it"
+  "effect_note": "revives a Junk monster and Synchros with it",
+  "rarity": 1
  },
  {
   "id": 48421595,
@@ -182,7 +192,8 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "+2 Levels; as material, summons a Level 1 Plant",
-  "effect_idea": "LEVEL UP 2"
+  "effect_idea": "LEVEL UP 2",
+  "rarity": 1
  },
  {
   "id": 96182448,
@@ -198,7 +209,8 @@
   "effects": [
    "BOOST 300"
   ],
-  "effect_note": "draws when used for a Nitro Synchro"
+  "effect_note": "draws when used for a Nitro Synchro",
+  "rarity": 1
  },
  {
   "id": 57458399,
@@ -215,7 +227,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "comes out when a monster is revived; becomes Level 4",
-  "effect_idea": "LEVEL SET 4"
+  "effect_idea": "LEVEL SET 4",
+  "rarity": 1
  },
  {
   "id": 56286179,
@@ -231,7 +244,8 @@
   "effects": [
    "SHOCK 400"
   ],
-  "effect_note": "Warriors deal piercing damage"
+  "effect_note": "Warriors deal piercing damage",
+  "rarity": 1
  },
  {
   "id": 1006081,
@@ -248,7 +262,8 @@
    "BOOST 200"
   ],
   "effect_note": "raises or lowers a Junk monster's Level by 1",
-  "effect_idea": "LEVEL UP 1"
+  "effect_idea": "LEVEL UP 1",
+  "rarity": 2
  },
  {
   "id": 63977008,
@@ -264,7 +279,8 @@
   "effects": [
    "RESURRECT LV 5 & LESS MONSTER"
   ],
-  "effect_note": "revives a Level 2 or lower monster"
+  "effect_note": "revives a Level 2 or lower monster",
+  "rarity": 1
  },
  {
   "id": 13021682,
@@ -280,7 +296,8 @@
   "effects": [
    "RESURRECT LV 5 & LESS MONSTER"
   ],
-  "effect_note": "revives itself and a Level 2 or lower monster"
+  "effect_note": "revives itself and a Level 2 or lower monster",
+  "rarity": 1
  },
  {
   "id": 83295594,
@@ -296,7 +313,8 @@
   "effects": [
    "BOOST 400"
   ],
-  "effect_note": "Synchro Summons during the opponent's turn"
+  "effect_note": "Synchro Summons during the opponent's turn",
+  "rarity": 1
  },
  {
   "id": 52840598,
@@ -313,7 +331,8 @@
    "BOOST 600"
   ],
   "effect_note": "its Synchro gains 600 ATK",
-  "effect_idea": "MATERIAL: BOOST 600"
+  "effect_idea": "MATERIAL: BOOST 600",
+  "rarity": 2
  },
  {
   "id": 40348946,
@@ -331,7 +350,8 @@
    "FEEBLE 400"
   ],
   "effect_note": "its Dragon Synchro gains 800 ATK, banished at the End Phase",
-  "effect_idea": "MATERIAL: BOOST 800"
+  "effect_idea": "MATERIAL: BOOST 800",
+  "rarity": 2
  },
  {
   "id": 71971554,
@@ -348,7 +368,8 @@
    "BOOST 300"
   ],
   "effect_note": "Level changes as material and when it attacks",
-  "effect_idea": "LEVEL DOWN 2"
+  "effect_idea": "LEVEL DOWN 2",
+  "rarity": 2
  },
  {
   "id": 37799519,
@@ -364,7 +385,8 @@
   "effects": [
    "RESURRECT SPELL"
   ],
-  "effect_note": "searches a Spell/Trap that mentions Stardust Dragon"
+  "effect_note": "searches a Spell/Trap that mentions Stardust Dragon",
+  "rarity": 2
  },
  {
   "id": 20932152,
@@ -380,7 +402,8 @@
   "effects": [
    "BOOST 700"
   ],
-  "effect_note": "summons itself by discarding a monster"
+  "effect_note": "summons itself by discarding a monster",
+  "rarity": 2
  },
  {
   "id": 38491199,
@@ -396,7 +419,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "negates and destroys a burn card"
+  "effect_note": "negates and destroys a burn card",
+  "rarity": 1
  },
  {
   "id": 80244114,
@@ -414,7 +438,8 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "revives Stardust Dragon when destroyed; protects a Dragon Synchro",
-  "effect_idea": "GUARDIAN"
+  "effect_idea": "GUARDIAN",
+  "rarity": 1
  },
  {
   "id": 91262474,
@@ -430,7 +455,8 @@
   "effects": [
    "RESURRECT DRAGONS"
   ],
-  "effect_note": "summons up to 2 Level 1 LIGHT Dragons"
+  "effect_note": "summons up to 2 Level 1 LIGHT Dragons",
+  "rarity": 1
  },
  {
   "id": 68543408,
@@ -446,7 +472,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "not destroyed by battle once per turn"
+  "effect_note": "not destroyed by battle once per turn",
+  "rarity": 1
  },
  {
   "id": 91215724,
@@ -463,7 +490,8 @@
    "IMMUNE ALL WARRIORS"
   ],
   "effect_note": "your Warrior Synchros can't be targeted",
-  "effect_idea": "IMMUNE ALL SYNCHROS"
+  "effect_idea": "IMMUNE ALL SYNCHROS",
+  "rarity": 2
  },
  {
   "id": 11069680,
@@ -480,7 +508,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "as material, revives a Tuner",
-  "effect_idea": "MATERIAL: RESURRECT MONSTER"
+  "effect_idea": "MATERIAL: RESURRECT MONSTER",
+  "rarity": 1
  },
  {
   "id": 62125438,
@@ -496,7 +525,8 @@
   "effects": [
    "BOOST ALL MACHINES 300"
   ],
-  "effect_note": "extra Synchron summons, makes tokens"
+  "effect_note": "extra Synchron summons, makes tokens",
+  "rarity": 1
  },
  {
   "id": 36643046,
@@ -512,7 +542,8 @@
   "effects": [
    "RESURRECT MACHINES"
   ],
-  "effect_note": "revives a Synchron"
+  "effect_note": "revives a Synchron",
+  "rarity": 1
  },
  {
   "id": 68120130,
@@ -528,7 +559,8 @@
   "effects": [
    "HEAL 300"
   ],
-  "effect_note": "comes out on a direct attack, gains 300 DEF"
+  "effect_note": "comes out on a direct attack, gains 300 DEF",
+  "rarity": 1
  },
  {
   "id": 56410040,
@@ -544,7 +576,8 @@
   "effects": [
    "COURAGE 500"
   ],
-  "effect_note": "summons itself when you have no monsters"
+  "effect_note": "summons itself when you have no monsters",
+  "rarity": 2
  },
  {
   "id": 51855378,
@@ -560,7 +593,8 @@
   "effects": [
    "NECRO BOOST 100"
   ],
-  "effect_note": "banishes Junk from the GY to gain ATK"
+  "effect_note": "banishes Junk from the GY to gain ATK",
+  "rarity": 2
  },
  {
   "id": 43436049,
@@ -577,7 +611,8 @@
    "BREAK IMMUNITY ALL",
    "SELF-DESTRUCT"
   ],
-  "effect_note": "tributes itself to negate all effects"
+  "effect_note": "tributes itself to negate all effects",
+  "rarity": 2
  },
  {
   "id": 73218792,
@@ -594,7 +629,8 @@
    "RESURRECT WARRIOR"
   ],
   "effect_note": "searches a Junk card, lowers Levels",
-  "effect_idea": "LEVEL DOWN 1"
+  "effect_idea": "LEVEL DOWN 1",
+  "rarity": 1
  },
  {
   "id": 78922939,
@@ -610,7 +646,8 @@
   "effects": [
    "BOOST 300"
   ],
-  "effect_note": "summons itself next to a Junk monster"
+  "effect_note": "summons itself next to a Junk monster",
+  "rarity": 2
  },
  {
   "id": 63184227,
@@ -626,7 +663,8 @@
   "effects": [
    "RESURRECT DRAGON"
   ],
-  "effect_note": "revives itself when a monster is tributed"
+  "effect_note": "revives itself when a monster is tributed",
+  "rarity": 1
  },
  {
   "id": 58242947,
@@ -642,7 +680,8 @@
   "effects": [
    "RESURRECT SPELL"
   ],
-  "effect_note": "copies a Trap from the GY"
+  "effect_note": "copies a Trap from the GY",
+  "rarity": 2
  },
  {
   "id": 3121655,
@@ -659,7 +698,8 @@
    "POWER REDISTRIBUTION 800"
   ],
   "effect_note": "from the GY, a Synchro gains 800 ATK",
-  "effect_idea": "BOOST ALL SYNCHROS 800"
+  "effect_idea": "BOOST ALL SYNCHROS 800",
+  "rarity": 3
  },
  {
   "id": 34492631,
@@ -675,7 +715,8 @@
   "effects": [
    "CRIPPLE ALL LV 6 & More MONSTERS 300"
   ],
-  "effect_note": "summons itself against Level 5+ monsters"
+  "effect_note": "summons itself against Level 5+ monsters",
+  "rarity": 3
  },
  {
   "id": 50091196,
@@ -691,7 +732,8 @@
   "effects": [
    "HEAL 500"
   ],
-  "effect_note": "draws a card when Synchro Summoned"
+  "effect_note": "draws a card when Synchro Summoned",
+  "rarity": 2
  },
  {
   "id": 37675907,
@@ -708,7 +750,8 @@
    "GROWTH"
   ],
   "effect_note": "sends Synchrons to the GY to change Level",
-  "effect_idea": "LEVEL UP / LEVEL DOWN"
+  "effect_idea": "LEVEL UP / LEVEL DOWN",
+  "rarity": 3
  },
  {
   "id": 37474917,
@@ -724,7 +767,8 @@
   "effects": [
    "HURT OPPONENT 1000"
   ],
-  "effect_note": "tributes a Junk for damage equal to its ATK"
+  "effect_note": "tributes a Junk for damage equal to its ATK",
+  "rarity": 3
  },
  {
   "id": 60800381,
@@ -741,7 +785,8 @@
    "BOOST 300 +"
   ],
   "effect_note": "gains the ATK of your small monsters (per ally)",
-  "effect_idea": "ON SYNCHRO: BOOST 300 + (per Level 2 or lower ally)"
+  "effect_idea": "ON SYNCHRO: BOOST 300 + (per Level 2 or lower ally)",
+  "rarity": 3
  },
  {
   "id": 37993923,
@@ -758,7 +803,8 @@
    "CRIPPLE 500",
    "REQUIEM 500"
   ],
-  "effect_note": "changes positions, also when it leaves the field"
+  "effect_note": "changes positions, also when it leaves the field",
+  "rarity": 3
  },
  {
   "id": 97792247,
@@ -775,7 +821,8 @@
    "RESURRECT WARRIOR",
    "SHOCK 500"
   ],
-  "effect_note": "revives a Junk; piercing damage"
+  "effect_note": "revives a Junk; piercing damage",
+  "rarity": 3
  },
  {
   "id": 64880894,
@@ -791,7 +838,8 @@
   "effects": [
    "CRIPPLE ALL 300"
   ],
-  "effect_note": "draws; attacks every Special Summoned monster"
+  "effect_note": "draws; attacks every Special Summoned monster",
+  "rarity": 3
  },
  {
   "id": 42810973,
@@ -807,7 +855,8 @@
   "effects": [
    "SNEAK"
   ],
-  "effect_note": "banishes a monster until the End Phase"
+  "effect_note": "banishes a monster until the End Phase",
+  "rarity": 4
  },
  {
   "id": 59771339,
@@ -823,7 +872,8 @@
   "effects": [
    "CRIPPLE 800"
   ],
-  "effect_note": "a monster loses the ATK of a banished Junk"
+  "effect_note": "a monster loses the ATK of a banished Junk",
+  "rarity": 4
  },
  {
   "id": 30983281,
@@ -840,7 +890,8 @@
    "RESURRECT MONSTER",
    "BOOST 500"
   ],
-  "effect_note": "revives a Tuner, becomes Stardust Dragon"
+  "effect_note": "revives a Tuner, becomes Stardust Dragon",
+  "rarity": 4
  },
  {
   "id": 74860293,
@@ -858,7 +909,8 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys a card per non-Tuner material",
-  "effect_idea": "ON SYNCHRO: DESTROY MONSTER (per non-Tuner material)"
+  "effect_idea": "ON SYNCHRO: DESTROY MONSTER (per non-Tuner material)",
+  "rarity": 4
  },
  {
   "id": 16327715,
@@ -875,7 +927,8 @@
    "RESURRECT MONSTERS",
    "DRAIN 300"
   ],
-  "effect_note": "revives small monsters; chains into a Junk Synchro"
+  "effect_note": "revives small monsters; chains into a Junk Synchro",
+  "rarity": 4
  },
  {
   "id": 44508094,
@@ -892,7 +945,8 @@
    "IMMUNE ALL"
   ],
   "effect_note": "tributes itself to stop destruction, returns at the End Phase",
-  "effect_idea": "GUARDIAN + REBIRTH"
+  "effect_idea": "GUARDIAN + REBIRTH",
+  "rarity": 4
  },
  {
   "id": 76636978,
@@ -909,7 +963,8 @@
    "BREAK IMMUNITY ALL",
    "RESURRECT DRAGON"
   ],
-  "effect_note": "negates responses; revives a Stardust"
+  "effect_note": "negates responses; revives a Stardust",
+  "rarity": 4
  },
  {
   "id": 83994433,
@@ -925,7 +980,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "a card you control can't be destroyed once"
+  "effect_note": "a card you control can't be destroyed once",
+  "rarity": 4
  },
  {
   "id": 89474727,
@@ -942,7 +998,8 @@
    "IMMUNE",
    "RESURRECT DRAGON"
   ],
-  "effect_note": "unaffected by effects; revives a banished Dragon Synchro"
+  "effect_note": "unaffected by effects; revives a banished Dragon Synchro",
+  "rarity": 4
  },
  {
   "id": 74892653,
@@ -960,7 +1017,8 @@
    "RESURRECT WARRIOR"
   ],
   "effect_note": "negates a Summon and destroys it, returns at the End Phase",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 4
  },
  {
   "id": 26268488,
@@ -977,7 +1035,8 @@
    "IMMUNE ALL",
    "BREAK IMMUNITY ALL"
   ],
-  "effect_note": "your cards survive destruction once; negates monster effects"
+  "effect_note": "your cards survive destruction once; negates monster effects",
+  "rarity": 4
  },
  {
   "id": 365213,
@@ -994,7 +1053,8 @@
    "BOOST ALL DRAGONS 300"
   ],
   "effect_note": "Stardust support, can't be bounced",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 79068663,
@@ -1012,7 +1072,8 @@
    "HURT OPPONENT 300"
   ],
   "effect_note": "damage when the equipped monster destroys a monster",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 37745919,
@@ -1029,7 +1090,8 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "revives a Morphtronic, destroyed at the End Phase",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 26387390,
@@ -1047,7 +1109,8 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "summons Junk Warrior / Stardust support; protects a Synchro",
-  "single_use": true
+  "single_use": true,
+  "rarity": 2
  },
  {
   "id": 25518020,
@@ -1064,7 +1127,8 @@
    "BOOST ALL MACHINES 200"
   ],
   "effect_note": "Machines gain 200 ATK",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 8529136,
@@ -1082,7 +1146,8 @@
    "IMMUNE"
   ],
   "effect_note": "Junk Warrior: piercing, double damage, not destroyed",
-  "single_use": true
+  "single_use": true,
+  "rarity": 3
  },
  {
   "id": 37750912,
@@ -1100,7 +1165,8 @@
   ],
   "effect_note": "summons a Stardust monster",
   "effect_idea": "LEVEL UP 1 / LEVEL DOWN 1",
-  "single_use": true
+  "single_use": true,
+  "rarity": 2
  },
  {
   "id": 89181369,
@@ -1117,7 +1183,8 @@
    "RESURRECT DRAGONS"
   ],
   "effect_note": "revives a Dragon Synchro from the GY",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 1003840,
@@ -1135,7 +1202,8 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "summons a Synchron; shuffles a card away",
-  "single_use": false
+  "single_use": false,
+  "rarity": 3
  },
  {
   "id": 61032879,
@@ -1153,7 +1221,8 @@
   ],
   "effect_note": "500 damage per Synchro Summon",
   "effect_idea": "ON SYNCHRO SUMMON: HURT OPPONENT 500",
-  "single_use": false
+  "single_use": false,
+  "rarity": 3
  },
  {
   "id": 56294501,
@@ -1170,7 +1239,8 @@
    "HEAL 500"
   ],
   "effect_note": "hides your monsters face-down",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 48497555,
@@ -1188,7 +1258,8 @@
    "RESURRECT WARRIOR"
   ],
   "effect_note": "destroys a face-up Spell/Trap; revives a Junk",
-  "single_use": true
+  "single_use": true,
+  "rarity": 3
  },
  {
   "id": 27196937,
@@ -1205,7 +1276,8 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "revives a Stardust monster",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 13556444,
@@ -1222,7 +1294,8 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "revives monsters destroyed this turn",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 20590784,
@@ -1240,7 +1313,8 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "negates a direct attack, summons a Stardust",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 35129241,
@@ -1258,7 +1332,8 @@
   ],
   "effect_note": "revives a tributed Stardust; it can't be destroyed by battle",
   "effect_idea": "IMMUNE ALL SYNCHROS",
-  "single_use": false
+  "single_use": false,
+  "rarity": 4
  },
  {
   "id": 89127526,
@@ -1275,7 +1350,8 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "discards itself so a Tuner survives battle",
-  "effect_idea": "GUARDIAN"
+  "effect_idea": "GUARDIAN",
+  "rarity": 1
  },
  {
   "id": 13764881,
@@ -1291,7 +1367,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "summons a Resonator while a Synchro is on the field"
+  "effect_note": "summons a Resonator while a Synchro is on the field",
+  "rarity": 1
  },
  {
   "id": 60832978,
@@ -1307,7 +1384,8 @@
   "effects": [
    "BOOST ALL 100"
   ],
-  "effect_note": "makes a monster a Tuner"
+  "effect_note": "makes a monster a Tuner",
+  "rarity": 1
  },
  {
   "id": 40159926,
@@ -1324,7 +1402,8 @@
    "COURAGE 500"
   ],
   "effect_note": "summons itself against Extra Deck monsters, copies their Level",
-  "effect_idea": "LEVEL SET"
+  "effect_idea": "LEVEL SET",
+  "rarity": 1
  },
  {
   "id": 77360173,
@@ -1340,7 +1419,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "summons itself next to a Synchro; fetches a Resonator"
+  "effect_note": "summons itself next to a Synchro; fetches a Resonator",
+  "rarity": 1
  },
  {
   "id": 34761841,
@@ -1356,7 +1436,8 @@
   "effects": [
    "COURAGE 500"
   ],
-  "effect_note": "summons itself when you have no monsters"
+  "effect_note": "summons itself when you have no monsters",
+  "rarity": 1
  },
  {
   "id": 40583194,
@@ -1372,7 +1453,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "your attacker can't be targeted"
+  "effect_note": "your attacker can't be targeted",
+  "rarity": 1
  },
  {
   "id": 40975574,
@@ -1388,7 +1470,8 @@
   "effects": [
    "HEAL 1000"
   ],
-  "effect_note": "gains LP equal to a monster's ATK"
+  "effect_note": "gains LP equal to a monster's ATK",
+  "rarity": 1
  },
  {
   "id": 98396890,
@@ -1404,7 +1487,8 @@
   "effects": [
    "RESURRECT SPELL"
   ],
-  "effect_note": "searches a Red Dragon Archfiend Spell/Trap"
+  "effect_note": "searches a Red Dragon Archfiend Spell/Trap",
+  "rarity": 1
  },
  {
   "id": 77087109,
@@ -1420,7 +1504,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "not destroyed once per turn"
+  "effect_note": "not destroyed once per turn",
+  "rarity": 1
  },
  {
   "id": 5780210,
@@ -1436,7 +1521,8 @@
   "effects": [
    "BOOST 400"
   ],
-  "effect_note": "summons itself next to a Level 8+ Synchro"
+  "effect_note": "summons itself next to a Level 8+ Synchro",
+  "rarity": 1
  },
  {
   "id": 97021916,
@@ -1452,7 +1538,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "not destroyed by battle once per turn"
+  "effect_note": "not destroyed by battle once per turn",
+  "rarity": 1
  },
  {
   "id": 83445539,
@@ -1468,7 +1555,8 @@
   "effects": [
    "BOOST 300"
   ],
-  "effect_note": "summons itself, extra Resonator summon"
+  "effect_note": "summons itself, extra Resonator summon",
+  "rarity": 1
  },
  {
   "id": 13708425,
@@ -1485,7 +1573,8 @@
    "BOOST 300"
   ],
   "effect_note": "its Synchro gains 300 ATK",
-  "effect_idea": "MATERIAL: BOOST 300"
+  "effect_idea": "MATERIAL: BOOST 300",
+  "rarity": 1
  },
  {
   "id": 62991792,
@@ -1503,7 +1592,8 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "searches a Fiend; banishes itself to save a card",
-  "effect_idea": "GUARDIAN"
+  "effect_idea": "GUARDIAN",
+  "rarity": 1
  },
  {
   "id": 45313993,
@@ -1519,7 +1609,8 @@
   "effects": [
    "RAGE 300"
   ],
-  "effect_note": "joins a Resonator summon at half ATK"
+  "effect_note": "joins a Resonator summon at half ATK",
+  "rarity": 2
  },
  {
   "id": 77336644,
@@ -1537,7 +1628,8 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "destroys all other monsters after attacking; revives Red Dragon Archfiend",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 4
  },
  {
   "id": 66141736,
@@ -1554,7 +1646,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "revives a Resonator when Synchro Summoned",
-  "effect_idea": "ON SYNCHRO: RESURRECT MONSTER"
+  "effect_idea": "ON SYNCHRO: RESURRECT MONSTER",
+  "rarity": 3
  },
  {
   "id": 76547525,
@@ -1570,7 +1663,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "destroys the strongest monster"
+  "effect_note": "destroys the strongest monster",
+  "rarity": 3
  },
  {
   "id": 39765958,
@@ -1587,7 +1681,8 @@
    "CRIPPLE ALL 700"
   ],
   "effect_note": "destroys all other Attack Position monsters",
-  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS"
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS",
+  "rarity": 4
  },
  {
   "id": 70902743,
@@ -1604,7 +1699,8 @@
    "DESTROY MONSTER",
    "FEEBLE ALL 300"
   ],
-  "effect_note": "destroys Defense monsters; destroys your monsters that didn't attack"
+  "effect_note": "destroys Defense monsters; destroys your monsters that didn't attack",
+  "rarity": 4
  },
  {
   "id": 80666118,
@@ -1621,7 +1717,8 @@
    "DESTROY MONSTER",
    "HURT OPPONENT 500"
   ],
-  "effect_note": "destroys weaker Special Summoned monsters, 500 each"
+  "effect_note": "destroys weaker Special Summoned monsters, 500 each",
+  "rarity": 4
  },
  {
   "id": 9753964,
@@ -1638,7 +1735,8 @@
    "BREAK IMMUNITY",
    "RESURRECT MONSTER"
   ],
-  "effect_note": "negates a card; revives a Tuner"
+  "effect_note": "negates a card; revives a Tuner",
+  "rarity": 4
  },
  {
   "id": 36857073,
@@ -1655,7 +1753,8 @@
    "RESURRECT DRAGON",
    "DRAIN 300"
   ],
-  "effect_note": "revives Red Dragon Archfiend; summons Tuners on damage"
+  "effect_note": "revives Red Dragon Archfiend; summons Tuners on damage",
+  "rarity": 4
  },
  {
   "id": 67030233,
@@ -1672,7 +1771,8 @@
    "IMMUNE",
    "OSMOSIS 1000"
   ],
-  "effect_note": "not destroyed by effects; takes a monster's ATK"
+  "effect_note": "not destroyed by effects; takes a monster's ATK",
+  "rarity": 4
  },
  {
   "id": 16172067,
@@ -1690,7 +1790,8 @@
    "BREAK IMMUNITY ALL"
   ],
   "effect_note": "destroys all other cards; negates and destroys",
-  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS"
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS",
+  "rarity": 4
  },
  {
   "id": 62242678,
@@ -1708,7 +1809,8 @@
    "HURT OPPONENT 1000"
   ],
   "effect_note": "locks the opponent when Synchro Summoned",
-  "effect_idea": "ON SYNCHRO: BREAK IMMUNITY ALL"
+  "effect_idea": "ON SYNCHRO: BREAK IMMUNITY ALL",
+  "rarity": 4
  },
  {
   "id": 97489701,
@@ -1725,7 +1827,8 @@
    "NECRO BOOST 200",
    "IMMUNE"
   ],
-  "effect_note": "+500 ATK per Tuner in the GY; not destroyed by effects"
+  "effect_note": "+500 ATK per Tuner in the GY; not destroyed by effects",
+  "rarity": 4
  },
  {
   "id": 59593925,
@@ -1743,7 +1846,8 @@
   ],
   "effect_note": "destroys a card each time a Resonator is Synchro material",
   "effect_idea": "ON SYNCHRO SUMMON: DESTROY MONSTER",
-  "single_use": false
+  "single_use": false,
+  "rarity": 3
  },
  {
   "id": 23008320,
@@ -1760,7 +1864,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "searches a Resonator",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 8559524,
@@ -1777,7 +1882,8 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "discards a Resonator, searches a Level 4 Fiend",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 15576074,
@@ -1794,7 +1900,8 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "returns 2 Resonators, searches a Level 4",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 41197012,
@@ -1811,7 +1918,8 @@
    "RESURRECT LV 4 MONSTERS"
   ],
   "effect_note": "revives 2 Resonators next to a Dragon Synchro",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 92936364,
@@ -1829,7 +1937,8 @@
    "BREAK IMMUNITY ALL"
   ],
   "effect_note": "monsters lose ATK and their effects",
-  "single_use": false
+  "single_use": false,
+  "rarity": 3
  },
  {
   "id": 26118970,
@@ -1846,7 +1955,8 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "as material, summons a Rose Dragon",
-  "effect_idea": "MATERIAL: RESURRECT DRAGON"
+  "effect_idea": "MATERIAL: RESURRECT DRAGON",
+  "rarity": 2
  },
  {
   "id": 2986553,
@@ -1862,7 +1972,8 @@
   "effects": [
    "IMMUNE ALL PLANTS"
   ],
-  "effect_note": "Plants can't be attacked; summons a Plant"
+  "effect_note": "Plants can't be attacked; summons a Plant",
+  "rarity": 2
  },
  {
   "id": 1557341,
@@ -1878,7 +1989,8 @@
   "effects": [
    "SHOCK 300"
   ],
-  "effect_note": "300 more damage on battle damage"
+  "effect_note": "300 more damage on battle damage",
+  "rarity": 2
  },
  {
   "id": 17720747,
@@ -1894,7 +2006,8 @@
   "effects": [
    "RESURRECT SPELL"
   ],
-  "effect_note": "draws; destroyed if it's not a monster"
+  "effect_note": "draws; destroyed if it's not a monster",
+  "rarity": 2
  },
  {
   "id": 89252157,
@@ -1910,7 +2023,8 @@
   "effects": [
    "RESURRECT PLANTS"
   ],
-  "effect_note": "banishes itself to summon a Plant"
+  "effect_note": "banishes itself to summon a Plant",
+  "rarity": 1
  },
  {
   "id": 51852507,
@@ -1926,7 +2040,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "negates and destroys a Trap"
+  "effect_note": "negates and destroys a Trap",
+  "rarity": 1
  },
  {
   "id": 44125452,
@@ -1942,7 +2057,8 @@
   "effects": [
    "SOOTHE 300"
   ],
-  "effect_note": "summons itself when searched"
+  "effect_note": "summons itself when searched",
+  "rarity": 1
  },
  {
   "id": 75252099,
@@ -1958,7 +2074,8 @@
   "effects": [
    "RESURRECT PLANTS"
   ],
-  "effect_note": "summons 2 Plant Tuners when destroyed"
+  "effect_note": "summons 2 Plant Tuners when destroyed",
+  "rarity": 2
  },
  {
   "id": 98884569,
@@ -1974,7 +2091,8 @@
   "effects": [
    "RESURRECT DRAGON"
   ],
-  "effect_note": "revives Black Rose Dragon or a Plant when destroyed"
+  "effect_note": "revives Black Rose Dragon or a Plant when destroyed",
+  "rarity": 2
  },
  {
   "id": 12469386,
@@ -1991,7 +2109,8 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "revives itself when a big Plant is destroyed",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 2
  },
  {
   "id": 96385345,
@@ -2007,7 +2126,8 @@
   "effects": [
    "BOOST 400"
   ],
-  "effect_note": "tributes itself for a Plant; searches a big Plant"
+  "effect_note": "tributes itself for a Plant; searches a big Plant",
+  "rarity": 2
  },
  {
   "id": 23087070,
@@ -2023,7 +2143,8 @@
   "effects": [
    "BOOST ALL PLANTS 200"
   ],
-  "effect_note": "counts as 2 Tributes for a Plant"
+  "effect_note": "counts as 2 Tributes for a Plant",
+  "rarity": 2
  },
  {
   "id": 12213463,
@@ -2039,7 +2160,8 @@
   "effects": [
    "RESURRECT DRAGON"
   ],
-  "effect_note": "summons a Rose Dragon"
+  "effect_note": "summons a Rose Dragon",
+  "rarity": 2
  },
  {
   "id": 41160533,
@@ -2055,7 +2177,8 @@
   "effects": [
    "SHOCK 300"
   ],
-  "effect_note": "extra attacks, 300 damage per Plant destroyed"
+  "effect_note": "extra attacks, 300 damage per Plant destroyed",
+  "rarity": 3
  },
  {
   "id": 31986288,
@@ -2071,7 +2194,8 @@
   "effects": [
    "POWER REDISTRIBUTION 600"
   ],
-  "effect_note": "two 1200 ATK tokens when destroyed"
+  "effect_note": "two 1200 ATK tokens when destroyed",
+  "rarity": 1
  },
  {
   "id": 53325667,
@@ -2088,7 +2212,8 @@
    "RESURRECT SPELL",
    "RESURRECT DRAGON"
   ],
-  "effect_note": "searches Black Garden; revives a Dragon Synchro"
+  "effect_note": "searches Black Garden; revives a Dragon Synchro",
+  "rarity": 3
  },
  {
   "id": 4290468,
@@ -2104,7 +2229,8 @@
   "effects": [
    "CRIPPLE 1000"
   ],
-  "effect_note": "halves a monster's ATK"
+  "effect_note": "halves a monster's ATK",
+  "rarity": 3
  },
  {
   "id": 73580471,
@@ -2121,7 +2247,8 @@
    "CRIPPLE ALL 700"
   ],
   "effect_note": "destroys all cards when Synchro Summoned; ATK to 0",
-  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS + SACRIFICE ALL MONSTERS"
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS + SACRIFICE ALL MONSTERS",
+  "rarity": 4
  },
  {
   "id": 33698022,
@@ -2138,7 +2265,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "returns a Special Summoned monster to the hand",
-  "effect_idea": "ON SYNCHRO: DESTROY MONSTER"
+  "effect_idea": "ON SYNCHRO: DESTROY MONSTER",
+  "rarity": 4
  },
  {
   "id": 32485271,
@@ -2154,7 +2282,8 @@
   "effects": [
    "BOOST ALL PLANTS 300"
   ],
-  "effect_note": "no effect (Fusion of Feral Imp + Snakeyashi)"
+  "effect_note": "no effect (Fusion of Feral Imp + Snakeyashi)",
+  "rarity": 3
  },
  {
   "id": 71645242,
@@ -2172,7 +2301,8 @@
    "HEAL OPPONENT 300"
   ],
   "effect_note": "halves summoned monsters' ATK, gives the opponent a token",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 53503015,
@@ -2190,7 +2320,8 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "sends your monster to the GY to draw or search",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 45247637,
@@ -2208,7 +2339,8 @@
    "BOOST 800"
   ],
   "effect_note": "takes control of a monster",
-  "single_use": false
+  "single_use": false,
+  "rarity": 4
  },
  {
   "id": 65079854,
@@ -2226,7 +2358,8 @@
    "CRIPPLE 600"
   ],
   "effect_note": "+600 ATK; the attacked monster loses 600",
-  "single_use": false
+  "single_use": false,
+  "rarity": 4
  },
  {
   "id": 84335863,
@@ -2243,7 +2376,8 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "summons a Rose Dragon or Plant when you have no monsters",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 99092624,
@@ -2260,7 +2394,8 @@
    "HEAL 800"
   ],
   "effect_note": "summons 800/800 Rose Tokens",
-  "single_use": true
+  "single_use": true,
+  "rarity": 3
  },
  {
   "id": 70703416,
@@ -2277,7 +2412,8 @@
    "CRIPPLE ALL 500"
   ],
   "effect_note": "opponent's monsters lose 500 ATK/DEF; copies a Level",
-  "effect_idea": "LEVEL SET"
+  "effect_idea": "LEVEL SET",
+  "rarity": 1
  },
  {
   "id": 23950192,
@@ -2291,9 +2427,10 @@
   "race": "Aqua",
   "era_print": true,
   "effects": [
-   "CRIPPLE ALL LV 4 & More MONSTERS 300"
+   "CRIPPLE ALL 300"
   ],
-  "effect_note": "Level 4+ monsters can't attack"
+  "effect_note": "Level 4+ monsters can't attack (the game's level filter matches one exact level)",
+  "rarity": 1
  },
  {
   "id": 90311614,
@@ -2309,7 +2446,8 @@
   "effects": [
    "SHOCK 500"
   ],
-  "effect_note": "attacks directly next to small monsters"
+  "effect_note": "attacks directly next to small monsters",
+  "rarity": 1
  },
  {
   "id": 9396662,
@@ -2326,7 +2464,8 @@
    "BOOST ALL WATER MONSTERS 200"
   ],
   "effect_note": "makes tokens and raises its Level",
-  "effect_idea": "LEVEL UP"
+  "effect_idea": "LEVEL UP",
+  "rarity": 1
  },
  {
   "id": 82498947,
@@ -2342,7 +2481,8 @@
   "effects": [
    "CRIPPLE ALL 400"
   ],
-  "effect_note": "stronger monsters can't attack"
+  "effect_note": "stronger monsters can't attack",
+  "rarity": 1
  },
  {
   "id": 56704140,
@@ -2358,7 +2498,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "can't be attacked by one Attribute"
+  "effect_note": "can't be attacked by one Attribute",
+  "rarity": 1
  },
  {
   "id": 32991027,
@@ -2374,7 +2515,8 @@
   "effects": [
    "BOOST ALL WATER MONSTERS 300"
   ],
-  "effect_note": "locks the opponent's GY; Ice Barrier support"
+  "effect_note": "locks the opponent's GY; Ice Barrier support",
+  "rarity": 3
  },
  {
   "id": 60161788,
@@ -2390,7 +2532,8 @@
   "effects": [
    "FAREWELL 500"
   ],
-  "effect_note": "draws when destroyed by battle"
+  "effect_note": "draws when destroyed by battle",
+  "rarity": 1
  },
  {
   "id": 50088247,
@@ -2406,7 +2549,8 @@
   "effects": [
    "RESURRECT WATER MONSTERS"
   ],
-  "effect_note": "tributes itself to revive an Ice Barrier"
+  "effect_note": "tributes itself to revive an Ice Barrier",
+  "rarity": 1
  },
  {
   "id": 27527047,
@@ -2422,7 +2566,8 @@
   "effects": [
    "IMMUNE ALL WATER MONSTERS"
   ],
-  "effect_note": "Ice Barrier monsters can't be targeted"
+  "effect_note": "Ice Barrier monsters can't be targeted",
+  "rarity": 1
  },
  {
   "id": 43256007,
@@ -2439,7 +2584,8 @@
    "BOOST ALL WATER MONSTERS 200"
   ],
   "effect_note": "summons a big Ice Barrier; lowers a Level by 2",
-  "effect_idea": "LEVEL DOWN 2"
+  "effect_idea": "LEVEL DOWN 2",
+  "rarity": 1
  },
  {
   "id": 38528901,
@@ -2456,7 +2602,8 @@
    "DESTROY MONSTER",
    "SELF-DESTRUCT"
   ],
-  "effect_note": "tributes itself to destroy a WATER monster"
+  "effect_note": "tributes itself to destroy a WATER monster",
+  "rarity": 2
  },
  {
   "id": 18482591,
@@ -2472,7 +2619,8 @@
   "effects": [
    "BREAK ALL SPELLS IMMUNITY"
   ],
-  "effect_note": "Spells must be Set a turn first"
+  "effect_note": "Spells must be Set a turn first",
+  "rarity": 1
  },
  {
   "id": 59546528,
@@ -2488,7 +2636,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "returns Set Spells/Traps to the hand"
+  "effect_note": "returns Set Spells/Traps to the hand",
+  "rarity": 2
  },
  {
   "id": 53535814,
@@ -2504,7 +2653,8 @@
   "effects": [
    "BLOODLUST 500"
   ],
-  "effect_note": "500 more LP loss when the opponent pays LP"
+  "effect_note": "500 more LP loss when the opponent pays LP",
+  "rarity": 2
  },
  {
   "id": 92065772,
@@ -2520,7 +2670,8 @@
   "effects": [
    "CRIPPLE 300"
   ],
-  "effect_note": "blocks a monster zone"
+  "effect_note": "blocks a monster zone",
+  "rarity": 2
  },
  {
   "id": 20700531,
@@ -2536,7 +2687,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "not destroyed by battle with 1900+ ATK monsters"
+  "effect_note": "not destroyed by battle with 1900+ ATK monsters",
+  "rarity": 2
  },
  {
   "id": 18319762,
@@ -2552,7 +2704,8 @@
   "effects": [
    "RESURRECT WATER MONSTERS"
   ],
-  "effect_note": "summons an Ice Barrier Tuner; stops Tribute Summons"
+  "effect_note": "summons an Ice Barrier Tuner; stops Tribute Summons",
+  "rarity": 2
  },
  {
   "id": 64926005,
@@ -2569,7 +2722,8 @@
    "FRAGILE",
    "FAREWELL 800"
   ],
-  "effect_note": "destroyed and draws when changed to Defense"
+  "effect_note": "destroyed and draws when changed to Defense",
+  "rarity": 2
  },
  {
   "id": 44308317,
@@ -2585,7 +2739,8 @@
   "effects": [
    "CRIPPLE ALL 200"
   ],
-  "effect_note": "locks the opponent's positions"
+  "effect_note": "locks the opponent's positions",
+  "rarity": 2
  },
  {
   "id": 73061465,
@@ -2601,7 +2756,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "Spells can't be activated"
+  "effect_note": "Spells can't be activated",
+  "rarity": 2
  },
  {
   "id": 50032342,
@@ -2617,7 +2773,8 @@
   "effects": [
    "HEAL 500"
   ],
-  "effect_note": "sends an Ice Barrier to draw"
+  "effect_note": "sends an Ice Barrier to draw",
+  "rarity": 2
  },
  {
   "id": 81825063,
@@ -2634,7 +2791,8 @@
    "DESTROY SPELL",
    "SHOCK 400"
   ],
-  "effect_note": "banishes Spells/Traps; extra attacks"
+  "effect_note": "banishes Spells/Traps; extra attacks",
+  "rarity": 3
  },
  {
   "id": 41090784,
@@ -2650,7 +2808,8 @@
   "effects": [
    "IMMUNE ALL WATER MONSTERS"
   ],
-  "effect_note": "Ice Barrier monsters survive Spells/Traps"
+  "effect_note": "Ice Barrier monsters survive Spells/Traps",
+  "rarity": 3
  },
  {
   "id": 81275309,
@@ -2666,7 +2825,8 @@
   "effects": [
    "BREAK IMMUNITY ALL"
   ],
-  "effect_note": "monster effects need a discard or are negated"
+  "effect_note": "monster effects need a discard or are negated",
+  "rarity": 3
  },
  {
   "id": 53921056,
@@ -2682,7 +2842,8 @@
   "effects": [
    "RESURRECT WATER MONSTERS"
   ],
-  "effect_note": "revives an Ice Barrier every End Phase"
+  "effect_note": "revives an Ice Barrier every End Phase",
+  "rarity": 3
  },
  {
   "id": 88494899,
@@ -2698,7 +2859,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "one Spell/Trap per turn for the opponent"
+  "effect_note": "one Spell/Trap per turn for the opponent",
+  "rarity": 3
  },
  {
   "id": 9056100,
@@ -2714,7 +2876,8 @@
   "effects": [
    "BOOST ALL WATER MONSTERS 300"
   ],
-  "effect_note": "extra Ice Barrier summon"
+  "effect_note": "extra Ice Barrier summon",
+  "rarity": 3
  },
  {
   "id": 50321796,
@@ -2731,7 +2894,8 @@
    "DESTROY MONSTER",
    "BACKFIRE 300"
   ],
-  "effect_note": "discards to bounce cards"
+  "effect_note": "discards to bounce cards",
+  "rarity": 3
  },
  {
   "id": 70583986,
@@ -2747,7 +2911,8 @@
   "effects": [
    "BOOST 300 +"
   ],
-  "effect_note": "+500 ATK per card it returns"
+  "effect_note": "+500 ATK per card it returns",
+  "rarity": 3
  },
  {
   "id": 65749035,
@@ -2764,7 +2929,8 @@
    "DESTROY MONSTER",
    "DESTROY SPELL"
   ],
-  "effect_note": "discards up to 2 to destroy up to 2"
+  "effect_note": "discards up to 2 to destroy up to 2",
+  "rarity": 4
  },
  {
   "id": 65424481,
@@ -2781,7 +2947,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "banishes 2 cards when Synchro Summoned",
-  "effect_idea": "ON SYNCHRO: DESTROY MONSTER + DESTROY SPELL"
+  "effect_idea": "ON SYNCHRO: DESTROY MONSTER + DESTROY SPELL",
+  "rarity": 4
  },
  {
   "id": 70980824,
@@ -2799,7 +2966,8 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "banishes 3 cards when Synchro Summoned; brings back Trishula",
-  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS"
+  "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS",
+  "rarity": 4
  },
  {
   "id": 15661378,
@@ -2817,7 +2985,8 @@
    "DESTROY SPELL"
   ],
   "effect_note": "banishes cards when Fusion Summoned",
-  "effect_idea": "ON FUSION: DESTROY MONSTER + DESTROY SPELL"
+  "effect_idea": "ON FUSION: DESTROY MONSTER + DESTROY SPELL",
+  "rarity": 4
  },
  {
   "id": 43582229,
@@ -2835,7 +3004,8 @@
    "IMMUNE ALL WATER MONSTERS"
   ],
   "effect_note": "revives an Ice Barrier; they are unaffected",
-  "single_use": false
+  "single_use": false,
+  "rarity": 4
  },
  {
   "id": 64990807,
@@ -2853,7 +3023,8 @@
    "RESURRECT WATER MONSTERS"
   ],
   "effect_note": "destroys a card and summons an Ice Barrier",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 84206435,
@@ -2870,7 +3041,8 @@
    "RESURRECT AQUA MONSTER"
   ],
   "effect_note": "searches an Ice Barrier",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 10691144,
@@ -2887,7 +3059,8 @@
    "HURT OPPONENT 500"
   ],
   "effect_note": "banishes the opponent's cards back",
-  "single_use": true
+  "single_use": true,
+  "rarity": 2
  },
  {
   "id": 17197110,
@@ -2905,7 +3078,8 @@
    "RESURRECT WATER MONSTERS"
   ],
   "effect_note": "tributes Ice Barriers to summon others",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 35380371,
@@ -2922,7 +3096,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "bounces an Extra Deck monster",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 34293667,
@@ -2940,7 +3115,8 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "attacker's ATK becomes 0, effects negated",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 6075533,
@@ -2958,7 +3134,8 @@
    "DESTROY SPELL"
   ],
   "effect_note": "banishes cards per Ice Barrier Synchro",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 64910482,
@@ -2974,7 +3151,8 @@
   "effects": [
    "RESURRECT MACHINES"
   ],
-  "effect_note": "T.G. Synchros from the hand; searches when destroyed"
+  "effect_note": "T.G. Synchros from the hand; searches when destroyed",
+  "rarity": 1
  },
  {
   "id": 94350039,
@@ -2990,7 +3168,8 @@
   "effects": [
    "BOOST 600"
   ],
-  "effect_note": "summons itself, a T.G. monster loses 1000 ATK"
+  "effect_note": "summons itself, a T.G. monster loses 1000 ATK",
+  "rarity": 1
  },
  {
   "id": 74627016,
@@ -3006,7 +3185,8 @@
   "effects": [
    "BOOST ALL 100"
   ],
-  "effect_note": "leaves a token after a T.G. Synchro"
+  "effect_note": "leaves a token after a T.G. Synchro",
+  "rarity": 1
  },
  {
   "id": 1315120,
@@ -3023,7 +3203,8 @@
    "COURAGE 500"
   ],
   "effect_note": "summons itself when only the opponent has monsters",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 1
  },
  {
   "id": 37300735,
@@ -3040,7 +3221,8 @@
    "HURT OPPONENT 500"
   ],
   "effect_note": "500 damage when used as Synchro material",
-  "effect_idea": "MATERIAL: HURT OPPONENT 500"
+  "effect_idea": "MATERIAL: HURT OPPONENT 500",
+  "rarity": 2
  },
  {
   "id": 11234702,
@@ -3057,7 +3239,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "revives a T.G.; changes a Level by 1",
-  "effect_idea": "LEVEL UP 1"
+  "effect_idea": "LEVEL UP 1",
+  "rarity": 2
  },
  {
   "id": 48633301,
@@ -3074,7 +3257,8 @@
    "BOOST 300"
   ],
   "effect_note": "summons itself next to a T.G.; searches when destroyed",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 1
  },
  {
   "id": 30348744,
@@ -3090,7 +3274,8 @@
   "effects": [
    "SHOCK 500"
   ],
-  "effect_note": "attacks directly"
+  "effect_note": "attacks directly",
+  "rarity": 1
  },
  {
   "id": 77392987,
@@ -3106,7 +3291,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "tributes a T.G. to summon another"
+  "effect_note": "tributes a T.G. to summon another",
+  "rarity": 1
  },
  {
   "id": 64898834,
@@ -3122,7 +3308,8 @@
   "effects": [
    "RESURRECT LV 5 & LESS MONSTER"
   ],
-  "effect_note": "summons a small T.G. Tuner"
+  "effect_note": "summons a small T.G. Tuner",
+  "rarity": 1
  },
  {
   "id": 66733743,
@@ -3139,7 +3326,8 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "banishes itself so a T.G. survives",
-  "effect_idea": "GUARDIAN"
+  "effect_idea": "GUARDIAN",
+  "rarity": 1
  },
  {
   "id": 293542,
@@ -3156,7 +3344,8 @@
    "RAGE 200"
   ],
   "effect_note": "summons itself after a small Special Summon; searches when destroyed",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 1
  },
  {
   "id": 36687247,
@@ -3173,7 +3362,8 @@
    "BOOST 400"
   ],
   "effect_note": "+400 ATK when attacking; searches when destroyed",
-  "effect_idea": "REBIRTH"
+  "effect_idea": "REBIRTH",
+  "rarity": 2
  },
  {
   "id": 32480825,
@@ -3189,7 +3379,8 @@
   "effects": [
    "BOOST 300"
   ],
-  "effect_note": "Synchro Summons during the opponent's turn"
+  "effect_note": "Synchro Summons during the opponent's turn",
+  "rarity": 2
  },
  {
   "id": 62560742,
@@ -3205,7 +3396,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "revives a Synchro's materials"
+  "effect_note": "revives a Synchro's materials",
+  "rarity": 1
  },
  {
   "id": 90953320,
@@ -3222,7 +3414,8 @@
    "HEAL 500"
   ],
   "effect_note": "draws whenever a Synchro is summoned",
-  "effect_idea": "ON SYNCHRO SUMMON: HEAL 500"
+  "effect_idea": "ON SYNCHRO SUMMON: HEAL 500",
+  "rarity": 3
  },
  {
   "id": 68989420,
@@ -3239,7 +3432,8 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "revives T.G. monsters when Synchro Summoned",
-  "effect_idea": "ON SYNCHRO: RESURRECT MONSTERS"
+  "effect_idea": "ON SYNCHRO: RESURRECT MONSTERS",
+  "rarity": 3
  },
  {
   "id": 24943456,
@@ -3256,7 +3450,8 @@
    "SHOCK 400",
    "FAREWELL 500"
   ],
-  "effect_note": "piercing; draws when destroyed"
+  "effect_note": "piercing; draws when destroyed",
+  "rarity": 3
  },
  {
   "id": 99937842,
@@ -3272,7 +3467,8 @@
   "effects": [
    "SOOTHE 500"
   ],
-  "effect_note": "Synchro Summons during the opponent's turn"
+  "effect_note": "Synchro Summons during the opponent's turn",
+  "rarity": 2
  },
  {
   "id": 98558751,
@@ -3290,7 +3486,8 @@
    "FAREWELL 500"
   ],
   "effect_note": "destroys a Spell/Trap when Synchro Summoned; draws when destroyed",
-  "effect_idea": "ON SYNCHRO: DESTROY SPELL"
+  "effect_idea": "ON SYNCHRO: DESTROY SPELL",
+  "rarity": 3
  },
  {
   "id": 63180841,
@@ -3307,7 +3504,8 @@
    "IMMUNE",
    "BREAK IMMUNITY"
   ],
-  "effect_note": "negates targeting effects"
+  "effect_note": "negates targeting effects",
+  "rarity": 4
  },
  {
   "id": 51447164,
@@ -3324,7 +3522,8 @@
    "IMMUNE",
    "DESTROY MONSTER"
   ],
-  "effect_note": "negates Spells/Traps on itself; banishes"
+  "effect_note": "negates Spells/Traps on itself; banishes",
+  "rarity": 4
  },
  {
   "id": 95973569,
@@ -3341,7 +3540,8 @@
    "DESTROY MONSTER",
    "IMMUNE"
   ],
-  "effect_note": "banishes Extra Deck monsters"
+  "effect_note": "banishes Extra Deck monsters",
+  "rarity": 4
  },
  {
   "id": 97836203,
@@ -3358,7 +3558,8 @@
    "SNEAK",
    "IMMUNE"
   ],
-  "effect_note": "negates a Summon and destroys it"
+  "effect_note": "negates a Summon and destroys it",
+  "rarity": 4
  },
  {
   "id": 54573517,
@@ -3375,7 +3576,8 @@
    "BOOST ALL MACHINES 300"
   ],
   "effect_note": "T.G. monsters become Machines; extra summon",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 28189908,
@@ -3392,7 +3594,8 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "searches 2 T.G. monsters",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 11264180,
@@ -3409,7 +3612,8 @@
    "DESTROY SPELL"
   ],
   "effect_note": "halves a T.G. to destroy a Spell/Trap",
-  "single_use": true
+  "single_use": true,
+  "rarity": 2
  },
  {
   "id": 58258899,
@@ -3426,7 +3630,8 @@
    "BOOST ALL 300"
   ],
   "effect_note": "+300 ATK per T.G. monster",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 93138457,
@@ -3444,7 +3649,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "negates an attack, summons a T.G.",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 2339825,
@@ -3462,7 +3668,8 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "negates and destroys",
-  "single_use": true
+  "single_use": true,
+  "rarity": 3
  },
  {
   "id": 40253382,
@@ -3479,7 +3686,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "revives a T.G. Synchro after a battle win",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 76641981,
@@ -3497,7 +3705,8 @@
    "BOOST 800"
   ],
   "effect_note": "switches control of two monsters",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 3868277,
@@ -3514,7 +3723,8 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "shuffles 3 T.G. monsters back, draws 2",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 80925836,
@@ -3531,7 +3741,8 @@
    "FEEBLE 200",
    "CRIPPLE ALL DARK MONSTERS 300"
   ],
-  "effect_note": "core upkeep; negates LIGHT and DARK monster effects"
+  "effect_note": "core upkeep; negates LIGHT and DARK monster effects",
+  "rarity": 2
  },
  {
   "id": 31692182,
@@ -3547,7 +3758,8 @@
   "effects": [
    "BREAK IMMUNITY ALL"
   ],
-  "effect_note": "negates all other monster effects"
+  "effect_note": "negates all other monster effects",
+  "rarity": 2
  },
  {
   "id": 68809475,
@@ -3564,7 +3776,8 @@
    "FEEBLE 200",
    "RESURRECT MACHINES"
   ],
-  "effect_note": "core upkeep; summons itself when you draw a core"
+  "effect_note": "core upkeep; summons itself when you draw a core",
+  "rarity": 2
  },
  {
   "id": 39037517,
@@ -3581,7 +3794,8 @@
    "FEEBLE 300",
    "CRIPPLE ALL DARK MONSTERS 400"
   ],
-  "effect_note": "core upkeep; LIGHT/DARK summons go to Defense"
+  "effect_note": "core upkeep; LIGHT/DARK summons go to Defense",
+  "rarity": 2
  },
  {
   "id": 80367387,
@@ -3598,7 +3812,8 @@
    "FEEBLE 300",
    "SHOCK 500"
   ],
-  "effect_note": "core upkeep; piercing, attacks again"
+  "effect_note": "core upkeep; piercing, attacks again",
+  "rarity": 2
  },
  {
   "id": 32314730,
@@ -3615,7 +3830,8 @@
    "FEEBLE 300",
    "RESURRECT SPELL"
   ],
-  "effect_note": "core upkeep; gets a core back after a battle win"
+  "effect_note": "core upkeep; gets a core back after a battle win",
+  "rarity": 2
  },
  {
   "id": 12435193,
@@ -3632,7 +3848,8 @@
    "FEEBLE 300",
    "BREAK IMMUNITY ALL DARK MONSTERS"
   ],
-  "effect_note": "core upkeep; no LIGHT/DARK Special Summons"
+  "effect_note": "core upkeep; no LIGHT/DARK Special Summons",
+  "rarity": 2
  },
  {
   "id": 41201555,
@@ -3649,7 +3866,8 @@
    "FEEBLE 300",
    "BOOST ALL PLANTS 300"
   ],
-  "effect_note": "core upkeep; Plant support"
+  "effect_note": "core upkeep; Plant support",
+  "rarity": 2
  },
  {
   "id": 54520292,
@@ -3666,7 +3884,8 @@
    "FEEBLE 300",
    "DESTROY MONSTER"
   ],
-  "effect_note": "core upkeep; discards to destroy a Special Summoned monster"
+  "effect_note": "core upkeep; discards to destroy a Special Summoned monster",
+  "rarity": 2
  },
  {
   "id": 14309486,
@@ -3683,7 +3902,8 @@
    "FEEBLE 300",
    "SNEAK"
   ],
-  "effect_note": "core upkeep; tributes itself to stop a Summon"
+  "effect_note": "core upkeep; tributes itself to stop a Summon",
+  "rarity": 2
  },
  {
   "id": 19642889,
@@ -3700,7 +3920,8 @@
    "FEEBLE 300",
    "BREAK IMMUNITY"
   ],
-  "effect_note": "core upkeep; negates LIGHT/DARK monsters it battles"
+  "effect_note": "core upkeep; negates LIGHT/DARK monsters it battles",
+  "rarity": 2
  },
  {
   "id": 74576482,
@@ -3717,7 +3938,8 @@
    "FEEBLE 300",
    "DESTROY SPELL"
   ],
-  "effect_note": "core upkeep; destroys a face-down card"
+  "effect_note": "core upkeep; destroys a face-down card",
+  "rarity": 2
  },
  {
   "id": 80839052,
@@ -3733,7 +3955,8 @@
   "effects": [
    "RESURRECT SPELL"
   ],
-  "effect_note": "searches a core"
+  "effect_note": "searches a core",
+  "rarity": 2
  },
  {
   "id": 95204084,
@@ -3749,7 +3972,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "returns a core to destroy Special Summoned monsters"
+  "effect_note": "returns a core to destroy Special Summoned monsters",
+  "rarity": 2
  },
  {
   "id": 30936186,
@@ -3766,7 +3990,8 @@
    "FEEBLE 300",
    "RESURRECT MONSTER"
   ],
-  "effect_note": "core upkeep; summons a Koa'ki Meiru"
+  "effect_note": "core upkeep; summons a Koa'ki Meiru",
+  "rarity": 2
  },
  {
   "id": 95090813,
@@ -3783,7 +4008,8 @@
    "FEEBLE 200",
    "OSMOSIS 500"
   ],
-  "effect_note": "core upkeep; equips a monster and takes its ATK"
+  "effect_note": "core upkeep; equips a monster and takes its ATK",
+  "rarity": 2
  },
  {
   "id": 5817857,
@@ -3801,7 +4027,8 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "core upkeep; protects Koa'ki Meiru monsters",
-  "effect_idea": "GUARDIAN"
+  "effect_idea": "GUARDIAN",
+  "rarity": 3
  },
  {
   "id": 10060427,
@@ -3818,7 +4045,8 @@
    "FEEBLE 400",
    "DESTROY MONSTER"
   ],
-  "effect_note": "core upkeep; destroys a monster"
+  "effect_note": "core upkeep; destroys a monster",
+  "rarity": 3
  },
  {
   "id": 65026212,
@@ -3835,7 +4063,8 @@
    "FEEBLE 500",
    "DESTROY MONSTER"
   ],
-  "effect_note": "core upkeep; destroys a card each turn"
+  "effect_note": "core upkeep; destroys a card each turn",
+  "rarity": 3
  },
  {
   "id": 72258771,
@@ -3852,7 +4081,8 @@
    "FEEBLE 500",
    "DRAIN 400"
   ],
-  "effect_note": "core upkeep; not destroyed by effects, draws"
+  "effect_note": "core upkeep; not destroyed by effects, draws",
+  "rarity": 3
  },
  {
   "id": 59385322,
@@ -3870,7 +4100,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys LIGHT/DARK monsters it battles",
-  "single_use": false
+  "single_use": false,
+  "rarity": 3
  },
  {
   "id": 13997673,
@@ -3887,7 +4118,8 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "discards to draw 2",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 36560997,
@@ -3904,7 +4136,8 @@
    "BOOST ALL 500"
   ],
   "effect_note": "Koa'ki Meiru monsters gain 500 ATK",
-  "single_use": false
+  "single_use": false,
+  "rarity": 3
  },
  {
   "id": 30770156,
@@ -3921,7 +4154,8 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "discards to search a core",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 81994591,
@@ -3939,7 +4173,8 @@
    "IMMUNE ALL"
   ],
   "effect_note": "searches; Koa'ki Meiru can't be destroyed",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 20457551,
@@ -3956,7 +4191,8 @@
    "CRIPPLE 400"
   ],
   "effect_note": "battling monsters lose Level x 100 ATK",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 63018036,
@@ -3973,7 +4209,8 @@
    "RESURRECT SPELLS"
   ],
   "effect_note": "sends a core to the GY",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 53039326,
@@ -3990,7 +4227,8 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "searches a Koa'ki Meiru when one is destroyed",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 46089249,
@@ -4009,7 +4247,8 @@
    "BACKFIRE 1000"
   ],
   "effect_note": "destroys a monster, both players take 1000",
-  "single_use": true
+  "single_use": true,
+  "rarity": 4
  },
  {
   "id": 99002135,
@@ -4026,7 +4265,8 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "summons a small Koa'ki Meiru",
-  "single_use": true
+  "single_use": true,
+  "rarity": 1
  },
  {
   "id": 58990631,
@@ -4043,7 +4283,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys a summoned 1000+ ATK monster",
-  "single_use": true
+  "single_use": true,
+  "rarity": 2
  },
  {
   "id": 18517177,
@@ -4060,7 +4301,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys cards while the opponent has more monsters",
-  "single_use": false
+  "single_use": false,
+  "rarity": 2
  },
  {
   "id": 8057630,
@@ -4078,7 +4320,8 @@
    "BACKFIRE 500"
   ],
   "effect_note": "revives a Koa'ki Meiru; damage when it is destroyed",
-  "single_use": false
+  "single_use": false,
+  "rarity": 1
  },
  {
   "id": 34545235,
@@ -4095,7 +4338,8 @@
    "DESTROY SPELL"
   ],
   "effect_note": "negates and destroys a Spell/Trap",
-  "single_use": true
+  "single_use": true,
+  "rarity": 2
  },
  {
   "id": 55117418,
@@ -4113,7 +4357,8 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "negates and destroys an effect monster",
-  "single_use": true
+  "single_use": true,
+  "rarity": 3
  },
  {
   "id": 11596936,
@@ -4130,6 +4375,7 @@
    "ANNIHILATE SPELLS"
   ],
   "effect_note": "destroys all face-down Spells/Traps",
-  "single_use": true
+  "single_use": true,
+  "rarity": 3
  }
 ]

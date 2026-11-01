@@ -155,6 +155,10 @@ def main():
             at = mods.index(content_mods.write_summons)  # before write_summons and write_boosterpacks
             mods[at:at] = content_test_mods.MODS
             print("TEST CONTENT included (YGO_TEST_CONTENT)")
+        if os.environ.get("YGO_SERIES3"):  # Series 3 cards (tools/series3_cards.py), until their boosters exist
+            import series3_cards
+            mods.insert(mods.index(content_mods.write_summons), series3_cards.build)
+            print("SERIES 3 cards included (YGO_SERIES3)")
         for mod in mods:
             print("mod:", mod.__name__)
             mod(ctx)

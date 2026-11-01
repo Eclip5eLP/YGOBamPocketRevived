@@ -218,3 +218,17 @@ Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter
   `effects` from existing keywords (new amounts/targets only as copied rows), 92 also an `effect_idea` for an approved
   new effect (notes/new_effects.md todo). Spells use only keywords original spells use. Next: rarities, Synchro/Xyz
   rules (`SUMMONS`) for the real Tuners/Synchros, then building the cards and the new effects.
+- 2026-11-01: Series 3 cards built: `tools/series3_cards.py` (build_content.py with env YGO_SERIES3=1 until the Series 3
+  boosters exist). 577 templates 3001-3577 (archetype cards first, then standalone; append only), real stats,
+  "rarity" (computed once into the data with the Series 2 split per card type: monsters 173/111/88/51, spells
+  46/42/39/27; edit freely), cardScore = Series 2 mean per type+rarity (InstantDeckCreator), spells' selfDestruct
+  from "single_use", effect rows from the reviewed keywords and the approved new effects, art crops (series3
+  package 1.0.2), a backorder card shop item each (30001+), Synchro rules from the real material lines (5134
+  tuner/total/result entries). VERIFIED emulator: granted cards render with art, Series 3 gem, Synchro frame, type
+  line, "Continuous Spell" + stay icon, effect texts.
+  Open: Series 3 booster packs (then drop the env gate); the Summon picker shows at most 4 cards (a generic Tuner can
+  reach more owned Synchros of one level total: needs paging); Fusion monsters (7) have no recipe; Garlandolf and
+  Kasha keep their stand-in effect (ON SUMMON of a Ritual/normal summon has no trigger); a duel with the real cards.
+- Note [VERIFIED TargetRetreiver.RemoveCardAccordingToLevel]: the level target filter keeps only cards of exactly
+  that level, so original keywords like "CRIPPLE ALL LV 6 & More MONSTERS" only hit level 6 (Cryomancer of the Ice
+  Barrier got CRIPPLE ALL 300 instead of a new "LV 4 & More" row).
