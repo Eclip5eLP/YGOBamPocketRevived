@@ -111,3 +111,14 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
   existed; it will now show the first new cover).
 - `add_atlas_frames` accumulates frames per atlas across mods (one page 2 per atlas).
 - Found [VERIFIED code]: `DeckUtil.IsSeriesEnabledForDeck` has no caller (series limits were never enforced).
+- [VERIFIED emulator] Test deck "Synchro Test Deck" (data deck, 1 DP) shows unlocked in Shop > Starter Decks with its
+  composed cover; buying it builds and equips the deck ("Your new starter deck" popup). Series 3 hexagon gem shows in
+  the card preview; Filters > Series lists Series 3 and filters to the 6 Series 3 test cards.
+- Chapter builder `content_mods.add_chapter` (+ `chapter_slots`, `write_world_maps`): a chapter re-uses an existing
+  chapter's layout and background (layouts follow paths drawn into the background art) and fills its duel nodes
+  (deck, portrait, line, DP, AI Synchro/Xyz settings) and treasures; adds story map/node rows, world node, layout and
+  preview files, texts (`map_0NN` section: intro HS01, outro HS12, one line per duel; chapter name; world map info).
+  New world maps get `worldmap<N>.xml` with world 1's background and node places. Test: `content_test_mods
+  .test_world2` (world map 2, chapter 60 on chapter 34's layout).
+- Original data detail [VERIFIED map33_level1.xml]: the series 2 starter deck was handed out as a treasure node of
+  chapter 34 (its 15 cards, node 3), not as a shop purchase.

@@ -13,7 +13,7 @@ import os
 import time
 from pathlib import Path
 
-from content_mods import SALE_END, SALE_START, SUMMONS, add_card, add_starter_deck, compose_deck_cover
+from content_mods import SALE_END, SALE_START, SUMMONS, add_card, add_chapter, add_starter_deck, compose_deck_cover
 
 ROOT = Path(__file__).resolve().parent.parent
 SCANS = Path(os.environ.get("YGO_CARD_SCANS", ROOT / "content" / "card_scans"))
@@ -78,6 +78,7 @@ def test_summons(ctx):
         return
     cards = {}
     for template_id, name, base, fields in TEST_SUMMON_CARDS:
+        fields = dict(fields, cardSerieId=3)  # Series 3 (new rarity gems, Series 3 filter)
         keep_effects = template_id in (9121, 9122)
         cards[template_id] = add_card(ctx, template_id, base, name, _card_picture(name),
                                       **(fields if keep_effects else dict(fields, effects=[])))
@@ -119,4 +120,19 @@ def test_starter_deck(ctx):
     }, compose_deck_cover(Image.open(_card_picture("Stardust Dragon")), hue=210))
 
 
-MODS = [test_new_card, test_summons, test_starter_deck]
+def test_world2(ctx):
+    """World map 2 with one chapter (story map 60) built by content_mods.add_chapter on chapter 34's layout: decks of
+    the Synchro/Xyz test cards, the boss allowed to Xyz, open from the start (unlocked_by 0)."""
+    if not (CARD_PICS / "cardinfo.json").is_file():
+        return
+    synchro = [9101, 9101, 9101, 317, 317, 317, 319, 319, 319, 473, 473, 473, 262, 262, 262]
+    warriors = [317, 317, 317, 319, 319, 319, 473, 473, 473, 317, 319, 473, 317, 319, 473]
+    duels = [{"deck": synchro if n % 2 else warriors, "character": 34, "dp": 500,
+              "text": f"Test duel {n + 1} on World 2!"} for n in range(8)]
+    duels[4].update(text="I am the World 2 test boss. Behold my Xyz!", aixyz=True, dp=800)
+    add_chapter(ctx, 60, 2, layout=34, name="W2-1. Test Chapter", info="Test chapter on World 2",
+                intro="Welcome to World 2. This is a test chapter.", outro="You cleared the World 2 test chapter.",
+                duels=duels, treasures=[[9101, 9101], [9111], [9121], [9122]])
+
+
+MODS = [test_new_card, test_summons, test_starter_deck, test_world2]

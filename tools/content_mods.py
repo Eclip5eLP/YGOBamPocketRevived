@@ -731,6 +731,13 @@ def compose_deck_cover(art, hue):
     side = min(art.width, art.height * w // h2)
     crop = art.crop(((art.width - side) // 2, 0, (art.width + side) // 2, min(art.height, side * h2 // w)))
     cover.paste(crop.convert("RGBA").resize((w, h2), Image.LANCZOS), (left, top))
+    # dark bands behind the "15 Cards" (top) and "Chapter x - y" (bottom) labels, as on the original covers
+    from PIL import ImageDraw
+    shade = Image.new("RGBA", cover.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(shade)
+    d.polygon([(52, 64), (166, 64), (148, 86), (70, 86)], fill=(0, 0, 0, 150))
+    d.polygon([(66, 236), (152, 236), (172, 262), (46, 262)], fill=(0, 0, 0, 150))
+    cover.alpha_composite(shade)
     cover.alpha_composite(_plate(base, shift), DECK_COVER_PLATE[:2])
     return cover
 
@@ -864,6 +871,152 @@ def add_starter_deck(ctx, deck, cover):
                              "worth": deck.get("worth", 0), "quest": deck.get("quest", 0)})
 
 
+WORLD_VERSION = "1.1.10"       # world package (original 1.1.9): layouts of new chapters and world maps
+MAPPREVIEW_VERSION = "1.1.7"   # mappreview package (original 1.1.6): chapter preview pictures
+WORLDMAP_DIR = "config/ace/worldmap/"
+
+
+def chapter_slots(base_chapter):
+    """The duel and treasure slots of a story map layout, in node order: [(node name, classname)], for writing the
+    duels/treasures lists of add_chapter (index i of duels fills the i-th DuelNode/BossNode)."""
+    xml = (LOCAL_STORE / f"asset/world/map{base_chapter - 1}_level1.xml").read_text(encoding="utf-8")
+    objs = re.findall(r'<object x="[^"]+" y="[^"]+" name="([^"]+)" classname="([^"]+)">', xml)
+    objs.sort(key=lambda o: int(o[0]) if o[0].isdigit() else 0)
+    return {"duels": [o for o in objs if o[1] in ("DuelNode", "BossNode")],
+            "treasures": [o for o in objs if o[1] == "TreasureNode"]}
+
+
+def add_chapter(ctx, chapter, world_map, layout, name, info, intro, outro, duels, treasures=None,
+                unlocked_by=0, series_limit=0):
+    """A new story chapter on world map `world_map`, re-using the layout, background and node rows of chapter
+    `layout` (layouts are drawn onto their background art, so new ones need new art).
+
+    chapter: new story map template id (49+; its files are map<chapter-1>_level1.xml, map_0<chapter-1> texts).
+    duels: one dict per DuelNode/BossNode of the layout, in node order (chapter_slots(layout)["duels"]):
+      {"deck": [15 template ids], "character": portrait id (mapcharacter_duelcharacterN), "text": opponent line,
+       "dp": coins won, optional "aixyz": True, "aiextra": [Synchro/Xyz ids the AI may make]}.
+    treasures: one card list per TreasureNode (None: keep the layout's treasure contents).
+    intro/outro: chapter story texts (start node / boss node). info: world map node text. name: chapter title.
+    unlocked_by: world node template id whose completion opens this chapter (0: open). series_limit: cardSerieLimit.
+    The world map layout is written by write_world_maps (node k of a new world map at node k's place on world 1)."""
+    a = WORLDMAP_DIR
+    world_nodes, maps, nodes = ctx.ace(a + "worldnodetemplate.ace"), ctx.ace(a + "storymaptemplate.ace"), ctx.ace(a + "storynodetemplate.ace")
+    if any(m["id"] == chapter for m in maps):
+        raise RuntimeError(f"chapter {chapter} exists")
+    slots = chapter_slots(layout)
+    if len(duels) != len(slots["duels"]):
+        raise RuntimeError(f"chapter {chapter}: layout {layout} has {len(slots['duels'])} duels, got {len(duels)}")
+    if treasures is not None and len(treasures) != len(slots["treasures"]):
+        raise RuntimeError(f"chapter {chapter}: layout {layout} has {len(slots['treasures'])} treasures")
+    cards = {i["id"] for i in ctx.ace("config/ace/inventory/item_template.ace")}
+    for d in duels:
+        if len(d["deck"]) != 15 or set(d["deck"]) - cards:
+            raise RuntimeError(f"chapter {chapter}: bad deck {d['deck']}")
+
+    # world node (its place on the world map comes from write_world_maps)
+    world_node_id = max(n["id"] for n in world_nodes) + 1
+    node = copy.deepcopy(world_nodes[0])
+    position = sum(1 for n in world_nodes if n["worldMapTemplateId"] == world_map) + 1
+    node.update(id=world_node_id, worldMapTemplateId=world_map, unlockedByNodeId=unlocked_by,
+                storyMapTemplateId=chapter, locked=bool(unlocked_by), xmlNodeName=position,
+                unlockStartDate=None, unlockEndDate=None)
+    world_nodes.append(node)
+    ctx.__dict__.setdefault("world_maps", {}).setdefault(world_map, []).append(
+        {"node": position, "chapter": chapter, "series": series_limit})
+
+    # story map + node rows (copies of the layout chapter's)
+    base_xml = (LOCAL_STORE / f"asset/world/map{layout - 1}_level1.xml").read_text(encoding="utf-8")
+    xml = base_xml.replace('name="cardSerieLimit" value="0"', f'name="cardSerieLimit" value="{series_limit}"')
+    prefix = f"M{chapter - 1:03d}"
+    texts = {f"{prefix}_HS01": intro, f"{prefix}_HS12": outro}
+    for (node_name, _), d in zip(slots["duels"], duels):
+        key = f"{prefix}_N{int(node_name):03d}"
+        texts[key] = d["text"]
+        props = {"deckid": ",".join(map(str, d["deck"])), "characterid": str(d["character"]), "stringid": key,
+                 "rewardid": "-5", "rewardqt": str(d.get("dp", 500))}
+        if d.get("aixyz"):
+            props["aixyz"] = "1"
+        if d.get("aiextra"):
+            props["aiextra"] = ",".join(map(str, d["aiextra"]))
+        xml = _set_node_props(xml, node_name, props)
+    for (node_name, _), reward in zip(slots["treasures"], treasures or []):
+        xml = _set_node_props(xml, node_name, {"rewardid": ",".join(map(str, reward)),
+                                               "rewardqt": ",".join("1" for _ in reward)})
+    # story texts on the start and boss nodes (the layout's own hudstoryid keys)
+    xml = re.sub(r'name="hudstoryid" value="M\d+_HS01"', f'name="hudstoryid" value="{prefix}_HS01"', xml)
+    xml = re.sub(r'name="hudstoryid" value="M\d+_HS12"', f'name="hudstoryid" value="{prefix}_HS12"', xml)
+    story = copy.deepcopy(next(m for m in maps if m["id"] == layout))
+    story.update(id=chapter, xml=xml)
+    maps.append(story)
+    next_node = max(n["id"] for n in nodes) + 1
+    next_star = max(s["id"] for n in nodes for s in n["storyNodeStarTemplates"]) + 1
+    for base in [n for n in nodes if n["storyMapTemplateId"] == layout]:
+        new = copy.deepcopy(base)
+        new.update(id=next_node, storyMapTemplateId=chapter)
+        for star in new["storyNodeStarTemplates"]:
+            star.update(id=next_star, storyNodeTemplateId=next_node)
+            next_star += 1
+        nodes.append(new)
+        next_node += 1
+    ctx.package_file("world", f"map{chapter - 1}_level1.xml", xml.encode("utf-8"), WORLD_VERSION)
+
+    # preview picture: the layout chapter's (new art: replace this file)
+    pdir = LOCAL_STORE / "asset/misc/mappreview"
+    ctx.package_file("mappreview", f"mappreview_preview{chapter - 1}.png",
+                     (pdir / f"mappreview_preview{layout - 1}.png").read_bytes(), MAPPREVIEW_VERSION)
+    ctx.package_file("mappreview", f"mappreview_preview{chapter - 1}.xml", (
+        f'<TextureAtlas imagePath="mappreview_preview{chapter - 1}.png">\n'
+        f'    <SubTexture name="mappreview_preview{chapter - 1}0000" x="0" y="0" width="150" height="150"/>\n'
+        "</TextureAtlas>\n").encode("utf-8"), MAPPREVIEW_VERSION)
+
+    # texts: a dialogue section per chapter (copy of the layout chapter's section, then our keys)
+    for lang in ("en", "fr"):
+        sections = ctx.ace(f"config/ace/resource/{lang}/localization_section.ace")
+        if not any(s["sectionName"] == f"map_{chapter - 1:03d}" for s in sections):
+            section = copy.deepcopy(next(s for s in sections if s["sectionName"] == f"map_{layout - 1:03d}"))
+            section["sectionName"] = f"map_{chapter - 1:03d}"
+            sections.append(section)
+        for key, text in texts.items():
+            ctx.set_text(lang, f"map_{chapter - 1:03d}", key, text)
+        ctx.set_text(lang, "map", f"WORLD_NODE_INFO_MAP_ID_{chapter - 1}", info)
+        ctx.set_text(lang, "world_map", f"NAME_CHAPTER{chapter - 1}", name)
+    return world_node_id
+
+
+def _set_node_props(xml, node_name, props):
+    """Set properties of the layout object named node_name (adds missing ones)."""
+    m = re.search(rf'(<object [^>]*name="{node_name}" [^>]*>)(.*?)(</object>)', xml, re.S)
+    body = m.group(2)
+    for key, value in props.items():
+        if re.search(rf'name="{key}" value="[^"]*"', body):
+            body = re.sub(rf'name="{key}" value="[^"]*"', f'name="{key}" value="{value}"', body)
+        else:
+            body = body.rstrip() + f'\n        <property name="{key}" value="{value}"/>\n      '
+    return xml[:m.start(2)] + body + xml[m.end(2):]
+
+
+def write_world_maps(ctx):
+    """worldmap<N>.xml for every new world map (WorldMap.CreateContent patch loads it for N > 1): world map 1's
+    background, its first nodes' places, each opening the chapter added for that place."""
+    for world_map, entries in sorted(ctx.__dict__.get("world_maps", {}).items()):
+        if world_map == 1:
+            continue
+        world = (LOCAL_STORE / "asset/world/worldmap.xml").read_text(encoding="utf-8")
+        objects = re.findall(r'\s*<object [^>]*classname="WorldNode">.*?</object>', world, re.S)
+        if len(entries) > len(objects):
+            raise RuntimeError(f"world map {world_map}: {len(entries)} chapters, layout has {len(objects)} places")
+        new_nodes = []
+        for entry, obj in zip(entries, objects):
+            obj = re.sub(r'(name="maptoload" value=")\d+', rf'\g<1>{entry["chapter"]}', obj)
+            obj = re.sub(r'(name="cardSerieLimit" value=")\d+', rf'\g<1>{entry["series"]}', obj)
+            obj = re.sub(r'(name="islock" value=")\d+', rf'\g<1>{0 if entry["node"] == 1 else 1}', obj)
+            new_nodes.append(obj)
+        for obj in objects:
+            world = world.replace(obj, "", 1)
+        world = world.replace('<layer name="Node" type="1">', '<layer name="Node" type="1">' + "".join(new_nodes), 1)
+        ctx.package_file("world", f"worldmap{world_map}.xml", world.encode("utf-8"), WORLD_VERSION)
+
+
 def write_starterdecks(ctx):
     """config/starterdecks.json (EStarterPack.LoadExtraDecks), when a mod added decks."""
     if ctx.starterdecks:
@@ -903,6 +1056,7 @@ MODS = [
     common_frames,
     series3_shop_art,
     write_summons,  # test mods (YGO_TEST_CONTENT) run right before this one (build_content.py)
+    write_world_maps,
     write_starterdecks,
     write_boosterpacks,
 ]
