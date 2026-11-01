@@ -2204,3 +2204,29 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   down. `server/profiles.py` edit_dialog: "Automatic" and the deck in use stay visible, the other decks sit in a
   `<details>` "Your decks (N)" that opens on tap. VERIFIED on the emulator (closed and opened) and by
   tests/test_profile.py. Server only. Deployed to the live server 2026-10-31 (auto-reload, backup of the replaced file in backup-before-1.1.0/).
+
+### 6.68 Card image downloader fixed; full download (2026-11-01)
+
+- Owner's `I:/Users/Dustin/Downloads/cards/dl/YGOCardDl.py` (not in the repo; original kept as `YGOCardDl.py.bak`)
+  [VERIFIED 2026-11-01]: `self.imgapi` now `images.ygoprodeck.com/images/cards/` (the old
+  `storage.googleapis.com/ygoprodeck.com/pics/` host answers 403, 6.55). It also fetches the art-only
+  `cards_cropped/` image into `pics/cropped/`, uses the per-artwork URLs from the API's `card_images` (alternate arts
+  have their own ids), saves the API answer as `pics/cardinfo.json`, writes through a `.part` file (a stopped run
+  leaves no broken image and resumes by skipping existing files), retries 4 times, and checks the JPEG header.
+  Dropped the unused `cv2`/`pkg_resources` imports (`pkg_resources` is deprecated and warns). Usage:
+  `python YGOCardDl.py [ids...] [--no-cropped]`; no ids = every card. Paths are relative to the script, not the cwd.
+- Tested on 89631139 (Blue-Eyes): full 813x1185, cropped 624x624 [VERIFIED]. Full run: the API lists 14653 cards
+  on 2026-11-01; log in `dl/dl.log`.
+
+### 6.69 Synchro and Xyz: research (2026-11-01, nothing changed)
+
+- Full write-up with code paths: `notes/synchro_xyz.md`. Key facts [VERIFIED]: fusion results already keep their
+  two cards in `CardBO.IngredientCardList` (to the graveyard with the result; `GameMatBO.CreateFusionCard`,
+  `AddCardToIngredientList`), and a fusion result can fuse again; live duels send `[slot, card, second card]` and
+  each phone works the result out itself (`PlayerHandBO`, `AwayPlayer.OnBamReadyNotification`; server/livepvp.py
+  passes `slotCard` through); one getter `CardVisual.IsFusionCard` picks the purple frame pictures
+  (`common_duel_fusion_card`, `common_cardtemplate_card_fusion`, `common_fusion_preview_card_background`, ...
+  in `common_all_1`); fusion results can't be owned (`InventoryManagerGame` l.146).
+- Proposal [INFERRED]: no extra deck; rules pick the result (Synchro: Tuner carries a list by level total; Xyz: rank
+  table, same-level pair, materials = the ingredient list). Recoloured frames as a second atlas page. Material
+  effects ("detach") are a new effect kind and the largest piece.
