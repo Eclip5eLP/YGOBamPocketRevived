@@ -2310,3 +2310,8 @@ YGOCardDl.py download), server/game.py result_cards.
   - Test switch: summons.json "test" may carry "AiXyz"/"AiExtra" (Summon.DuelSetting reads them before the duel's
     DuelData), set by YGO_TEST_AI_XYZ=1 in test content, to test AI Xyz without story map progress. The map node path
     (XMLNode.GetDuelData -> DuelData.AiXyz/AiExtra) is verified by code reading only.
+  - [VERIFIED emulator] With the test switch AiXyz on, the AI with only level 4 Warriors summoned Number 39: Utopia
+    (strongest allowed) in round 1 and its material effect ran for the AI (6000, x1, material in the AI graveyard).
+  - [VERIFIED two emulators, live friend duel] Xyz in a live duel: emulator 1 paired Skull Stalker + Ansatsu and
+    picked Heroic Champion - Excalibur; emulator 2 showed the same card with x2 and the same round-end doubling
+    (5000); server log has no "out of sync".
