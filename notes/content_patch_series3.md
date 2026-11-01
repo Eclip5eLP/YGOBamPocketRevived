@@ -193,3 +193,6 @@ Archetypes need not be taken whole (later prints such as Stardust Sifr Divine Dr
 World 2 shape (proposal, mirrors World 1): part 1 = main chapters 25-48 + 8 side chapters (x.1) with Series 3 limit;
 part 2 = 8 main + 7 side chapters with Series 4 limit, opened from part 1 like Tropica opens from Alba Litora 15.
 Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter entry, shop pack art).
+- 2026-11-01: owner confirmed the split (Series 3 = Synchro archetypes, Series 4 = Xyz archetypes). Series 4 support
+  added (enum SERIE_4, rarity frames 16-19 as octagon gems, filter entry, shop pack art frames 3); gems are drawn by
+  `content_mods.series_gem` (Series 3 hexagon, Series 4 octagon). Draft Series 3 list: notes/series3_card_list.md.

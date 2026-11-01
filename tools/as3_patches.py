@@ -2520,8 +2520,8 @@ SUMMON_EDITS = {
 for _cls, _edits in SUMMON_EDITS.items():
     PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
 
-# --- Series 3 (notes/content_patch_series3.md, part A) ---------------------------------------------------------
-# A third card series: enum value, rarity icons (frames 12-15 of common_rarity_all, hexagons drawn by
+# --- Series 3 and 4 (notes/content_patch_series3.md, part A) ---------------------------------------------------------
+# Card series 3 and 4: enum values, rarity icons (frames 12-15 / 16-19 of common_rarity_all, gems drawn by
 # tools/content_mods.py common_frames; frames 8-11 are the Arena crowns, so series 3 can't use the series formula)
 # and the SERIES filter entry. (DeckUtil.IsSeriesEnabledForDeck, the "15 cards of the series" rule, has no caller:
 # the original game never enforced cardSerieLimit; it only shows an icon and filters instant decks.)
@@ -2531,20 +2531,22 @@ SERIES3_EDITS = {
 """, """      public static const SERIE_2:CardSeries = new CardSeries(2,9753995277998,"SERIE_2","Second serie of card");
 
       public static const SERIE_3:CardSeries = new CardSeries(3,0,"SERIE_3","Third serie of card");
+
+      public static const SERIE_4:CardSeries = new CardSeries(4,0,"SERIE_4","Fourth serie of card");
 """),
     ],
     "com.frimastudio.utils.rendering.card.enum.CardRarityUtil": [
         ("""         var rarity:int = Math.max(aRarity - 1,0);
 """, """         var rarity:int = Math.max(aRarity - 1,0);
-         if(aSeries == 3)
+         if(aSeries == 3 || aSeries == 4)
          {
-            return rarity + (NBR_SERIE + 1) * NBR_ICONS_PER_SERIE;
+            return rarity + (aSeries - 2 + NBR_SERIE) * NBR_ICONS_PER_SERIE;
          }
 """),
     ],
     "com.frimastudio.snowstorm.module.filter.enum.EContextMenu": [
         ("""new SubMenuItem("SERIES_2_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_2.Id])));""",
-         """new SubMenuItem("SERIES_2_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_2.Id])),new SubMenuItem("SERIES_3_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_3.Id])));"""),
+         """new SubMenuItem("SERIES_2_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_2.Id])),new SubMenuItem("SERIES_3_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_3.Id])),new SubMenuItem("SERIES_4_FILTER",10,new CardSeriesFilter(new <int>[CardSeries.SERIE_4.Id])));"""),
     ],
 }
 for _cls, _edits in SERIES3_EDITS.items():

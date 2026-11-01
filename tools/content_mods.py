@@ -627,7 +627,7 @@ def card_sources(ctx):
     print(f"  card sources: {len(texts)} card(s) with a source text")
 
 
-COMMON_VERSION = "1.1.12"  # common package (original 1.1.9): raise when its overlay changes
+COMMON_VERSION = "1.1.13"  # common package (original 1.1.9): raise when its overlay changes
 
 # Synchro/Xyz frame colours: the fusion pictures' brightness mapped onto dark..light (common_frames)
 SUMMON_TINTS = {
@@ -669,11 +669,12 @@ def common_frames(ctx):
         frames[f"common_cardtemplate_card_{kind}_0000"] = tint(big, t["frame"], keep_beige=True)
         frames[f"common_{kind}_preview_card_background_0000"] = tint(preview, t["preview"])
         frames[f"common_card_template_bar_bottom_000{n}"] = tint(bar, t["bar"])
-    frames.update(series3_rarity_icons())
+    frames.update(new_series_rarity_icons())
     add_atlas_frames(ctx, "common", "common_all", "asset/list/common/common_list.xml", frames,
                      version=COMMON_VERSION, subdir="common/")
-    for lang, text in (("en", "Series 3"), ("fr", "Série 3")):
-        ctx.set_text(lang, "card_filtering", "SERIES_3_FILTER", text)
+    for series in (3, 4):
+        for lang, word in (("en", "Series"), ("fr", "Série")):
+            ctx.set_text(lang, "card_filtering", f"SERIES_{series}_FILTER", f"{word} {series}")
 
 
 # Series 3 rarity icons, frames 12-15 of common_rarity_all (CardRarityUtil patch): hexagons in the colours of the
@@ -682,8 +683,13 @@ SERIES3_ICON_COLOURS = [("#e8e8ea", "#c4c4c8", "#9a9aa0"), ("#f7a8c6", "#d9628f"
                         ("#a6c8ff", "#4f7ff0", "#2a30bf"), ("#ffe9a0", "#f2c23c", "#b8800f")]
 
 
-def hexagon_gem(size, colours, ring="#ffffff"):
-    """A series 3 gem: white-rimmed hexagon, light top facets, dark bottom facets (size x size, transparent)."""
+# New series gems (rarity icons and shop art): series 3 a hexagon, series 4 an octagon (series 1 = triangle, series 2 =
+# pentagon in the original art)
+SERIES_GEM_SIDES = {3: 6, 4: 8}
+
+
+def series_gem(size, colours, sides=6, ring="#ffffff"):
+    """A white-rimmed gem with `sides` corners, light top facets, dark bottom facets (size x size, transparent)."""
     import math
     from PIL import Image, ImageDraw
     light, mid, dark = colours
@@ -691,13 +697,16 @@ def hexagon_gem(size, colours, ring="#ffffff"):
     img = Image.new("RGBA", (size * scale, size * scale), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     c, r = size * scale / 2, size * scale * 0.48
-    hexagon = [(c + r * math.cos(math.radians(60 * k + 30)), c + r * math.sin(math.radians(60 * k + 30)))
-               for k in range(6)]
-    d.polygon(hexagon, fill=ring)
-    inner = [(c + (x - c) * 0.74, c + (y - c) * 0.74) for x, y in hexagon]
+    turn = 90 if sides == 6 else 90 + 180 / sides  # hexagon: a point at the top; octagon: flat edges
+    outer = [(c + r * math.cos(math.radians(360 * k / sides + turn)), c + r * math.sin(math.radians(360 * k / sides + turn)))
+             for k in range(sides)]
+    d.polygon(outer, fill=ring)
+    inner = [(c + (x - c) * 0.74, c + (y - c) * 0.74) for x, y in outer]
     d.polygon(inner, fill=mid)
-    d.polygon([inner[3], inner[4], inner[5], (c, c)], fill=light)  # top facets
-    d.polygon([inner[0], inner[1], inner[2], (c, c)], fill=dark)   # bottom facets
+    top = [pt for pt in inner if pt[1] <= c + 1]
+    bottom = [pt for pt in inner if pt[1] >= c - 1]
+    d.polygon(sorted(top, key=lambda pt: pt[0]) + [(c, c)], fill=light)
+    d.polygon(sorted(bottom, key=lambda pt: pt[0]) + [(c, c)], fill=dark)
     return img.resize((size, size), Image.LANCZOS)
 
 
@@ -713,19 +722,21 @@ def _sparkle(width, height):
     return corner.resize((width, height))
 
 
-def series3_rarity_icons():
+def new_series_rarity_icons():
+    """Rarity icons of series 3 (frames 12-15 of common_rarity_all) and 4 (16-19); CardRarityUtil patch."""
     from PIL import Image
     icons = {}
-    for n, colours in enumerate(SERIES3_ICON_COLOURS):
-        icon = Image.new("RGBA", (42, 45), (0, 0, 0, 0))
-        icon.alpha_composite(hexagon_gem(32, colours), (4, 12))
-        if n == 3:  # the legend icons carry a sparkle at the top right
-            icon.alpha_composite(_sparkle(22, 20), (42 - 22, 0))
-        icons[f"common_rarity_all_{12 + n:04d}"] = icon
+    for series, first in ((3, 12), (4, 16)):
+        for n, colours in enumerate(SERIES3_ICON_COLOURS):
+            icon = Image.new("RGBA", (42, 45), (0, 0, 0, 0))
+            icon.alpha_composite(series_gem(32, colours, SERIES_GEM_SIDES[series]), (4, 12))
+            if n == 3:  # the legend icons carry a sparkle at the top right
+                icon.alpha_composite(_sparkle(22, 20), (42 - 22, 0))
+            icons[f"common_rarity_all_{first + n:04d}"] = icon
     return icons
 
 
-SHOP_VERSION = "1.1.13"  # shop package (original 1.1.9)
+SHOP_VERSION = "1.1.14"  # shop package (original 1.1.9)
 
 # Starter deck cover (common_starterdeck_covers_NNNN, 219x318, StarterDeck.as:47): the window that shows the monster
 # and the label plate drawn over it, measured on cover 6 (Blue-Eyes)
@@ -780,27 +791,30 @@ def _plate(base, shift):
     return out
 
 
-def series3_shop_art(ctx):
-    """Shop art for series 3 booster packs (frame = series - 1, BuyBoosterPackShopDisplay / ShopCollectionView):
-    shop_booster_rarities_0002 (the four rarity gems, 2x2 like the series 2 frame) and shop_booster_series_icon_0002
-    (the gold laurel badge with a gold hexagon), plus the "Series 3" pack label."""
+def new_series_shop_art(ctx):
+    """Shop art for series 3 and 4 booster packs (frame = series - 1, BuyBoosterPackShopDisplay / ShopCollectionView):
+    shop_booster_rarities_000N (the four rarity gems, 2x2 like the series 2 frame), shop_booster_series_icon_000N (the
+    gold laurel badge with a gold gem), plus the "Series N" pack label."""
     from PIL import Image
     shop = "asset/module/shop"
-    rarities = Image.new("RGBA", (209, 226), (0, 0, 0, 0))
-    for n, colours in enumerate(SERIES3_ICON_COLOURS):  # same grid as series 2's frame: 2 per row
-        rarities.alpha_composite(hexagon_gem(88, colours), (8 + (n % 2) * 112, 10 + (n // 2) * 112))
-    rarities.alpha_composite(_sparkle(40, 36), (165, 116))
-    badge = atlas_frame(shop, "shop_all_1", "shop_booster_series_icon_0001").copy()
-    px = badge.load()
-    for yy in range(badge.height):  # clear the pentagon in the middle, keep the laurels
-        for xx in range(38, 84):
-            px[xx, yy] = (0, 0, 0, 0)
-    badge.alpha_composite(hexagon_gem(48, ("#fff1b0", "#f2c23c", "#b8800f"), ring="#8a5a00"), (37, 4))
-    add_atlas_frames(ctx, "shop", "shop_all", "asset/list/module/shop_list.xml",
-                     {"shop_booster_rarities_0002": rarities, "shop_booster_series_icon_0002": badge},
-                     version=SHOP_VERSION)
-    for lang, text in (("en", "Series 3"), ("fr", "Série 3")):
-        ctx.set_text(lang, "shop", "shop_booster_serie3", text)
+    frames = {}
+    for series in (3, 4):
+        sides = SERIES_GEM_SIDES[series]
+        rarities = Image.new("RGBA", (209, 226), (0, 0, 0, 0))
+        for n, colours in enumerate(SERIES3_ICON_COLOURS):
+            rarities.alpha_composite(series_gem(88, colours, sides), (8 + (n % 2) * 112, 10 + (n // 2) * 112))
+        rarities.alpha_composite(_sparkle(40, 36), (165, 116))
+        badge = atlas_frame(shop, "shop_all_1", "shop_booster_series_icon_0001").copy()
+        px = badge.load()
+        for yy in range(badge.height):  # clear the pentagon in the middle, keep the laurels
+            for xx in range(38, 84):
+                px[xx, yy] = (0, 0, 0, 0)
+        badge.alpha_composite(series_gem(48, ("#fff1b0", "#f2c23c", "#b8800f"), sides, ring="#8a5a00"), (37, 4))
+        frames[f"shop_booster_rarities_{series - 1:04d}"] = rarities
+        frames[f"shop_booster_series_icon_{series - 1:04d}"] = badge
+        for lang, word in (("en", "Series"), ("fr", "Série")):
+            ctx.set_text(lang, "shop", f"shop_booster_serie{series}", f"{word} {series}")
+    add_atlas_frames(ctx, "shop", "shop_all", "asset/list/module/shop_list.xml", frames, version=SHOP_VERSION)
 
 
 # Synchro/Xyz rules, written to config/summons.json (com.revival.summon.Summon):
@@ -1087,7 +1101,7 @@ MODS = [
     profile_icons,
     card_icons,
     common_frames,
-    series3_shop_art,
+    new_series_shop_art,
     write_summons,  # test mods (YGO_TEST_CONTENT) run right before this one (build_content.py)
     write_world_maps,
     write_starterdecks,
