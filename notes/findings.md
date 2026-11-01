@@ -2315,3 +2315,18 @@ YGOCardDl.py download), server/game.py result_cards.
   - [VERIFIED two emulators, live friend duel] Xyz in a live duel: emulator 1 paired Skull Stalker + Ansatsu and
     picked Heroic Champion - Excalibur; emulator 2 showed the same card with x2 and the same round-end doubling
     (5000); server log has no "out of sync".
+
+### 6.71 Effect building blocks for new cards (2026-11-01)
+
+- [VERIFIED work/as3/.../project/inventory/enumeration/CardEffectTypes.as, EffectTriggers.as, TargetTypes.as,
+  Operators.as] An effect row = effect type (58 types) + trigger (30) + target (35) + operator/amount + family/
+  element/level filters + flags; the keyword (BOOST 300) is only the row's name text. Original data uses triggers
+  0-5, 7, 10, 11, 13-15, 18, 19, 24, 26, 27 (counted over item_template.ace).
+- [VERIFIED work/as3/.../round/RoundHandler.as:370, DoFusionLaunch] After CreateFusionCard the game launches
+  CGTriggerEvent.ON_FUSION with the new card as dispatcher; Synchro/Xyz results go through the same code
+  (tools/as3_patches.py, RoundHandler edit). No original row uses trigger 32 (ON_FUSION), so whether a result's
+  own row on that trigger fires is INFERRED (to test). It would give "when Synchro Summoned" effects without code.
+- [VERIFIED item_template.ace] "+" keywords (BOOST 100 +, Common Soul) use effect.friendEffect with
+  friendMultiplierValue/maxNbFriend: the amount grows per allied monster.
+- [VERIFIED grep] CardEffectTypes.COWARDICE_COURAGE (49) has no reference under module/: not implemented.
+- Proposed new effects and which need code: notes/new_effects.md.

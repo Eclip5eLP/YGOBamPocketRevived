@@ -210,3 +210,7 @@ Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter
   mapper suggestions + a hand review of every card, archetype by archetype, written into the card data
   (`content/series3/*.json` gets an `effects` field), then `add_card` builds them.
 - Synchro/Xyz monsters can also get material effects (needs/cost/perMaterial/attach, notes/synchro_xyz.md).
+- 2026-11-01: Stardust / Junk / Synchron reviewed (75 cards): `effects` (existing keywords, 3 new amounts),
+  `effect_note` (the real card in short), `effect_idea` for 26 cards where a proposed new effect fits better.
+  The mapper's picks were mostly wrong for this engine-heavy group (summon/search/level texts), so the review is by
+  hand. Proposed new effects (data-only vs engine code, with their cards): notes/new_effects.md.

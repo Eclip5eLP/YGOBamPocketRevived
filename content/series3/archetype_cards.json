@@ -9,7 +9,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 300"
+  ],
+  "effect_note": "changes an opponent's monster's position as material",
+  "effect_idea": "MATERIAL: CRIPPLE ALL 300"
  },
  {
   "id": 86784733,
@@ -21,7 +26,12 @@
   "def": 100,
   "attribute": "DARK",
   "race": "Cyberse",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "banishes itself to save your monsters",
+  "effect_idea": "LEVEL UP 1"
  },
  {
   "id": 9742784,
@@ -33,7 +43,12 @@
   "def": 0,
   "attribute": "FIRE",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WARRIOR"
+  ],
+  "effect_note": "fetches a Junk (Warrior), revives itself",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 39520293,
@@ -45,7 +60,12 @@
   "def": 100,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "its Synchro can't be destroyed by battle",
+  "effect_idea": "MATERIAL: IMMUNE"
  },
  {
   "id": 56897896,
@@ -57,7 +77,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST ALL LV 1 MONSTERS 300"
+  ],
+  "effect_note": "other materials count as Level 1",
+  "effect_idea": "LEVEL SET 1"
  },
  {
   "id": 67270095,
@@ -69,7 +94,12 @@
   "def": 500,
   "attribute": "WIND",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 300",
+   "RAGE 300"
+  ],
+  "effect_note": "turns the target to defence; summons when you take damage"
  },
  {
   "id": 15310033,
@@ -81,7 +111,11 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "COURAGE 500"
+  ],
+  "effect_note": "summons itself when you have no monsters"
  },
  {
   "id": 77202120,
@@ -93,7 +127,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 700",
+   "BACKFIRE 700"
+  ],
+  "effect_note": "summons itself, then you take 700 damage"
  },
  {
   "id": 19642774,
@@ -105,7 +144,12 @@
   "def": 200,
   "attribute": "LIGHT",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "as material, summons a Level 2 or lower monster",
+  "effect_idea": "MATERIAL: RESURRECT MONSTER"
  },
  {
   "id": 25148255,
@@ -117,7 +161,11 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WARRIORS"
+  ],
+  "effect_note": "revives a Junk monster and Synchros with it"
  },
  {
   "id": 48421595,
@@ -129,7 +177,12 @@
   "def": 400,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "+2 Levels; as material, summons a Level 1 Plant",
+  "effect_idea": "LEVEL UP 2"
  },
  {
   "id": 96182448,
@@ -141,7 +194,12 @@
   "def": 100,
   "attribute": "FIRE",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "draws when used for a Nitro Synchro",
+  "effect_idea": "MATERIAL: DRAW 1"
  },
  {
   "id": 57458399,
@@ -153,7 +211,12 @@
   "def": 100,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "comes out when a monster is revived; becomes Level 4",
+  "effect_idea": "LEVEL SET 4"
  },
  {
   "id": 56286179,
@@ -165,7 +228,12 @@
   "def": 300,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SHOCK 400"
+  ],
+  "effect_note": "Warriors deal piercing damage",
+  "effect_idea": "PIERCE"
  },
  {
   "id": 1006081,
@@ -177,7 +245,12 @@
   "def": 900,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 200"
+  ],
+  "effect_note": "raises or lowers a Junk monster's Level by 1",
+  "effect_idea": "LEVEL UP 1"
  },
  {
   "id": 63977008,
@@ -189,7 +262,11 @@
   "def": 500,
   "attribute": "DARK",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives a Level 2 or lower monster"
  },
  {
   "id": 13021682,
@@ -201,7 +278,11 @@
   "def": 500,
   "attribute": "DARK",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives itself and a Level 2 or lower monster"
  },
  {
   "id": 83295594,
@@ -213,7 +294,11 @@
   "def": 800,
   "attribute": "WATER",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 400"
+  ],
+  "effect_note": "Synchro Summons during the opponent's turn"
  },
  {
   "id": 52840598,
@@ -225,7 +310,12 @@
   "def": 1100,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 600"
+  ],
+  "effect_note": "its Synchro gains 600 ATK",
+  "effect_idea": "MATERIAL: BOOST 600"
  },
  {
   "id": 40348946,
@@ -237,7 +327,13 @@
   "def": 800,
   "attribute": "LIGHT",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 800",
+   "FEEBLE 400"
+  ],
+  "effect_note": "its Dragon Synchro gains 800 ATK, banished at the End Phase",
+  "effect_idea": "MATERIAL: BOOST 800"
  },
  {
   "id": 71971554,
@@ -249,7 +345,12 @@
   "def": 800,
   "attribute": "LIGHT",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "Level changes as material and when it attacks",
+  "effect_idea": "LEVEL DOWN 2"
  },
  {
   "id": 37799519,
@@ -261,7 +362,11 @@
   "def": 1000,
   "attribute": "LIGHT",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "searches a Spell/Trap that mentions Stardust Dragon"
  },
  {
   "id": 20932152,
@@ -273,7 +378,11 @@
   "def": 1400,
   "attribute": "WIND",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 700"
+  ],
+  "effect_note": "summons itself by discarding a monster"
  },
  {
   "id": 38491199,
@@ -285,7 +394,11 @@
   "def": 200,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "negates and destroys a burn card"
  },
  {
   "id": 80244114,
@@ -297,7 +410,12 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT DRAGON",
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "revives Stardust Dragon when destroyed; protects a Dragon Synchro"
  },
  {
   "id": 91262474,
@@ -309,7 +427,11 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT DRAGONS"
+  ],
+  "effect_note": "summons up to 2 Level 1 LIGHT Dragons"
  },
  {
   "id": 68543408,
@@ -321,7 +443,11 @@
   "def": 100,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "not destroyed by battle once per turn"
  },
  {
   "id": 91215724,
@@ -333,7 +459,11 @@
   "def": 1200,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "IMMUNE ALL WARRIORS"
+  ],
+  "effect_note": "your Warrior Synchros can't be targeted"
  },
  {
   "id": 11069680,
@@ -345,7 +475,12 @@
   "def": 200,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "as material, revives a Tuner",
+  "effect_idea": "MATERIAL: RESURRECT MONSTER"
  },
  {
   "id": 62125438,
@@ -357,7 +492,11 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL MACHINES 300"
+  ],
+  "effect_note": "extra Synchron summons, makes tokens"
  },
  {
   "id": 36643046,
@@ -369,7 +508,11 @@
   "def": 700,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "revives a Synchron"
  },
  {
   "id": 68120130,
@@ -381,7 +524,11 @@
   "def": 1800,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HEAL 300"
+  ],
+  "effect_note": "comes out on a direct attack, gains 300 DEF"
  },
  {
   "id": 56410040,
@@ -393,7 +540,11 @@
   "def": 1500,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "COURAGE 500"
+  ],
+  "effect_note": "summons itself when you have no monsters"
  },
  {
   "id": 51855378,
@@ -405,7 +556,11 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "NECRO BOOST 100"
+  ],
+  "effect_note": "banishes Junk from the GY to gain ATK"
  },
  {
   "id": 43436049,
@@ -417,7 +572,12 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "SELF-DESTRUCT"
+  ],
+  "effect_note": "tributes itself to negate all effects"
  },
  {
   "id": 73218792,
@@ -429,7 +589,12 @@
   "def": 2300,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WARRIOR"
+  ],
+  "effect_note": "searches a Junk card, lowers Levels",
+  "effect_idea": "LEVEL DOWN 1"
  },
  {
   "id": 78922939,
@@ -441,7 +606,11 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summons itself next to a Junk monster"
  },
  {
   "id": 63184227,
@@ -453,7 +622,11 @@
   "def": 2000,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "revives itself when a monster is tributed"
  },
  {
   "id": 58242947,
@@ -465,7 +638,11 @@
   "def": 2200,
   "attribute": "LIGHT",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "copies a Trap from the GY"
  },
  {
   "id": 3121655,
@@ -477,7 +654,11 @@
   "def": 1800,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "POWER REDISTRIBUTION 800"
+  ],
+  "effect_note": "from the GY, a Synchro gains 800 ATK"
  },
  {
   "id": 34492631,
@@ -489,7 +670,11 @@
   "def": 2400,
   "attribute": "EARTH",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE ALL LV 6 & More MONSTERS 300"
+  ],
+  "effect_note": "summons itself against Level 5+ monsters"
  },
  {
   "id": 50091196,
@@ -501,7 +686,12 @@
   "def": 1500,
   "attribute": "LIGHT",
   "race": "Machine",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HEAL 500"
+  ],
+  "effect_note": "draws a card when Synchro Summoned",
+  "effect_idea": "ON SYNCHRO: DRAW 1"
  },
  {
   "id": 37675907,
@@ -513,7 +703,11 @@
   "def": 2100,
   "attribute": "DARK",
   "race": "Machine",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "GROWTH"
+  ],
+  "effect_note": "sends Synchrons to the GY to change Level"
  },
  {
   "id": 37474917,
@@ -525,7 +719,11 @@
   "def": 1500,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "tributes a Junk for damage equal to its ATK"
  },
  {
   "id": 60800381,
@@ -537,7 +735,12 @@
   "def": 1300,
   "attribute": "DARK",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 300 +"
+  ],
+  "effect_note": "gains the ATK of your small monsters (per ally)",
+  "effect_idea": "ON SYNCHRO: BOOST per Level 2 or lower ally"
  },
  {
   "id": 37993923,
@@ -549,7 +752,12 @@
   "def": 2600,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE 500",
+   "REQUIEM 500"
+  ],
+  "effect_note": "changes positions, also when it leaves the field"
  },
  {
   "id": 97792247,
@@ -561,7 +769,12 @@
   "def": 1200,
   "attribute": "WIND",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WARRIOR",
+   "SHOCK 500"
+  ],
+  "effect_note": "revives a Junk; piercing damage"
  },
  {
   "id": 64880894,
@@ -573,7 +786,12 @@
   "def": 1300,
   "attribute": "WIND",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "CRIPPLE ALL 300"
+  ],
+  "effect_note": "draws; attacks every Special Summoned monster",
+  "effect_idea": "CLEAVE"
  },
  {
   "id": 42810973,
@@ -585,7 +803,12 @@
   "def": 2000,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "SNEAK"
+  ],
+  "effect_note": "banishes a monster until the End Phase",
+  "effect_idea": "BANISH"
  },
  {
   "id": 59771339,
@@ -597,7 +820,11 @@
   "def": 1800,
   "attribute": "WIND",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 800"
+  ],
+  "effect_note": "a monster loses the ATK of a banished Junk"
  },
  {
   "id": 30983281,
@@ -609,7 +836,12 @@
   "def": 2000,
   "attribute": "WIND",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTER",
+   "BOOST 500"
+  ],
+  "effect_note": "revives a Tuner, becomes Stardust Dragon"
  },
  {
   "id": 74860293,
@@ -621,7 +853,13 @@
   "def": 2500,
   "attribute": "EARTH",
   "race": "Warrior",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "DESTROY MONSTER",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys a card per non-Tuner material",
+  "effect_idea": "ON SYNCHRO: DESTROY per material"
  },
  {
   "id": 16327715,
@@ -633,7 +871,12 @@
   "def": 2300,
   "attribute": "DARK",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTERS",
+   "DRAIN 300"
+  ],
+  "effect_note": "revives small monsters; chains into a Junk Synchro"
  },
  {
   "id": 44508094,
@@ -645,7 +888,12 @@
   "def": 2000,
   "attribute": "WIND",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE ALL"
+  ],
+  "effect_note": "tributes itself to stop destruction, returns at the End Phase",
+  "effect_idea": "GUARDIAN + REBIRTH"
  },
  {
   "id": 76636978,
@@ -657,7 +905,12 @@
   "def": 2000,
   "attribute": "WIND",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "negates responses; revives a Stardust"
  },
  {
   "id": 83994433,
@@ -669,7 +922,11 @@
   "def": 2000,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "a card you control can't be destroyed once"
  },
  {
   "id": 89474727,
@@ -681,7 +938,12 @@
   "def": 2500,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "IMMUNE",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "unaffected by effects; revives a banished Dragon Synchro"
  },
  {
   "id": 74892653,
@@ -693,7 +955,13 @@
   "def": 2500,
   "attribute": "WIND",
   "race": "Warrior",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "SNEAK",
+   "RESURRECT WARRIOR"
+  ],
+  "effect_note": "negates a Summon and destroys it, returns at the End Phase",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 26268488,
@@ -705,7 +973,12 @@
   "def": 4000,
   "attribute": "LIGHT",
   "race": "Dragon",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "IMMUNE ALL",
+   "BREAK IMMUNITY ALL"
+  ],
+  "effect_note": "your cards survive destruction once; negates monster effects"
  },
  {
   "id": 365213,
@@ -717,7 +990,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST ALL DRAGONS 300"
+  ],
+  "effect_note": "Stardust support, can't be bounced"
  },
  {
   "id": 79068663,
@@ -729,7 +1006,12 @@
   "def": null,
   "attribute": null,
   "race": "Equip",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST 400",
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "damage when the equipped monster destroys a monster"
  },
  {
   "id": 37745919,
@@ -741,7 +1023,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "revives a Morphtronic, destroyed at the End Phase"
  },
  {
   "id": 26387390,
@@ -753,7 +1039,12 @@
   "def": null,
   "attribute": null,
   "race": "Quick-Play",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT WARRIOR",
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "summons Junk Warrior / Stardust support; protects a Synchro"
  },
  {
   "id": 25518020,
@@ -765,7 +1056,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "BOOST ALL MACHINES 200"
+  ],
+  "effect_note": "Machines gain 200 ATK"
  },
  {
   "id": 8529136,
@@ -777,7 +1072,12 @@
   "def": null,
   "attribute": null,
   "race": "Quick-Play",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "BOOST 500",
+   "IMMUNE"
+  ],
+  "effect_note": "Junk Warrior: piercing, double damage, not destroyed"
  },
  {
   "id": 37750912,
@@ -789,7 +1089,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "summons a Stardust monster"
  },
  {
   "id": 89181369,
@@ -801,7 +1105,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "RESURRECT DRAGONS"
+  ],
+  "effect_note": "revives a Dragon Synchro from the GY"
  },
  {
   "id": 1003840,
@@ -813,7 +1121,12 @@
   "def": null,
   "attribute": null,
   "race": "Field",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY SPELL",
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "summons a Synchron; shuffles a card away"
  },
  {
   "id": 61032879,
@@ -825,7 +1138,12 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "500 damage per Synchro Summon",
+  "effect_idea": "ON SYNCHRO (any): HURT OPPONENT 500"
  },
  {
   "id": 56294501,
@@ -837,7 +1155,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "HEAL 500"
+  ],
+  "effect_note": "hides your monsters face-down"
  },
  {
   "id": 48497555,
@@ -849,7 +1171,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "DESTROY SPELL",
+   "RESURRECT WARRIOR"
+  ],
+  "effect_note": "destroys a face-up Spell/Trap; revives a Junk"
  },
  {
   "id": 27196937,
@@ -861,7 +1188,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "revives a Stardust monster"
  },
  {
   "id": 13556444,
@@ -873,7 +1204,11 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "revives monsters destroyed this turn"
  },
  {
   "id": 20590784,
@@ -885,7 +1220,12 @@
   "def": null,
   "attribute": null,
   "race": "Normal",
-  "era_print": true
+  "era_print": true,
+  "effects": [
+   "CRIPPLE 800",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "negates a direct attack, summons a Stardust"
  },
  {
   "id": 35129241,
@@ -897,7 +1237,11 @@
   "def": null,
   "attribute": null,
   "race": "Continuous",
-  "era_print": false
+  "era_print": false,
+  "effects": [
+   "IMMUNE ALL DRAGONS"
+  ],
+  "effect_note": "revives a tributed Stardust; it can't be destroyed by battle"
  },
  {
   "id": 89127526,
