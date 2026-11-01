@@ -107,6 +107,17 @@ version check already handles that).
 - **Xyz**: picked by type/attribute match; what happens when several match is still open (section 8).
 - **Material effects** (detach / check materials) are fine to build.
 
+Second round (same day):
+- **No split release**: Synchro and Xyz ship together, in one APK, once everything works.
+- **Picker for both**: when a drop can make more than one result, a picker shows the choices (it plays the role of
+  the extra deck). Also used when a pair could make a Fusion **or** an Xyz/Synchro: the player picks.
+- **Only cards you own** show in the picker, if that doesn't break the game (section 9: it doesn't). So Synchro and
+  Xyz cards are pulled from packs/rewards, but can't go into decks.
+- **No attaching**: dropping a monster on an Xyz never adds a material; only card effects can (new material
+  effects in the duel engine).
+- **Xyz rank = level** (counts as its level when it is material for something else).
+- **Both generic and type/attribute Xyz** exist; the picker handles the choice.
+
 ## 7. Does this need a new APK?
 
 Yes, for both. All duel rules, card frames and the AI live in the game code inside the APK (`MobileGame.swf`,
@@ -164,3 +175,44 @@ B can start as A (no picker) and get the picker later: the rule check is the sam
 4. Does an Xyz count its rank as level when it is the base for a Synchro or another Xyz?
 5. Generic Xyz per rank (every pair works) or only type/attribute Xyz (rare)?
 6. Starter set of cards for Synchro (e.g. 2-3 Tuners, their results per level total).
+
+## 9. Owning Synchro/Xyz cards without putting them in decks: doable
+
+Verdict: **yes, low risk.** The original game was already built for owning fusion results that can't be played
+from the deck: several places skip cards whose template has `fusionResult = true`. Synchro/Xyz cards get the same
+flag (plus a kind), so they inherit all of it.
+
+Already handled by the game (VERIFIED, paths under `work/as3/scripts/com/frimastudio/`):
+
+| Place | Code | Effect for an owned Synchro/Xyz |
+|---|---|---|
+| Card list behind "my cards" filters | `snowstorm/project/inventory/InventoryManagerGame.as` `GetCompleteDifferentFloatingCardList` l.146 | skipped |
+| Instant decks (Attack/Defense/Balanced) | `utils/instantdeck/InstantDeckUtils.as` `CreateUsableCardList` l.37 | skipped |
+| End-of-duel collection count "x/y" | `snowstorm/project/popup/popups/EndGamePopup.as` l.205 | not counted |
+| Collection (revival screen) | `tools/as3_patches.py` `UpdateCollectionList` (~l.1493) via `CardTemplateListUtil.GenerateCardTemplateDataList` | listed with the owned count, owned first; good, that's where you see them |
+
+Needs a change:
+
+| Place | Problem | Fix | Size |
+|---|---|---|---|
+| Deck builder card list | `snowstorm/module/deckbuilder/screens/EditDeckScreen.as` l.274 lists **every** card template with its owned count (`CardTemplateListUtil.GenerateCardTemplateDataList`), no `fusionResult` check: owned Synchro/Xyz could be dragged into a deck (VERIFIED) | drop `fusionResult` templates from that list (one patch) | S |
+| Server "best cards" deck | `server/game.py` `deck_source` (fallback when no deck is set) takes the strongest owned cards (VERIFIED l.385-391): Synchro/Xyz would be picked | skip result cards (template list from content) | S |
+| Server card counts | `server/profiles.py` l.128 `cards_unique` counts all owned cards | fine either way; matches the Collection | none |
+| Sell screen | `snowstorm/module/shop/view/ShopSellView.as` l.219 lists owned cards with the same util: Synchro/Xyz could be sold for coins | owner's call: allow (normal card) or hide | S |
+| Profile picture | `server/profiles.py` `owned_cards` | a Synchro/Xyz you own can be your picture; nothing to do | none |
+| Decks that already contain one | can't happen through the game after the deck builder fix; a hand-edited save would just play it as a normal monster | nothing | none |
+
+In the duel:
+- **Your picker**: the duel can read your inventory (`GameMatBO` has `mInventoryManager`; `InventoryManagerGame
+  .GetCompleteCardList`) VERIFIED. The picker lists results that fit the pair **and** that you own (any copy, in
+  any container). Nothing owned fits: no glow, no summon, as today without a fusion partner.
+- **Live duels**: the other phone doesn't need to know what you own: your choice travels as the 4th placement entry
+  and the other phone only checks that it fits the pair (same rule code). The server passes it through
+  (server/livepvp.py l.218) and could check ownership against your online save if cheating ever matters. INFERRED
+- **AI opponents** (story, arena, friend decks): no inventory of their own; they pick from **all** results that
+  fit (or a per-duel list in the content if that is too strong). INFERRED, owner's call.
+- **Getting them**: normal cards for the loot side: booster loot tables, card shop, Arena/tournament rewards,
+  `cardsources.json` texts ("where to get"). Content only.
+
+So the owner's balance idea works without breaking the deck/collection mechanics: one client patch (deck builder
+list), one server fix (best-cards fallback), and a decision on selling.

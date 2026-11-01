@@ -2236,3 +2236,8 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   content alone [INFERRED]. Card pool: 928 monsters, levels 1-12, level 4 = 97 monsters in 37 type+attribute pairs
   [VERIFIED item_template.ace]. Xyz rules sit on the Xyz cards (rank + optional type/attribute); tie options
   documented (fixed order / player picks / random).
+- 2026-11-01 second round [notes/synchro_xyz.md sections 6 and 9]: one APK for both; picker for Synchro and Xyz,
+  only owned results. Owning cards that can't be put in decks is supported by the original code for
+  `fusionResult` templates (InventoryManagerGame l.146, InstantDeckUtils l.37, EndGamePopup l.205) [VERIFIED];
+  gaps: deck builder list (EditDeckScreen l.274 lists every template with its count) and the server's best-cards
+  fallback deck (server/game.py deck_source) [VERIFIED]; selling them is an open choice (ShopSellView l.219).
