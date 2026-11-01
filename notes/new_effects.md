@@ -78,6 +78,10 @@ Ordered by how many Series 3/4 cards would use them.
   original data: a new amount (BOOST ALL MACHINES 200) or a new target (BOOST ALL PLANTS 200) is a copied row with a
   new modifier or family filter and a new name text; UNKNOWN must not happen.
 
+- Real cards with "?" ATK/DEF (-1 in YGOPRODeck: Greed Quasar, Montage Dragon, Clear Vice Dragon, Kasha, Rai-Jin,
+  Scanner) get fixed stats in the card data (`stats_fixed: true`), chosen from their real effect.
+- Traps become spells and use keywords the original spells use (no SHOCK/SNEAK/OSMOSIS on spells).
+
 ## Review progress
 
 | Group | Cards | Reviewed |
@@ -88,6 +92,6 @@ Ordered by how many Series 3/4 cards would use them.
 | Ice Barrier | 42 | yes (2026-11-01) |
 | T.G. | 33 | yes (2026-11-01) |
 | Koa'ki Meiru | 36 | yes (2026-11-01) |
-| Standalone | 331 | |
+| Standalone | 331 | yes (2026-11-01) |
 
-Archetype cards waiting for an approved new effect (`effect_idea`): ON 16, LEVEL 14, MATERIAL 9, REBIRTH 8, GUARDIAN 6, IMMUNE 2, BOOST 1 (56 cards).
+Series 3 cards waiting for an approved new effect (`effect_idea`, archetype + standalone): LEVEL 27, MATERIAL 20, ON 18, REBIRTH 15, GUARDIAN 8, BOOST 2, IMMUNE 2 (92 of 577 cards).

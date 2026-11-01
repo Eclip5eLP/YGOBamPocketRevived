@@ -12,7 +12,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "SHARED FATE",
+   "PARTING GIFT 1500"
+  ],
+  "effect_note": "destroys its destroyer and burns when destroyed"
  },
  {
   "id": 9012916,
@@ -27,7 +32,11 @@
   "effect_hints": [
    "burn",
    "weaken"
-  ]
+  ],
+  "effects": [
+   "EMPATHY 300"
+  ],
+  "effect_note": "takes effect damage as counters, loses ATK"
  },
  {
   "id": 18013090,
@@ -42,7 +51,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 800"
+  ],
+  "effect_note": "+1000 ATK after you use a Spell"
  },
  {
   "id": 6021033,
@@ -57,7 +70,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "steals a Zombie from the opponent's GY"
  },
  {
   "id": 40529384,
@@ -72,7 +89,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "SNEAK",
+   "SHOCK 1000"
+  ],
+  "effect_note": "destroys a weaker monster it battles and burns"
  },
  {
   "id": 25862681,
@@ -87,7 +109,12 @@
   "effect_hints": [
    "destroy",
    "heal"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL",
+   "HEAL 1000"
+  ],
+  "effect_note": "destroys a Field Spell, gains 1000 LP"
  },
  {
   "id": 31924889,
@@ -102,7 +129,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "+1000 ATK per Spell Counter, removes one to destroy"
  },
  {
   "id": 13574687,
@@ -117,7 +149,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "destroys a monster, burns half its ATK"
  },
  {
   "id": 24696097,
@@ -131,7 +168,13 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SHOCK 1000",
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "attacks up to 5 times; negates destruction",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 96029574,
@@ -145,7 +188,11 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "discards a Gemini to destroy a Spell/Trap"
  },
  {
   "id": 39402797,
@@ -159,7 +206,11 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SHOCK 800"
+  ],
+  "effect_note": "destroys your cards to attack more times"
  },
  {
   "id": 49389523,
@@ -173,7 +224,12 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "brings back Thunder Unicorn or Voltic Bicorn when destroyed",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 32646477,
@@ -187,7 +243,11 @@
   "race": "Machine",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 800"
+  ],
+  "effect_note": "tributes a monster for Level x 200 damage"
  },
  {
   "id": 25132288,
@@ -201,7 +261,12 @@
   "race": "Dragon",
   "effect_hints": [
    "weaken"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 1500",
+   "FEEBLE 500"
+  ],
+  "effect_note": "loses 500, the battled monster loses 1500"
  },
  {
   "id": 33413279,
@@ -215,7 +280,11 @@
   "race": "Spellcaster",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "uses Spell Counters to destroy a Spell/Trap"
  },
  {
   "id": 66818682,
@@ -229,7 +298,12 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HEAL 1000",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "gains LP when attacked; revives Sun Dragon Inti"
  },
  {
   "id": 13995824,
@@ -243,7 +317,12 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 700",
+   "BACKFIRE 700"
+  ],
+  "effect_note": "both players mill 7 when it is destroyed"
  },
  {
   "id": 5309481,
@@ -257,7 +336,12 @@
   "race": "Zombie",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "BOOST ALL ZOMBIES 400"
+  ],
+  "effect_note": "negates monsters destroyed by Zombies"
  },
  {
   "id": 3429238,
@@ -271,7 +355,12 @@
   "race": "Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "SHOCK 1200"
+  ],
+  "effect_note": "halves its ATK to attack directly; returns next turn",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 7582066,
@@ -285,7 +374,11 @@
   "race": "Psychic",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 800"
+  ],
+  "effect_note": "+1000 ATK on a correct guess"
  },
  {
   "id": 63465535,
@@ -299,7 +392,11 @@
   "race": "Insect",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "OSMOSIS 600"
+  ],
+  "effect_note": "equips an opponent's monster"
  },
  {
   "id": 63101919,
@@ -313,7 +410,11 @@
   "race": "Spellcaster",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "500 damage per Spell Counter"
  },
  {
   "id": 77506119,
@@ -327,7 +428,11 @@
   "race": "Beast",
   "effect_hints": [
    "weaken"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 500 +"
+  ],
+  "effect_note": "a monster loses 500 ATK per monster you control"
  },
  {
   "id": 25958491,
@@ -341,7 +446,11 @@
   "race": "Fairy",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "EMPATHY 500"
+  ],
+  "effect_note": "gains or loses the LP difference"
  },
  {
   "id": 25373678,
@@ -355,7 +464,11 @@
   "race": "Winged Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT WINGED BEAST"
+  ],
+  "effect_note": "summons a small Winged Beast when destroyed"
  },
  {
   "id": 46195773,
@@ -367,7 +480,11 @@
   "def": 1500,
   "attribute": "WIND",
   "race": "Warrior",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 1000"
+  ],
+  "effect_note": "halves a big Synchro's ATK"
  },
  {
   "id": 22858242,
@@ -379,7 +496,12 @@
   "def": 1800,
   "attribute": "EARTH",
   "race": "Beast",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 800",
+   "IMMUNE"
+  ],
+  "effect_note": "tributes to negate an attack"
  },
  {
   "id": 45500495,
@@ -391,7 +513,11 @@
   "def": 1800,
   "attribute": "LIGHT",
   "race": "Plant",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "1000 LP per non-Plant summon"
  },
  {
   "id": 96914272,
@@ -407,7 +533,12 @@
    "boost",
    "weaken",
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "takes a Level from a discarded Beast",
+  "effect_idea": "LEVEL SET"
  },
  {
   "id": 6142213,
@@ -423,7 +554,12 @@
    "destroy",
    "burn",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "SHOCK 300"
+  ],
+  "effect_note": "not destroyed attacking, burns half the target's ATK"
  },
  {
   "id": 78275321,
@@ -438,7 +574,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives a Level 5 when destroyed"
  },
  {
   "id": 11747708,
@@ -453,7 +593,12 @@
   "effect_hints": [
    "boost",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "revives itself, adds a Plant's Level",
+  "effect_idea": "LEVEL UP"
  },
  {
   "id": 35448319,
@@ -468,7 +613,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "tributes a Plant to destroy a card"
  },
  {
   "id": 13821299,
@@ -482,7 +631,11 @@
   "race": "Fiend",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "summoned by sending an opponent's Trap to the GY"
  },
  {
   "id": 57568840,
@@ -496,7 +649,12 @@
   "race": "Dragon",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL 100"
+  ],
+  "effect_note": "raises a monster's Level by 1",
+  "effect_idea": "LEVEL UP 1"
  },
  {
   "id": 36107810,
@@ -510,7 +668,11 @@
   "race": "Spellcaster",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "banishes 2 cards from the opponent's GY"
  },
  {
   "id": 19505896,
@@ -524,7 +686,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "a Plant is destroyed in its place"
  },
  {
   "id": 81336148,
@@ -538,7 +704,11 @@
   "race": "Warrior",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL WARRIORS 300"
+  ],
+  "effect_note": "joins after a Warrior's attack"
  },
  {
   "id": 51925772,
@@ -552,7 +722,11 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "searches a small Dragon when destroyed"
  },
  {
   "id": 53623827,
@@ -566,7 +740,12 @@
   "race": "Machine",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL 300"
+  ],
+  "effect_note": "Synchro Monsters gain 600 ATK",
+  "effect_idea": "BOOST ALL SYNCHROS 600"
  },
  {
   "id": 525110,
@@ -580,7 +759,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "summons 2 Inmato when destroyed"
  },
  {
   "id": 83602069,
@@ -594,7 +777,11 @@
   "race": "Warrior",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL WARRIORS 400"
+  ],
+  "effect_note": "Warriors gain 400 ATK"
  },
  {
   "id": 88845345,
@@ -608,7 +795,11 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "returns a banished Beast when destroyed"
  },
  {
   "id": 5519829,
@@ -622,7 +813,13 @@
   "race": "Fairy",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "BACKFIRE 500"
+  ],
+  "effect_note": "pays 500 LP, its Synchro gains 1000 ATK",
+  "effect_idea": "MATERIAL: BOOST 1000"
  },
  {
   "id": 61632317,
@@ -636,7 +833,12 @@
   "race": "Fiend",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys a Spell/Trap for a DARK Synchro",
+  "effect_idea": "MATERIAL: DESTROY SPELL"
  },
  {
   "id": 73837870,
@@ -650,7 +852,12 @@
   "race": "Spellcaster",
   "effect_hints": [
    "heal"
-  ]
+  ],
+  "effects": [
+   "HEAL 1000"
+  ],
+  "effect_note": "gains 1000 LP for a LIGHT Synchro",
+  "effect_idea": "MATERIAL: HEAL 1000"
  },
  {
   "id": 135598,
@@ -664,7 +871,11 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "searches a small Beast when destroyed"
  },
  {
   "id": 31175914,
@@ -678,7 +889,12 @@
   "race": "Warrior",
   "effect_hints": [
    "weaken"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 1000"
+  ],
+  "effect_note": "as material, a monster loses 1000 ATK",
+  "effect_idea": "MATERIAL: CRIPPLE 1000"
  },
  {
   "id": 42685062,
@@ -690,7 +906,11 @@
   "def": 1800,
   "attribute": "EARTH",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "Tribute Summoned with half stats"
  },
  {
   "id": 37953640,
@@ -702,7 +922,11 @@
   "def": 1200,
   "attribute": "WATER",
   "race": "Fish",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL WATER MONSTERS 200"
+  ],
+  "effect_note": "Fish-only Synchros"
  },
  {
   "id": 59575539,
@@ -714,7 +938,12 @@
   "def": 400,
   "attribute": "DARK",
   "race": "Psychic",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE",
+   "BACKFIRE 800"
+  ],
+  "effect_note": "pays 800 LP to negate an attack"
  },
  {
   "id": 76614003,
@@ -726,7 +955,11 @@
   "def": 1300,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "looks at the top card"
  },
  {
   "id": 14943837,
@@ -738,7 +971,11 @@
   "def": 2000,
   "attribute": "WIND",
   "race": "Dragon",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives a 500 or less ATK monster"
  },
  {
   "id": 50702124,
@@ -750,7 +987,11 @@
   "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summons itself after a Synchro Summon"
  },
  {
   "id": 36565699,
@@ -762,7 +1003,11 @@
   "def": 600,
   "attribute": "EARTH",
   "race": "Psychic",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "banishes a card from the opponent's Deck"
  },
  {
   "id": 60410769,
@@ -774,7 +1019,11 @@
   "def": 900,
   "attribute": "EARTH",
   "race": "Warrior",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 300"
+  ],
+  "effect_note": "changes a monster to Defense"
  },
  {
   "id": 83370323,
@@ -786,7 +1035,12 @@
   "def": 600,
   "attribute": "DARK",
   "race": "Warrior",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "its Warrior Synchro destroys a Spell/Trap",
+  "effect_idea": "MATERIAL: DESTROY SPELL"
  },
  {
   "id": 99070951,
@@ -798,7 +1052,11 @@
   "def": 300,
   "attribute": "EARTH",
   "race": "Psychic",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "keeps a card for later"
  },
  {
   "id": 78552773,
@@ -810,7 +1068,11 @@
   "def": 100,
   "attribute": "EARTH",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "summons Oracle of the Sun with double ATK"
  },
  {
   "id": 78868119,
@@ -822,7 +1084,11 @@
   "def": 400,
   "attribute": "WATER",
   "race": "Sea Serpent",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT AQUA MONSTER"
+  ],
+  "effect_note": "summons a small Sea Serpent"
  },
  {
   "id": 20450925,
@@ -834,7 +1100,11 @@
   "def": 300,
   "attribute": "LIGHT",
   "race": "Fairy",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "HEAL 500"
+  ],
+  "effect_note": "no effect damage this turn"
  },
  {
   "id": 88671720,
@@ -846,7 +1116,11 @@
   "def": 1100,
   "attribute": "DARK",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "revives a DARK Machine"
  },
  {
   "id": 67441435,
@@ -858,7 +1132,12 @@
   "def": 100,
   "attribute": "EARTH",
   "race": "Plant",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "revives itself once per Duel",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 96782886,
@@ -870,7 +1149,12 @@
   "def": 200,
   "attribute": "LIGHT",
   "race": "Psychic",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER",
+   "BACKFIRE 800"
+  ],
+  "effect_note": "pays 800 LP to summon a Psychic"
  },
  {
   "id": 66457407,
@@ -882,7 +1166,12 @@
   "def": 0,
   "attribute": "WIND",
   "race": "Plant",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL PLANTS 200"
+  ],
+  "effect_note": "copies a Plant's Level",
+  "effect_idea": "LEVEL SET"
  },
  {
   "id": 97268402,
@@ -894,7 +1183,11 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "negates a monster's effects"
  },
  {
   "id": 22318971,
@@ -906,7 +1199,11 @@
   "def": 1000,
   "attribute": "LIGHT",
   "race": "Beast",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "dodges an attack"
  },
  {
   "id": 40101111,
@@ -922,7 +1219,12 @@
    "destroy",
    "heal",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "SHOCK 1000"
+  ],
+  "effect_note": "not destroyed by effects; piercing"
  },
  {
   "id": 21113684,
@@ -937,7 +1239,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "Spell Counters to destroy or draw"
  },
  {
   "id": 4796100,
@@ -951,7 +1258,11 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "brings back a material when destroyed"
  },
  {
   "id": 14017402,
@@ -963,7 +1274,12 @@
   "def": 2000,
   "attribute": "WIND",
   "race": "Dragon",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE",
+   "BOOST ALL DRAGONS 500"
+  ],
+  "effect_note": "copies a Dragon Synchro; negates effects"
  },
  {
   "id": 71628381,
@@ -975,7 +1291,11 @@
   "def": 1300,
   "attribute": "EARTH",
   "race": "Rock",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "splits back into its materials"
  },
  {
   "id": 61757117,
@@ -990,7 +1310,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "can't be destroyed while its chosen cards stay"
  },
  {
   "id": 30646525,
@@ -1005,7 +1329,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 500"
+  ],
+  "effect_note": "destroys weaker monsters when Ritual Summoned",
+  "effect_idea": "ON SUMMON: ANNIHILATE MONSTERS"
  },
  {
   "id": 76218643,
@@ -1021,7 +1350,12 @@
    "destroy",
    "heal",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "HEAL 800"
+  ],
+  "effect_note": "protected by a Tuner; 800 LP when a Tuner leaves"
  },
  {
   "id": 10110717,
@@ -1036,7 +1370,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "500 damage when flipped"
  },
  {
   "id": 27870033,
@@ -1051,7 +1389,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "SHOCK 500"
+  ],
+  "effect_note": "500 damage when a Defense monster is destroyed"
  },
  {
   "id": 19357125,
@@ -1067,7 +1409,11 @@
    "destroy",
    "boost",
    "weaken"
-  ]
+  ],
+  "effects": [
+   "NECRO BOOST 100"
+  ],
+  "effect_note": "grows with DARK monsters in the GY"
  },
  {
   "id": 89493368,
@@ -1082,7 +1428,11 @@
   "effect_hints": [
    "burn",
    "revive"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 800"
+  ],
+  "effect_note": "800 damage on the opponent's summons"
  },
  {
   "id": 77600660,
@@ -1097,7 +1447,11 @@
   "effect_hints": [
    "heal",
    "revive"
-  ]
+  ],
+  "effects": [
+   "NECRO HEAL 300"
+  ],
+  "effect_note": "500 LP per Psychic in the GY"
  },
  {
   "id": 50781944,
@@ -1112,7 +1466,11 @@
   "effect_hints": [
    "destroy",
    "heal"
-  ]
+  ],
+  "effects": [
+   "FAREWELL 1000"
+  ],
+  "effect_note": "1000 LP when your monster is destroyed"
  },
  {
   "id": 14462257,
@@ -1127,7 +1485,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "gets a Spell back when destroyed"
  },
  {
   "id": 98024118,
@@ -1143,7 +1505,12 @@
    "destroy",
    "burn",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "PARTING GIFT 500"
+  ],
+  "effect_note": "protected by a Tuner; 500 damage when a Tuner falls"
  },
  {
   "id": 69529567,
@@ -1158,7 +1525,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "destroys itself next to a stronger monster"
  },
  {
   "id": 4252828,
@@ -1173,7 +1544,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "equips a small monster"
  },
  {
   "id": 68473226,
@@ -1189,7 +1564,11 @@
    "destroy",
    "revive",
    "protect"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL DRAGONS 300"
+  ],
+  "effect_note": "protects Level 7+ Dragons"
  },
  {
   "id": 97904474,
@@ -1204,7 +1583,11 @@
   "effect_hints": [
    "destroy",
    "weaken"
-  ]
+  ],
+  "effects": [
+   "REQUIEM 500"
+  ],
+  "effect_note": "equips to its destroyer, which loses 1800 ATK"
  },
  {
   "id": 23770284,
@@ -1219,7 +1602,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000"
+  ],
+  "effect_note": "gains half a tributed Dragon's ATK"
  },
  {
   "id": 50263751,
@@ -1227,14 +1614,20 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": -1,
-  "def": -1,
+  "atk": 2100,
+  "def": 2100,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "DRAIN 300"
+  ],
+  "effect_note": "ATK = Level x 300 (2100); Level grows with each kill",
+  "stats_fixed": true,
+  "effect_idea": "LEVEL UP"
  },
  {
   "id": 82556058,
@@ -1249,7 +1642,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "makes Engine Tokens, gains ATK"
  },
  {
   "id": 63676256,
@@ -1264,7 +1661,11 @@
   "effect_hints": [
    "destroy",
    "weaken"
-  ]
+  ],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "equips to a monster"
  },
  {
   "id": 60741115,
@@ -1279,7 +1680,11 @@
   "effect_hints": [
    "burn",
    "boost"
-  ]
+  ],
+  "effects": [
+   "HEAL 800"
+  ],
+  "effect_note": "turns effect damage into LP"
  },
  {
   "id": 15175429,
@@ -1294,7 +1699,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL",
+   "HURT OPPONENT 800"
+  ],
+  "effect_note": "destroys a Spell, 800 damage"
  },
  {
   "id": 43642620,
@@ -1309,7 +1719,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "SORROW 1000"
+  ],
+  "effect_note": "its controller takes its ATK when destroyed"
  },
  {
   "id": 79080761,
@@ -1324,7 +1738,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys Spells/Traps when destroyed"
  },
  {
   "id": 35984222,
@@ -1339,7 +1757,12 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "COURAGE 800"
+  ],
+  "effect_note": "you can't summon; revives itself",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 3167573,
@@ -1353,7 +1776,11 @@
   "race": "Warrior",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "FEEBLE 500"
+  ],
+  "effect_note": "summons itself, destroyed next turn"
  },
  {
   "id": 23303072,
@@ -1361,14 +1788,19 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": -1,
+  "atk": 2400,
   "def": 0,
   "attribute": "EARTH",
   "race": "Dragon",
   "effect_hints": [
    "boost",
    "revive"
-  ]
+  ],
+  "effects": [
+   "NECRO BOOST 200"
+  ],
+  "effect_note": "ATK = discarded Levels x 300 (2400 here)",
+  "stats_fixed": true
  },
  {
   "id": 18489208,
@@ -1382,7 +1814,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK ALL SPELLS IMMUNITY"
+  ],
+  "effect_note": "locks 2 Set Spells/Traps"
  },
  {
   "id": 77700347,
@@ -1397,7 +1833,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "a monster can't be destroyed from the GY"
  },
  {
   "id": 94079037,
@@ -1412,7 +1852,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "not destroyed by battle once per turn"
  },
  {
   "id": 41158734,
@@ -1427,7 +1871,12 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "Level 5 with a Tuner; searches when destroyed",
+  "effect_idea": "LEVEL UP 1"
  },
  {
   "id": 87622767,
@@ -1441,7 +1890,12 @@
   "race": "Psychic",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER",
+   "BACKFIRE 800"
+  ],
+  "effect_note": "pays 800 to get a Psychic back"
  },
  {
   "id": 7025445,
@@ -1456,7 +1910,12 @@
   "effect_hints": [
    "weaken",
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "loses Levels for a discarded monster",
+  "effect_idea": "LEVEL DOWN"
  },
  {
   "id": 65303664,
@@ -1470,7 +1929,11 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "POWER REDISTRIBUTION 500"
+  ],
+  "effect_note": "comes out when a Beast falls"
  },
  {
   "id": 79473793,
@@ -1484,7 +1947,12 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "negates targeting Spells/Traps"
  },
  {
   "id": 44341034,
@@ -1498,7 +1966,11 @@
   "race": "Insect",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives a Level 3 Tuner"
  },
  {
   "id": 28859794,
@@ -1513,7 +1985,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "not destroyed by battle twice per turn"
  },
  {
   "id": 95360850,
@@ -1528,7 +2004,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "your monsters survive a battle"
  },
  {
   "id": 54360049,
@@ -1543,7 +2023,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys a Special Summoned monster"
  },
  {
   "id": 1287123,
@@ -1557,7 +2041,11 @@
   "race": "Winged Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE SPELL"
+  ],
+  "effect_note": "negates effects that destroy Spells/Traps"
  },
  {
   "id": 82841979,
@@ -1572,7 +2060,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys a Spell/Trap on damage"
  },
  {
   "id": 67757079,
@@ -1586,7 +2078,11 @@
   "race": "Beast",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL BEASTS 500"
+  ],
+  "effect_note": "king of Moja"
  },
  {
   "id": 65282484,
@@ -1600,7 +2096,11 @@
   "race": "Fairy",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys a card when summoned"
  },
  {
   "id": 85431040,
@@ -1614,7 +2114,12 @@
   "race": "Plant",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 300",
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "300 damage, summons 2 more"
  },
  {
   "id": 71759912,
@@ -1628,7 +2133,11 @@
   "race": "Beast",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 800"
+  ],
+  "effect_note": "a monster gains 1000 ATK"
  },
  {
   "id": 48568432,
@@ -1643,7 +2152,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "equips to a Machine"
  },
  {
   "id": 94538053,
@@ -1658,7 +2171,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 400",
+   "FEEBLE 300"
+  ],
+  "effect_note": "+400 attacking; halved after a win"
  },
  {
   "id": 75675029,
@@ -1672,7 +2190,11 @@
   "race": "Fiend",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "SHOCK 1000"
+  ],
+  "effect_note": "1000 damage per Synchro banished"
  },
  {
   "id": 70595331,
@@ -1687,7 +2209,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "Gemini: summons a Zombie"
  },
  {
   "id": 68722455,
@@ -1699,7 +2225,12 @@
   "def": 2100,
   "attribute": "EARTH",
   "race": "Zombie",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "DESTROY MONSTER",
+   "BACKFIRE 300"
+  ],
+  "effect_note": "discards to return cards"
  },
  {
   "id": 47297616,
@@ -1713,7 +2244,12 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "FEEBLE 500"
+  ],
+  "effect_note": "negates everything, loses 500 each time"
  },
  {
   "id": 45358284,
@@ -1727,7 +2263,12 @@
   "race": "Insect",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "its Level becomes the total of your monsters",
+  "effect_idea": "LEVEL SET"
  },
  {
   "id": 53855409,
@@ -1741,7 +2282,11 @@
   "race": "Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL 100"
+  ],
+  "effect_note": "leaves 2 tokens after a Synchro"
  },
  {
   "id": 59042331,
@@ -1756,7 +2301,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 1000"
+  ],
+  "effect_note": "halves an attacker's ATK"
  },
  {
   "id": 69695704,
@@ -1771,7 +2320,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 100 +",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "+100 per Winged Beast; destroys a Spell/Trap"
  },
  {
   "id": 41705642,
@@ -1785,7 +2339,11 @@
   "race": "Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "summons a Tuner"
  },
  {
   "id": 17313545,
@@ -1799,7 +2357,12 @@
   "race": "Fiend",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "SHOCK 500"
+  ],
+  "effect_note": "negates LIGHT monsters, attacks again"
  },
  {
   "id": 64382839,
@@ -1811,7 +2374,11 @@
   "def": 2100,
   "attribute": "DARK",
   "race": "Fairy",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL 200"
+  ],
+  "effect_note": "makes tokens when monsters are banished"
  },
  {
   "id": 5645210,
@@ -1825,7 +2392,11 @@
   "race": "Fairy",
   "effect_hints": [
    "weaken"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 500"
+  ],
+  "effect_note": "non-Fairies lose 500 ATK"
  },
  {
   "id": 94878265,
@@ -1839,7 +2410,11 @@
   "race": "Beast",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "gets a Beast back when destroyed"
  },
  {
   "id": 94230224,
@@ -1853,7 +2428,12 @@
   "race": "Fiend",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 1000",
+   "BACKFIRE 2000"
+  ],
+  "effect_note": "pays 2000 for 1000 damage"
  },
  {
   "id": 83239739,
@@ -1867,7 +2447,11 @@
   "race": "Fish",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "POWER REDISTRIBUTION 300"
+  ],
+  "effect_note": "leaves a token"
  },
  {
   "id": 72631243,
@@ -1882,7 +2466,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "Gemini monsters survive effects"
  },
  {
   "id": 42280216,
@@ -1896,7 +2484,12 @@
   "race": "Spellcaster",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "COURAGE 500",
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "brings back Sun Dragon Inti"
  },
  {
   "id": 41224658,
@@ -1910,7 +2503,11 @@
   "race": "Fiend",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys up to 2 monsters"
  },
  {
   "id": 32750510,
@@ -1924,7 +2521,11 @@
   "race": "Spellcaster",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 500"
+  ],
+  "effect_note": "freezes monsters with Ice Counters"
  },
  {
   "id": 81759748,
@@ -1938,7 +2539,12 @@
   "race": "Insect",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL INSECTS 300"
+  ],
+  "effect_note": "an Insect's Level +2",
+  "effect_idea": "LEVEL UP 2"
  },
  {
   "id": 45620686,
@@ -1952,7 +2558,12 @@
   "race": "Insect",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 200"
+  ],
+  "effect_note": "a monster's Level +1",
+  "effect_idea": "LEVEL UP 1"
  },
  {
   "id": 38041940,
@@ -1966,7 +2577,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "revives a Plant when destroyed"
  },
  {
   "id": 84055227,
@@ -1981,7 +2596,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "DRAIN 200"
+  ],
+  "effect_note": "+200 per monster destroyed"
  },
  {
   "id": 87148330,
@@ -1993,7 +2612,11 @@
   "def": 1800,
   "attribute": "LIGHT",
   "race": "Fairy",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL FAIRIES 300"
+  ],
+  "effect_note": "draws more with Fairies"
  },
  {
   "id": 10097168,
@@ -2007,7 +2630,11 @@
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys 2 Set cards"
  },
  {
   "id": 92719314,
@@ -2021,7 +2648,11 @@
   "race": "Thunder",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT DARK MONSTERS"
+  ],
+  "effect_note": "revives a DARK monster"
  },
  {
   "id": 70054514,
@@ -2035,7 +2666,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "FAREWELL 300"
+  ],
+  "effect_note": "draws when destroyed"
  },
  {
   "id": 59482302,
@@ -2049,7 +2684,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SHARED FATE"
+  ],
+  "effect_note": "destroys 2 cards when destroyed by LIGHT"
  },
  {
   "id": 48742406,
@@ -2063,7 +2702,11 @@
   "race": "Fairy",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 400"
+  ],
+  "effect_note": "400 damage per LIGHT monster"
  },
  {
   "id": 37675138,
@@ -2078,7 +2721,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys a Spell/Trap when revived"
  },
  {
   "id": 18842395,
@@ -2090,7 +2737,11 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "no Tribute if the opponent has 2+ monsters"
  },
  {
   "id": 15935204,
@@ -2104,7 +2755,11 @@
   "race": "Psychic",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL PSYCHIC MONSTERS 300"
+  ],
+  "effect_note": "sends destroyed monsters to the Deck top"
  },
  {
   "id": 97811903,
@@ -2112,13 +2767,18 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": -1,
+  "atk": 2000,
   "def": 0,
   "attribute": "DARK",
   "race": "Dragon",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "OSMOSIS 1000"
+  ],
+  "effect_note": "ATK = twice the attack target's (2000 here)",
+  "stats_fixed": true
  },
  {
   "id": 79796561,
@@ -2132,7 +2792,11 @@
   "race": "Machine",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 600"
+  ],
+  "effect_note": "banishes your Synchro for 600 damage"
  },
  {
   "id": 82994509,
@@ -2146,7 +2810,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HEAL OPPONENT 300"
+  ],
+  "effect_note": "gives the opponent a token"
  },
  {
   "id": 71519605,
@@ -2160,7 +2828,11 @@
   "race": "Reptile",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "the only attack target"
  },
  {
   "id": 4694209,
@@ -2175,7 +2847,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 300",
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "Guard Counter: +300, gives it away to protect"
  },
  {
   "id": 25247218,
@@ -2187,7 +2864,11 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Rock",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "COURAGE 500"
+  ],
+  "effect_note": "no Tribute when you have no monsters"
  },
  {
   "id": 37955049,
@@ -2201,7 +2882,11 @@
   "race": "Fiend",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 600"
+  ],
+  "effect_note": "all monsters attack; +300 per Fiend revealed"
  },
  {
   "id": 52512994,
@@ -2209,13 +2894,19 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": -1,
+  "atk": 2000,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Zombie",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 500"
+  ],
+  "effect_note": "shuffles other monsters away when summoned (ATK 2000 here)",
+  "stats_fixed": true,
+  "effect_idea": "ON SUMMON: ANNIHILATE MONSTERS"
  },
  {
   "id": 60187739,
@@ -2229,7 +2920,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SHARED FATE"
+  ],
+  "effect_note": "tributes itself to destroy its battle partner"
  },
  {
   "id": 31768112,
@@ -2243,7 +2938,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST 800"
+  ],
+  "effect_note": "equips to a Machine for +1000"
  },
  {
   "id": 63223467,
@@ -2257,7 +2956,11 @@
   "race": "Thunder",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT LIGHT MONSTER"
+  ],
+  "effect_note": "searches a small LIGHT when destroyed"
  },
  {
   "id": 13521194,
@@ -2272,7 +2975,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "SHOCK 400"
+  ],
+  "effect_note": "Level x 100 damage after a kill"
  },
  {
   "id": 67964209,
@@ -2284,7 +2991,11 @@
   "def": 1500,
   "attribute": "WATER",
   "race": "Sea Serpent",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "returns a Continuous/Field Spell"
  },
  {
   "id": 46237548,
@@ -2298,7 +3009,11 @@
   "race": "Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summoned with Normal Monsters"
  },
  {
   "id": 41753322,
@@ -2310,7 +3025,11 @@
   "def": 3000,
   "attribute": "EARTH",
   "race": "Dinosaur",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "HEAL 500"
+  ],
+  "effect_note": "wall that hides face-down"
  },
  {
   "id": 57421866,
@@ -2322,7 +3041,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Insect",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "takes a Level from a big monster to revive",
+  "effect_idea": "LEVEL DOWN 1"
  },
  {
   "id": 55063681,
@@ -2336,7 +3060,11 @@
   "race": "Spellcaster",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 400"
+  ],
+  "effect_note": "a monster gains 400 ATK"
  },
  {
   "id": 98358303,
@@ -2350,7 +3078,11 @@
   "race": "Psychic",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "brings a Psychic when destroyed"
  },
  {
   "id": 80637190,
@@ -2365,7 +3097,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT INSECT"
+  ],
+  "effect_note": "revives an Insect after a kill"
  },
  {
   "id": 67211766,
@@ -2377,7 +3113,11 @@
   "def": 800,
   "attribute": "WATER",
   "race": "Reptile",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "SHOCK 500"
+  ],
+  "effect_note": "untargetable with Spells/Traps out; piercing"
  },
  {
   "id": 80513550,
@@ -2391,7 +3131,11 @@
   "race": "Dragon",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 500"
+  ],
+  "effect_note": "summoned with 3 Continuous Spells"
  },
  {
   "id": 1474910,
@@ -2403,7 +3147,11 @@
   "def": 400,
   "attribute": "WIND",
   "race": "Insect",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL INSECTS 300"
+  ],
+  "effect_note": "tributes with an Insect to draw 2"
  },
  {
   "id": 54248491,
@@ -2417,7 +3165,11 @@
   "race": "Insect",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 300"
+  ],
+  "effect_note": "destroys Defense monsters"
  },
  {
   "id": 9848939,
@@ -2431,7 +3183,11 @@
   "race": "Beast-Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "tributes to destroy"
  },
  {
   "id": 44364207,
@@ -2446,7 +3202,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "protects small Machines; searches when destroyed"
  },
  {
   "id": 14778250,
@@ -2458,7 +3218,11 @@
   "def": 1200,
   "attribute": "WIND",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summons itself by discarding"
  },
  {
   "id": 38837163,
@@ -2472,7 +3236,11 @@
   "race": "Beast-Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys a monster"
  },
  {
   "id": 45452224,
@@ -2484,7 +3252,11 @@
   "def": 200,
   "attribute": "DARK",
   "race": "Beast",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives a Level 1"
  },
  {
   "id": 30069398,
@@ -2498,7 +3270,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "gives the opponent a 300 damage token"
  },
  {
   "id": 42463414,
@@ -2512,7 +3288,11 @@
   "race": "Sea Serpent",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL WATER MONSTERS 400"
+  ],
+  "effect_note": "Fish, Sea Serpents and Aqua gain 400 ATK"
  },
  {
   "id": 43014054,
@@ -2527,7 +3307,13 @@
   "effect_hints": [
    "burn",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "BACKFIRE 1000"
+  ],
+  "effect_note": "its Synchro gains 2000, you take 2000",
+  "effect_idea": "MATERIAL: BOOST 2000"
  },
  {
   "id": 61864793,
@@ -2539,7 +3325,11 @@
   "def": 2100,
   "attribute": "EARTH",
   "race": "Rock",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 300"
+  ],
+  "effect_note": "changes a monster's position"
  },
  {
   "id": 17021204,
@@ -2551,7 +3341,11 @@
   "def": 1200,
   "attribute": "DARK",
   "race": "Insect",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "sends 2 Defense monsters to the GY"
  },
  {
   "id": 47432275,
@@ -2563,7 +3357,12 @@
   "def": 200,
   "attribute": "LIGHT",
   "race": "Fairy",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE",
+   "HEAL OPPONENT 300"
+  ],
+  "effect_note": "no battle damage, the opponent gains LP"
  },
  {
   "id": 83392426,
@@ -2577,7 +3376,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "summons Unicycular when destroyed"
  },
  {
   "id": 58807980,
@@ -2591,7 +3394,12 @@
   "race": "Beast",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "its Synchro brings a Beast Tuner",
+  "effect_idea": "MATERIAL: RESURRECT MONSTER"
  },
  {
   "id": 52286175,
@@ -2606,7 +3414,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL",
+   "HURT OPPONENT 800"
+  ],
+  "effect_note": "destroys a Trap, 800 damage"
  },
  {
   "id": 77207191,
@@ -2618,7 +3431,11 @@
   "def": 1800,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "searches Gazelle"
  },
  {
   "id": 6544078,
@@ -2630,7 +3447,11 @@
   "def": 1000,
   "attribute": "WIND",
   "race": "Fairy",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "Spirit support"
  },
  {
   "id": 96146814,
@@ -2642,7 +3463,11 @@
   "def": 100,
   "attribute": "LIGHT",
   "race": "Warrior",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 300"
+  ],
+  "effect_note": "changes a monster's position from the GY"
  },
  {
   "id": 51047350,
@@ -2656,7 +3481,11 @@
   "race": "Warrior",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "summoned by sending your Spell/Trap"
  },
  {
   "id": 88032368,
@@ -2670,7 +3499,12 @@
   "race": "Machine",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "SELF-DESTRUCT"
+  ],
+  "effect_note": "tributes itself, a monster gains 1500"
  },
  {
   "id": 56043447,
@@ -2685,7 +3519,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 500"
+  ],
+  "effect_note": "destroys a monster 3 turns later"
  },
  {
   "id": 88559132,
@@ -2697,7 +3535,11 @@
   "def": 2000,
   "attribute": "EARTH",
   "race": "Warrior",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 800"
+  ],
+  "effect_note": "gains a tributed Warrior's ATK"
  },
  {
   "id": 43708640,
@@ -2709,7 +3551,11 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT BEAST-WARRIOR"
+  ],
+  "effect_note": "tributes for 2 Beast-Warriors"
  },
  {
   "id": 27450400,
@@ -2721,7 +3567,11 @@
   "def": 300,
   "attribute": "EARTH",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL 100"
+  ],
+  "effect_note": "makes tokens"
  },
  {
   "id": 50164989,
@@ -2735,7 +3585,12 @@
   "race": "Plant",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "revives itself when a Plant Tuner is summoned",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 34257001,
@@ -2749,7 +3604,11 @@
   "race": "Warrior",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000"
+  ],
+  "effect_note": "+1200 ATK attacking"
  },
  {
   "id": 59965151,
@@ -2764,7 +3623,12 @@
   "effect_hints": [
    "destroy",
    "weaken"
-  ]
+  ],
+  "effects": [
+   "REQUIEM 1000"
+  ],
+  "effect_note": "takes the attack; a monster loses 1000 when it falls",
+  "effect_idea": "GUARDIAN"
  },
  {
   "id": 68087897,
@@ -2776,7 +3640,11 @@
   "def": 2300,
   "attribute": "WIND",
   "race": "Insect",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE ALL 200"
+  ],
+  "effect_note": "one Special Summon per turn"
  },
  {
   "id": 17841097,
@@ -2788,7 +3656,12 @@
   "def": 100,
   "attribute": "EARTH",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "SHOCK 300"
+  ],
+  "effect_note": "its Synchro deals piercing damage",
+  "effect_idea": "MATERIAL: SHOCK 300"
  },
  {
   "id": 70187958,
@@ -2800,7 +3673,11 @@
   "def": 300,
   "attribute": "EARTH",
   "race": "Beast",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives a small Beast when banished"
  },
  {
   "id": 20797524,
@@ -2814,7 +3691,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "summons Bicular when destroyed"
  },
  {
   "id": 93816465,
@@ -2829,7 +3710,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "tributes itself: no battle destruction or damage"
  },
  {
   "id": 41442341,
@@ -2841,7 +3726,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTERS",
+   "BACKFIRE 1000"
+  ],
+  "effect_note": "pays 2000 LP to revive 2 Fiends"
  },
  {
   "id": 57308711,
@@ -2853,7 +3743,11 @@
   "def": 100,
   "attribute": "EARTH",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST ALL MACHINES 200"
+  ],
+  "effect_note": "the third brother"
  },
  {
   "id": 96553688,
@@ -2865,7 +3759,11 @@
   "def": 0,
   "attribute": "FIRE",
   "race": "Plant",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "sends itself to summon Amaryllis"
  },
  {
   "id": 85060248,
@@ -2879,7 +3777,12 @@
   "race": "Psychic",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 300",
+   "BACKFIRE 300"
+  ],
+  "effect_note": "pays 500 a turn; weak monsters can't attack"
  },
  {
   "id": 37829468,
@@ -2887,14 +3790,19 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": -1,
+  "atk": 1000,
   "def": 1000,
   "attribute": "LIGHT",
   "race": "Thunder",
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "NECRO BOOST ALL LIGHT 100"
+  ],
+  "effect_note": "LIGHT monsters +100 per LIGHT in the GY (ATK 1000 here)",
+  "stats_fixed": true
  },
  {
   "id": 19665973,
@@ -2906,7 +3814,11 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "stops a direct attack and the Battle Phase"
  },
  {
   "id": 23571046,
@@ -2918,7 +3830,12 @@
   "def": 800,
   "attribute": "EARTH",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "revives itself next to a Tuner",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 39703254,
@@ -2930,7 +3847,11 @@
   "def": 800,
   "attribute": "DARK",
   "race": "Plant",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "SPIRIT PROTECTION"
+  ],
+  "effect_note": "tributes itself when a Plant is targeted"
  },
  {
   "id": 62782218,
@@ -2944,7 +3865,12 @@
   "race": "Zombie",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SELF-DESTRUCT",
+   "RESURRECT ZOMBIE"
+  ],
+  "effect_note": "destroyed after battle; summons Zombies"
  },
  {
   "id": 34659866,
@@ -2956,7 +3882,12 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "HEAL 300"
+  ],
+  "effect_note": "draws when used for a Synchro",
+  "effect_idea": "MATERIAL: HEAL 300"
  },
  {
   "id": 15839054,
@@ -2968,7 +3899,12 @@
   "def": 600,
   "attribute": "DARK",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "as material, searches Polymerization",
+  "effect_idea": "MATERIAL: RESURRECT SPELL"
  },
  {
   "id": 59797187,
@@ -2980,7 +3916,11 @@
   "def": 1600,
   "attribute": "EARTH",
   "race": "Rock",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 500"
+  ],
+  "effect_note": "turns its battle partner face-down"
  },
  {
   "id": 74440055,
@@ -2994,7 +3934,11 @@
   "race": "Plant",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HEAL OPPONENT 300"
+  ],
+  "effect_note": "gives the opponent a token after a kill"
  },
  {
   "id": 94145021,
@@ -3006,7 +3950,11 @@
   "def": 0,
   "attribute": "WIND",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BREAK ALL SPELLS IMMUNITY"
+  ],
+  "effect_note": "stops searching"
  },
  {
   "id": 46291010,
@@ -3018,7 +3966,12 @@
   "def": 500,
   "attribute": "EARTH",
   "race": "Psychic",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "takes a banished Psychic's Level",
+  "effect_idea": "LEVEL SET"
  },
  {
   "id": 84824601,
@@ -3030,7 +3983,11 @@
   "def": 1100,
   "attribute": "WATER",
   "race": "Plant",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "searches a Plant when sent to the GY"
  },
  {
   "id": 6903857,
@@ -3044,7 +4001,11 @@
   "race": "Warrior",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys a Spell/Trap when destroyed"
  },
  {
   "id": 14198496,
@@ -3056,7 +4017,11 @@
   "def": 0,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "HEAL 300"
+  ],
+  "effect_note": "tributes to draw"
  },
  {
   "id": 32391566,
@@ -3068,7 +4033,11 @@
   "def": 200,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "no effect damage after a Special Summon"
  },
  {
   "id": 52346240,
@@ -3080,7 +4049,11 @@
   "def": 1000,
   "attribute": "EARTH",
   "race": "Beast",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives a Level 1 Beast"
  },
  {
   "id": 82116191,
@@ -3094,7 +4067,11 @@
   "race": "Plant",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "NECRO BOOST 100"
+  ],
+  "effect_note": "+200 per Plant sent to the GY"
  },
  {
   "id": 18964575,
@@ -3106,7 +4083,11 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "negates a direct attack"
  },
  {
   "id": 25531465,
@@ -3118,7 +4099,12 @@
   "def": 500,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT SPELL"
+  ],
+  "effect_note": "as material, returns a Spell to the Deck",
+  "effect_idea": "MATERIAL: RESURRECT SPELL"
  },
  {
   "id": 22754505,
@@ -3130,7 +4116,11 @@
   "def": 0,
   "attribute": "EARTH",
   "race": "Rock",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "summons Medium Piece Golem"
  },
  {
   "id": 58324930,
@@ -3144,7 +4134,11 @@
   "race": "Spellcaster",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK IMMUNITY"
+  ],
+  "effect_note": "banishes a card when destroyed"
  },
  {
   "id": 74952447,
@@ -3156,7 +4150,11 @@
   "def": 1800,
   "attribute": "WATER",
   "race": "Aqua",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE ALL 300"
+  ],
+  "effect_note": "no 1800+ ATK Special Summons"
  },
  {
   "id": 44236692,
@@ -3168,7 +4166,11 @@
   "def": 0,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "tributes itself to revive a Synchron"
  },
  {
   "id": 10802915,
@@ -3180,7 +4182,11 @@
   "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "summons a Level 3 Fiend"
  },
  {
   "id": 51987571,
@@ -3194,7 +4200,12 @@
   "race": "Rock",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "POWER REDISTRIBUTION 300"
+  ],
+  "effect_note": "no battle damage; tokens when destroyed"
  },
  {
   "id": 75198893,
@@ -3202,11 +4213,16 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": -1,
-  "def": -1,
+  "atk": 1000,
+  "def": 0,
   "attribute": "LIGHT",
   "race": "Machine",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "copies a banished monster (ATK 1000 here)",
+  "stats_fixed": true
  },
  {
   "id": 564541,
@@ -3218,7 +4234,12 @@
   "def": 200,
   "attribute": "EARTH",
   "race": "Dragon",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "RESURRECT DRAGON"
+  ],
+  "effect_note": "counts as 2 Tributes; revives itself",
+  "effect_idea": "REBIRTH"
  },
  {
   "id": 20630765,
@@ -3230,7 +4251,11 @@
   "def": 1900,
   "attribute": "LIGHT",
   "race": "Spellcaster",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "counters protect it"
  },
  {
   "id": 74130411,
@@ -3244,7 +4269,11 @@
   "race": "Machine",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MACHINES"
+  ],
+  "effect_note": "searches a Machine when one is destroyed"
  },
  {
   "id": 18235577,
@@ -3256,7 +4285,12 @@
   "def": 700,
   "attribute": "EARTH",
   "race": "Insect",
-  "effect_hints": []
+  "effect_hints": [],
+  "effects": [
+   "CRIPPLE 200"
+  ],
+  "effect_note": "a monster's Level -1",
+  "effect_idea": "LEVEL DOWN 1"
  },
  {
   "id": 19578592,
@@ -3271,7 +4305,12 @@
   "effect_hints": [
    "burn",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "BACKFIRE 500"
+  ],
+  "effect_note": "+1000 ATK, negated, 500 damage a turn"
  },
  {
   "id": 46967601,
@@ -3286,7 +4325,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "damage equal to the destroyed monster's DEF"
  },
  {
   "id": 91107093,
@@ -3301,7 +4344,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE ALL LV 3 MONSTERS"
+  ],
+  "effect_note": "small Thunders can't be destroyed"
  },
  {
   "id": 24019261,
@@ -3316,7 +4363,11 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT LV 4 MONSTERS"
+  ],
+  "effect_note": "revives a Level 4 destroyed this turn"
  },
  {
   "id": 6178850,
@@ -3331,7 +4382,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 300 +",
+   "IMMUNE"
+  ],
+  "effect_note": "+300 per opponent monster; destroyed instead"
  },
  {
   "id": 95784434,
@@ -3346,7 +4402,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "BOOST 300"
+  ],
+  "effect_note": "a Reptile survives battle and gains 300"
  },
  {
   "id": 74115234,
@@ -3361,7 +4422,11 @@
   "effect_hints": [
    "destroy",
    "heal"
-  ]
+  ],
+  "effects": [
+   "HEAL 1000"
+  ],
+  "effect_note": "LP equal to the destroyed monster's ATK"
  },
  {
   "id": 62472614,
@@ -3376,7 +4441,12 @@
   "effect_hints": [
    "burn",
    "boost"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 1000",
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "ATK becomes 0, 500 damage a turn"
  },
  {
   "id": 66835946,
@@ -3391,7 +4461,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL ZOMBIES 400"
+  ],
+  "effect_note": "+200 per opponent monster"
  },
  {
   "id": 95507060,
@@ -3406,7 +4480,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL PLANTS 600",
+   "SACRIFICE ALL MONSTERS"
+  ],
+  "effect_note": "+300 per Plant in the GY, destroyed at the End Phase"
  },
  {
   "id": 27863269,
@@ -3421,7 +4500,12 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "CRIPPLE 500"
+  ],
+  "effect_note": "survives attacking, the target loses ATK"
  },
  {
   "id": 25231813,
@@ -3436,7 +4520,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE ALL DRAGONS"
+  ],
+  "effect_note": "a big Dragon Synchro survives battles"
  },
  {
   "id": 91468551,
@@ -3451,7 +4539,11 @@
   "effect_hints": [
    "boost",
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL 300"
+  ],
+  "effect_note": "revived monsters gain 300 ATK"
  },
  {
   "id": 92223641,
@@ -3466,7 +4558,11 @@
   "effect_hints": [
    "destroy",
    "heal"
-  ]
+  ],
+  "effects": [
+   "HEAL 1500"
+  ],
+  "effect_note": "LP equal to a destroyed LIGHT monster's ATK"
  },
  {
   "id": 5973663,
@@ -3481,7 +4577,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL PLANTS 400",
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "Flower Counters for boosts and revival"
  },
  {
   "id": 87624166,
@@ -3495,7 +4596,11 @@
   "race": "Field",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 300"
+  ],
+  "effect_note": "attackers are destroyed at the End Phase"
  },
  {
   "id": 17896384,
@@ -3509,7 +4614,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT SPELLS"
+  ],
+  "effect_note": "counters when Spellcasters fall"
  },
  {
   "id": 88190790,
@@ -3523,7 +4632,11 @@
   "race": "Equip",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 300"
+  ],
+  "effect_note": "+300; attack twice"
  },
  {
   "id": 9999961,
@@ -3537,7 +4650,11 @@
   "race": "Normal",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL BEASTS 400"
+  ],
+  "effect_note": "+200 per banished Beast"
  },
  {
   "id": 63851864,
@@ -3551,7 +4668,11 @@
   "race": "Equip",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL MACHINES 300"
+  ],
+  "effect_note": "draws after a Machine wins"
  },
  {
   "id": 33900648,
@@ -3565,7 +4686,12 @@
   "race": "Field",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK IMMUNITY ALL",
+   "BACKFIRE 500"
+  ],
+  "effect_note": "Attribute penalties; 500 LP upkeep"
  },
  {
   "id": 98867329,
@@ -3579,7 +4705,11 @@
   "race": "Equip",
   "effect_hints": [
    "weaken"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 600"
+  ],
+  "effect_note": "-600 per monster you control"
  },
  {
   "id": 83584898,
@@ -3593,7 +4723,12 @@
   "race": "Equip",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 1500",
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "ATK 100, can't attack, 500 damage a turn"
  },
  {
   "id": 32663969,
@@ -3607,7 +4742,12 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "SACRIFICE MONSTER"
+  ],
+  "effect_note": "sends your monster to destroy one"
  },
  {
   "id": 75652080,
@@ -3621,7 +4761,11 @@
   "race": "Quick-Play",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys one of yours and one of theirs"
  },
  {
   "id": 29228350,
@@ -3635,7 +4779,11 @@
   "race": "Quick-Play",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "ANNIHILATE MONSTERS"
+  ],
+  "effect_note": "destroys all opponent's monsters"
  },
  {
   "id": 84653834,
@@ -3649,7 +4797,11 @@
   "race": "Quick-Play",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL PSYCHIC MONSTERS 400"
+  ],
+  "effect_note": "+300 per banished Psychic"
  },
  {
   "id": 31467372,
@@ -3663,7 +4815,11 @@
   "race": "Continuous",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 800"
+  ],
+  "effect_note": "800 damage per Zombie Special Summon"
  },
  {
   "id": 68396778,
@@ -3677,7 +4833,12 @@
   "race": "Normal",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "sends a Special Summoned monster away, summons a Normal"
  },
  {
   "id": 69584564,
@@ -3691,7 +4852,12 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "HEAL 300"
+  ],
+  "effect_note": "destroys a Plant and draws"
  },
  {
   "id": 33846209,
@@ -3705,7 +4871,12 @@
   "race": "Quick-Play",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "SACRIFICE MONSTER"
+  ],
+  "effect_note": "tributes a Gemini to destroy and draw"
  },
  {
   "id": 12174035,
@@ -3719,7 +4890,11 @@
   "race": "Equip",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL WATER MONSTERS 300"
+  ],
+  "effect_note": "a small WATER discards the opponent's card"
  },
  {
   "id": 27827272,
@@ -3733,7 +4908,12 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "ANNIHILATE MONSTERS",
+   "BACKFIRE 500"
+  ],
+  "effect_note": "destroys monsters weaker than your Thunder"
  },
  {
   "id": 44887817,
@@ -3747,7 +4927,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "revives a Plant"
  },
  {
   "id": 36484016,
@@ -3761,7 +4945,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "Fusion Summons from field/GY"
  },
  {
   "id": 1200843,
@@ -3775,7 +4963,11 @@
   "race": "Equip",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "a Spirit survives battle"
  },
  {
   "id": 79718768,
@@ -3789,7 +4981,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "the opponent discards when they target the GY"
  },
  {
   "id": 79707116,
@@ -3803,7 +4999,11 @@
   "race": "Continuous",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "300 damage per milled card"
  },
  {
   "id": 90246973,
@@ -3817,7 +5017,11 @@
   "race": "Equip",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 500"
+  ],
+  "effect_note": "banishes from the opponent's GY to gain ATK"
  },
  {
   "id": 94303232,
@@ -3831,7 +5035,11 @@
   "race": "Equip",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE 500"
+  ],
+  "effect_note": "an opponent's monster can't attack"
  },
  {
   "id": 32180819,
@@ -3845,7 +5053,12 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "BACKFIRE 1000"
+  ],
+  "effect_note": "destroys a card, you take 1000"
  },
  {
   "id": 98847704,
@@ -3859,7 +5072,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "ANNIHILATE SPELLS"
+  ],
+  "effect_note": "destroys your Equip and their Set cards"
  },
  {
   "id": 25796442,
@@ -3873,7 +5090,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "Ritual Monsters are protected"
  },
  {
   "id": 52913738,
@@ -3887,7 +5108,11 @@
   "race": "Ritual",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "Ritual Spell for Garlandolf"
  },
  {
   "id": 32391631,
@@ -3901,7 +5126,12 @@
   "race": "Field",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "HEAL 300",
+   "FEEBLE ALL 300"
+  ],
+  "effect_note": "attackers gain 300 LP; non-attackers destroyed"
  },
  {
   "id": 81524977,
@@ -3915,7 +5145,11 @@
   "race": "Continuous",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "500 damage per Plant Counter"
  },
  {
   "id": 86780027,
@@ -3929,7 +5163,11 @@
   "race": "Continuous",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL 800"
+  ],
+  "effect_note": "+800 when your GY has only one Type"
  },
  {
   "id": 50418970,
@@ -3943,7 +5181,11 @@
   "race": "Equip",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 600"
+  ],
+  "effect_note": "damage when its Spirit returns to the hand"
  },
  {
   "id": 69112325,
@@ -3957,7 +5199,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE ALL BEASTS"
+  ],
+  "effect_note": "Beasts and Plants survive a battle each turn"
  },
  {
   "id": 61650133,
@@ -3971,7 +5217,12 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BACKFIRE 300",
+   "CRIPPLE ALL 200"
+  ],
+  "effect_note": "banish a card per Special Summon; 500 LP upkeep"
  },
  {
   "id": 28529976,
@@ -3985,7 +5236,12 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SACRIFICE MONSTER",
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "tributes a small Plant for a bigger one"
  },
  {
   "id": 98380593,
@@ -3999,7 +5255,11 @@
   "race": "Normal",
   "effect_hints": [
    "heal"
-  ]
+  ],
+  "effects": [
+   "HEAL 2000"
+  ],
+  "effect_note": "2000 LP when behind (1000 damage when ahead)"
  },
  {
   "id": 28741524,
@@ -4013,7 +5273,12 @@
   "race": "Quick-Play",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTERS",
+   "BACKFIRE 600"
+  ],
+  "effect_note": "revives small Psychics, damage per Level"
  },
  {
   "id": 52971673,
@@ -4027,7 +5292,12 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "SACRIFICE ALL MONSTERS",
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys your Tokens to destroy cards"
  },
  {
   "id": 62991886,
@@ -4041,7 +5311,11 @@
   "race": "Equip",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000"
+  ],
+  "effect_note": "ATK 2400 when behind, 1000 when ahead"
  },
  {
   "id": 88341502,
@@ -4057,7 +5331,11 @@
    "destroy",
    "burn",
    "weaken"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "loses 500 ATK, piercing"
  },
  {
   "id": 41234315,
@@ -4073,7 +5351,12 @@
    "destroy",
    "revive",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE ALL",
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "no destruction this battle; summons Summon Reactor SK"
  },
  {
   "id": 87046457,
@@ -4089,7 +5372,11 @@
    "destroy",
    "boost",
    "revive"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL PLANTS 1000"
+  ],
+  "effect_note": "revived Plants gain 1000 ATK"
  },
  {
   "id": 14342283,
@@ -4105,7 +5392,11 @@
    "destroy",
    "boost",
    "protect"
-  ]
+  ],
+  "effects": [
+   "BOOST ALL 500"
+  ],
+  "effect_note": "Tokens gain 1000 and can't be destroyed"
  },
  {
   "id": 13438207,
@@ -4120,7 +5411,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "damage equal to the destroyed monster's ATK"
  },
  {
   "id": 47778083,
@@ -4135,7 +5430,12 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER",
+   "BACKFIRE 300"
+  ],
+  "effect_note": "both players revive from the other's GY"
  },
  {
   "id": 18739764,
@@ -4150,7 +5450,12 @@
   "effect_hints": [
    "destroy",
    "heal"
-  ]
+  ],
+  "effects": [
+   "SACRIFICE MONSTER",
+   "HEAL 1500"
+  ],
+  "effect_note": "destroys your monster, gain its ATK"
  },
  {
   "id": 18096222,
@@ -4165,7 +5470,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 700"
+  ],
+  "effect_note": "a Gemini gains 700 ATK"
  },
  {
   "id": 88928798,
@@ -4180,7 +5489,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "IMMUNE",
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "negates a destroy effect, 500 damage"
  },
  {
   "id": 21350571,
@@ -4195,7 +5509,11 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 800"
+  ],
+  "effect_note": "a Beast gains 800 ATK, draws on kills"
  },
  {
   "id": 97922283,
@@ -4210,7 +5528,11 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 300"
+  ],
+  "effect_note": "300 damage per Beast after a kill"
  },
  {
   "id": 54451023,
@@ -4225,7 +5547,12 @@
   "effect_hints": [
    "destroy",
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 500",
+   "RESURRECT PLANTS"
+  ],
+  "effect_note": "a Plant gains 500; revives one when destroyed"
  },
  {
   "id": 16678947,
@@ -4240,7 +5567,12 @@
   "effect_hints": [
    "destroy",
    "burn"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "HURT OPPONENT 500"
+  ],
+  "effect_note": "destroys the attacker of your Psychic"
  },
  {
   "id": 38296564,
@@ -4255,7 +5587,11 @@
   "effect_hints": [
    "destroy",
    "protect"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "a monster can't be destroyed or targeted"
  },
  {
   "id": 80955168,
@@ -4270,7 +5606,12 @@
   "effect_hints": [
    "destroy",
    "revive"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys 2 cards"
  },
  {
   "id": 96700602,
@@ -4284,7 +5625,12 @@
   "race": "Normal",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "SACRIFICE MONSTER",
+   "HURT OPPONENT 1000"
+  ],
+  "effect_note": "tributes a Synchro, damage per position change"
  },
  {
   "id": 39531794,
@@ -4298,7 +5644,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "returns a banished Psychic"
  },
  {
   "id": 60930169,
@@ -4312,7 +5662,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTERS"
+  ],
+  "effect_note": "summons 2 copies of a destroyed wall"
  },
  {
   "id": 45133463,
@@ -4326,7 +5680,11 @@
   "race": "Normal",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives Supay or Fire Ant Ascator"
  },
  {
   "id": 22205600,
@@ -4340,7 +5698,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "destroys 2 Spells/Traps"
  },
  {
   "id": 30127518,
@@ -4354,7 +5716,11 @@
   "race": "Normal",
   "effect_hints": [
    "revive"
-  ]
+  ],
+  "effects": [
+   "ANNIHILATE MONSTERS"
+  ],
+  "effect_note": "sends multiple Special Summoned monsters to the GY"
  },
  {
   "id": 8279188,
@@ -4368,7 +5734,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "IMMUNE"
+  ],
+  "effect_note": "discards to negate attacks"
  },
  {
   "id": 34149830,
@@ -4382,7 +5752,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT LV 4 MONSTERS"
+  ],
+  "effect_note": "no damage, summons a Level 4 Warrior"
  },
  {
   "id": 73507661,
@@ -4396,7 +5770,12 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "ANNIHILATE SPELLS",
+   "BACKFIRE 300"
+  ],
+  "effect_note": "destroys face-up Spells/Traps, both take damage"
  },
  {
   "id": 50078509,
@@ -4410,7 +5789,12 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BREAK IMMUNITY",
+   "CRIPPLE 1000"
+  ],
+  "effect_note": "negates a monster, it can't attack"
  },
  {
   "id": 58873391,
@@ -4424,7 +5808,12 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "SACRIFICE MONSTER"
+  ],
+  "effect_note": "tributes a Fish to destroy and draw"
  },
  {
   "id": 45178472,
@@ -4438,7 +5827,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "ANNIHILATE SPELLS"
+  ],
+  "effect_note": "destroys 5 Spells/Traps"
  },
  {
   "id": 81601517,
@@ -4452,7 +5845,11 @@
   "race": "Counter",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY SPELL"
+  ],
+  "effect_note": "negates a Spell"
  },
  {
   "id": 98273947,
@@ -4466,7 +5863,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT LV 5 & LESS MONSTER"
+  ],
+  "effect_note": "revives a Level 2 or lower"
  },
  {
   "id": 7811875,
@@ -4480,7 +5881,12 @@
   "race": "Counter",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "SACRIFICE MONSTER"
+  ],
+  "effect_note": "sends a Synchro to negate a Summon"
  },
  {
   "id": 14730606,
@@ -4494,7 +5900,11 @@
   "race": "Continuous",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "CRIPPLE ALL 300"
+  ],
+  "effect_note": "opponent's monsters become Plants"
  },
  {
   "id": 85080048,
@@ -4508,7 +5918,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "destroys a card after a Thunder summon"
  },
  {
   "id": 81128478,
@@ -4522,7 +5936,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER"
+  ],
+  "effect_note": "banishes an Insect to destroy"
  },
  {
   "id": 29307554,
@@ -4536,7 +5954,11 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000"
+  ],
+  "effect_note": "a Level 8 attacks twice"
  },
  {
   "id": 56856951,
@@ -4550,7 +5972,12 @@
   "race": "Normal",
   "effect_hints": [
    "burn"
-  ]
+  ],
+  "effects": [
+   "HURT OPPONENT 2000",
+   "BACKFIRE 300"
+  ],
+  "effect_note": "discards 2 for 2000 damage"
  },
  {
   "id": 59718521,
@@ -4564,7 +5991,12 @@
   "race": "Counter",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "DESTROY MONSTER",
+   "DESTROY SPELL"
+  ],
+  "effect_note": "tributes a Psychic to negate"
  },
  {
   "id": 97168905,
@@ -4578,7 +6010,12 @@
   "race": "Normal",
   "effect_hints": [
    "boost"
-  ]
+  ],
+  "effects": [
+   "BOOST 1000",
+   "HEAL OPPONENT 300"
+  ],
+  "effect_note": "+1000 and 2 attacks; the opponent draws"
  },
  {
   "id": 21636650,
@@ -4592,6 +6029,10 @@
   "race": "Normal",
   "effect_hints": [
    "destroy"
-  ]
+  ],
+  "effects": [
+   "RESURRECT MONSTER"
+  ],
+  "effect_note": "revives a monster destroyed this turn"
  }
 ]

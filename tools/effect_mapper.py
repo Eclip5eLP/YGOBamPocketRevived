@@ -90,8 +90,9 @@ def check(path):
         for e in c.get("effects", []):
             if e in names:
                 continue
+            words = e.split(" ")
             kind = ("new amount" if _family(e) in families else
-                    "new target" if e.split(" ")[0] + " " + e.split(" ")[1] in targets else "UNKNOWN")
+                    "new target" if " ".join(words[:2]) in targets or words[0] == "RESURRECT" else "UNKNOWN")
             print(f"{kind:10s} {e:36s} {c['name']}")
 
 

@@ -214,3 +214,7 @@ Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter
   `effect_note` (the real card in short), `effect_idea` for 26 cards where a proposed new effect fits better.
   The mapper's picks were mostly wrong for this engine-heavy group (summon/search/level texts), so the review is by
   hand. Proposed new effects (data-only vs engine code, with their cards): notes/new_effects.md.
+- 2026-11-01: per-card effect review done for all 577 Series 3 cards (246 archetype + 331 standalone): every card has
+  `effects` from existing keywords (new amounts/targets only as copied rows), 92 also an `effect_idea` for an approved
+  new effect (notes/new_effects.md todo). Spells use only keywords original spells use. Next: rarities, Synchro/Xyz
+  rules (`SUMMONS`) for the real Tuners/Synchros, then building the cards and the new effects.
