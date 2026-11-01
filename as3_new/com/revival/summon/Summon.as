@@ -198,6 +198,11 @@ package com.revival.summon
 
       private static function DuelSetting(aName:String) : *
       {
+         var test:Object = Rules().test;
+         if(test != null && test.hasOwnProperty(aName))  // test content: same as the map node property (aixyz, aiextra)
+         {
+            return test[aName];
+         }
          try
          {
             return Object(CGHandlerManager.MainModule.DuelInfo)[aName];
@@ -433,6 +438,7 @@ package com.revival.summon
       //   "cost": n       ... and detaches n materials (to the graveyard) each time it works
       //   "perMaterial":1 its ATK/LP amount is multiplied by the number of materials
       //   "attach": n     after it works, the card takes up to n monsters from its owner's graveyard as materials
+      //                   (not shown yet: the graveyard pile/count keeps them until its next visual update)
       // Materials are the cards under the result (CardBO.IngredientCardList, saved and reverted by the duel's undo
       // states, CardBO.SaveState / RevertToState), so the AI's trial rounds undo detaching too.
 

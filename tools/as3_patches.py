@@ -2471,6 +2471,34 @@ SUMMON_EDITS = {
             }
 """),
     ],
+    # AI planning: two hand cards in one slot only when they can pair. The original looked the cards up as inventory
+    # items by their duel id (CardBO.CardId, a per-duel counter), which never finds them: the AI could only fuse onto
+    # monsters already on the field. Look them up in the AI's hand instead (also used for Synchro/Xyz, with the AI
+    # rules of Summon.AiAllows).
+    "com.frimastudio.snowstorm.module.cardgame.ai.CardGameAI": [
+        ("""         var card1:Card = this.mInventoryManager.CacheLogic.GetItemById(aCardId1) as Card;
+         var card2:Card = this.mInventoryManager.CacheLogic.GetItemById(aCardId2) as Card;
+         if(!card1 || !card2)
+         {
+            return false;
+         }""", """         var hand:PlayerHandBO = (this.mPlayer as PlayerBO).PlayerHand;
+         var handCard1:CardBO = hand.GetCardByUniqueId(aCardId1);
+         var handCard2:CardBO = hand.GetCardByUniqueId(aCardId2);
+         if(handCard1 != null && handCard2 != null)
+         {
+            return FusionUtil.IsFusionPossible(handCard1,handCard2);
+         }
+         var card1:Card = this.mInventoryManager.CacheLogic.GetItemById(aCardId1) as Card;
+         var card2:Card = this.mInventoryManager.CacheLogic.GetItemById(aCardId2) as Card;
+         if(!card1 || !card2)
+         {
+            return false;
+         }"""),
+        ("""   import com.frimastudio.as3ToolKit.util.Cleaner;
+""", """   import com.frimastudio.as3ToolKit.util.Cleaner;
+   import com.frimastudio.snowstorm.module.cardgame.player.hand.PlayerHandBO;
+"""),
+    ],
     # Every card list (Collection, sell menu, deck builder, crafting) starts here; it dropped all fusion results.
     # Synchro/Xyz cards can be owned: let them through (the deck builder removes them again, EditDeckScreen below).
     "com.frimastudio.utils.cardfiltering.CardFiltering": [

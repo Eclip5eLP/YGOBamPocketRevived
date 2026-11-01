@@ -2297,3 +2297,16 @@ YGOCardDl.py download), server/game.py result_cards.
     3000 -> 6000 (x1, graveyard 1) -> 12000 (x0, graveyard 2) -> stays 12000 (no materials, effect skipped).
     Excalibur ("needs": 1): 2500 -> 5000, stays x2. Synchro on an on-field Tuner (Junk Synchron + Ansatsu ->
     Stardust Dragon, white frame). Xyz picker from a field monster + hand monster.
+- 2026-11-01 AI:
+  - [VERIFIED code] Original AI bug: CardGameAI.IsFusionPossible (planning two hand cards into one slot) looked the
+    cards up with CacheLogic.GetItemById(CardBO.CardId); CardId is a per-duel counter, not an inventory item id, so
+    the lookup never matched and the AI could only fuse onto monsters already on the field (via CardSlot
+    .CardFitsInSlot). Patched: look the cards up in the AI's hand (PlayerHandBO.GetCardByUniqueId) and use
+    FusionUtil.IsFusionPossible (fusion + Synchro/Xyz with the AI rules). Side effect: story/arena AIs with fusion
+    pairs in their decks now fuse from the hand, as the original design intended.
+  - [VERIFIED emulator, Arena AI with dev-server decks] AI with Junk Synchron + level 4 monsters made Stardust Dragon
+    from its hand in round 1 (strongest of the two allowed results). AI with only level 4 Warriors (an Xyz pair in
+    every hand) made no Xyz in two rounds (default: Synchro yes, Xyz no).
+  - Test switch: summons.json "test" may carry "AiXyz"/"AiExtra" (Summon.DuelSetting reads them before the duel's
+    DuelData), set by YGO_TEST_AI_XYZ=1 in test content, to test AI Xyz without story map progress. The map node path
+    (XMLNode.GetDuelData -> DuelData.AiXyz/AiExtra) is verified by code reading only.
