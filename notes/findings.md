@@ -2245,3 +2245,30 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
   AI: Synchro allowed, Xyz off by default; per-duel opt-in. Story duel settings come from map node properties via
   `XMLNode.GetDuelData` (l.243-268) into `DuelData` [VERIFIED], so two new node properties (`aixyz`, `aiextra`
   list) can carry the boss settings in content [INFERRED].
+
+### 6.70 Synchro and Xyz: first build (2026-11-01)
+
+Design: notes/synchro_xyz.md sections 6-10. Code: as3_new/com/revival/summon/ (Summon, SummonPickerPopup),
+tools/as3_patches.py SUMMON_EDITS (14 classes), tools/content_mods.py summon_frames / SUMMONS / write_summons,
+test cards tools/content_test_mods.py test_summons (YGO_TEST_CONTENT=1, pictures from YGO_CARD_PICS = the owner's
+YGOCardDl.py download), server/game.py result_cards.
+- Rules in config/summons.json (game data): Synchro per Tuner by level total, Xyz by rank (+ optional type /
+  attribute), material effects per effect row. Results are cards with fusionResult=true.
+- [VERIFIED code+data] CardTemplate.itemTemplateId is 0 in every template (item_template.ace); the template id is
+  `id`. The original FusionUtil.MeetsFusionRequirementsFromTemplate compares the card list with itemTemplateId, so
+  fusion "card list" conditions never matched in AI planning (original bug, left as is).
+- [VERIFIED code] Every card list (Collection, sell, deck builder, crafting) passes CardFiltering.FilterCardTemplateList,
+  which drops fusionResult templates and cards without a shop item: patched to let Synchro/Xyz through; the deck builder
+  removes them again (EditDeckScreen patch). Release Synchro/Xyz cards therefore need a shop item (backorder is fine).
+- [VERIFIED code] A duel preloads its decks' pictures plus fusion results (CardLoadingUtil); a result card is created
+  mid-round from its loaded picture. Without the Synchro/Xyz results in that list the round never finished (emulator,
+  no script error). Patched (Summon.PreloadIds); the picker no longer unloads pictures on close.
+- [VERIFIED code] Original live-duel bug: fusing onto a monster already on the field sent that monster's id instead
+  of the dropped card (PlayerHandBO, AddCardToPlacedLivePvP(card.CurrentCardSlot, card)); fixed. The pick travels
+  as a negative last entry of the placement.
+- [VERIFIED emulator, x64 dev build] reward inbox grants the test cards with pictures; deck builder hides results;
+  Synchro picker (Junk Synchron + level 4: Stardust / Black Rose, white frames) and Xyz picker (two level 4
+  Warriors: Utopia / Excalibur, black frames); the picked card is summoned, black duel frame, round resolves, a
+  dead result sends its 2 materials to the graveyard.
+- Not verified yet: material effects (cost/needs/perMaterial/attach) in a duel, live duels, AI making Synchro,
+  Collection/sell listing of owned results, story map aixyz/aiextra.

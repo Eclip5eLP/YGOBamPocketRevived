@@ -2083,6 +2083,326 @@ if __import__("os").environ.get("YGO_WEB") == "1":
     for _cls, _edits in WEB_EDITS.items():
         PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
 
+# --- Synchro and Xyz (notes/synchro_xyz.md, rules and policy in as3_new/com/revival/summon/Summon.as) ------------
+# They reuse the fusion pairing (drop a card on your monster in the same channel) and GameMatBO.CreateFusionCard, so
+# the materials stay under the result. Changed: who can pair and what the pair becomes (FusionUtil, CardBO,
+# RoundHandler), the local player's pick (LocalPlayerHand -> SummonPickerPopup), the pick in live-duel moves
+# (PlayerHandBO sends it as a negative last entry, AwayPlayer reads it), per-duel AI settings (DuelData, XMLNode
+# map node properties aixyz / aiextra), white/black frames (CardVisual, DuelCard, DetailedCardVisual,
+# FullCardVisual), and no results in the deck builder (EditDeckScreen).
+SUMMON_IMPORT = "   import com.revival.summon.Summon;\n"
+SUMMON_EDITS = {
+    "com.frimastudio.snowstorm.module.cardgame.util.FusionUtil": [
+        ("""   import com.frimastudio.snowstorm.module.cardgame.card.CardBO;
+""", """   import com.frimastudio.snowstorm.module.cardgame.card.CardBO;
+""" + SUMMON_IMPORT),
+        ("""            return FindBaseMonster(aCard1,aCard2) != null && aCard1.CardToFuseWith == null && aCard2.CardToFuseWith == null;""",
+         """            return Summon.IsPossible(aCard1,aCard2);"""),
+        ("""            return true;
+         }
+         return false;
+      }""", """            return true;
+         }
+         return Summon.AiCanPair(aCardTemplate1,aCardTemplate2);
+      }"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.card.CardBO": [
+        ("""   import com.frimastudio.snowstorm.module.cardgame.duelstar.IDuelStarHandler;
+""", """   import com.frimastudio.snowstorm.module.cardgame.duelstar.IDuelStarHandler;
+""" + SUMMON_IMPORT),
+        ("""            aCard.Skin.FaceUpSkin.DisplayFusedAnim(baseCard.FusionInfo.resultCardTemplateId);""",
+         """            aCard.Skin.FaceUpSkin.DisplayFusedAnim(Summon.Result(this,aCard));"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.round.RoundHandler": [
+        ("""   import com.frimastudio.mobile.util.event.StarlingListener;
+""", """   import com.frimastudio.mobile.util.event.StarlingListener;
+""" + SUMMON_IMPORT),
+        ("""                  fusionInfo = this.GetFusionData(card);
+                  if(fusionInfo != null)
+                  {
+                     fusedCard = aPlayer.GameMat.CreateFusionCard(fusionInfo.resultCardTemplateId,card,cardToFuseWith);""",
+         """                  var summonId:int = Summon.Result(card,cardToFuseWith);
+                  if(summonId != 0)
+                  {
+                     fusedCard = aPlayer.GameMat.CreateFusionCard(summonId,card,cardToFuseWith);"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.player.hand.LocalPlayerHand": [
+        ("""   import com.frimastudio.common.core.client.UpdateManager;
+""", """   import com.frimastudio.common.core.client.UpdateManager;
+""" + SUMMON_IMPORT),
+        ("""               if(FusionUtil.IsFusionPossible(cardOnMat,aCurrentDraggedCard))
+               {
+                  cardOnMat.CardToFuseWith = aCurrentDraggedCard;
+                  fused = true;""", """               if(FusionUtil.IsFusionPossible(cardOnMat,aCurrentDraggedCard))
+               {
+                  cardOnMat.CardToFuseWith = aCurrentDraggedCard;
+                  Summon.OnLocalPair(cardOnMat,aCurrentDraggedCard);
+                  fused = true;"""),
+        ("""            else if(FusionUtil.IsFusionPossible(cardOnMat,aCurrentDraggedCard))
+            {
+               cardOnMat.CardToFuseWith = aCurrentDraggedCard;
+               fused = true;""", """            else if(FusionUtil.IsFusionPossible(cardOnMat,aCurrentDraggedCard))
+            {
+               cardOnMat.CardToFuseWith = aCurrentDraggedCard;
+               Summon.OnLocalPair(cardOnMat,aCurrentDraggedCard);
+               fused = true;"""),
+    ],
+    # Live-duel move: [slot, card, (second card), (-picked result)]. Also fixes the original sending the card already
+    # on the field instead of the card dropped on it (the other phone then played the wrong card).
+    "com.frimastudio.snowstorm.module.cardgame.player.hand.PlayerHandBO": [
+        ("""   import com.frimastudio.as3ToolKit.display.IUpdatable;
+""", """   import com.frimastudio.as3ToolKit.display.IUpdatable;
+""" + SUMMON_IMPORT),
+        ("""                  this.AddCardToPlacedLivePvP(slot,card.CardToFuseWith);
+""", """                  this.AddCardToPlacedLivePvP(slot,card.CardToFuseWith);
+                  this.AddSummonChoice(card);
+"""),
+        ("""               this.AddCardToPlacedLivePvP(card.CurrentCardSlot,card);
+""", """               this.AddCardToPlacedLivePvP(card.CurrentCardSlot,card.CardToFuseWith);
+               this.AddSummonChoice(card);
+"""),
+        ("""      private function AddCardToPlacedLivePvP(aCardSlot:CardSlot, aCard:CardBO) : void
+""", """      private function AddSummonChoice(aCard:CardBO) : void
+      {
+         var choice:int = Summon.Choice(aCard);
+         if(choice != 0 && this.mCardsPlacedArray.length > 0)
+         {
+            (this.mCardsPlacedArray[this.mCardsPlacedArray.length - 1] as Array).push(-choice);
+         }
+      }
+
+      private function AddCardToPlacedLivePvP(aCardSlot:CardSlot, aCard:CardBO) : void
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.player.AwayPlayer": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+""" + SUMMON_IMPORT),
+        ("""            placementData = cardPlacementData[i];
+""", """            placementData = (cardPlacementData[i] as Array).concat();
+            var summonChoice:int = 0;
+            if(placementData.length > 2 && int(placementData[placementData.length - 1]) < 0)
+            {
+               summonChoice = -int(placementData.pop());
+            }
+"""),
+        ("""            cardsBeingPlayed.push(cardToPlay);
+            if(placementData.length > 2)
+            {
+               fusionCard = this.GetNextAvailableCardByTemplateId(placementData[2]);
+               cardToPlay.CardToFuseWith = fusionCard;""", """            cardsBeingPlayed.push(cardToPlay);
+            Summon.SetChoice(cardToPlay,null,summonChoice);
+            if(placementData.length > 2)
+            {
+               fusionCard = this.GetNextAvailableCardByTemplateId(placementData[2]);
+               Summon.SetChoice(cardToPlay,fusionCard,summonChoice);
+               cardToPlay.CardToFuseWith = fusionCard;"""),
+    ],
+    "com.frimastudio.snowstorm.module.map.node.DuelData": [
+        ("""      private var mOpponentExternalId:String;
+""", """      private var mOpponentExternalId:String;
+
+      public var AiXyz:Boolean = false;
+
+      public var AiExtra:Array = null;
+"""),
+        ("""         this.mOpponentExternalId = "";
+""", """         this.mOpponentExternalId = "";
+         this.AiXyz = false;
+         this.AiExtra = null;
+"""),
+        ("""         clone.OpponentExternalId = this.mOpponentExternalId;
+""", """         clone.OpponentExternalId = this.mOpponentExternalId;
+         clone.AiXyz = this.AiXyz;
+         clone.AiExtra = this.AiExtra != null ? this.AiExtra.concat() : null;
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.map.node.XMLNode": [
+        ("""         duel.NodeName = mName.concat();
+""", """         duel.NodeName = mName.concat();
+         duel.AiXyz = GetProperty("aixyz") == "1";
+         if(GetProperty("aiextra"))
+         {
+            duel.AiExtra = [];
+            for each(var extraId:String in GetProperty("aiextra").split(","))
+            {
+               duel.AiExtra.push(int(extraId));
+            }
+         }
+"""),
+    ],
+    "com.frimastudio.utils.rendering.card.CardVisual": [
+        ("""   import com.frimastudio.common.core.manager.ManagerA;
+""", """   import com.frimastudio.common.core.manager.ManagerA;
+""" + SUMMON_IMPORT),
+        ("""      public function get IsFusionCard() : Boolean
+""", """      public function get SummonKind() : int
+      {
+         return this.mCardTemplate != null ? Summon.Kind(this.mCardTemplate.id) : 0;
+      }
+
+      public function get IsFusionCard() : Boolean
+"""),
+    ],
+    "com.frimastudio.utils.rendering.card.DuelCard": [
+        ("""   import com.frimastudio.mobile.asset.AssetCreationUtil;
+""", """   import com.frimastudio.mobile.asset.AssetCreationUtil;
+""" + SUMMON_IMPORT),
+        ("""         this.mMonsterMaskQuad.color = IsFusionCard ? 4865697 : 11216906;""",
+         """         this.mMonsterMaskQuad.color = IsFusionCard ? (SummonKind == Summon.SYNCHRO ? 10526880 : (SummonKind == Summon.XYZ ? 2631720 : 4865697)) : 11216906;"""),
+        ("""               return FUSION_CARD_BACKGROUND;""", """               return Summon.FrameName(FUSION_CARD_BACKGROUND,SummonKind);"""),
+    ],
+    "com.frimastudio.utils.rendering.card.DetailedCardVisual": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+""" + SUMMON_IMPORT),
+        ("""      protected var mBackgroundFusion:Image;
+""", """      protected var mBackgroundFusion:Image;
+
+      private var mBackgroundSummon:Image;
+
+      private var mBackgroundSummonName:String;
+"""),
+        ("""            ImagePool.ReuseImage(this.mBackgroundFusion);
+            this.mBackgroundFusion = null;
+         }
+""", """            ImagePool.ReuseImage(this.mBackgroundFusion);
+            this.mBackgroundFusion = null;
+         }
+         if(this.mBackgroundSummon != null)
+         {
+            this.mBackgroundSummon.removeFromParent();
+            ImagePool.ReuseImage(this.mBackgroundSummon);
+            this.mBackgroundSummon = null;
+         }
+"""),
+        ("""               mBackground = this.mBackgroundFusion;""",
+         """               mBackground = SummonKind != 0 ? this.SummonBackground() : this.mBackgroundFusion;"""),
+        ("""      override protected function DisplayBackground() : void
+""", """      private function SummonBackground() : Image
+      {
+         var name:String = Summon.FrameName(this.mDisplayData.FusionBackgroundTextureName,SummonKind);
+         if(this.mBackgroundSummon == null || this.mBackgroundSummonName != name)
+         {
+            if(this.mBackgroundSummon != null)
+            {
+               this.mBackgroundSummon.removeFromParent();
+               ImagePool.ReuseImage(this.mBackgroundSummon);
+            }
+            this.mBackgroundSummon = AssetManagerWrapper.GetImage(name);
+            this.mBackgroundSummonName = name;
+         }
+         return this.mBackgroundSummon;
+      }
+
+      override protected function DisplayBackground() : void
+"""),
+    ],
+    # Synchro: white frame, black name/type text; bar under the art: frames 2 (Synchro) / 3 (Xyz) of
+    # common_card_template_bar_bottom (second common atlas page)
+    "com.frimastudio.utils.rendering.card.FullCardVisual": [
+        ("""   import com.frimastudio.mobile.asset.AssetManagerWrapper;
+""", """   import com.frimastudio.mobile.asset.AssetManagerWrapper;
+""" + SUMMON_IMPORT),
+        ("""         mCardNameTxtField.color = IsFusionCard ? Color.WHITE : Color.BLACK;
+         mCardTypeTxtField.color = IsFusionCard ? Color.WHITE : Color.BLACK;""",
+         """         mCardNameTxtField.color = IsFusionCard && SummonKind != Summon.SYNCHRO ? Color.WHITE : Color.BLACK;
+         mCardTypeTxtField.color = IsFusionCard && SummonKind != Summon.SYNCHRO ? Color.WHITE : Color.BLACK;"""),
+        ("""            this.mBarBottom.currentFrame = IsFusionCard ? 1 : 0;""",
+         """            this.mBarBottom.currentFrame = Math.min(IsFusionCard ? (SummonKind == Summon.SYNCHRO ? 2 : (SummonKind == Summon.XYZ ? 3 : 1)) : 0,this.mBarBottom.numFrames - 1);"""),
+    ],
+    # Material effects (Summon.CanResolveEffect / OnEffectResolved / ScaleByMaterials): the effect row's id is kept on
+    # the effect so its rule can be looked up in summons.json "effects".
+    "com.frimastudio.snowstorm.module.cardgame.effect.effectlist.EffectBO": [
+        ("""      protected var mIsOncePerGameDispatched:Boolean;
+""", """      protected var mIsOncePerGameDispatched:Boolean;
+
+      public var RevivalEffectId:int = 0;
+"""),
+        ("""         this.mIsOncePerGame = (aData[0] as Effect).oncePerGame;
+""", """         this.mIsOncePerGame = (aData[0] as Effect).oncePerGame;
+         this.RevivalEffectId = (aData[0] as Effect).id;
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.effect.EffectHandler": [
+        ("""   import com.frimastudio.as3ToolKit.math.RandomSeed;
+""", """   import com.frimastudio.as3ToolKit.math.RandomSeed;
+""" + SUMMON_IMPORT),
+        ("""         if(aEffect.IsOncePerGame && aEffect.IsOncePerGameDispatched)
+         {
+            aEffect.OnEffectFailedResolved();
+            return;
+         }
+""", """         if(aEffect.IsOncePerGame && aEffect.IsOncePerGameDispatched)
+         {
+            aEffect.OnEffectFailedResolved();
+            return;
+         }
+         if(!Summon.CanResolveEffect(aEffect))
+         {
+            aEffect.OnEffectFailedResolved();
+            aEffect.DispatcherList.length = 0;
+            return;
+         }
+"""),
+        ("""         if(isResolved)
+         {
+            aEffect.OnEffectResolved();
+""", """         if(isResolved)
+         {
+            Summon.OnEffectResolved(aEffect);
+            aEffect.OnEffectResolved();
+"""),
+        ("""                  initialValue = currentTargetCard.AttackPower;
+""", """                  attackModifier = Summon.ScaleByMaterials(aCardStatModifier,attackModifier);
+                  initialValue = currentTargetCard.AttackPower;
+"""),
+        ("""         targetPlayer.HP = OperatorUtil.ApplyOperator(aHealthEffect.HealthOperator,targetPlayer.HP,healthModifier);
+""", """         healthModifier = Summon.ScaleByMaterials(aHealthEffect,healthModifier);
+         targetPlayer.HP = OperatorUtil.ApplyOperator(aHealthEffect.HealthOperator,targetPlayer.HP,healthModifier);
+"""),
+    ],
+    # A duel preloads its cards' pictures plus their fusion results'; a result card is created mid-round and needs its
+    # picture already loaded (without it the round never finished, seen in the emulator). Add the Synchro/Xyz results.
+    "com.frimastudio.utils.cardloading.CardLoadingUtil": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+""" + SUMMON_IMPORT),
+        ("""               path = GetCardCompletePathFromCardTemplateId(cardTemplate.fusionData.resultCardTemplateId);
+               file = File.applicationStorageDirectory.resolvePath(path);
+               fileList.push(file);
+            }
+""", """               path = GetCardCompletePathFromCardTemplateId(cardTemplate.fusionData.resultCardTemplateId);
+               file = File.applicationStorageDirectory.resolvePath(path);
+               fileList.push(file);
+            }
+            for each(var summonId:int in Summon.PreloadIds(cardTemplateId))
+            {
+               fileList.push(File.applicationStorageDirectory.resolvePath(GetCardCompletePathFromCardTemplateId(summonId)));
+            }
+"""),
+    ],
+    # Every card list (Collection, sell menu, deck builder, crafting) starts here; it dropped all fusion results.
+    # Synchro/Xyz cards can be owned: let them through (the deck builder removes them again, EditDeckScreen below).
+    "com.frimastudio.utils.cardfiltering.CardFiltering": [
+        ("""   import com.frimastudio.common.core.manager.ManagerA;
+""", """   import com.frimastudio.common.core.manager.ManagerA;
+""" + SUMMON_IMPORT),
+        ("""            if(Boolean(shopItem) && (Boolean(aIgnoreBackorder || !shopItem.backorder)) && cardTemplate.fusionResult == false)""",
+         """            if(Boolean(shopItem) && (Boolean(aIgnoreBackorder || !shopItem.backorder)) && (cardTemplate.fusionResult == false || Summon.Kind(cardTemplate.id) != Summon.NONE))"""),
+    ],
+    "com.frimastudio.snowstorm.module.deckbuilder.screens.EditDeckScreen": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+""" + SUMMON_IMPORT),
+        ("""         var cardListData:CardTemplateListData = CardTemplateListUtil.GenerateCardTemplateDataList(FilterModule.MyCardOnly,FilterModule.TournamentCardOnly,this.mUI.FilterDisplay.ActiveFilterList,null,cardTemplateDisplayedOnMatList);
+""", """         var cardListData:CardTemplateListData = Summon.WithoutResults(CardTemplateListUtil.GenerateCardTemplateDataList(FilterModule.MyCardOnly,FilterModule.TournamentCardOnly,this.mUI.FilterDisplay.ActiveFilterList,null,cardTemplateDisplayedOnMatList));
+"""),
+    ],
+}
+for _cls, _edits in SUMMON_EDITS.items():
+    PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
+
 # Browser profiling (YGO_WEB_PROFILE=1 on top of YGO_WEB, dev only): Starling's per-frame logic vs. drawing, and
 # rendered (non-bitmap-font) text, reported to the page every 2 s (com.revival.web.WebProf).
 WEB_PROFILE_EDITS = {

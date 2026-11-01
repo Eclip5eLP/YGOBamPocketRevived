@@ -713,6 +713,7 @@ class BAMThreadingServer(http.server.ThreadingHTTPServer):
         self.traffic = Traffic()
         store = AccountStore(Path(config["data_dir"]))
         self.game = Game(store, Path(config["data_dir"]) / "rsa_private.json", logger)
+        self.game.load_result_cards(config.get("content_dir", ""))
         self.content = Content(config.get("content_dir", ""))
         self.rewards = Rewards(store, config.get("content_dir", ""), logger)
         self.game.livepvp.rewards = self.rewards

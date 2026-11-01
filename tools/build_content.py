@@ -151,7 +151,8 @@ def main():
         mods = list(content_mods.MODS)
         if os.environ.get("YGO_TEST_CONTENT"):
             import content_test_mods
-            mods[-1:-1] = content_test_mods.MODS  # before write_boosterpacks
+            at = mods.index(content_mods.write_summons)  # before write_summons and write_boosterpacks
+            mods[at:at] = content_test_mods.MODS
             print("TEST CONTENT included (YGO_TEST_CONTENT)")
         for mod in mods:
             print("mod:", mod.__name__)

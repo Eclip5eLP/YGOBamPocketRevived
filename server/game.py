@@ -21,6 +21,7 @@ Client references (work/as3):
 """
 
 import json
+import os
 import secrets
 import zlib
 import threading
@@ -74,7 +75,17 @@ class Game:
         self.arena = Arena(store, self.deck_for, logger)
         self.teams = Teams(store, logger)
         self.livepvp = LivePvP(store, self.teams, logger)
+        self.result_cards = set()  # Fusion/Synchro/Xyz results: made in duels, never in a deck (load_result_cards)
         self._load_sessions()
+
+    def load_result_cards(self, content_dir):
+        """<content_dir>/server/result_cards.json (tools/content_mods.write_summons): template ids of the cards that
+        are made in duels; the strongest-cards deck (deck_source) leaves them out."""
+        try:
+            with open(os.path.join(content_dir or "", "server", "result_cards.json"), encoding="utf-8") as f:
+                self.result_cards = {int(i) for i in json.load(f)}
+        except (OSError, ValueError):
+            self.result_cards = set()
 
     # Logged-in sessions survive a server restart (deploy / auto-reload); otherwise every client
     # would get "no logged-in session" until it logs in again.
@@ -381,7 +392,8 @@ class Game:
             if d["default"] and d["cards"]:
                 return d["name"], d["cards"]
         out = []
-        collection = [it for it in items if it.get("itemTemplateId", 0) > 0 and "atkStat" in it]
+        collection = [it for it in items if it.get("itemTemplateId", 0) > 0 and "atkStat" in it
+                      and int(it["itemTemplateId"]) not in self.result_cards]
         collection.sort(key=lambda c: -(c.get("atkStat", 0) + c.get("defStat", 0)))
         for c in collection:  # max 3 copies per card, even when it is spread over several save items
             tid = int(c["itemTemplateId"])

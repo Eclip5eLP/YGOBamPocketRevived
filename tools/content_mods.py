@@ -18,11 +18,12 @@ PACKAGE_DIRS = {
     "mappreview": "asset/misc/mappreview/",
     "hud": "asset/module/hud/",
     "mainmenu": "asset/module/mainmenu/",
+    "common": "asset/common/",
     # pictures of new cards only (add_card); unpacks into asset/cards/ next to series1/series2 (EExternalAsset
     # SERIES3, tools/as3_patches.py). None: no original files to start from.
     "series3": None,
 }
-NEW_CARDS_VERSION = "1.0.0"  # series3 package version: raise it whenever a card picture is added or changed
+NEW_CARDS_VERSION = "1.0.1"  # series3 package version: raise it whenever a card picture is added or changed
 
 
 def free_bam_pro(ctx):
@@ -100,30 +101,37 @@ LOCAL_STORE = (Path(__file__).resolve().parent.parent / "input" / "data" / "data
                "com.konami.ygo" / "Local Store")
 
 
-def add_atlas_frames(ctx, package, atlas, list_path, frames, version, first_page=None):
+def add_atlas_frames(ctx, package, atlas, list_path, frames, version, first_page=None, subdir=""):
     """Add texture frames to a module as a second atlas page <atlas>_2 (Starling merges all pages of a module,
     AssetManager.getTextureNames sorts names across atlases, so e.g. shop_booster_covers_0011 becomes frame 11).
 
     frames: {frame name: PIL image}. The page is added to the module's asset list (asset/list/..., game data)
     and shipped in the module's package (version = new package version). first_page: list name of the original
-    page when it is not <atlas>_1 (e.g. hud_all)."""
+    page when it is not <atlas>_1 (e.g. hud_all). subdir: the atlas folder inside the package (common: "common/").
+    Frames go in columns at most 2048 px high (the largest texture the game's GPU profile takes)."""
     first_page = first_page or f"{atlas}_1"
     from PIL import Image
-    pad = 2
-    width = max(img.width for img in frames.values()) + 2 * pad
-    height = sum(img.height + pad for img in frames.values()) + pad
+    pad, max_height = 2, 2048
+    places, x, y, column_width = {}, pad, pad, 0
+    for name, img in sorted(frames.items()):
+        if y + img.height + pad > max_height:
+            x, y, column_width = x + column_width + pad, pad, 0
+        places[name] = (x, y)
+        y += img.height + pad
+        column_width = max(column_width, img.width)
+    width = max(px + frames[n].width for n, (px, _) in places.items()) + pad
+    height = max(py + frames[n].height for n, (_, py) in places.items()) + pad
     page = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     xml = [f'<TextureAtlas imagePath="{atlas}_2.png">']
-    y = pad
     for name, img in sorted(frames.items()):
-        page.paste(img, (pad, y))
-        xml.append(f'    <SubTexture name="{name}" x="{pad}" y="{y}" width="{img.width}" height="{img.height}"/>')
-        y += img.height + pad
+        px, py = places[name]
+        page.paste(img, (px, py))
+        xml.append(f'    <SubTexture name="{name}" x="{px}" y="{py}" width="{img.width}" height="{img.height}"/>')
     xml.append("</TextureAtlas>")
     buf = io.BytesIO()
     page.save(buf, "PNG")
-    ctx.package_file(package, f"{atlas}_2.png", buf.getvalue(), version)
-    ctx.package_file(package, f"{atlas}_2.xml", ("\n".join(xml) + "\n").encode("utf-8"), version)
+    ctx.package_file(package, f"{subdir}{atlas}_2.png", buf.getvalue(), version)
+    ctx.package_file(package, f"{subdir}{atlas}_2.xml", ("\n".join(xml) + "\n").encode("utf-8"), version)
     lst = ctx.original(list_path).decode("utf-8")
     first = re.search(rf'<Asset name="{first_page}" path="([^"]+)"[^>]*/>', lst)
     entry = first.group(0).replace(f'name="{first_page}"', f'name="{atlas}_2"').replace(
@@ -166,7 +174,7 @@ def add_card(ctx, template_id, base_template_id, name, scan, **fields):
     """A new card: a copy of an existing card (stats, effects, rarity...) with its own id, name and picture.
 
     scan is an official card scan (full card); its art box becomes the card picture (tools/card_art.py) in the
-    series3 package. fields override template fields (atkStat, defStat, cardLevel, cardRarityId,
+    series3 package. A square image is taken as the art itself (YGOPRODeck cards_cropped). fields override template fields (atkStat, defStat, cardLevel, cardRarityId,
     cardElementId, cardFamilyId, cardSerieId...). Effects are copied with new effect ids (they are unique in the
     data); their texts stay those of the base card. Returns the new template."""
     from PIL import Image
@@ -181,7 +189,8 @@ def add_card(ctx, template_id, base_template_id, name, scan, **fields):
         e["effect"]["id"] = next_effect
         next_effect += 1
     card.update(id=template_id, resourceNameId=type(base["resourceNameId"])(NEW_CARD_NAME_IDS + template_id),
-                fusionData=None, fusionResult=False, cardNumber=0, **fields)
+                fusionData=None, fusionResult=False, cardNumber=0)
+    card.update(fields)
     templates.append(card)
     for lang in ("en", "fr"):
         ctx.set_text(lang, "inventory", str(NEW_CARD_NAME_IDS + template_id), name,
@@ -200,7 +209,9 @@ def add_card(ctx, template_id, base_template_id, name, scan, **fields):
     link.update(id=max(x["id"] for x in links) + 1, itemTemplateId=template_id, assetId=asset["id"])
     links.append(link)
     buf = io.BytesIO()
-    cutter.game_picture(cutter.cut_art(Image.open(scan))).save(buf, "JPEG", quality=90)
+    image = Image.open(scan)
+    art = image.convert("RGB") if abs(image.height / image.width - 1) < 0.05 else cutter.cut_art(image)
+    cutter.game_picture(art).save(buf, "JPEG", quality=90)
     ctx.package_file("series3", f"{picture}.jpg", buf.getvalue(), NEW_CARDS_VERSION)
     return card
 
@@ -594,6 +605,85 @@ def card_sources(ctx):
     print(f"  card sources: {len(texts)} card(s) with a source text")
 
 
+COMMON_VERSION = "1.1.10"  # common package (original 1.1.9): raise when its overlay changes
+
+# Synchro/Xyz frame colours: the fusion pictures' brightness mapped onto dark..light (summon_frames)
+SUMMON_TINTS = {
+    "synchro": {"frame": ("#77777d", "#ffffff"), "preview": ("#9a9aa0", "#ffffff"), "bar": ("#000000", "#a9a9b0")},
+    "xyz": {"frame": ("#050506", "#5c5c66"), "preview": ("#55555e", "#d2d2da"), "bar": ("#000000", "#3e3e48")},
+}
+
+
+def summon_frames(ctx):
+    """White (Synchro) and black (Xyz) versions of the fusion card pictures, as a second common atlas page. Names:
+    the fusion picture's with "fusion" -> "synchro"/"xyz" (com.revival.summon.Summon.FrameName); the bar under the
+    art becomes frames 2/3 of common_card_template_bar_bottom (FullCardVisual patch). The beige text box of the big
+    card keeps its colour."""
+    from PIL import Image, ImageOps
+
+    def tint(img, colours, keep_beige=False):
+        rgb = img.convert("RGB")
+        grey = ImageOps.autocontrast(ImageOps.grayscale(rgb))
+        out = ImageOps.colorize(grey, *colours).convert("RGBA")
+        out.putalpha(img.getchannel("A"))
+        if keep_beige:  # text box and its edge: red clearly above blue (the fusion frame is blue/purple)
+            src, dst = img.load(), out.load()
+            for yy in range(img.height):
+                for xx in range(img.width):
+                    r, _, b, a = src[xx, yy]
+                    if r > b + 30:
+                        dst[xx, yy] = (*src[xx, yy][:3], a)
+        return out
+
+    common = "asset/common/common"
+    duel = atlas_frame(common, "common_all_1", "common_duel_fusion_card_0000")
+    big = atlas_frame(common, "common_all_1", "common_cardtemplate_card_fusion_0000")
+    preview = atlas_frame(common, "common_all_1", "common_fusion_preview_card_background_0000")
+    bar = atlas_frame(common, "common_all_1", "common_card_template_bar_bottom_0001")
+    frames = {}
+    for n, kind in ((2, "synchro"), (3, "xyz")):
+        t = SUMMON_TINTS[kind]
+        frames[f"common_duel_{kind}_card_0000"] = tint(duel, t["frame"])
+        frames[f"common_cardtemplate_card_{kind}_0000"] = tint(big, t["frame"], keep_beige=True)
+        frames[f"common_{kind}_preview_card_background_0000"] = tint(preview, t["preview"])
+        frames[f"common_card_template_bar_bottom_000{n}"] = tint(bar, t["bar"])
+    add_atlas_frames(ctx, "common", "common_all", "asset/list/common/common_list.xml", frames,
+                     version=COMMON_VERSION, subdir="common/")
+
+
+# Synchro/Xyz rules, written to config/summons.json (com.revival.summon.Summon):
+#   "synchro": {tuner template id: {level total: [result ids]}}
+#   "xyz": [{"id": result id, "rank": level of both materials, "family": 0 or monster type, "element": 0 or attribute}]
+#   "effects": {effect id: {"needs": n, "cost": n, "perMaterial": 1, "attach": n}}  material effects on effect rows of
+#              a result card (meaning: com.revival.summon.Summon, "Material effects")
+# Result cards are added with add_card(..., fusionResult=True): made in duels, never in decks (Collection and the
+# sell menu show the ones you own). Test cards: tools/content_test_mods.py.
+SUMMONS = {"synchro": {}, "xyz": [], "effects": {}}
+
+
+def write_summons(ctx):
+    """config/summons.json from SUMMONS (after the test mods, which may add test rules). Checks every id is a card."""
+    items = {i["id"]: i for i in ctx.ace("config/ace/inventory/item_template.ace")}
+    ids = [int(t) for t in SUMMONS["synchro"]] + [x["id"] for x in SUMMONS["xyz"]]
+    ids += [r for levels in SUMMONS["synchro"].values() for results in levels.values() for r in results]
+    for i in ids:
+        if i not in items:
+            raise RuntimeError(f"summons: unknown card {i}")
+    effect_ids = {e["effect"]["id"] for t in items.values() for e in (t.get("effects") or [])}
+    for effect_id, rule in SUMMONS["effects"].items():
+        if effect_id not in effect_ids or set(rule) - {"needs", "cost", "perMaterial", "attach"}:
+            raise RuntimeError(f"summons: bad material effect {effect_id}: {rule}")
+    for x in SUMMONS["xyz"]:
+        if items[x["id"]]["cardLevel"] != x["rank"]:
+            raise RuntimeError(f"summons: Xyz {x['id']} level {items[x['id']]['cardLevel']} != rank {x['rank']}")
+    data = {"synchro": {str(t): {str(lv): r for lv, r in levels.items()} for t, levels in SUMMONS["synchro"].items()},
+            "xyz": SUMMONS["xyz"], "effects": {str(e): r for e, r in SUMMONS["effects"].items()}}
+    ctx.new_file("config/summons.json", json.dumps(data, separators=(",", ":"), sort_keys=True).encode("utf-8"))
+    # server: cards made in duels (fusionResult), left out of the strongest-cards deck (server/game.py deck_source)
+    results = sorted(i for i, t in items.items() if t.get("fusionResult"))
+    ctx.server_files["result_cards.json"] = json.dumps(results).encode("utf-8")
+
+
 def write_boosterpacks(ctx):
     """Last: config/boosterpacks.json for EBoosterPackInfo.LoadExtraPacks (tools/as3_patches.py). Validates each
     pack first: a purchase charges before the pack is rolled, so a pack without a loot table would take DP and
@@ -624,5 +714,7 @@ MODS = [
     mainmenu_icons,
     profile_icons,
     card_icons,
+    summon_frames,
+    write_summons,  # test mods (YGO_TEST_CONTENT) run right before this one (build_content.py)
     write_boosterpacks,
 ]
