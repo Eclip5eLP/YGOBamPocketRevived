@@ -993,7 +993,8 @@
   "effects": [
    "BOOST ALL DRAGONS 300"
   ],
-  "effect_note": "Stardust support, can't be bounced"
+  "effect_note": "Stardust support, can't be bounced",
+  "single_use": false
  },
  {
   "id": 79068663,
@@ -1010,7 +1011,8 @@
    "BOOST 400",
    "HURT OPPONENT 300"
   ],
-  "effect_note": "damage when the equipped monster destroys a monster"
+  "effect_note": "damage when the equipped monster destroys a monster",
+  "single_use": false
  },
  {
   "id": 37745919,
@@ -1026,7 +1028,8 @@
   "effects": [
    "RESURRECT MACHINES"
   ],
-  "effect_note": "revives a Morphtronic, destroyed at the End Phase"
+  "effect_note": "revives a Morphtronic, destroyed at the End Phase",
+  "single_use": true
  },
  {
   "id": 26387390,
@@ -1043,7 +1046,8 @@
    "RESURRECT WARRIOR",
    "BREAK IMMUNITY"
   ],
-  "effect_note": "summons Junk Warrior / Stardust support; protects a Synchro"
+  "effect_note": "summons Junk Warrior / Stardust support; protects a Synchro",
+  "single_use": true
  },
  {
   "id": 25518020,
@@ -1059,7 +1063,8 @@
   "effects": [
    "BOOST ALL MACHINES 200"
   ],
-  "effect_note": "Machines gain 200 ATK"
+  "effect_note": "Machines gain 200 ATK",
+  "single_use": false
  },
  {
   "id": 8529136,
@@ -1076,7 +1081,8 @@
    "BOOST 500",
    "IMMUNE"
   ],
-  "effect_note": "Junk Warrior: piercing, double damage, not destroyed"
+  "effect_note": "Junk Warrior: piercing, double damage, not destroyed",
+  "single_use": true
  },
  {
   "id": 37750912,
@@ -1093,7 +1099,8 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "summons a Stardust monster",
-  "effect_idea": "LEVEL UP 1 / LEVEL DOWN 1"
+  "effect_idea": "LEVEL UP 1 / LEVEL DOWN 1",
+  "single_use": true
  },
  {
   "id": 89181369,
@@ -1109,7 +1116,8 @@
   "effects": [
    "RESURRECT DRAGONS"
   ],
-  "effect_note": "revives a Dragon Synchro from the GY"
+  "effect_note": "revives a Dragon Synchro from the GY",
+  "single_use": true
  },
  {
   "id": 1003840,
@@ -1126,7 +1134,8 @@
    "DESTROY SPELL",
    "RESURRECT MACHINES"
   ],
-  "effect_note": "summons a Synchron; shuffles a card away"
+  "effect_note": "summons a Synchron; shuffles a card away",
+  "single_use": false
  },
  {
   "id": 61032879,
@@ -1143,7 +1152,8 @@
    "HURT OPPONENT 500"
   ],
   "effect_note": "500 damage per Synchro Summon",
-  "effect_idea": "ON SYNCHRO SUMMON: HURT OPPONENT 500"
+  "effect_idea": "ON SYNCHRO SUMMON: HURT OPPONENT 500",
+  "single_use": false
  },
  {
   "id": 56294501,
@@ -1159,7 +1169,8 @@
   "effects": [
    "HEAL 500"
   ],
-  "effect_note": "hides your monsters face-down"
+  "effect_note": "hides your monsters face-down",
+  "single_use": false
  },
  {
   "id": 48497555,
@@ -1176,7 +1187,8 @@
    "DESTROY SPELL",
    "RESURRECT WARRIOR"
   ],
-  "effect_note": "destroys a face-up Spell/Trap; revives a Junk"
+  "effect_note": "destroys a face-up Spell/Trap; revives a Junk",
+  "single_use": true
  },
  {
   "id": 27196937,
@@ -1192,7 +1204,8 @@
   "effects": [
    "RESURRECT DRAGON"
   ],
-  "effect_note": "revives a Stardust monster"
+  "effect_note": "revives a Stardust monster",
+  "single_use": true
  },
  {
   "id": 13556444,
@@ -1208,7 +1221,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "revives monsters destroyed this turn"
+  "effect_note": "revives monsters destroyed this turn",
+  "single_use": true
  },
  {
   "id": 20590784,
@@ -1225,7 +1239,8 @@
    "CRIPPLE 800",
    "RESURRECT DRAGON"
   ],
-  "effect_note": "negates a direct attack, summons a Stardust"
+  "effect_note": "negates a direct attack, summons a Stardust",
+  "single_use": true
  },
  {
   "id": 35129241,
@@ -1242,7 +1257,8 @@
    "IMMUNE ALL DRAGONS"
   ],
   "effect_note": "revives a tributed Stardust; it can't be destroyed by battle",
-  "effect_idea": "IMMUNE ALL SYNCHROS"
+  "effect_idea": "IMMUNE ALL SYNCHROS",
+  "single_use": false
  },
  {
   "id": 89127526,
@@ -1726,7 +1742,8 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys a card each time a Resonator is Synchro material",
-  "effect_idea": "ON SYNCHRO SUMMON: DESTROY MONSTER"
+  "effect_idea": "ON SYNCHRO SUMMON: DESTROY MONSTER",
+  "single_use": false
  },
  {
   "id": 23008320,
@@ -1742,7 +1759,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "searches a Resonator"
+  "effect_note": "searches a Resonator",
+  "single_use": true
  },
  {
   "id": 8559524,
@@ -1758,7 +1776,8 @@
   "effects": [
    "RESURRECT LV 5 & LESS MONSTER"
   ],
-  "effect_note": "discards a Resonator, searches a Level 4 Fiend"
+  "effect_note": "discards a Resonator, searches a Level 4 Fiend",
+  "single_use": true
  },
  {
   "id": 15576074,
@@ -1774,7 +1793,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "returns 2 Resonators, searches a Level 4"
+  "effect_note": "returns 2 Resonators, searches a Level 4",
+  "single_use": true
  },
  {
   "id": 41197012,
@@ -1790,7 +1810,8 @@
   "effects": [
    "RESURRECT LV 4 MONSTERS"
   ],
-  "effect_note": "revives 2 Resonators next to a Dragon Synchro"
+  "effect_note": "revives 2 Resonators next to a Dragon Synchro",
+  "single_use": true
  },
  {
   "id": 92936364,
@@ -1807,7 +1828,8 @@
    "CRIPPLE ALL 300",
    "BREAK IMMUNITY ALL"
   ],
-  "effect_note": "monsters lose ATK and their effects"
+  "effect_note": "monsters lose ATK and their effects",
+  "single_use": false
  },
  {
   "id": 26118970,
@@ -2149,7 +2171,8 @@
    "CRIPPLE ALL 500",
    "HEAL OPPONENT 300"
   ],
-  "effect_note": "halves summoned monsters' ATK, gives the opponent a token"
+  "effect_note": "halves summoned monsters' ATK, gives the opponent a token",
+  "single_use": false
  },
  {
   "id": 53503015,
@@ -2166,7 +2189,8 @@
    "SACRIFICE MONSTER",
    "RESURRECT PLANTS"
   ],
-  "effect_note": "sends your monster to the GY to draw or search"
+  "effect_note": "sends your monster to the GY to draw or search",
+  "single_use": true
  },
  {
   "id": 45247637,
@@ -2183,7 +2207,8 @@
    "CRIPPLE 800",
    "BOOST 800"
   ],
-  "effect_note": "takes control of a monster"
+  "effect_note": "takes control of a monster",
+  "single_use": false
  },
  {
   "id": 65079854,
@@ -2200,7 +2225,8 @@
    "BOOST 600",
    "CRIPPLE 600"
   ],
-  "effect_note": "+600 ATK; the attacked monster loses 600"
+  "effect_note": "+600 ATK; the attacked monster loses 600",
+  "single_use": false
  },
  {
   "id": 84335863,
@@ -2216,7 +2242,8 @@
   "effects": [
    "RESURRECT PLANTS"
   ],
-  "effect_note": "summons a Rose Dragon or Plant when you have no monsters"
+  "effect_note": "summons a Rose Dragon or Plant when you have no monsters",
+  "single_use": false
  },
  {
   "id": 99092624,
@@ -2232,7 +2259,8 @@
   "effects": [
    "HEAL 800"
   ],
-  "effect_note": "summons 800/800 Rose Tokens"
+  "effect_note": "summons 800/800 Rose Tokens",
+  "single_use": true
  },
  {
   "id": 70703416,
@@ -2806,7 +2834,8 @@
    "RESURRECT WATER MONSTERS",
    "IMMUNE ALL WATER MONSTERS"
   ],
-  "effect_note": "revives an Ice Barrier; they are unaffected"
+  "effect_note": "revives an Ice Barrier; they are unaffected",
+  "single_use": false
  },
  {
   "id": 64990807,
@@ -2823,7 +2852,8 @@
    "DESTROY MONSTER",
    "RESURRECT WATER MONSTERS"
   ],
-  "effect_note": "destroys a card and summons an Ice Barrier"
+  "effect_note": "destroys a card and summons an Ice Barrier",
+  "single_use": true
  },
  {
   "id": 84206435,
@@ -2839,7 +2869,8 @@
   "effects": [
    "RESURRECT AQUA MONSTER"
   ],
-  "effect_note": "searches an Ice Barrier"
+  "effect_note": "searches an Ice Barrier",
+  "single_use": true
  },
  {
   "id": 10691144,
@@ -2855,7 +2886,8 @@
   "effects": [
    "HURT OPPONENT 500"
   ],
-  "effect_note": "banishes the opponent's cards back"
+  "effect_note": "banishes the opponent's cards back",
+  "single_use": true
  },
  {
   "id": 17197110,
@@ -2872,7 +2904,8 @@
    "SACRIFICE MONSTER",
    "RESURRECT WATER MONSTERS"
   ],
-  "effect_note": "tributes Ice Barriers to summon others"
+  "effect_note": "tributes Ice Barriers to summon others",
+  "single_use": true
  },
  {
   "id": 35380371,
@@ -2888,7 +2921,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "bounces an Extra Deck monster"
+  "effect_note": "bounces an Extra Deck monster",
+  "single_use": false
  },
  {
   "id": 34293667,
@@ -2905,7 +2939,8 @@
    "CRIPPLE 1500",
    "BREAK IMMUNITY"
   ],
-  "effect_note": "attacker's ATK becomes 0, effects negated"
+  "effect_note": "attacker's ATK becomes 0, effects negated",
+  "single_use": true
  },
  {
   "id": 6075533,
@@ -2922,7 +2957,8 @@
    "DESTROY MONSTER",
    "DESTROY SPELL"
   ],
-  "effect_note": "banishes cards per Ice Barrier Synchro"
+  "effect_note": "banishes cards per Ice Barrier Synchro",
+  "single_use": true
  },
  {
   "id": 64910482,
@@ -3338,7 +3374,8 @@
   "effects": [
    "BOOST ALL MACHINES 300"
   ],
-  "effect_note": "T.G. monsters become Machines; extra summon"
+  "effect_note": "T.G. monsters become Machines; extra summon",
+  "single_use": false
  },
  {
   "id": 28189908,
@@ -3354,7 +3391,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "searches 2 T.G. monsters"
+  "effect_note": "searches 2 T.G. monsters",
+  "single_use": true
  },
  {
   "id": 11264180,
@@ -3370,7 +3408,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "halves a T.G. to destroy a Spell/Trap"
+  "effect_note": "halves a T.G. to destroy a Spell/Trap",
+  "single_use": true
  },
  {
   "id": 58258899,
@@ -3386,7 +3425,8 @@
   "effects": [
    "BOOST ALL 300"
   ],
-  "effect_note": "+300 ATK per T.G. monster"
+  "effect_note": "+300 ATK per T.G. monster",
+  "single_use": false
  },
  {
   "id": 93138457,
@@ -3403,7 +3443,8 @@
    "CRIPPLE 1000",
    "RESURRECT MONSTER"
   ],
-  "effect_note": "negates an attack, summons a T.G."
+  "effect_note": "negates an attack, summons a T.G.",
+  "single_use": true
  },
  {
   "id": 2339825,
@@ -3420,7 +3461,8 @@
    "DESTROY SPELL",
    "BREAK IMMUNITY"
   ],
-  "effect_note": "negates and destroys"
+  "effect_note": "negates and destroys",
+  "single_use": true
  },
  {
   "id": 40253382,
@@ -3436,7 +3478,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "revives a T.G. Synchro after a battle win"
+  "effect_note": "revives a T.G. Synchro after a battle win",
+  "single_use": true
  },
  {
   "id": 76641981,
@@ -3453,7 +3496,8 @@
    "CRIPPLE 800",
    "BOOST 800"
   ],
-  "effect_note": "switches control of two monsters"
+  "effect_note": "switches control of two monsters",
+  "single_use": true
  },
  {
   "id": 3868277,
@@ -3469,7 +3513,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "shuffles 3 T.G. monsters back, draws 2"
+  "effect_note": "shuffles 3 T.G. monsters back, draws 2",
+  "single_use": true
  },
  {
   "id": 80925836,
@@ -3824,7 +3869,8 @@
    "BOOST 300",
    "DESTROY MONSTER"
   ],
-  "effect_note": "destroys LIGHT/DARK monsters it battles"
+  "effect_note": "destroys LIGHT/DARK monsters it battles",
+  "single_use": false
  },
  {
   "id": 13997673,
@@ -3840,7 +3886,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "discards to draw 2"
+  "effect_note": "discards to draw 2",
+  "single_use": true
  },
  {
   "id": 36560997,
@@ -3856,7 +3903,8 @@
   "effects": [
    "BOOST ALL 500"
   ],
-  "effect_note": "Koa'ki Meiru monsters gain 500 ATK"
+  "effect_note": "Koa'ki Meiru monsters gain 500 ATK",
+  "single_use": false
  },
  {
   "id": 30770156,
@@ -3872,7 +3920,8 @@
   "effects": [
    "RESURRECT SPELL"
   ],
-  "effect_note": "discards to search a core"
+  "effect_note": "discards to search a core",
+  "single_use": false
  },
  {
   "id": 81994591,
@@ -3889,7 +3938,8 @@
    "RESURRECT SPELL",
    "IMMUNE ALL"
   ],
-  "effect_note": "searches; Koa'ki Meiru can't be destroyed"
+  "effect_note": "searches; Koa'ki Meiru can't be destroyed",
+  "single_use": true
  },
  {
   "id": 20457551,
@@ -3905,7 +3955,8 @@
   "effects": [
    "CRIPPLE 400"
   ],
-  "effect_note": "battling monsters lose Level x 100 ATK"
+  "effect_note": "battling monsters lose Level x 100 ATK",
+  "single_use": false
  },
  {
   "id": 63018036,
@@ -3921,7 +3972,8 @@
   "effects": [
    "RESURRECT SPELLS"
   ],
-  "effect_note": "sends a core to the GY"
+  "effect_note": "sends a core to the GY",
+  "single_use": true
  },
  {
   "id": 53039326,
@@ -3937,7 +3989,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "searches a Koa'ki Meiru when one is destroyed"
+  "effect_note": "searches a Koa'ki Meiru when one is destroyed",
+  "single_use": false
  },
  {
   "id": 46089249,
@@ -3955,7 +4008,8 @@
    "HURT OPPONENT 1000",
    "BACKFIRE 1000"
   ],
-  "effect_note": "destroys a monster, both players take 1000"
+  "effect_note": "destroys a monster, both players take 1000",
+  "single_use": true
  },
  {
   "id": 99002135,
@@ -3971,7 +4025,8 @@
   "effects": [
    "RESURRECT LV 5 & LESS MONSTER"
   ],
-  "effect_note": "summons a small Koa'ki Meiru"
+  "effect_note": "summons a small Koa'ki Meiru",
+  "single_use": true
  },
  {
   "id": 58990631,
@@ -3987,7 +4042,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "destroys a summoned 1000+ ATK monster"
+  "effect_note": "destroys a summoned 1000+ ATK monster",
+  "single_use": true
  },
  {
   "id": 18517177,
@@ -4003,7 +4059,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "destroys cards while the opponent has more monsters"
+  "effect_note": "destroys cards while the opponent has more monsters",
+  "single_use": false
  },
  {
   "id": 8057630,
@@ -4020,7 +4077,8 @@
    "RESURRECT MONSTER",
    "BACKFIRE 500"
   ],
-  "effect_note": "revives a Koa'ki Meiru; damage when it is destroyed"
+  "effect_note": "revives a Koa'ki Meiru; damage when it is destroyed",
+  "single_use": false
  },
  {
   "id": 34545235,
@@ -4036,7 +4094,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "negates and destroys a Spell/Trap"
+  "effect_note": "negates and destroys a Spell/Trap",
+  "single_use": true
  },
  {
   "id": 55117418,
@@ -4053,7 +4112,8 @@
    "DESTROY MONSTER",
    "BREAK IMMUNITY"
   ],
-  "effect_note": "negates and destroys an effect monster"
+  "effect_note": "negates and destroys an effect monster",
+  "single_use": true
  },
  {
   "id": 11596936,
@@ -4069,6 +4129,7 @@
   "effects": [
    "ANNIHILATE SPELLS"
   ],
-  "effect_note": "destroys all face-down Spells/Traps"
+  "effect_note": "destroys all face-down Spells/Traps",
+  "single_use": true
  }
 ]

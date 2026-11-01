@@ -7,6 +7,7 @@ package com.revival.summon
    import com.frimastudio.snowstorm.module.cardgame.player.AwayPlayer;
    import com.frimastudio.snowstorm.module.cardgame.player.IAIPlayer;
    import com.frimastudio.snowstorm.module.cardgame.player.LocalPlayer;
+   import com.frimastudio.snowstorm.module.cardgame.trigger.ICGTriggerDispatcher;
    import com.frimastudio.snowstorm.module.cardgame.util.FusionUtil;
    import com.frimastudio.snowstorm.project.inventory.IInventoryManagerGame;
    import com.frimastudio.snowstorm.project.inventory.amf.Card;
@@ -470,13 +471,18 @@ package com.revival.summon
          return aCard != null && aCard.IngredientCardList != null ? int(aCard.IngredientCardList.length) : 0;
       }
 
-      // EffectHandler.ResolveEffect (patched): false = the effect does not happen (not enough materials)
+      // EffectHandler.ResolveEffect (patched): false = the effect does not happen (not enough materials, or an
+      // ON ... SUMMON effect after a summon of another kind)
       public static function CanResolveEffect(aEffect:EffectBO) : Boolean
       {
          var rule:Object = EffectRule(aEffect);
          if(rule == null)
          {
             return true;
+         }
+         if(rule.summonKind && !KindFits(String(rule.summonKind),sLastSummon))
+         {
+            return false;
          }
          // perMaterial needs one: with none, a "x materials" amount would be 0 (a multiply would zero the ATK)
          return MaterialCount(EffectCard(aEffect)) >= Math.max(int(rule.needs),int(rule.cost),rule.perMaterial ? 1 : 0);
@@ -530,6 +536,205 @@ package com.revival.summon
       {
          var rule:Object = EffectRule(aEffect);
          return rule != null && rule.perMaterial ? aValue * MaterialCount(EffectCard(aEffect)) : aValue;
+      }
+
+      // --- New effects (notes/new_effects.md; summons.json "effects" rules on effect rows) --------------------------
+      //   ON SYNCHRO / ON XYZ / ON FUSION: a row with trigger ON_FUSION (32) and dispatcher ACTIVE_CARD on the result
+      //                    card: RoundHandler.DoFusionLaunch launches ON_FUSION for the new card (no rule needed)
+      //   "summonKind": "synchro" | "xyz" | "fusion" | "any"   ON SYNCHRO SUMMON ...: a row with trigger ON_FUSION and
+      //                    dispatcher PLAYER (DoFusionLaunch patch adds the owner to the dispatchers) that only works
+      //                    after a summon of that kind
+      //   "targetKind": same values   BOOST ALL SYNCHROS ...: the row's targets are only results of that kind
+      //                    (TargetRetreiver.GetEffectTarget patch)
+      //   "material": true  MATERIAL: X, a row on a material card without a trigger of its own (trigger 0): when the
+      //                    card is used for a summon, the row is added to the new card and works with its ON_FUSION
+      //   "level": n / "levelSet": n   LEVEL UP / DOWN / SET: a LevelEffect changes the targets' Level (Synchro totals,
+      //                    Xyz ranks) while they stay on the field (CardBO.RevivalLevel, saved with the card's state)
+      //   "rebirth": true  REBIRTH, a text row: when the card is destroyed it is shuffled back into the Deck (a result:
+      //                    its materials) - RoundHandler.ClearDeadCards patch
+      //   "guardian": true GUARDIAN, a text row: when another card of its owner would be destroyed (effect or battle),
+      //                    this card is destroyed instead - EffectHandler patches
+
+      private static var sLastSummon:CardBO;
+
+      // "synchro", "xyz" or "fusion" for a result card, "" for others
+      public static function KindName(aCard:CardBO) : String
+      {
+         if(aCard == null)
+         {
+            return "";
+         }
+         if(Kind(aCard.CardTemplateId) == SYNCHRO)
+         {
+            return "synchro";
+         }
+         if(Kind(aCard.CardTemplateId) == XYZ)
+         {
+            return "xyz";
+         }
+         return aCard.IsFusionResult ? "fusion" : "";
+      }
+
+      private static function KindFits(aKind:String, aCard:CardBO) : Boolean
+      {
+         var kind:String = KindName(aCard);
+         return kind != "" && (aKind == "any" || aKind == kind);
+      }
+
+      private static function RowRule(aEffectId:int) : Object
+      {
+         var effects:Object = Rules().effects;
+         return effects != null ? effects[String(aEffectId)] : null;
+      }
+
+      // A card's template has a row with this rule key (guardian, rebirth)
+      private static function HasRule(aCard:CardBO, aKey:String) : Boolean
+      {
+         var template:CardTemplate = Template(aCard.CardTemplateId);
+         var rule:Object = null;
+         if(template == null || template.effects == null)
+         {
+            return false;
+         }
+         for each(var cardEffect:Object in template.effects)
+         {
+            rule = RowRule(int(cardEffect.effect.id));
+            if(rule != null && rule[aKey])
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+
+      // RoundHandler.DoFusionLaunch (patched), right after GameMatBO.CreateFusionCard: remember the summon for
+      // "summonKind" rules and give the new card its materials' MATERIAL rows
+      public static function OnSummoned(aResult:CardBO, aMaterial1:CardBO, aMaterial2:CardBO) : void
+      {
+         var rows:Array = [];
+         var template:CardTemplate = null;
+         var rule:Object = null;
+         sLastSummon = aResult;
+         for each(var material:CardBO in [aMaterial1,aMaterial2])
+         {
+            template = material != null ? Template(material.CardTemplateId) : null;
+            if(template == null || template.effects == null)
+            {
+               continue;
+            }
+            for each(var cardEffect:Object in template.effects)
+            {
+               rule = RowRule(int(cardEffect.effect.id));
+               if(rule != null && rule.material)
+               {
+                  rows.push(cardEffect);
+               }
+            }
+         }
+         if(rows.length > 0)
+         {
+            Object(aResult)["RevivalAddEffects"](rows);  // CardBO patch (added after this class is compiled)
+         }
+      }
+
+      // TargetRetreiver.GetEffectTarget (patched)
+      public static function FilterTargets(aEffect:EffectBO, aTargets:Vector.<ICGTriggerDispatcher>) : Vector.<ICGTriggerDispatcher>
+      {
+         var rule:Object = EffectRule(aEffect);
+         var kept:Vector.<ICGTriggerDispatcher> = null;
+         if(rule == null || !rule.targetKind)
+         {
+            return aTargets;
+         }
+         kept = new Vector.<ICGTriggerDispatcher>();
+         for each(var target:ICGTriggerDispatcher in aTargets)
+         {
+            if(target is CardBO && KindFits(String(rule.targetKind),target as CardBO))
+            {
+               kept.push(target);
+            }
+         }
+         return kept;
+      }
+
+      // EffectCreater.CreateEffects (patched): this row gets a LevelEffect
+      public static function IsLevelEffect(aEffectId:int) : Boolean
+      {
+         var rule:Object = RowRule(aEffectId);
+         return rule != null && (rule.hasOwnProperty("level") || rule.hasOwnProperty("levelSet"));
+      }
+
+      // EffectHandler.ResolveEffect (patched) for a LevelEffect
+      public static function ResolveLevel(aEffect:EffectBO, aTargets:Vector.<ICGTriggerDispatcher>) : Boolean
+      {
+         var rule:Object = EffectRule(aEffect);
+         var card:CardBO = null;
+         var resolved:Boolean = false;
+         if(rule == null)
+         {
+            return false;
+         }
+         for each(var target:ICGTriggerDispatcher in aTargets)
+         {
+            card = target as CardBO;
+            if(card == null || card.IsDead || card.CardType.Id != CardTypes.MONSTER_TYPE.Id)
+            {
+               continue;
+            }
+            if(!resolved)
+            {
+               aEffect.EffectOwner.OnEffectLaunched(aEffect);
+               resolved = true;
+            }
+            Object(card)["RevivalLevel"] = rule.hasOwnProperty("levelSet") ? int(rule.levelSet) : Math.max(1,card.CardLevel + int(rule.level));
+         }
+         return resolved;
+      }
+
+      // EffectHandler.ResolveDestroyCard / ResolveNormalAttack (patched): the card that is destroyed when aTarget would
+      // be: a living GUARDIAN of the same owner, else aTarget itself
+      public static function Destroyed(aTarget:CardBO) : CardBO
+      {
+         if(aTarget == null || aTarget.IsDead || aTarget.Owner == null)
+         {
+            return aTarget;
+         }
+         for each(var card:CardBO in aTarget.Owner.GameMat.GetCardsOnMat())
+         {
+            if(card != aTarget && !card.IsDead && !card.IsInvincible && HasRule(card,"guardian"))
+            {
+               return card;
+            }
+         }
+         return aTarget;
+      }
+
+      // RoundHandler.ClearDeadCards (patched), before the dead cards leave the field: the cards REBIRTH returns to the
+      // Deck once they are in the graveyard (a result card: its materials)
+      public static function RebirthCards(aPlayers:Array) : Vector.<CardBO>
+      {
+         var cards:Vector.<CardBO> = new Vector.<CardBO>();
+         for each(var player:Object in aPlayers)
+         {
+            for each(var card:CardBO in player.GameMat.GetCardsOnMat())
+            {
+               if(card.IsDead && HasRule(card,"rebirth"))
+               {
+                  if(card.IsFusionResult)
+                  {
+                     if(card.IngredientCardList != null)
+                     {
+                        cards = cards.concat(card.IngredientCardList);
+                     }
+                  }
+                  else
+                  {
+                     cards.push(card);
+                  }
+               }
+            }
+         }
+         return cards;
       }
 
       // Card frame pictures: the fusion picture's name with "fusion" replaced by "synchro"/"xyz" (second common atlas

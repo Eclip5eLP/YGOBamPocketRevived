@@ -105,6 +105,44 @@ def test_summons(ctx):
         group["shopItem"].append(it)
 
 
+def test_new_effects(ctx):
+    """The new effects (notes/new_effects.md) on the cards of the Synchro test deck, for the test duel:
+      Ansatsu (319)          LEVEL SET 3 at its first round start: Junk Synchron + Ansatsu = 6 -> Junk Warrior (no
+                             picker; at level 4 it would be 7: Stardust / Black Rose picker)
+      Millennium Shield (473) ON SYNCHRO SUMMON: opponent loses 500; BOOST ALL SYNCHROS 600 every round start
+      Skull Stalker (317)    GUARDIAN: destroyed instead of your other monster
+      Junk Synchron (9101)   MATERIAL: BOOST 600 for the Synchro it makes
+      Stardust Dragon (9112) ON SYNCHRO: opponent loses 1000; REBIRTH (its materials go back to the Deck)
+    Draw order: Petit Dragon, Junk Synchron, Shield, then Skull Stalker x2, Ansatsu, Junk Synchron. Round 1: Petit
+    Dragon, Junk Synchron on it (Stardust: -1000, Shield -500, +600 material), Shield; round 2: Skull Stalkers
+    (GUARDIAN) and Stardust +600 (BOOST ALL SYNCHROS); Ansatsu + Skull Stalker later (LEVEL SET: no Xyz)."""
+    if not (CARD_PICS / "cardinfo.json").is_file():
+        return
+    from content_mods import effect_row
+    items = {t["id"]: t for t in ctx.ace("config/ace/inventory/item_template.ace")}
+    effect_row(ctx, items[319], "BOOST 300", "LEVEL SET 3", "This Monster's Level becomes 3.", rule={"levelSet": 3},
+               trigger="round_start", dispatcher="player", target="self", atkModifier=0, atkOperatorId=0,
+               oncePerGame=True)
+    effect_row(ctx, items[473], "HURT OPPONENT 500", "ON SYNCHRO SUMMON 500",
+               "Every time you Synchro Summon, your Opponent loses Life Points.", rule={"summonKind": "synchro"},
+               trigger="summon", dispatcher="player")
+    effect_row(ctx, items[473], "BOOST ALL 600", "BOOST ALL SYNCHROS 600", "All your Synchro Monsters gain Power.",
+               rule={"targetKind": "synchro"})
+    effect_row(ctx, items[317], "SPIRIT PROTECTION", "GUARDIAN",
+               "When another of your Monsters would be destroyed, this Monster is destroyed instead.",
+               rule={"guardian": True}, trigger="none", grantImmunity=False)
+    effect_row(ctx, items[9101], "BOOST 600", "MATERIAL: BOOST 600",
+               "The Monster Summoned with this card gains Power.", rule={"material": True}, trigger="none",
+               target="self")
+    effect_row(ctx, items[9112], "HURT OPPONENT 1000", "ON SYNCHRO 1000",
+               "When this Monster is Synchro Summoned, your Opponent loses Life Points.", trigger="summon",
+               dispatcher="self")
+    effect_row(ctx, items[9112], "RESURRECT MONSTER", "REBIRTH",
+               "When this Monster is destroyed, its materials are shuffled back into your Deck.",
+               rule={"rebirth": True}, trigger="none", resurrect=False)
+    SUMMONS["test"]["draw"] = [262, 9101, 473, 317, 317, 319, 9101]
+
+
 def test_starter_deck(ctx):
     """A data starter deck in the shop (EStarterPack data patch): the Synchro/Xyz test cards, 1 DP, cover composed
     from Stardust Dragon's art. Frame 7: cover frames must be numbered without gaps (the game takes the n-th texture
@@ -135,4 +173,4 @@ def test_world2(ctx):
                 duels=duels, treasures=[[9101, 9101], [9111], [9121], [9122]], series_limit=3)
 
 
-MODS = [test_new_card, test_summons, test_starter_deck, test_world2]
+MODS = [test_new_card, test_summons, test_new_effects, test_starter_deck, test_world2]

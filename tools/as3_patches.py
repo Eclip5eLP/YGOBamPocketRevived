@@ -2520,6 +2520,181 @@ SUMMON_EDITS = {
 for _cls, _edits in SUMMON_EDITS.items():
     PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
 
+# --- New card effects (notes/new_effects.md; rules and behaviour in com.revival.summon.Summon) ----------------------
+# ON SYNCHRO/XYZ/FUSION (data only: trigger ON_FUSION on the result), ON ... SUMMON (summonKind), BOOST ALL SYNCHROS
+# (targetKind), MATERIAL, LEVEL UP/DOWN/SET (LevelEffect), REBIRTH, GUARDIAN. Applied after SUMMON_EDITS (some anchors
+# are text those edits wrote).
+LEVEL_EFFECT_IMPORT = "   import com.revival.summon.LevelEffect;\n"
+NEW_EFFECT_EDITS = {
+    "com.frimastudio.snowstorm.module.cardgame.round.RoundHandler": [
+        # MATERIAL rows and the summon kind, before the card's first saved state and its ON_FUSION
+        ("""                     fusedCard = aPlayer.GameMat.CreateFusionCard(summonId,card,cardToFuseWith);
+""", """                     fusedCard = aPlayer.GameMat.CreateFusionCard(summonId,card,cardToFuseWith);
+                     Summon.OnSummoned(fusedCard,card,cardToFuseWith);
+"""),
+        # the owner too: ON ... SUMMON rows of the owner's other cards listen with dispatcher PLAYER
+        ("""CGTriggerEvent.ON_FUSION,new <ICGTriggerDispatcher>[fusedCard]""",
+         """CGTriggerEvent.ON_FUSION,new <ICGTriggerDispatcher>[fusedCard,aPlayer]"""),
+        # REBIRTH: once in the graveyard, flagged like a resurrected card (EffectHandler.ResolveResurrect does the same)
+        ("""      public function ClearDeadCards() : void
+      {
+         this.mLocalPlayer.GameMat.SendDeadCardsToGraveyard();
+         this.mOpponentPlayer.GameMat.SendDeadCardsToGraveyard();
+""", """      public function ClearDeadCards() : void
+      {
+         var reborn:Vector.<CardBO> = Summon.RebirthCards([this.mLocalPlayer,this.mOpponentPlayer]);
+         this.mLocalPlayer.GameMat.SendDeadCardsToGraveyard();
+         this.mOpponentPlayer.GameMat.SendDeadCardsToGraveyard();
+         for each(var rebornCard:CardBO in reborn)
+         {
+            if(!rebornCard.IsRez && rebornCard.Owner.GameMat.Graveyard.indexOf(rebornCard) != -1)
+            {
+               rebornCard.SetRez();
+               this.AddVisualFeedback(new VisualFeedbackData(rebornCard,ECardGameVisualFeedback.RESURRECT_CARDS,rebornCard,null));
+            }
+         }
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.effect.EffectHandler": [
+        ("""   import com.frimastudio.as3ToolKit.math.RandomSeed;
+""", """   import com.frimastudio.as3ToolKit.math.RandomSeed;
+""" + LEVEL_EFFECT_IMPORT),
+        ("""            else if(aEffect is ResurrectEffect)
+            {
+               isResolved = this.ResolveResurrect(aEffect as ResurrectEffect);
+            }
+""", """            else if(aEffect is ResurrectEffect)
+            {
+               isResolved = this.ResolveResurrect(aEffect as ResurrectEffect);
+            }
+            else if(aEffect is LevelEffect)
+            {
+               isResolved = Summon.ResolveLevel(aEffect,this.mTargetRetreiver.GetEffectTarget(aEffect));
+               this.mRoundHandler.SaveRoundResultState();
+            }
+"""),
+        # GUARDIAN, destroyed by an effect
+        ("""         for each(targetCard in targetList)
+         {
+            if(!targetCard.IsInvincible)
+            {
+""", """         for each(targetCard in targetList)
+         {
+            if(!targetCard.IsInvincible)
+            {
+               targetCard = Summon.Destroyed(targetCard);
+"""),
+        # GUARDIAN, destroyed in battle: the attack still spends the target's Power
+        ("""               if(currentCardTarget.AttackPower <= damage)
+               {
+                  if(!currentCardTarget.IsDead)
+                  {
+                     this.mNormalAttackTriggerQueue.push(new CGTriggerEvent(CGTriggerEvent.CARD_DESTROYED,new <ICGTriggerDispatcher>[currentCardTarget]));
+                  }
+                  this.mRoundHandler.CurrentRoundResult.AddCardDied(currentCardTarget);
+                  currentCardTarget.SetDead(true,aNormalAttack);
+                  currentCardTarget.PlayCardDestroyed();
+               }""", """               if(currentCardTarget.AttackPower <= damage)
+               {
+                  var dyingCard:CardBO = Summon.Destroyed(currentCardTarget);
+                  if(!dyingCard.IsDead)
+                  {
+                     this.mNormalAttackTriggerQueue.push(new CGTriggerEvent(CGTriggerEvent.CARD_DESTROYED,new <ICGTriggerDispatcher>[dyingCard]));
+                  }
+                  this.mRoundHandler.CurrentRoundResult.AddCardDied(dyingCard);
+                  dyingCard.SetDead(true,aNormalAttack);
+                  dyingCard.PlayCardDestroyed();
+               }"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.effect.EffectCreater": [
+        ("""   import com.frimastudio.snowstorm.module.cardgame.effect.effectlist.BreakImmunityEffect;
+""", """   import com.frimastudio.snowstorm.module.cardgame.effect.effectlist.BreakImmunityEffect;
+""" + SUMMON_IMPORT + LEVEL_EFFECT_IMPORT),
+        ("""         var length:uint = effectList.length;
+""", """         if(Summon.IsLevelEffect(aEffect.id))
+         {
+            effectList.push(new LevelEffect());
+         }
+         var length:uint = effectList.length;
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.target.TargetRetreiver": [
+        ("""   import com.frimastudio.as3ToolKit.display.Log;
+""", """   import com.frimastudio.as3ToolKit.display.Log;
+""" + SUMMON_IMPORT),
+        ("""         targetList.sort(EffectOwnerSorter.SortByEffectOwner);
+         return targetList;""", """         targetList = Summon.FilterTargets(aEffect,targetList);
+         targetList.sort(EffectOwnerSorter.SortByEffectOwner);
+         return targetList;"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.effect.memento.data.CardSaveState": [
+        ("""      private var mIngredientCardIndexList:Vector.<int>;
+""", """      private var mIngredientCardIndexList:Vector.<int>;
+
+      public var RevivalLevel:int = 0;
+"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.card.CardBO": [
+        # LEVEL: the card's Level is part of its saved state (the AI's trial rounds and the replay undo it)
+        ("""         savedState.IsRez = this.mIsRez;
+""", """         savedState.IsRez = this.mIsRez;
+         savedState.RevivalLevel = this.mCardLevel;
+"""),
+        ("""            this.mCanDoActions = savedState.CanDoActions;
+""", """            this.mCanDoActions = savedState.CanDoActions;
+            if(savedState.RevivalLevel > 0)
+            {
+               this.mCardLevel = savedState.RevivalLevel;
+            }
+"""),
+        ("""         this.CreateTriggerList(this.mCardTemplate);
+         this.mIsSingleUse = this.mCardTemplate.selfDestruct;
+""", """         this.CreateTriggerList(this.mCardTemplate);
+         this.mIsSingleUse = this.mCardTemplate.selfDestruct;
+         this.mCardLevel = this.mCardTemplate.cardLevel;
+"""),
+        # a state saved before RevivalAddEffects added triggers has fewer trigger states
+        ("""               this.mTriggerList[i].RevertToState(savedState.TriggerStates[i]);""",
+         """               if(i < savedState.TriggerStates.length)
+               {
+                  this.mTriggerList[i].RevertToState(savedState.TriggerStates[i]);
+               }"""),
+        ("""      public function get CardLevel() : int
+""", """      public function set RevivalLevel(aLevel:int) : void
+      {
+         this.mCardLevel = aLevel;
+      }
+
+      // MATERIAL (Summon.OnSummoned): rows of the materials, made like CreateTriggerList's, working with this card's
+      // ON_FUSION
+      public function RevivalAddEffects(aCardEffects:Array) : void
+      {
+         var addedTrigger:TriggerBO = null;
+         var addedEffects:Vector.<EffectBO> = null;
+         for each(var addedCardEffect:CardEffect in aCardEffects)
+         {
+            addedTrigger = new TriggerBO();
+            addedEffects = EffectCreater.CreateEffects(addedCardEffect.effect,TargetSpecification.GenerateFromCardEffect(addedCardEffect),this.mOwner);
+            for each(var addedEffect:EffectBO in addedEffects)
+            {
+               addedEffect.Init();
+               addedEffect.PassOwnerData(this.mOwner,this,addedTrigger);
+            }
+            addedTrigger.Init();
+            addedTrigger.PassData(this.mOwner,this,CGTriggerEvent.ON_FUSION,TargetTypes.ACTIVE_CARD,addedEffects);
+            addedTrigger.SetActive(true);
+            addedTrigger.RetreiveDispatchers();
+            this.mTriggerList.push(addedTrigger);
+         }
+      }
+
+      public function get CardLevel() : int
+"""),
+    ],
+}
+for _cls, _edits in NEW_EFFECT_EDITS.items():
+    PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
+
 # --- Series 3 and 4 (notes/content_patch_series3.md, part A) ---------------------------------------------------------
 # Card series 3 and 4: enum values, rarity icons (frames 12-15 / 16-19 of common_rarity_all, gems drawn by
 # tools/content_mods.py common_frames; frames 8-11 are the Arena crowns, so series 3 can't use the series formula)

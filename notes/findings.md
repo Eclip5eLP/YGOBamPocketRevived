@@ -2330,3 +2330,19 @@ YGOCardDl.py download), server/game.py result_cards.
   friendMultiplierValue/maxNbFriend: the amount grows per allied monster.
 - [VERIFIED grep] CardEffectTypes.COWARDICE_COURAGE (49) has no reference under module/: not implemented.
 - Proposed new effects and which need code: notes/new_effects.md.
+
+### 6.72 Spell lifetime, and the new effects (2026-11-01)
+
+- [VERIFIED work/as3/.../card/CardBO.as OnRoundEnd / CheckForSelfDestruct] A card template's `selfDestruct` makes it
+  single use: it dies at round end once its effects ran. Otherwise a spell stays on the field (its round-start rows
+  fire every round). The original data sets it per card, not by the real spell type [VERIFIED item_template.ace vs
+  YGOPRODeck types: Continuous 11 single-use / 8 stay, Normal 49 / 19, Equip 21 / 8, Field 5 / 6, Normal Trap 33 /
+  24, Continuous Trap 11 / 12]. Series 3 data: `single_use` per spell (Continuous, Field, Equip spells and Continuous
+  traps stay: 72; the rest single use: 82).
+- [VERIFIED EffectCreater.CreateEffects] An effect row's behaviour comes from its fields (atk/def/hp modifiers,
+  destroyCard, grantImmunity, breakImmunity, resurrect), not from cardEffectTypeId; TriggerHandler.LaunchTrigger
+  resolves the effects synchronously (EffectHandler.ManageEffectList).
+- [VERIFIED GameMatBO.CreateFusionCard] the result's triggers are active before RoundHandler.DoFusionLaunch launches
+  ON_FUSION for it, so a result's own ON_FUSION rows fire; a Synchro/Xyz/Fusion result is never placed in the
+  graveyard itself (CardBO.SendToGraveyard places its ingredients).
+- New effects built and tested: notes/new_effects.md "Built".

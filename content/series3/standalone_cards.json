@@ -4310,7 +4310,8 @@
    "BOOST 1000",
    "BACKFIRE 500"
   ],
-  "effect_note": "+1000 ATK, negated, 500 damage a turn"
+  "effect_note": "+1000 ATK, negated, 500 damage a turn",
+  "single_use": false
  },
  {
   "id": 46967601,
@@ -4329,7 +4330,8 @@
   "effects": [
    "HURT OPPONENT 500"
   ],
-  "effect_note": "damage equal to the destroyed monster's DEF"
+  "effect_note": "damage equal to the destroyed monster's DEF",
+  "single_use": false
  },
  {
   "id": 91107093,
@@ -4348,7 +4350,8 @@
   "effects": [
    "IMMUNE ALL LV 3 MONSTERS"
   ],
-  "effect_note": "small Thunders can't be destroyed"
+  "effect_note": "small Thunders can't be destroyed",
+  "single_use": false
  },
  {
   "id": 24019261,
@@ -4367,7 +4370,8 @@
   "effects": [
    "RESURRECT LV 4 MONSTERS"
   ],
-  "effect_note": "revives a Level 4 destroyed this turn"
+  "effect_note": "revives a Level 4 destroyed this turn",
+  "single_use": true
  },
  {
   "id": 6178850,
@@ -4387,7 +4391,8 @@
    "BOOST 300 +",
    "IMMUNE"
   ],
-  "effect_note": "+300 per opponent monster; destroyed instead"
+  "effect_note": "+300 per opponent monster; destroyed instead",
+  "single_use": false
  },
  {
   "id": 95784434,
@@ -4407,7 +4412,8 @@
    "IMMUNE",
    "BOOST 300"
   ],
-  "effect_note": "a Reptile survives battle and gains 300"
+  "effect_note": "a Reptile survives battle and gains 300",
+  "single_use": false
  },
  {
   "id": 74115234,
@@ -4426,7 +4432,8 @@
   "effects": [
    "HEAL 1000"
   ],
-  "effect_note": "LP equal to the destroyed monster's ATK"
+  "effect_note": "LP equal to the destroyed monster's ATK",
+  "single_use": false
  },
  {
   "id": 62472614,
@@ -4446,7 +4453,8 @@
    "CRIPPLE 1000",
    "HURT OPPONENT 500"
   ],
-  "effect_note": "ATK becomes 0, 500 damage a turn"
+  "effect_note": "ATK becomes 0, 500 damage a turn",
+  "single_use": false
  },
  {
   "id": 66835946,
@@ -4465,7 +4473,8 @@
   "effects": [
    "BOOST ALL ZOMBIES 400"
   ],
-  "effect_note": "+200 per opponent monster"
+  "effect_note": "+200 per opponent monster",
+  "single_use": false
  },
  {
   "id": 95507060,
@@ -4485,7 +4494,8 @@
    "BOOST ALL PLANTS 600",
    "SACRIFICE ALL MONSTERS"
   ],
-  "effect_note": "+300 per Plant in the GY, destroyed at the End Phase"
+  "effect_note": "+300 per Plant in the GY, destroyed at the End Phase",
+  "single_use": true
  },
  {
   "id": 27863269,
@@ -4505,7 +4515,8 @@
    "IMMUNE",
    "CRIPPLE 500"
   ],
-  "effect_note": "survives attacking, the target loses ATK"
+  "effect_note": "survives attacking, the target loses ATK",
+  "single_use": false
  },
  {
   "id": 25231813,
@@ -4524,7 +4535,8 @@
   "effects": [
    "IMMUNE ALL DRAGONS"
   ],
-  "effect_note": "a big Dragon Synchro survives battles"
+  "effect_note": "a big Dragon Synchro survives battles",
+  "single_use": false
  },
  {
   "id": 91468551,
@@ -4543,7 +4555,8 @@
   "effects": [
    "BOOST ALL 300"
   ],
-  "effect_note": "revived monsters gain 300 ATK"
+  "effect_note": "revived monsters gain 300 ATK",
+  "single_use": false
  },
  {
   "id": 92223641,
@@ -4562,7 +4575,8 @@
   "effects": [
    "HEAL 1500"
   ],
-  "effect_note": "LP equal to a destroyed LIGHT monster's ATK"
+  "effect_note": "LP equal to a destroyed LIGHT monster's ATK",
+  "single_use": false
  },
  {
   "id": 5973663,
@@ -4582,7 +4596,8 @@
    "BOOST ALL PLANTS 400",
    "RESURRECT PLANTS"
   ],
-  "effect_note": "Flower Counters for boosts and revival"
+  "effect_note": "Flower Counters for boosts and revival",
+  "single_use": false
  },
  {
   "id": 87624166,
@@ -4600,7 +4615,8 @@
   "effects": [
    "CRIPPLE ALL 300"
   ],
-  "effect_note": "attackers are destroyed at the End Phase"
+  "effect_note": "attackers are destroyed at the End Phase",
+  "single_use": false
  },
  {
   "id": 17896384,
@@ -4618,7 +4634,8 @@
   "effects": [
    "RESURRECT SPELLS"
   ],
-  "effect_note": "counters when Spellcasters fall"
+  "effect_note": "counters when Spellcasters fall",
+  "single_use": false
  },
  {
   "id": 88190790,
@@ -4636,7 +4653,8 @@
   "effects": [
    "BOOST 300"
   ],
-  "effect_note": "+300; attack twice"
+  "effect_note": "+300; attack twice",
+  "single_use": false
  },
  {
   "id": 9999961,
@@ -4654,7 +4672,8 @@
   "effects": [
    "BOOST ALL BEASTS 400"
   ],
-  "effect_note": "+200 per banished Beast"
+  "effect_note": "+200 per banished Beast",
+  "single_use": true
  },
  {
   "id": 63851864,
@@ -4672,7 +4691,8 @@
   "effects": [
    "BOOST ALL MACHINES 300"
   ],
-  "effect_note": "draws after a Machine wins"
+  "effect_note": "draws after a Machine wins",
+  "single_use": false
  },
  {
   "id": 33900648,
@@ -4691,7 +4711,8 @@
    "BREAK IMMUNITY ALL",
    "BACKFIRE 500"
   ],
-  "effect_note": "Attribute penalties; 500 LP upkeep"
+  "effect_note": "Attribute penalties; 500 LP upkeep",
+  "single_use": false
  },
  {
   "id": 98867329,
@@ -4709,7 +4730,8 @@
   "effects": [
    "CRIPPLE 600"
   ],
-  "effect_note": "-600 per monster you control"
+  "effect_note": "-600 per monster you control",
+  "single_use": false
  },
  {
   "id": 83584898,
@@ -4728,7 +4750,8 @@
    "CRIPPLE 1500",
    "HURT OPPONENT 500"
   ],
-  "effect_note": "ATK 100, can't attack, 500 damage a turn"
+  "effect_note": "ATK 100, can't attack, 500 damage a turn",
+  "single_use": false
  },
  {
   "id": 32663969,
@@ -4747,7 +4770,8 @@
    "DESTROY MONSTER",
    "SACRIFICE MONSTER"
   ],
-  "effect_note": "sends your monster to destroy one"
+  "effect_note": "sends your monster to destroy one",
+  "single_use": false
  },
  {
   "id": 75652080,
@@ -4765,7 +4789,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "destroys one of yours and one of theirs"
+  "effect_note": "destroys one of yours and one of theirs",
+  "single_use": true
  },
  {
   "id": 29228350,
@@ -4783,7 +4808,8 @@
   "effects": [
    "ANNIHILATE MONSTERS"
   ],
-  "effect_note": "destroys all opponent's monsters"
+  "effect_note": "destroys all opponent's monsters",
+  "single_use": true
  },
  {
   "id": 84653834,
@@ -4801,7 +4827,8 @@
   "effects": [
    "BOOST ALL PSYCHIC MONSTERS 400"
   ],
-  "effect_note": "+300 per banished Psychic"
+  "effect_note": "+300 per banished Psychic",
+  "single_use": true
  },
  {
   "id": 31467372,
@@ -4819,7 +4846,8 @@
   "effects": [
    "HURT OPPONENT 800"
   ],
-  "effect_note": "800 damage per Zombie Special Summon"
+  "effect_note": "800 damage per Zombie Special Summon",
+  "single_use": false
  },
  {
   "id": 68396778,
@@ -4838,7 +4866,8 @@
    "DESTROY MONSTER",
    "RESURRECT MONSTER"
   ],
-  "effect_note": "sends a Special Summoned monster away, summons a Normal"
+  "effect_note": "sends a Special Summoned monster away, summons a Normal",
+  "single_use": true
  },
  {
   "id": 69584564,
@@ -4857,7 +4886,8 @@
    "DESTROY MONSTER",
    "HEAL 300"
   ],
-  "effect_note": "destroys a Plant and draws"
+  "effect_note": "destroys a Plant and draws",
+  "single_use": true
  },
  {
   "id": 33846209,
@@ -4876,7 +4906,8 @@
    "DESTROY MONSTER",
    "SACRIFICE MONSTER"
   ],
-  "effect_note": "tributes a Gemini to destroy and draw"
+  "effect_note": "tributes a Gemini to destroy and draw",
+  "single_use": true
  },
  {
   "id": 12174035,
@@ -4894,7 +4925,8 @@
   "effects": [
    "BOOST ALL WATER MONSTERS 300"
   ],
-  "effect_note": "a small WATER discards the opponent's card"
+  "effect_note": "a small WATER discards the opponent's card",
+  "single_use": false
  },
  {
   "id": 27827272,
@@ -4913,7 +4945,8 @@
    "ANNIHILATE MONSTERS",
    "BACKFIRE 500"
   ],
-  "effect_note": "destroys monsters weaker than your Thunder"
+  "effect_note": "destroys monsters weaker than your Thunder",
+  "single_use": true
  },
  {
   "id": 44887817,
@@ -4931,7 +4964,8 @@
   "effects": [
    "RESURRECT PLANTS"
   ],
-  "effect_note": "revives a Plant"
+  "effect_note": "revives a Plant",
+  "single_use": false
  },
  {
   "id": 36484016,
@@ -4949,7 +4983,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "Fusion Summons from field/GY"
+  "effect_note": "Fusion Summons from field/GY",
+  "single_use": true
  },
  {
   "id": 1200843,
@@ -4967,7 +5002,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "a Spirit survives battle"
+  "effect_note": "a Spirit survives battle",
+  "single_use": false
  },
  {
   "id": 79718768,
@@ -4985,7 +5021,8 @@
   "effects": [
    "HURT OPPONENT 300"
   ],
-  "effect_note": "the opponent discards when they target the GY"
+  "effect_note": "the opponent discards when they target the GY",
+  "single_use": false
  },
  {
   "id": 79707116,
@@ -5003,7 +5040,8 @@
   "effects": [
    "HURT OPPONENT 300"
   ],
-  "effect_note": "300 damage per milled card"
+  "effect_note": "300 damage per milled card",
+  "single_use": false
  },
  {
   "id": 90246973,
@@ -5021,7 +5059,8 @@
   "effects": [
    "BOOST 500"
   ],
-  "effect_note": "banishes from the opponent's GY to gain ATK"
+  "effect_note": "banishes from the opponent's GY to gain ATK",
+  "single_use": false
  },
  {
   "id": 94303232,
@@ -5039,7 +5078,8 @@
   "effects": [
    "CRIPPLE 500"
   ],
-  "effect_note": "an opponent's monster can't attack"
+  "effect_note": "an opponent's monster can't attack",
+  "single_use": false
  },
  {
   "id": 32180819,
@@ -5058,7 +5098,8 @@
    "DESTROY MONSTER",
    "BACKFIRE 1000"
   ],
-  "effect_note": "destroys a card, you take 1000"
+  "effect_note": "destroys a card, you take 1000",
+  "single_use": true
  },
  {
   "id": 98847704,
@@ -5076,7 +5117,8 @@
   "effects": [
    "ANNIHILATE SPELLS"
   ],
-  "effect_note": "destroys your Equip and their Set cards"
+  "effect_note": "destroys your Equip and their Set cards",
+  "single_use": true
  },
  {
   "id": 25796442,
@@ -5094,7 +5136,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "Ritual Monsters are protected"
+  "effect_note": "Ritual Monsters are protected",
+  "single_use": false
  },
  {
   "id": 52913738,
@@ -5112,7 +5155,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "Ritual Spell for Garlandolf"
+  "effect_note": "Ritual Spell for Garlandolf",
+  "single_use": true
  },
  {
   "id": 32391631,
@@ -5131,7 +5175,8 @@
    "HEAL 300",
    "FEEBLE ALL 300"
   ],
-  "effect_note": "attackers gain 300 LP; non-attackers destroyed"
+  "effect_note": "attackers gain 300 LP; non-attackers destroyed",
+  "single_use": false
  },
  {
   "id": 81524977,
@@ -5149,7 +5194,8 @@
   "effects": [
    "HURT OPPONENT 1000"
   ],
-  "effect_note": "500 damage per Plant Counter"
+  "effect_note": "500 damage per Plant Counter",
+  "single_use": false
  },
  {
   "id": 86780027,
@@ -5167,7 +5213,8 @@
   "effects": [
    "BOOST ALL 800"
   ],
-  "effect_note": "+800 when your GY has only one Type"
+  "effect_note": "+800 when your GY has only one Type",
+  "single_use": false
  },
  {
   "id": 50418970,
@@ -5185,7 +5232,8 @@
   "effects": [
    "HURT OPPONENT 600"
   ],
-  "effect_note": "damage when its Spirit returns to the hand"
+  "effect_note": "damage when its Spirit returns to the hand",
+  "single_use": false
  },
  {
   "id": 69112325,
@@ -5203,7 +5251,8 @@
   "effects": [
    "IMMUNE ALL BEASTS"
   ],
-  "effect_note": "Beasts and Plants survive a battle each turn"
+  "effect_note": "Beasts and Plants survive a battle each turn",
+  "single_use": false
  },
  {
   "id": 61650133,
@@ -5222,7 +5271,8 @@
    "BACKFIRE 300",
    "CRIPPLE ALL 200"
   ],
-  "effect_note": "banish a card per Special Summon; 500 LP upkeep"
+  "effect_note": "banish a card per Special Summon; 500 LP upkeep",
+  "single_use": false
  },
  {
   "id": 28529976,
@@ -5241,7 +5291,8 @@
    "SACRIFICE MONSTER",
    "RESURRECT PLANTS"
   ],
-  "effect_note": "tributes a small Plant for a bigger one"
+  "effect_note": "tributes a small Plant for a bigger one",
+  "single_use": false
  },
  {
   "id": 98380593,
@@ -5259,7 +5310,8 @@
   "effects": [
    "HEAL 2000"
   ],
-  "effect_note": "2000 LP when behind (1000 damage when ahead)"
+  "effect_note": "2000 LP when behind (1000 damage when ahead)",
+  "single_use": true
  },
  {
   "id": 28741524,
@@ -5278,7 +5330,8 @@
    "RESURRECT MONSTERS",
    "BACKFIRE 600"
   ],
-  "effect_note": "revives small Psychics, damage per Level"
+  "effect_note": "revives small Psychics, damage per Level",
+  "single_use": true
  },
  {
   "id": 52971673,
@@ -5297,7 +5350,8 @@
    "SACRIFICE ALL MONSTERS",
    "DESTROY MONSTER"
   ],
-  "effect_note": "destroys your Tokens to destroy cards"
+  "effect_note": "destroys your Tokens to destroy cards",
+  "single_use": true
  },
  {
   "id": 62991886,
@@ -5315,7 +5369,8 @@
   "effects": [
    "BOOST 1000"
   ],
-  "effect_note": "ATK 2400 when behind, 1000 when ahead"
+  "effect_note": "ATK 2400 when behind, 1000 when ahead",
+  "single_use": false
  },
  {
   "id": 88341502,
@@ -5335,7 +5390,8 @@
   "effects": [
    "HURT OPPONENT 500"
   ],
-  "effect_note": "loses 500 ATK, piercing"
+  "effect_note": "loses 500 ATK, piercing",
+  "single_use": true
  },
  {
   "id": 41234315,
@@ -5356,7 +5412,8 @@
    "IMMUNE ALL",
    "RESURRECT MONSTER"
   ],
-  "effect_note": "no destruction this battle; summons Summon Reactor SK"
+  "effect_note": "no destruction this battle; summons Summon Reactor SK",
+  "single_use": true
  },
  {
   "id": 87046457,
@@ -5376,7 +5433,8 @@
   "effects": [
    "BOOST ALL PLANTS 1000"
   ],
-  "effect_note": "revived Plants gain 1000 ATK"
+  "effect_note": "revived Plants gain 1000 ATK",
+  "single_use": false
  },
  {
   "id": 14342283,
@@ -5396,7 +5454,8 @@
   "effects": [
    "BOOST ALL 500"
   ],
-  "effect_note": "Tokens gain 1000 and can't be destroyed"
+  "effect_note": "Tokens gain 1000 and can't be destroyed",
+  "single_use": false
  },
  {
   "id": 13438207,
@@ -5415,7 +5474,8 @@
   "effects": [
    "HURT OPPONENT 1000"
   ],
-  "effect_note": "damage equal to the destroyed monster's ATK"
+  "effect_note": "damage equal to the destroyed monster's ATK",
+  "single_use": true
  },
  {
   "id": 47778083,
@@ -5435,7 +5495,8 @@
    "RESURRECT MONSTER",
    "BACKFIRE 300"
   ],
-  "effect_note": "both players revive from the other's GY"
+  "effect_note": "both players revive from the other's GY",
+  "single_use": true
  },
  {
   "id": 18739764,
@@ -5455,7 +5516,8 @@
    "SACRIFICE MONSTER",
    "HEAL 1500"
   ],
-  "effect_note": "destroys your monster, gain its ATK"
+  "effect_note": "destroys your monster, gain its ATK",
+  "single_use": true
  },
  {
   "id": 18096222,
@@ -5474,7 +5536,8 @@
   "effects": [
    "BOOST 700"
   ],
-  "effect_note": "a Gemini gains 700 ATK"
+  "effect_note": "a Gemini gains 700 ATK",
+  "single_use": true
  },
  {
   "id": 88928798,
@@ -5494,7 +5557,8 @@
    "IMMUNE",
    "HURT OPPONENT 500"
   ],
-  "effect_note": "negates a destroy effect, 500 damage"
+  "effect_note": "negates a destroy effect, 500 damage",
+  "single_use": true
  },
  {
   "id": 21350571,
@@ -5513,7 +5577,8 @@
   "effects": [
    "BOOST 800"
   ],
-  "effect_note": "a Beast gains 800 ATK, draws on kills"
+  "effect_note": "a Beast gains 800 ATK, draws on kills",
+  "single_use": true
  },
  {
   "id": 97922283,
@@ -5532,7 +5597,8 @@
   "effects": [
    "HURT OPPONENT 300"
   ],
-  "effect_note": "300 damage per Beast after a kill"
+  "effect_note": "300 damage per Beast after a kill",
+  "single_use": false
  },
  {
   "id": 54451023,
@@ -5552,7 +5618,8 @@
    "BOOST 500",
    "RESURRECT PLANTS"
   ],
-  "effect_note": "a Plant gains 500; revives one when destroyed"
+  "effect_note": "a Plant gains 500; revives one when destroyed",
+  "single_use": true
  },
  {
   "id": 16678947,
@@ -5572,7 +5639,8 @@
    "DESTROY MONSTER",
    "HURT OPPONENT 500"
   ],
-  "effect_note": "destroys the attacker of your Psychic"
+  "effect_note": "destroys the attacker of your Psychic",
+  "single_use": true
  },
  {
   "id": 38296564,
@@ -5591,7 +5659,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "a monster can't be destroyed or targeted"
+  "effect_note": "a monster can't be destroyed or targeted",
+  "single_use": false
  },
  {
   "id": 80955168,
@@ -5611,7 +5680,8 @@
    "DESTROY MONSTER",
    "DESTROY SPELL"
   ],
-  "effect_note": "destroys 2 cards"
+  "effect_note": "destroys 2 cards",
+  "single_use": true
  },
  {
   "id": 96700602,
@@ -5630,7 +5700,8 @@
    "SACRIFICE MONSTER",
    "HURT OPPONENT 1000"
   ],
-  "effect_note": "tributes a Synchro, damage per position change"
+  "effect_note": "tributes a Synchro, damage per position change",
+  "single_use": true
  },
  {
   "id": 39531794,
@@ -5648,7 +5719,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "returns a banished Psychic"
+  "effect_note": "returns a banished Psychic",
+  "single_use": false
  },
  {
   "id": 60930169,
@@ -5666,7 +5738,8 @@
   "effects": [
    "RESURRECT MONSTERS"
   ],
-  "effect_note": "summons 2 copies of a destroyed wall"
+  "effect_note": "summons 2 copies of a destroyed wall",
+  "single_use": true
  },
  {
   "id": 45133463,
@@ -5684,7 +5757,8 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "revives Supay or Fire Ant Ascator"
+  "effect_note": "revives Supay or Fire Ant Ascator",
+  "single_use": true
  },
  {
   "id": 22205600,
@@ -5702,7 +5776,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "destroys 2 Spells/Traps"
+  "effect_note": "destroys 2 Spells/Traps",
+  "single_use": true
  },
  {
   "id": 30127518,
@@ -5720,7 +5795,8 @@
   "effects": [
    "ANNIHILATE MONSTERS"
   ],
-  "effect_note": "sends multiple Special Summoned monsters to the GY"
+  "effect_note": "sends multiple Special Summoned monsters to the GY",
+  "single_use": true
  },
  {
   "id": 8279188,
@@ -5738,7 +5814,8 @@
   "effects": [
    "IMMUNE"
   ],
-  "effect_note": "discards to negate attacks"
+  "effect_note": "discards to negate attacks",
+  "single_use": false
  },
  {
   "id": 34149830,
@@ -5756,7 +5833,8 @@
   "effects": [
    "RESURRECT LV 4 MONSTERS"
   ],
-  "effect_note": "no damage, summons a Level 4 Warrior"
+  "effect_note": "no damage, summons a Level 4 Warrior",
+  "single_use": false
  },
  {
   "id": 73507661,
@@ -5775,7 +5853,8 @@
    "ANNIHILATE SPELLS",
    "BACKFIRE 300"
   ],
-  "effect_note": "destroys face-up Spells/Traps, both take damage"
+  "effect_note": "destroys face-up Spells/Traps, both take damage",
+  "single_use": true
  },
  {
   "id": 50078509,
@@ -5794,7 +5873,8 @@
    "BREAK IMMUNITY",
    "CRIPPLE 1000"
   ],
-  "effect_note": "negates a monster, it can't attack"
+  "effect_note": "negates a monster, it can't attack",
+  "single_use": false
  },
  {
   "id": 58873391,
@@ -5813,7 +5893,8 @@
    "DESTROY MONSTER",
    "SACRIFICE MONSTER"
   ],
-  "effect_note": "tributes a Fish to destroy and draw"
+  "effect_note": "tributes a Fish to destroy and draw",
+  "single_use": true
  },
  {
   "id": 45178472,
@@ -5831,7 +5912,8 @@
   "effects": [
    "ANNIHILATE SPELLS"
   ],
-  "effect_note": "destroys 5 Spells/Traps"
+  "effect_note": "destroys 5 Spells/Traps",
+  "single_use": true
  },
  {
   "id": 81601517,
@@ -5849,7 +5931,8 @@
   "effects": [
    "DESTROY SPELL"
   ],
-  "effect_note": "negates a Spell"
+  "effect_note": "negates a Spell",
+  "single_use": true
  },
  {
   "id": 98273947,
@@ -5867,7 +5950,8 @@
   "effects": [
    "RESURRECT LV 5 & LESS MONSTER"
   ],
-  "effect_note": "revives a Level 2 or lower"
+  "effect_note": "revives a Level 2 or lower",
+  "single_use": false
  },
  {
   "id": 7811875,
@@ -5886,7 +5970,8 @@
    "DESTROY MONSTER",
    "SACRIFICE MONSTER"
   ],
-  "effect_note": "sends a Synchro to negate a Summon"
+  "effect_note": "sends a Synchro to negate a Summon",
+  "single_use": true
  },
  {
   "id": 14730606,
@@ -5904,7 +5989,8 @@
   "effects": [
    "CRIPPLE ALL 300"
   ],
-  "effect_note": "opponent's monsters become Plants"
+  "effect_note": "opponent's monsters become Plants",
+  "single_use": false
  },
  {
   "id": 85080048,
@@ -5922,7 +6008,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "destroys a card after a Thunder summon"
+  "effect_note": "destroys a card after a Thunder summon",
+  "single_use": true
  },
  {
   "id": 81128478,
@@ -5940,7 +6027,8 @@
   "effects": [
    "DESTROY MONSTER"
   ],
-  "effect_note": "banishes an Insect to destroy"
+  "effect_note": "banishes an Insect to destroy",
+  "single_use": true
  },
  {
   "id": 29307554,
@@ -5958,7 +6046,8 @@
   "effects": [
    "BOOST 1000"
   ],
-  "effect_note": "a Level 8 attacks twice"
+  "effect_note": "a Level 8 attacks twice",
+  "single_use": true
  },
  {
   "id": 56856951,
@@ -5977,7 +6066,8 @@
    "HURT OPPONENT 2000",
    "BACKFIRE 300"
   ],
-  "effect_note": "discards 2 for 2000 damage"
+  "effect_note": "discards 2 for 2000 damage",
+  "single_use": true
  },
  {
   "id": 59718521,
@@ -5996,7 +6086,8 @@
    "DESTROY MONSTER",
    "DESTROY SPELL"
   ],
-  "effect_note": "tributes a Psychic to negate"
+  "effect_note": "tributes a Psychic to negate",
+  "single_use": true
  },
  {
   "id": 97168905,
@@ -6015,7 +6106,8 @@
    "BOOST 1000",
    "HEAL OPPONENT 300"
   ],
-  "effect_note": "+1000 and 2 attacks; the opponent draws"
+  "effect_note": "+1000 and 2 attacks; the opponent draws",
+  "single_use": true
  },
  {
   "id": 21636650,
@@ -6033,6 +6125,7 @@
   "effects": [
    "RESURRECT MONSTER"
   ],
-  "effect_note": "revives a monster destroyed this turn"
+  "effect_note": "revives a monster destroyed this turn",
+  "single_use": true
  }
 ]

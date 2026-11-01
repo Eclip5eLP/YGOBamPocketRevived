@@ -820,11 +820,54 @@ def new_series_shop_art(ctx):
 # Synchro/Xyz rules, written to config/summons.json (com.revival.summon.Summon):
 #   "synchro": {tuner template id: {level total: [result ids]}}
 #   "xyz": [{"id": result id, "rank": level of both materials, "family": 0 or monster type, "element": 0 or attribute}]
-#   "effects": {effect id: {"needs": n, "cost": n, "perMaterial": 1, "attach": n}}  material effects on effect rows of
-#              a result card (meaning: com.revival.summon.Summon, "Material effects")
+#   "effects": {effect id: rule}  rules on effect rows (meaning: com.revival.summon.Summon):
+#              material effects of a result card {"needs": n, "cost": n, "perMaterial": 1, "attach": n} and the new
+#              effects (notes/new_effects.md) {"summonKind"/"targetKind": kind, "material": true, "level": n,
+#              "levelSet": n, "rebirth": true, "guardian": true}; rows for them: effect_row
 # Result cards are added with add_card(..., fusionResult=True): made in duels, never in decks (Collection and the
 # sell menu show the ones you own). Test cards: tools/content_test_mods.py.
 SUMMONS = {"synchro": {}, "xyz": [], "effects": {}}
+RULE_KEYS = {"needs", "cost", "perMaterial", "attach", "summonKind", "targetKind", "material", "level", "levelSet",
+             "rebirth", "guardian"}
+SUMMON_KINDS = {"synchro", "xyz", "fusion", "any"}
+
+# Effect row fields (item_template.ace CardEffect; enums in work/as3/.../inventory/enumeration)
+TRIGGER = {"none": 0, "round_start": 1, "destroyed": 7, "attack": 11, "summon": 32}  # EffectTriggers (32 ON_FUSION)
+TARGET = {"self": 1, "opponent": 2, "player": 12, "my_monsters": 28, "opponent_monsters": 30}  # TargetTypes
+NEW_EFFECT_TEXT_IDS = 21_000_000_000_000  # name/description resource ids of new effect rows: + 2 x effect id (+1)
+
+
+def effect_row(ctx, card, like, name, description, rule=None, trigger=None, dispatcher=None, target=None, **effect):
+    """A new effect row on card (a template from add_card), copied from an existing row whose name text is like
+    (e.g. "BOOST 300"): new effect id, its own name/description texts, then trigger/dispatcher/target (TRIGGER/TARGET
+    names or ids) and effect fields (atkModifier=600, hpModifier=500, ...) changed. rule: its summons.json rule.
+    Returns the effect id."""
+    templates = ctx.ace("config/ace/inventory/item_template.ace")
+    _, by_id, _ = ctx.strings("en", "inventory")
+    source = next(e for t in templates for e in (t.get("effects") or [])
+                  if by_id.get(int(e["effect"]["resourceNameId"]), "").strip() == like)
+    row = copy.deepcopy(source)
+    effect_id = max(e["effect"]["id"] for t in templates for e in (t.get("effects") or [])) + 1
+    row["effect"]["id"] = effect_id
+    for field, value in (("triggerId", TRIGGER.get(trigger, trigger)), ("triggerDispatcherId", TARGET.get(dispatcher, dispatcher)),
+                         ("targetTypeId", TARGET.get(target, target))):
+        if value is not None:
+            row[field] = value
+    for field, value in effect.items():
+        row["effect"][field] = type(row["effect"][field])(value)
+    for key, text in (("resourceNameId", name), ("resourceDescId", description)):
+        rid = NEW_EFFECT_TEXT_IDS + 2 * effect_id + (key == "resourceDescId")
+        row["effect"][key] = type(row["effect"][key])(rid)
+        for lang in ("en", "fr"):
+            ctx.set_text(lang, "inventory", str(rid), text, resource_id=rid)
+    card.setdefault("effects", [])
+    if card["effects"] is None:
+        card["effects"] = []
+    row["displayOrder"] = len(card["effects"]) + 1
+    card["effects"].append(row)
+    if rule:
+        SUMMONS["effects"][effect_id] = rule
+    return effect_id
 
 
 def write_summons(ctx):
@@ -837,8 +880,9 @@ def write_summons(ctx):
             raise RuntimeError(f"summons: unknown card {i}")
     effect_ids = {e["effect"]["id"] for t in items.values() for e in (t.get("effects") or [])}
     for effect_id, rule in SUMMONS["effects"].items():
-        if effect_id not in effect_ids or set(rule) - {"needs", "cost", "perMaterial", "attach"}:
-            raise RuntimeError(f"summons: bad material effect {effect_id}: {rule}")
+        if effect_id not in effect_ids or set(rule) - RULE_KEYS or any(
+                rule[k] not in SUMMON_KINDS for k in ("summonKind", "targetKind") if k in rule):
+            raise RuntimeError(f"summons: bad effect rule {effect_id}: {rule}")
     # every card list starts from CardFiltering.FilterCardTemplateList, which drops cards without a shop item: a
     # Synchro/Xyz card without one would never show in the Collection or the sell menu (a backorder item is enough)
     shop = {i["itemTemplateId"] for _, i in _shop_items(ctx)}

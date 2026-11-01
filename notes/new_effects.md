@@ -14,17 +14,38 @@ others need engine code.
 
 To build (code or data, whichever each needs); the review already uses these names in `effect_idea`:
 
-- [ ] **ON SYNCHRO / ON XYZ / ON FUSION: X** - "When this Monster is Synchro/Xyz/Fusion Summoned, X." (A1 below)
-- [ ] **MATERIAL: X** - "When this card is used for a Summon, the new Monster gets X." (B1)
-- [ ] **LEVEL UP n / LEVEL DOWN n / LEVEL SET n** - Level for Synchro totals and Xyz ranks, this Round. (B2)
-- [ ] **REBIRTH** - "When this Monster is destroyed, it is shuffled back into your Deck." (B3)
-- [ ] **GUARDIAN** - "When another of your cards would be destroyed, this Monster is destroyed instead." (B4)
-- [ ] **BOOST ALL SYNCHROS / XYZ / FUSIONS** (plus IMMUNE/CRIPPLE variants where cards need them) - target filter
+- [x] **ON SYNCHRO / ON XYZ / ON FUSION: X** - "When this Monster is Synchro/Xyz/Fusion Summoned, X." (A1 below)
+- [x] **MATERIAL: X** - "When this card is used for a Summon, the new Monster gets X." (B1)
+- [x] **LEVEL UP n / LEVEL DOWN n / LEVEL SET n** - Level for Synchro totals and Xyz ranks, this Round. (B2)
+- [x] **REBIRTH** - "When this Monster is destroyed, it is shuffled back into your Deck." (B3)
+- [x] **GUARDIAN** - "When another of your cards would be destroyed, this Monster is destroyed instead." (B4)
+- [x] **BOOST ALL SYNCHROS / XYZ / FUSIONS** (plus IMMUNE/CRIPPLE variants where cards need them) - target filter
   on the summon kind. (B6)
-- [ ] **ON SYNCHRO SUMMON / ON XYZ SUMMON / ON FUSION SUMMON: X** - "Every time you Synchro Summon, X." on any of
+- [x] **ON SYNCHRO SUMMON / ON XYZ SUMMON / ON FUSION SUMMON: X** - "Every time you Synchro Summon, X." on any of
   your cards in play (a Spell or another Monster). (B10)
 
 Not approved for now: DRAW, BANISH, CLEAVE, PIERCE (cards keep their existing-keyword effects).
+
+### Built (2026-11-01)
+
+All seven are rules on effect rows in config/summons.json "effects" (like the material effects), written by
+`content_mods.effect_row` (a new row copied from an existing keyword's row: own id and texts, trigger/target changed,
+rule added). Behaviour: `as3_new/com/revival/summon/Summon.as` ("New effects") and `LevelEffect.as`; engine hooks:
+`tools/as3_patches.py` NEW_EFFECT_EDITS.
+
+| Effect | Row | Hook | Emulator (Arena, test deck, 2026-11-01) |
+|---|---|---|---|
+| ON SYNCHRO/XYZ/FUSION | trigger ON_FUSION (32), dispatcher self | none (RoundHandler.DoFusionLaunch already launches it) | VERIFIED: Stardust Dragon made, opponent -1000 at once |
+| ON ... SUMMON | trigger 32, dispatcher player, rule summonKind | DoFusionLaunch adds the owner to the dispatchers; Summon.CanResolveEffect | VERIFIED: Synchro -> -500; an Xyz (Utopia) -> nothing |
+| BOOST ALL SYNCHROS | any boost row, rule targetKind | TargetRetreiver.GetEffectTarget filter | VERIFIED: Stardust +600 at round start; Utopia (Xyz) unchanged |
+| MATERIAL | row on the material, trigger none, target self, rule material | Summon.OnSummoned -> CardBO.RevivalAddEffects (fires with ON_FUSION) | VERIFIED: Stardust 2500 -> 3100 from Junk Synchron |
+| LEVEL UP/DOWN/SET | row with no modifier, rule level/levelSet (oncePerGame for SET) | EffectCreater makes a LevelEffect; CardBO.RevivalLevel, saved in CardSaveState | VERIFIED: Ansatsu set to 3 no longer pairs with a level 4 Warrior; the control pair (two level 4) still makes Utopia |
+| REBIRTH | text row, trigger none, rule rebirth | RoundHandler.ClearDeadCards flags the card (a result: its materials) like a resurrection | VERIFIED: Stardust destroyed -> "Resurrected", both materials back in the Deck (deck count +2) |
+| GUARDIAN | text row, trigger none, rule guardian | EffectHandler.ResolveDestroyCard / ResolveNormalAttack: Summon.Destroyed | not seen yet: the AI killed by Power loss (ATK to 0), which GUARDIAN does not cover |
+
+Notes: the card picture still shows the template Level (LEVEL effects change the duel value only). GUARDIAN covers
+destruction by an effect and by battle, not a card whose Power drops to 0 (ResolveStatModifier); say so in its text or
+extend it if wanted. Real Series 3 cards get these rows when the cards are built (their `effect_idea`).
 
 ## A. Data only (new rows from existing engine pieces; need an emulator test)
 
