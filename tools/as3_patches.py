@@ -2695,6 +2695,121 @@ NEW_EFFECT_EDITS = {
 for _cls, _edits in NEW_EFFECT_EDITS.items():
     PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
 
+# LEVEL effects shown to the players (Summon.ShowLevel): a "Lv N" badge on the duel card while its Level differs from
+# the printed one, and the zoomed card view shows the duel Level
+LEVEL_DISPLAY_EDITS = {
+    "com.frimastudio.utils.rendering.card.DuelCard": [
+        ("""      private var mMaterialTxt:TextField;
+""", """      private var mMaterialTxt:TextField;
+
+      private var mLevelBack:Quad;
+
+      private var mLevelTxt:TextField;
+
+      public function RevivalLevel(aLevel:int, aShow:Boolean) : void
+      {
+         if(this.mLevelTxt == null)
+         {
+            this.mLevelBack = new Quad(58,26,0);
+            this.mLevelBack.alpha = 0.7;
+            this.mLevelBack.x = 17;
+            this.mLevelBack.y = 45;
+            this.mLevelBack.touchable = false;
+            this.mLevelTxt = new TextField(58,26,"",EFonts.HANZEL_BOLD,20,16766720);
+            this.mLevelTxt.x = 17;
+            this.mLevelTxt.y = 45;
+            this.mLevelTxt.touchable = false;
+         }
+         this.mLevelTxt.text = "Lv " + aLevel;
+         if(aShow)
+         {
+            addChild(this.mLevelBack);
+            addChild(this.mLevelTxt);
+         }
+         else
+         {
+            this.mLevelBack.removeFromParent();
+            this.mLevelTxt.removeFromParent();
+         }
+      }
+"""),
+        ("""         if(this.mMaterialTxt != null)
+         {
+            addChild(this.mMaterialBack);
+            addChild(this.mMaterialTxt);
+         }
+""", """         if(this.mMaterialTxt != null)
+         {
+            addChild(this.mMaterialBack);
+            addChild(this.mMaterialTxt);
+         }
+         if(this.mLevelTxt != null && this.mLevelTxt.parent != null)
+         {
+            addChild(this.mLevelBack);
+            addChild(this.mLevelTxt);
+         }
+"""),
+        ("""         if(this.mMaterialTxt != null)
+         {
+            this.mMaterialBack.removeFromParent(true);
+            this.mMaterialTxt.removeFromParent(true);""", """         if(this.mLevelTxt != null)
+         {
+            this.mLevelBack.removeFromParent(true);
+            this.mLevelTxt.removeFromParent(true);
+            this.mLevelBack = null;
+            this.mLevelTxt = null;
+         }
+         if(this.mMaterialTxt != null)
+         {
+            this.mMaterialBack.removeFromParent(true);
+            this.mMaterialTxt.removeFromParent(true);"""),
+    ],
+    "com.frimastudio.utils.rendering.card.DetailedCardVisual": [
+        ("""      protected var mLevelTxtField:TextField;
+""", """      protected var mLevelTxtField:TextField;
+
+      public var RevivalLevelOverride:int = 0;
+"""),
+        ("""            this.mLevelTxtField.text = mAssociatedCardData.Level.toString();""",
+         """            this.mLevelTxtField.text = (this.RevivalLevelOverride > 0 ? this.RevivalLevelOverride : mAssociatedCardData.Level).toString();"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.card.CardZoomingHandler": [
+        ("""         this.DisplayZoomedCard(container,aCard.Skin.DetailedCardData,cardTemplateId);""",
+         """         Object(this.mCurrentZoomedCard)["RevivalLevelOverride"] = cardTemplateId == aCard.CardTemplateId ? aCard.CardLevel : 0;
+         this.DisplayZoomedCard(container,aCard.Skin.DetailedCardData,cardTemplateId);"""),
+    ],
+    "com.frimastudio.snowstorm.module.cardgame.card.CardBO": [
+        ("""            if(savedState.RevivalLevel > 0)
+            {
+               this.mCardLevel = savedState.RevivalLevel;
+            }
+""", """            if(savedState.RevivalLevel > 0)
+            {
+               this.mCardLevel = savedState.RevivalLevel;
+               Summon.ShowLevel(this);
+            }
+"""),
+        ("""         this.mCardLevel = this.mCardTemplate.cardLevel;
+""", """         this.mCardLevel = this.mCardTemplate.cardLevel;
+         Summon.ShowLevel(this);
+"""),
+    ],
+    # a Level change lasts while the card is on the field: every way into the graveyard (the card itself, materials
+    # of a result, detached Xyz materials) passes here, also on undo/replay
+    "com.frimastudio.snowstorm.module.cardgame.player.gamemat.GameMatBO": [
+        ("""         var index:int = this.mGraveyard.indexOf(aCard);
+         if(index == -1)
+         {
+            this.mGraveyard.push(aCard);""", """         Summon.ResetLevel(aCard);
+         var index:int = this.mGraveyard.indexOf(aCard);
+         if(index == -1)
+         {
+            this.mGraveyard.push(aCard);"""),
+    ],
+}
+for _cls, _edits in LEVEL_DISPLAY_EDITS.items():
+    PATCHES[_cls] = PATCHES.get(_cls, []) + _edits
+
 # --- Series 3 and 4 (notes/content_patch_series3.md, part A) ---------------------------------------------------------
 # Card series 3 and 4: enum values, rarity icons (frames 12-15 / 16-19 of common_rarity_all, gems drawn by
 # tools/content_mods.py common_frames; frames 8-11 are the Arena crowns, so series 3 can't use the series formula)

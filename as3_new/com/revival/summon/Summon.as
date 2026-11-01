@@ -687,8 +687,38 @@ package com.revival.summon
                resolved = true;
             }
             Object(card)["RevivalLevel"] = rule.hasOwnProperty("levelSet") ? int(rule.levelSet) : Math.max(1,card.CardLevel + int(rule.level));
+            ShowLevel(card);
          }
          return resolved;
+      }
+
+      // GameMatBO.PlaceCardInGraveyard (patched): the card's Level is its printed one again
+      public static function ResetLevel(aCard:CardBO) : void
+      {
+         var template:CardTemplate = aCard != null ? Template(aCard.CardTemplateId) : null;
+         if(template != null && aCard.CardLevel != template.cardLevel)
+         {
+            Object(aCard)["RevivalLevel"] = template.cardLevel;
+            ShowLevel(aCard);
+         }
+      }
+
+      // The duel card's "Lv N" badge (DuelCard.RevivalLevel, added by tools/as3_patches.py after this class is
+      // compiled): shown while the card's Level differs from its printed one. On a change and on undo/replay.
+      public static function ShowLevel(aCard:CardBO) : void
+      {
+         var template:CardTemplate = null;
+         try
+         {
+            template = Template(aCard.CardTemplateId);
+            if(template != null && aCard.Skin != null && template.cardTypeId == CardTypes.MONSTER_TYPE.Id)
+            {
+               Object(aCard.Skin.FaceUpSkin)["RevivalLevel"](aCard.CardLevel,aCard.CardLevel != template.cardLevel);
+            }
+         }
+         catch(error:Error)
+         {
+         }
       }
 
       // EffectHandler.ResolveDestroyCard / ResolveNormalAttack (patched): the card that is destroyed when aTarget would

@@ -43,9 +43,13 @@ rule added). Behaviour: `as3_new/com/revival/summon/Summon.as` ("New effects") a
 | REBIRTH | text row, trigger none, rule rebirth | RoundHandler.ClearDeadCards flags the card (a result: its materials) like a resurrection | VERIFIED: Stardust destroyed -> "Resurrected", both materials back in the Deck (deck count +2) |
 | GUARDIAN | text row, trigger none, rule guardian | EffectHandler.ResolveDestroyCard / ResolveNormalAttack: Summon.Destroyed | not seen yet: the AI killed by Power loss (ATK to 0), which GUARDIAN does not cover |
 
-Notes: the card picture still shows the template Level (LEVEL effects change the duel value only). GUARDIAN covers
-destruction by an effect and by battle, not a card whose Power drops to 0 (ResolveStatModifier); say so in its text or
-extend it if wanted. Real Series 3 cards get these rows when the cards are built (their `effect_idea`).
+Level display (owner request): while a card's duel Level differs from its printed one, the duel card shows a gold
+"Lv N" badge (DuelCard.RevivalLevel, under the Xyz material badge) and the zoomed card shows the duel Level
+(DetailedCardVisual.RevivalLevelOverride via CardZoomingHandler). A Level change lasts while the card is on the field:
+GameMatBO.PlaceCardInGraveyard resets it (every way into the graveyard passes there); drawing a card resets it too
+(CardBO.ResetCardValue). VERIFIED emulator: badge on a Level-3 Ansatsu (own and opponent's), zoom shows 3, badge gone
+once it is in the graveyard.
+GUARDIAN covers destruction by an effect and by battle only, not a card whose Power drops to 0 (owner decision). Real Series 3 cards get these rows when the cards are built (their `effect_idea`).
 
 ## A. Data only (new rows from existing engine pieces; need an emulator test)
 
