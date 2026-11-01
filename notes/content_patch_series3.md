@@ -122,3 +122,7 @@ Paths below are under `work/as3/scripts/com/frimastudio/snowstorm/` unless they 
   .test_world2` (world map 2, chapter 60 on chapter 34's layout).
 - Original data detail [VERIFIED map33_level1.xml]: the series 2 starter deck was handed out as a treasure node of
   chapter 34 (its 15 cards, node 3), not as a shop purchase.
+- [VERIFIED emulator] World select shows World 1 / World 2; World 2's node 1 opens "W2-1. Test Chapter" (our name,
+  info text, the layout chapter's preview picture), VISIT loads chapter 60 on chapter 34's background with our intro
+  story text. World 2 looks like World 1 because the world map's hexagons and paths are painted into its background
+  picture (backgroundWorld/backgroundWorld2): a real World 2 needs its own background art (decision 6).
