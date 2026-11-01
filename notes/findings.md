@@ -2285,3 +2285,15 @@ YGOCardDl.py download), server/game.py result_cards.
     Black Rose Dragon, duel to a winner, server: no "out of sync" (checksums and winners agree on both phones).
   - Not verified yet: material effects in a duel (the test Xyz never survived to round end; friend/arena duels used
     up for the day), Xyz in a live duel, AI making Synchro, story aixyz/aiextra.
+- 2026-11-01 test duel + material effects:
+  - Test duels (test content only, summons.json "test", never written by release content): "draw" = template ids the
+    local player draws first after each shuffle (GameMatBO.ShuffleDeck patch, Summon.TestDraw), "aiHp" = AI starting
+    LP (GameMatBO.CalculateDeckHP patch, Summon.TestHp; not live opponents). Dev server trick for a fresh AI duel:
+    set the player's "arena" player data "generated" to 0 (new Arena opponents).
+  - Fixed: detached materials reached the graveyard list but not its display/count (PlaceCardInGraveyard(.., false)
+    has no visual); now each one queues the game's card-to-graveyard feedback (CardBO.PlayCardGoesToGraveyard).
+    Attached materials (rule "attach") still leave the graveyard without a display update (no test card uses it yet).
+  - [VERIFIED emulator, Arena AI duel with the test settings] Utopia ("cost": 1, round end x2 ATK): x2 materials,
+    3000 -> 6000 (x1, graveyard 1) -> 12000 (x0, graveyard 2) -> stays 12000 (no materials, effect skipped).
+    Excalibur ("needs": 1): 2500 -> 5000, stays x2. Synchro on an on-field Tuner (Junk Synchron + Ansatsu ->
+    Stardust Dragon, white frame). Xyz picker from a field monster + hand monster.

@@ -84,6 +84,9 @@ def test_summons(ctx):
     # Utopia: doubles at round end while it can detach a material (2 materials: twice); Excalibur: while it has one
     SUMMONS["effects"][cards[9121]["effects"][0]["effect"]["id"]] = {"cost": 1}
     SUMMONS["effects"][cards[9122]["effects"][0]["effect"]["id"]] = {"needs": 1}
+    # test duel: draw Skull Stalker, Ansatsu, Junk Synchron, Skull Stalker, Ansatsu first (Xyz on turn 1, Synchro and a
+    # second Xyz next); AI opponents start with 60000 LP so result cards survive to round end
+    SUMMONS["test"] = {"draw": [317, 319, 9101, 317, 319, 473], "aiHp": 60000}  # play a card each round: an empty round loses
     SUMMONS["synchro"][9101] = {6: [9111], 7: [9112, 9113]}
     SUMMONS["xyz"] += [{"id": 9121, "rank": 4, "family": 0, "element": 0},
                        {"id": 9122, "rank": 4, "family": 20, "element": 0}]

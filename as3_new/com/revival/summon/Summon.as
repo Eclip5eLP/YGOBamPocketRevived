@@ -387,6 +387,46 @@ package com.revival.summon
          }
       }
 
+      // --- Test duels (summons.json "test", written only by tools/content_test_mods.py, never in a release) ---------
+      //   "draw": [template ids]  the local player's deck is drawn in this order first (after each shuffle)
+      //   "aiHp": n               an AI opponent starts with n life points (the duel lasts long enough to test)
+
+      // GameMatBO.ShuffleDeck (patched)
+      public static function TestDraw(aDeck:Vector.<CardBO>, aOwner:Object) : Vector.<CardBO>
+      {
+         var test:Object = Rules().test;
+         var front:Vector.<CardBO> = new Vector.<CardBO>();
+         var rest:Vector.<CardBO> = aDeck.concat();
+         var i:int = 0;
+         if(test == null || test.draw == null || !(aOwner is LocalPlayer))
+         {
+            return aDeck;
+         }
+         for each(var id:* in test.draw)
+         {
+            for(i = 0; i < rest.length; i++)
+            {
+               if(rest[i].CardTemplateId == int(id))
+               {
+                  front.push(rest.splice(i,1)[0]);
+                  break;
+               }
+            }
+         }
+         return front.concat(rest);
+      }
+
+      // GameMatBO.CalculateDeckHP (patched)
+      public static function TestHp(aOwner:Object, aHp:int) : int
+      {
+         var test:Object = Rules().test;
+         if(test != null && int(test.aiHp) > 0 && aOwner != null && !(aOwner is LocalPlayer) && !(aOwner is AwayPlayer))
+         {
+            return int(test.aiHp);
+         }
+         return aHp;
+      }
+
       // --- Material effects (summons.json "effects": {"<effect id>": rule}) ---------------------------------------
       // A rule turns an existing effect row of a Synchro/Xyz card into a material effect:
       //   "needs": n      the effect only works while the card has at least n materials
@@ -459,6 +499,7 @@ package com.revival.summon
             for each(var material:CardBO in detached)
             {
                card.Owner.GameMat.PlaceCardInGraveyard(material,false);
+               material.PlayCardGoesToGraveyard();  // queued animation; it also updates the graveyard count
             }
          }
          if(int(rule.attach) > 0)

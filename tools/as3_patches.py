@@ -2319,6 +2319,17 @@ SUMMON_EDITS = {
 """, """         this.AddCardToIngredientList(cardBO,aCard2);
          Summon.ShowMaterials(cardBO);
 """),
+        # test duels only (summons.json "test", test content): fixed first draws, big AI life points
+        ("""         this.mDeck = suffledDeck;
+""", """         this.mDeck = Summon.TestDraw(suffledDeck,this.mOwner);
+"""),
+        ("""               totalHP += this.mDeck[i].DefenseValue;
+            }
+         }
+         return totalHP;""", """               totalHP += this.mDeck[i].DefenseValue;
+            }
+         }
+         return Summon.TestHp(this.mOwner,totalHP);"""),
     ],
     "com.frimastudio.utils.rendering.card.DetailedCardVisual": [
         ("""   import com.frimastudio.as3ToolKit.display.Log;

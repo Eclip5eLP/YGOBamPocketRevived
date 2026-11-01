@@ -685,6 +685,8 @@ def write_summons(ctx):
             raise RuntimeError(f"summons: Xyz {x['id']} level {items[x['id']]['cardLevel']} != rank {x['rank']}")
     data = {"synchro": {str(t): {str(lv): r for lv, r in levels.items()} for t, levels in SUMMONS["synchro"].items()},
             "xyz": SUMMONS["xyz"], "effects": {str(e): r for e, r in SUMMONS["effects"].items()}}
+    if SUMMONS.get("test"):  # test duels, set only by tools/content_test_mods.py (Summon.TestDraw / TestHp)
+        data["test"] = SUMMONS["test"]
     ctx.new_file("config/summons.json", json.dumps(data, separators=(",", ":"), sort_keys=True).encode("utf-8"))
     # server: cards made in duels (fusionResult), left out of the strongest-cards deck (server/game.py deck_source)
     results = sorted(i for i, t in items.items() if t.get("fusionResult"))
