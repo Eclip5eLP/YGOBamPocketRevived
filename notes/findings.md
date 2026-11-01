@@ -2230,3 +2230,9 @@ Friends opens the old menus; Edit Deck hangs on its loading screen.
 - Proposal [INFERRED]: no extra deck; rules pick the result (Synchro: Tuner carries a list by level total; Xyz: rank
   table, same-level pair, materials = the ingredient list). Recoloured frames as a second atlas page. Material
   effects ("detach") are a new effect kind and the largest piece.
+- 2026-11-01 owner decisions and follow-up [notes/synchro_xyz.md sections 6-8]: no extra deck; Synchro results per
+  Tuner by level total; results may be material again. Both mechanics need a new APK (rules, frames and AI are in
+  MobileGame.swf; content only adds cards) [VERIFIED]; Xyz can ship switched off in 1.2.0 and be enabled later by
+  content alone [INFERRED]. Card pool: 928 monsters, levels 1-12, level 4 = 97 monsters in 37 type+attribute pairs
+  [VERIFIED item_template.ace]. Xyz rules sit on the Xyz cards (rank + optional type/attribute); tie options
+  documented (fixed order / player picks / random).

@@ -98,10 +98,69 @@ Effort guess: Synchro M (mostly frame work + rule check), Xyz without material e
 Everything stays inside the duel code both phones run, so live duels need both players on the new APK (the
 version check already handles that).
 
-## 6. Open questions for the owner
+## 6. Owner decisions (2026-11-01)
 
-1. No extra deck (rules decide) — OK? Or the "must own the result" middle way?
-2. Synchro by level total (several Synchros per Tuner) or one fixed Synchro per Tuner?
-3. Xyz: how should the result be picked when a rank has several Xyz monsters (type/attribute match, or one per rank)?
-4. Xyz material effects in the first version, or later?
-5. Which cards first (a small starter set: e.g. 2-3 Tuners, 3 Synchros, 3 Xyz)?
+- **No extra deck.** Rules pick the result.
+- **Synchro**: each Tuner has its own list, one result per level total (Tuner level + other monster's level).
+- **Results as material**: Fusion/Synchro/Xyz results can be the base of another Synchro or Xyz (the ingredient
+  list is carried over, VERIFIED `GameMatBO.AddCardToIngredientList`).
+- **Xyz**: picked by type/attribute match; what happens when several match is still open (section 8).
+- **Material effects** (detach / check materials) are fine to build.
+
+## 7. Does this need a new APK?
+
+Yes, for both. All duel rules, card frames and the AI live in the game code inside the APK (`MobileGame.swf`,
+patched through tools/as3_patches.py / new classes). The server only sends card data and passes live-duel moves
+through (server/livepvp.py l.218-231). VERIFIED
+
+| Can be done without a new APK | Needs a new APK |
+|---|---|
+| New cards, art, stats, effects built from the existing six effect pieces (content) | Synchro rule by level total, Tuner flag, white frame |
+| A Synchro done as a plain fusion: Tuner + level N → one fixed result, purple frame (VERIFIED: the level condition exists) | Xyz rule table, black frame, attaching materials |
+| Which Synchro/Xyz cards exist and their rules, **once the APK has the code** | Detach / count-materials effects (new effect kind) |
+
+Release plan that follows from this (INFERRED):
+- Build Synchro and Xyz in the same code. The next APK (1.2.0) ships with Synchro cards in the content.
+- If the Xyz code is finished and tested by then, it goes into 1.2.0 switched off: no Xyz cards or rank table in
+  the content means no Xyz can happen. Xyz then releases later **through content only, no second APK**.
+- If Xyz code isn't done in time, Xyz comes with a later APK.
+- New AMF fields (Tuner flag, kind, rank table) are only understood by the new APK. The server's version gate
+  (server/content.py l.84, `minimum APK version`) already sends older APKs to the update screen, so 1.1.0 players
+  are asked to update and never read the new data. VERIFIED (gate) / INFERRED (that this covers it)
+
+## 8. Xyz: who can make one, and which one
+
+Card pool (base data, `item_template.ace`, 928 monsters without fusion results) [VERIFIED]: levels 1-12, every
+level 1-11 has 42-145 monsters (level 12: 2). Level 4: 97 monsters, 37 different type+attribute pairs; level 3:
+103 monsters, 40 pairs. So almost any two cards of a level share a level, and type+attribute matches are rare.
+
+### "Every card can be material"
+
+The rule doesn't sit on cards: it sits on the Xyz monsters. Each Xyz card lists: rank, and optionally a type and/or
+attribute its materials must have. A pair can make an Xyz only if some Xyz in the content accepts it. That keeps
+it under control:
+- Ranks with no Xyz cards: nothing happens, same as today.
+- The content decides how open it is: one generic Xyz per rank makes every same-level pair work; only
+  type/attribute Xyz make it rare.
+- Drop glow: the same-channel glow appears only when a real Xyz is possible (same check as fusion today:
+  `LocalPlayerHand.WillFusionOccur`). Optionally a dark glow for Xyz.
+
+### Several Xyz match: options
+
+| | How | Good | Bad |
+|---|---|---|---|
+| A. Best match + fixed order | Score: type and attribute both match > one matches > generic. Ties: an order set in the data (e.g. by card number). | No new screen, deterministic, live duels need no message change | Same pair always gives the same card; tied cards lower in the order can never be made |
+| **B. Player picks (recommended)** | Matching narrows the list (only Xyz whose conditions fit). One left: made directly. Several left: a small picker shows them when you drop the card. AI takes its best one. | Closest to the real game, every Xyz is reachable, also settles pairs that could make a Fusion **or** an Xyz | One new popup; the choice is sent as a 4th entry in the live-duel placement (`[slot, card, second card, chosen result]`; server passes it through already, VERIFIED server/livepvp.py l.218) and read in `AwayPlayer.OnBamReadyNotification` |
+| C. Random | Seeded by the duel | Simple | Feels unfair, can't plan |
+
+B can start as A (no picker) and get the picker later: the rule check is the same, only the tie-breaker changes.
+
+### Still to decide
+
+1. Tie between Xyz cards: A (fixed order), B (player picks) or A first then B?
+2. A pair that could make a Fusion and an Xyz (or Synchro): fusion first, or let the player pick (B)?
+3. Dropping a same-level monster on an Xyz of that rank: always **attach** (Xyz gets a material), or can it make
+   a new Xyz on top?
+4. Does an Xyz count its rank as level when it is the base for a Synchro or another Xyz?
+5. Generic Xyz per rank (every pair works) or only type/attribute Xyz (rare)?
+6. Starter set of cards for Synchro (e.g. 2-3 Tuners, their results per level total).
