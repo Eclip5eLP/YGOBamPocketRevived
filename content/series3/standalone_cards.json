@@ -5,8 +5,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 8,
-  "atk": 3000,
-  "def": 2800,
+  "atk": 2300,
+  "def": 2300,
   "attribute": "LIGHT",
   "race": "Dragon",
   "effect_hints": [
@@ -18,7 +18,9 @@
    "PARTING GIFT 1500"
   ],
   "effect_note": "destroys its destroyer and burns when destroyed",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2800
  },
  {
   "id": 9012916,
@@ -26,8 +28,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2800,
-  "def": 1600,
+  "atk": 2200,
+  "def": 2000,
   "attribute": "DARK",
   "race": "Dragon",
   "effect_hints": [
@@ -38,7 +40,9 @@
    "EMPATHY 300"
   ],
   "effect_note": "takes effect damage as counters, loses ATK",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2800,
+  "real_def": 1600
  },
  {
   "id": 18013090,
@@ -46,8 +50,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2800,
-  "def": 1800,
+  "atk": 2200,
+  "def": 2000,
   "attribute": "FIRE",
   "race": "Warrior",
   "effect_hints": [
@@ -58,7 +62,9 @@
    "BOOST 800"
   ],
   "effect_note": "+1000 ATK after you use a Spell",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2800,
+  "real_def": 1800
  },
  {
   "id": 6021033,
@@ -66,8 +72,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2400,
-  "def": 1500,
+  "atk": 2000,
+  "def": 1400,
   "attribute": "FIRE",
   "race": "Zombie",
   "effect_hints": [
@@ -78,7 +84,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "steals a Zombie from the opponent's GY",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1500
  },
  {
   "id": 40529384,
@@ -86,8 +94,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2400,
-  "def": 1600,
+  "atk": 1900,
+  "def": 2000,
   "attribute": "DARK",
   "race": "Dragon",
   "effect_hints": [
@@ -99,7 +107,9 @@
    "SHOCK 1000"
   ],
   "effect_note": "destroys a weaker monster it battles and burns",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2400,
+  "real_def": 1600
  },
  {
   "id": 25862681,
@@ -107,8 +117,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2100,
-  "def": 3000,
+  "atk": 2000,
+  "def": 2400,
   "attribute": "LIGHT",
   "race": "Dragon",
   "effect_hints": [
@@ -120,7 +130,9 @@
    "HEAL 1000"
   ],
   "effect_note": "destroys a Field Spell, gains 1000 LP",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2100,
+  "real_def": 3000
  },
  {
   "id": 31924889,
@@ -128,7 +140,7 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 400,
+  "atk": 1400,
   "def": 1800,
   "attribute": "LIGHT",
   "race": "Spellcaster",
@@ -137,11 +149,13 @@
    "boost"
   ],
   "effects": [
-   "BOOST 1000",
-   "DESTROY MONSTER"
+   "FEEBLE 400"
   ],
   "effect_note": "+1000 ATK per Spell Counter, removes one to destroy",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 400,
+  "real_def": 1800,
+  "owner_reviewed": true
  },
  {
   "id": 13574687,
@@ -149,8 +163,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 3,
-  "atk": 0,
-  "def": 0,
+  "atk": 900,
+  "def": 700,
   "attribute": "FIRE",
   "race": "Machine",
   "effect_hints": [
@@ -162,7 +176,9 @@
    "HURT OPPONENT 1000"
   ],
   "effect_note": "destroys a monster, burns half its ATK",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 24696097,
@@ -170,8 +186,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3300,
-  "def": 2500,
+  "atk": 2400,
+  "def": 2200,
   "attribute": "WIND",
   "race": "Dragon",
   "effect_hints": [
@@ -183,7 +199,9 @@
   ],
   "effect_note": "attacks up to 5 times; negates destruction",
   "effect_idea": "GUARDIAN",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3300,
+  "real_def": 2500
  },
  {
   "id": 96029574,
@@ -191,8 +209,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 8,
-  "atk": 3000,
-  "def": 2600,
+  "atk": 2300,
+  "def": 2200,
   "attribute": "FIRE",
   "race": "Dragon",
   "effect_hints": [
@@ -202,7 +220,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "discards a Gemini to destroy a Spell/Trap",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2600
  },
  {
   "id": 39402797,
@@ -210,8 +230,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3000,
-  "def": 2800,
+  "atk": 2300,
+  "def": 2300,
   "attribute": "FIRE",
   "race": "Dragon",
   "effect_hints": [
@@ -221,7 +241,9 @@
    "SHOCK 800"
   ],
   "effect_note": "destroys your cards to attack more times",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2800
  },
  {
   "id": 49389523,
@@ -229,8 +251,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2800,
-  "def": 2000,
+  "atk": 2200,
+  "def": 2100,
   "attribute": "LIGHT",
   "race": "Beast",
   "effect_hints": [
@@ -241,7 +263,9 @@
   ],
   "effect_note": "brings back Thunder Unicorn or Voltic Bicorn when destroyed",
   "effect_idea": "REBIRTH",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2800,
+  "real_def": 2000
  },
  {
   "id": 32646477,
@@ -249,8 +273,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2600,
-  "def": 1800,
+  "atk": 2200,
+  "def": 2000,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [
@@ -260,7 +284,9 @@
    "HURT OPPONENT 800"
   ],
   "effect_note": "tributes a monster for Level x 200 damage",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2600,
+  "real_def": 1800
  },
  {
   "id": 25132288,
@@ -268,7 +294,7 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2600,
+  "atk": 2200,
   "def": 2100,
   "attribute": "LIGHT",
   "race": "Dragon",
@@ -280,7 +306,9 @@
    "FEEBLE 500"
   ],
   "effect_note": "loses 500, the battled monster loses 1500",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2600,
+  "real_def": 2100
  },
  {
   "id": 33413279,
@@ -288,8 +316,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2500,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [
@@ -299,7 +327,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "uses Spell Counters to destroy a Spell/Trap",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 1800
  },
  {
   "id": 66818682,
@@ -307,8 +337,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2500,
-  "def": 2000,
+  "atk": 2200,
+  "def": 2100,
   "attribute": "DARK",
   "race": "Dragon",
   "effect_hints": [
@@ -319,7 +349,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "gains LP when attacked; revives Sun Dragon Inti",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 2000
  },
  {
   "id": 13995824,
@@ -327,8 +359,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2500,
-  "def": 2000,
+  "atk": 2000,
+  "def": 1600,
   "attribute": "LIGHT",
   "race": "Beast",
   "effect_hints": [
@@ -339,7 +371,9 @@
    "BACKFIRE 700"
   ],
   "effect_note": "both players mill 7 when it is destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 2000
  },
  {
   "id": 5309481,
@@ -347,8 +381,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2450,
-  "def": 0,
+  "atk": 2000,
+  "def": 1000,
   "attribute": "DARK",
   "race": "Zombie",
   "effect_hints": [
@@ -359,7 +393,9 @@
    "BOOST ALL ZOMBIES 400"
   ],
   "effect_note": "negates monsters destroyed by Zombies",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2450,
+  "real_def": 0
  },
  {
   "id": 3429238,
@@ -367,8 +403,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2400,
-  "def": 2000,
+  "atk": 2100,
+  "def": 2100,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
@@ -379,7 +415,9 @@
   ],
   "effect_note": "halves its ATK to attack directly; returns next turn",
   "effect_idea": "REBIRTH",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2400,
+  "real_def": 2000
  },
  {
   "id": 7582066,
@@ -387,8 +425,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2400,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "WIND",
   "race": "Psychic",
   "effect_hints": [
@@ -398,7 +436,9 @@
    "BOOST 800"
   ],
   "effect_note": "+1000 ATK on a correct guess",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1800
  },
  {
   "id": 63465535,
@@ -406,8 +446,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2400,
-  "def": 1200,
+  "atk": 2000,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Insect",
   "effect_hints": [
@@ -417,7 +457,9 @@
    "OSMOSIS 600"
   ],
   "effect_note": "equips an opponent's monster",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1200
  },
  {
   "id": 63101919,
@@ -425,7 +467,7 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2200,
+  "atk": 1900,
   "def": 1400,
   "attribute": "DARK",
   "race": "Spellcaster",
@@ -436,7 +478,9 @@
    "HURT OPPONENT 1000"
   ],
   "effect_note": "500 damage per Spell Counter",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1400
  },
  {
   "id": 77506119,
@@ -444,8 +488,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 5,
-  "atk": 2200,
-  "def": 1800,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "LIGHT",
   "race": "Beast",
   "effect_hints": [
@@ -455,7 +499,9 @@
    "CRIPPLE 500 +"
   ],
   "effect_note": "a monster loses 500 ATK per monster you control",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1800
  },
  {
   "id": 25958491,
@@ -463,8 +509,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2100,
-  "def": 2000,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [
@@ -474,7 +520,9 @@
    "EMPATHY 500"
   ],
   "effect_note": "gains or loses the LP difference",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 2000
  },
  {
   "id": 25373678,
@@ -482,8 +530,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 5,
-  "atk": 2100,
-  "def": 700,
+  "atk": 1900,
+  "def": 1200,
   "attribute": "WIND",
   "race": "Winged Beast",
   "effect_hints": [
@@ -493,7 +541,9 @@
    "RESURRECT WINGED BEAST"
   ],
   "effect_note": "summons a small Winged Beast when destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 700
  },
  {
   "id": 46195773,
@@ -501,8 +551,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2500,
-  "def": 1500,
+  "atk": 2000,
+  "def": 1400,
   "attribute": "WIND",
   "race": "Warrior",
   "effect_hints": [],
@@ -510,7 +560,9 @@
    "CRIPPLE 1000"
   ],
   "effect_note": "halves a big Synchro's ATK",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 1500
  },
  {
   "id": 22858242,
@@ -518,8 +570,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2500,
-  "def": 1800,
+  "atk": 2200,
+  "def": 2000,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [],
@@ -528,7 +580,9 @@
    "IMMUNE"
   ],
   "effect_note": "tributes to negate an attack",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 1800
  },
  {
   "id": 45500495,
@@ -536,8 +590,8 @@
   "group": "Standalone",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2200,
-  "def": 1800,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "LIGHT",
   "race": "Plant",
   "effect_hints": [],
@@ -545,7 +599,9 @@
    "HURT OPPONENT 1000"
   ],
   "effect_note": "1000 LP per non-Plant summon",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1800
  },
  {
   "id": 96914272,
@@ -553,8 +609,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 5,
-  "atk": 1200,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -567,7 +623,9 @@
   ],
   "effect_note": "takes a Level from a discarded Beast",
   "effect_idea": "LEVEL SET",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 1200
  },
  {
   "id": 6142213,
@@ -575,8 +633,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "WIND",
   "race": "Machine",
   "effect_hints": [
@@ -589,7 +647,9 @@
    "SHOCK 300"
   ],
   "effect_note": "not destroyed attacking, burns half the target's ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 78275321,
@@ -597,8 +657,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 700,
-  "def": 1300,
+  "atk": 900,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Insect",
   "effect_hints": [
@@ -609,7 +669,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "revives a Level 5 when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 1300
  },
  {
   "id": 11747708,
@@ -617,7 +679,7 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 400,
+  "atk": 800,
   "def": 800,
   "attribute": "WIND",
   "race": "Plant",
@@ -630,7 +692,9 @@
   ],
   "effect_note": "revives itself, adds a Plant's Level",
   "effect_idea": "LEVEL UP",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 800
  },
  {
   "id": 35448319,
@@ -638,8 +702,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 500,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -650,7 +714,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "tributes a Plant to destroy a card",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 13821299,
@@ -658,8 +724,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1900,
-  "def": 1600,
+  "atk": 1800,
+  "def": 1500,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -669,7 +735,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "summoned by sending an opponent's Trap to the GY",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1900,
+  "real_def": 1600
  },
  {
   "id": 57568840,
@@ -677,8 +745,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1500,
-  "def": 900,
+  "atk": 1600,
+  "def": 1000,
   "attribute": "WIND",
   "race": "Dragon",
   "effect_hints": [
@@ -689,7 +757,9 @@
   ],
   "effect_note": "raises a monster's Level by 1",
   "effect_idea": "LEVEL UP 1",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 900
  },
  {
   "id": 36107810,
@@ -697,8 +767,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 1300,
-  "def": 400,
+  "atk": 1100,
+  "def": 700,
   "attribute": "DARK",
   "race": "Spellcaster",
   "effect_hints": [
@@ -708,7 +778,9 @@
    "HURT OPPONENT 300"
   ],
   "effect_note": "banishes 2 cards from the opponent's GY",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 400
  },
  {
   "id": 19505896,
@@ -716,8 +788,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 1200,
-  "def": 400,
+  "atk": 1100,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [
@@ -727,7 +799,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "a Plant is destroyed in its place",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 400
  },
  {
   "id": 81336148,
@@ -735,8 +809,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1200,
-  "def": 0,
+  "atk": 1100,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
@@ -746,7 +820,9 @@
    "BOOST ALL WARRIORS 300"
   ],
   "effect_note": "joins after a Warrior's attack",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 0
  },
  {
   "id": 51925772,
@@ -754,8 +830,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 1100,
-  "def": 400,
+  "atk": 1000,
+  "def": 700,
   "attribute": "FIRE",
   "race": "Dragon",
   "effect_hints": [
@@ -765,7 +841,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "searches a small Dragon when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1100,
+  "real_def": 400
  },
  {
   "id": 53623827,
@@ -773,8 +851,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1100,
-  "def": 800,
+  "atk": 1400,
+  "def": 900,
   "attribute": "WIND",
   "race": "Machine",
   "effect_hints": [
@@ -784,8 +862,10 @@
    "BOOST ALL 300"
   ],
   "effect_note": "Synchro Monsters gain 600 ATK",
-  "effect_idea": "BOOST ALL SYNCHROS 600",
-  "rarity": 2
+  "effect_idea": "BOOST ALL SYNCHROS 400",
+  "rarity": 2,
+  "real_atk": 1100,
+  "real_def": 800
  },
  {
   "id": 525110,
@@ -793,8 +873,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 700,
-  "def": 400,
+  "atk": 900,
+  "def": 700,
   "attribute": "DARK",
   "race": "Plant",
   "effect_hints": [
@@ -804,7 +884,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "summons 2 Inmato when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 400
  },
  {
   "id": 83602069,
@@ -812,18 +894,20 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 500,
-  "def": 1200,
+  "atk": 800,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
    "boost"
   ],
   "effects": [
-   "BOOST ALL WARRIORS 400"
+   "BOOST ALL WARRIORS 300"
   ],
   "effect_note": "Warriors gain 400 ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 1200
  },
  {
   "id": 88845345,
@@ -831,8 +915,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 500,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -842,7 +926,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "returns a banished Beast when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 300
  },
  {
   "id": 5519829,
@@ -850,20 +936,22 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 400,
-  "def": 1500,
+  "atk": 800,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Fairy",
   "effect_hints": [
    "boost"
   ],
   "effects": [
-   "BOOST 1000",
+   "BOOST 500",
    "BACKFIRE 500"
   ],
   "effect_note": "pays 500 LP, its Synchro gains 1000 ATK",
-  "effect_idea": "MATERIAL: BOOST 1000",
-  "rarity": 1
+  "effect_idea": "MATERIAL: BOOST 500",
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 1500
  },
  {
   "id": 61632317,
@@ -871,8 +959,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 400,
-  "def": 0,
+  "atk": 800,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -883,7 +971,9 @@
   ],
   "effect_note": "destroys a Spell/Trap for a DARK Synchro",
   "effect_idea": "MATERIAL: DESTROY SPELL",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 0
  },
  {
   "id": 73837870,
@@ -891,19 +981,21 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 300,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [
    "heal"
   ],
   "effects": [
-   "HEAL 1000"
+   "HEAL 800"
   ],
   "effect_note": "gains 1000 LP for a LIGHT Synchro",
-  "effect_idea": "MATERIAL: HEAL 1000",
-  "rarity": 1
+  "effect_idea": "MATERIAL: HEAL 800",
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 400
  },
  {
   "id": 135598,
@@ -911,8 +1003,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -922,7 +1014,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "searches a small Beast when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 31175914,
@@ -930,19 +1024,22 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 100,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
    "weaken"
   ],
   "effects": [
-   "CRIPPLE 1000"
+   "OSMOSIS 1000"
   ],
   "effect_note": "as material, a monster loses 1000 ATK",
-  "effect_idea": "MATERIAL: CRIPPLE 1000",
-  "rarity": 1
+  "effect_idea": "MATERIAL: OSMOSIS 1000",
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0,
+  "owner_reviewed": true
  },
  {
   "id": 42685062,
@@ -950,8 +1047,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 7,
-  "atk": 2600,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Fiend",
   "effect_hints": [],
@@ -959,7 +1056,9 @@
    "BOOST 500"
   ],
   "effect_note": "Tribute Summoned with half stats",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2600,
+  "real_def": 1800
  },
  {
   "id": 37953640,
@@ -967,8 +1066,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1700,
-  "def": 1200,
+  "atk": 1600,
+  "def": 1100,
   "attribute": "WATER",
   "race": "Fish",
   "effect_hints": [],
@@ -976,7 +1075,9 @@
    "BOOST ALL WATER MONSTERS 200"
   ],
   "effect_note": "Fish-only Synchros",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 1200
  },
  {
   "id": 59575539,
@@ -984,8 +1085,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 1200,
-  "def": 400,
+  "atk": 1100,
+  "def": 700,
   "attribute": "DARK",
   "race": "Psychic",
   "effect_hints": [],
@@ -994,7 +1095,9 @@
    "BACKFIRE 800"
   ],
   "effect_note": "pays 800 LP to negate an attack",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 400
  },
  {
   "id": 76614003,
@@ -1003,7 +1106,7 @@
   "kind": "Tuner",
   "level": 2,
   "atk": 1000,
-  "def": 1300,
+  "def": 1000,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [],
@@ -1011,7 +1114,9 @@
    "BOOST 300"
   ],
   "effect_note": "looks at the top card",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 1300
  },
  {
   "id": 14943837,
@@ -1019,8 +1124,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1000,
-  "def": 2000,
+  "atk": 1400,
+  "def": 1300,
   "attribute": "WIND",
   "race": "Dragon",
   "effect_hints": [],
@@ -1028,7 +1133,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "revives a 500 or less ATK monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 2000
  },
  {
   "id": 50702124,
@@ -1037,7 +1144,7 @@
   "kind": "Tuner",
   "level": 3,
   "atk": 1000,
-  "def": 600,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [],
@@ -1045,7 +1152,9 @@
    "BOOST 300"
   ],
   "effect_note": "summons itself after a Synchro Summon",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 600
  },
  {
   "id": 36565699,
@@ -1053,8 +1162,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 800,
-  "def": 600,
+  "atk": 900,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Psychic",
   "effect_hints": [],
@@ -1062,7 +1171,9 @@
    "HURT OPPONENT 300"
   ],
   "effect_note": "banishes a card from the opponent's Deck",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 600
  },
  {
   "id": 60410769,
@@ -1070,8 +1181,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 700,
-  "def": 900,
+  "atk": 900,
+  "def": 800,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [],
@@ -1079,7 +1190,9 @@
    "CRIPPLE 300"
   ],
   "effect_note": "changes a monster to Defense",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 900
  },
  {
   "id": 83370323,
@@ -1087,8 +1200,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 600,
-  "def": 600,
+  "atk": 900,
+  "def": 700,
   "attribute": "DARK",
   "race": "Warrior",
   "effect_hints": [],
@@ -1097,7 +1210,9 @@
   ],
   "effect_note": "its Warrior Synchro destroys a Spell/Trap",
   "effect_idea": "MATERIAL: DESTROY SPELL",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 600
  },
  {
   "id": 99070951,
@@ -1105,8 +1220,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 500,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Psychic",
   "effect_hints": [],
@@ -1114,7 +1229,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "keeps a card for later",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 300
  },
  {
   "id": 78552773,
@@ -1122,8 +1239,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 300,
-  "def": 100,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Fiend",
   "effect_hints": [],
@@ -1131,7 +1248,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "summons Oracle of the Sun with double ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 100
  },
  {
   "id": 78868119,
@@ -1139,8 +1258,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 200,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "effect_hints": [],
@@ -1148,7 +1267,9 @@
    "RESURRECT AQUA MONSTER"
   ],
   "effect_note": "summons a small Sea Serpent",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 400
  },
  {
   "id": 20450925,
@@ -1156,8 +1277,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 200,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [],
@@ -1165,7 +1286,9 @@
    "HEAL 500"
   ],
   "effect_note": "no effect damage this turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 300
  },
  {
   "id": 88671720,
@@ -1173,8 +1296,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 3,
-  "atk": 100,
-  "def": 1100,
+  "atk": 700,
+  "def": 900,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [],
@@ -1182,7 +1305,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "revives a DARK Machine",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 1100
  },
  {
   "id": 67441435,
@@ -1190,8 +1315,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [],
@@ -1200,7 +1325,9 @@
   ],
   "effect_note": "revives itself once per Duel",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 96782886,
@@ -1208,8 +1335,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 200,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Psychic",
   "effect_hints": [],
@@ -1218,7 +1345,9 @@
    "BACKFIRE 800"
   ],
   "effect_note": "pays 800 LP to summon a Psychic",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 200
  },
  {
   "id": 66457407,
@@ -1226,8 +1355,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "WIND",
   "race": "Plant",
   "effect_hints": [],
@@ -1236,7 +1365,9 @@
   ],
   "effect_note": "copies a Plant's Level",
   "effect_idea": "LEVEL SET",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 97268402,
@@ -1244,8 +1375,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -1253,7 +1384,9 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "negates a monster's effects",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 22318971,
@@ -1261,8 +1394,8 @@
   "group": "Standalone",
   "kind": "Tuner",
   "level": 2,
-  "atk": 0,
-  "def": 1000,
+  "atk": 700,
+  "def": 900,
   "attribute": "LIGHT",
   "race": "Beast",
   "effect_hints": [],
@@ -1270,7 +1403,9 @@
    "IMMUNE"
   ],
   "effect_note": "dodges an attack",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 1000
  },
  {
   "id": 40101111,
@@ -1278,8 +1413,8 @@
   "group": "Standalone",
   "kind": "Fusion",
   "level": 10,
-  "atk": 2900,
-  "def": 1700,
+  "atk": 2300,
+  "def": 2000,
   "attribute": "LIGHT",
   "race": "Psychic",
   "effect_hints": [
@@ -1292,7 +1427,9 @@
    "SHOCK 1000"
   ],
   "effect_note": "not destroyed by effects; piercing",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2900,
+  "real_def": 1700
  },
  {
   "id": 21113684,
@@ -1300,7 +1437,7 @@
   "group": "Standalone",
   "kind": "Fusion",
   "level": 10,
-  "atk": 1400,
+  "atk": 2000,
   "def": 2800,
   "attribute": "LIGHT",
   "race": "Spellcaster",
@@ -1313,7 +1450,10 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "Spell Counters to destroy or draw",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 1400,
+  "real_def": 2800,
+  "owner_reviewed": true
  },
  {
   "id": 4796100,
@@ -1321,8 +1461,8 @@
   "group": "Standalone",
   "kind": "Fusion",
   "level": 6,
-  "atk": 2100,
-  "def": 1800,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "WIND",
   "race": "Beast",
   "effect_hints": [
@@ -1332,7 +1472,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "brings back a material when destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1800
  },
  {
   "id": 14017402,
@@ -1340,8 +1482,8 @@
   "group": "Standalone",
   "kind": "Fusion",
   "level": 10,
-  "atk": 3200,
-  "def": 2000,
+  "atk": 2400,
+  "def": 2100,
   "attribute": "WIND",
   "race": "Dragon",
   "effect_hints": [],
@@ -1350,7 +1492,9 @@
    "BOOST ALL DRAGONS 500"
   ],
   "effect_note": "copies a Dragon Synchro; negates effects",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3200,
+  "real_def": 2000
  },
  {
   "id": 71628381,
@@ -1358,8 +1502,8 @@
   "group": "Standalone",
   "kind": "Fusion",
   "level": 7,
-  "atk": 2600,
-  "def": 1300,
+  "atk": 2000,
+  "def": 1400,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [],
@@ -1367,7 +1511,9 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "splits back into its materials",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2600,
+  "real_def": 1300
  },
  {
   "id": 61757117,
@@ -1375,8 +1521,8 @@
   "group": "Standalone",
   "kind": "Ritual",
   "level": 7,
-  "atk": 2700,
-  "def": 1200,
+  "atk": 2100,
+  "def": 1300,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [
@@ -1387,7 +1533,9 @@
    "IMMUNE"
   ],
   "effect_note": "can't be destroyed while its chosen cards stay",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2700,
+  "real_def": 1200
  },
  {
   "id": 30646525,
@@ -1395,8 +1543,8 @@
   "group": "Standalone",
   "kind": "Ritual",
   "level": 7,
-  "atk": 2500,
-  "def": 1400,
+  "atk": 2200,
+  "def": 1900,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -1408,7 +1556,9 @@
   ],
   "effect_note": "destroys weaker monsters when Ritual Summoned",
   "effect_idea": "ON SUMMON: ANNIHILATE MONSTERS",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 1400
  },
  {
   "id": 76218643,
@@ -1416,8 +1566,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 200,
-  "def": 100,
+  "atk": 800,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -1430,7 +1580,9 @@
    "HEAL 800"
   ],
   "effect_note": "protected by a Tuner; 800 LP when a Tuner leaves",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 100
  },
  {
   "id": 10110717,
@@ -1438,8 +1590,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 800,
-  "def": 100,
+  "atk": 900,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -1450,7 +1602,9 @@
    "HURT OPPONENT 500"
   ],
   "effect_note": "500 damage when flipped",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 100
  },
  {
   "id": 27870033,
@@ -1458,8 +1612,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 600,
+  "atk": 1500,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -1470,7 +1624,9 @@
    "SHOCK 500"
   ],
   "effect_note": "500 damage when a Defense monster is destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 600
  },
  {
   "id": 19357125,
@@ -1479,7 +1635,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 400,
+  "def": 800,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -1491,7 +1647,9 @@
    "NECRO BOOST 100"
   ],
   "effect_note": "grows with DARK monsters in the GY",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 400
  },
  {
   "id": 89493368,
@@ -1499,7 +1657,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2000,
+  "atk": 1900,
   "def": 1400,
   "attribute": "DARK",
   "race": "Machine",
@@ -1511,7 +1669,9 @@
    "HURT OPPONENT 800"
   ],
   "effect_note": "800 damage on the opponent's summons",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 1400
  },
  {
   "id": 77600660,
@@ -1519,8 +1679,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2400,
-  "def": 1000,
+  "atk": 2000,
+  "def": 1300,
   "attribute": "LIGHT",
   "race": "Psychic",
   "effect_hints": [
@@ -1531,7 +1691,9 @@
    "NECRO HEAL 300"
   ],
   "effect_note": "500 LP per Psychic in the GY",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1000
  },
  {
   "id": 50781944,
@@ -1539,7 +1701,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2600,
+  "atk": 1900,
   "def": 1800,
   "attribute": "LIGHT",
   "race": "Beast",
@@ -1551,7 +1713,10 @@
    "FAREWELL 1000"
   ],
   "effect_note": "1000 LP when your monster is destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2600,
+  "real_def": 1800,
+  "owner_reviewed": true
  },
  {
   "id": 14462257,
@@ -1559,8 +1724,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2900,
-  "def": 2100,
+  "atk": 2100,
+  "def": 1600,
   "attribute": "WATER",
   "race": "Spellcaster",
   "effect_hints": [
@@ -1571,7 +1736,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "gets a Spell back when destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2900,
+  "real_def": 2100
  },
  {
   "id": 98024118,
@@ -1579,8 +1746,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 200,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [
@@ -1593,7 +1760,9 @@
    "PARTING GIFT 500"
   ],
   "effect_note": "protected by a Tuner; 500 damage when a Tuner falls",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 200
  },
  {
   "id": 69529567,
@@ -1601,8 +1770,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 800,
-  "def": 600,
+  "atk": 900,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -1613,7 +1782,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "destroys itself next to a stronger monster",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 600
  },
  {
   "id": 4252828,
@@ -1621,8 +1792,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1200,
-  "def": 200,
+  "atk": 1100,
+  "def": 600,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "effect_hints": [
@@ -1633,7 +1804,9 @@
    "BOOST 300"
   ],
   "effect_note": "equips a small monster",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 200
  },
  {
   "id": 68473226,
@@ -1641,8 +1814,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1500,
-  "def": 800,
+  "atk": 1600,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Dragon",
   "effect_hints": [
@@ -1654,7 +1827,9 @@
    "BOOST ALL DRAGONS 300"
   ],
   "effect_note": "protects Level 7+ Dragons",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 800
  },
  {
   "id": 97904474,
@@ -1663,7 +1838,7 @@
   "kind": "Monster",
   "level": 5,
   "atk": 1800,
-  "def": 1800,
+  "def": 1500,
   "attribute": "WIND",
   "race": "Dragon",
   "effect_hints": [
@@ -1674,7 +1849,9 @@
    "REQUIEM 500"
   ],
   "effect_note": "equips to its destroyer, which loses 1800 ATK",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1800,
+  "real_def": 1800
  },
  {
   "id": 23770284,
@@ -1682,8 +1859,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2400,
-  "def": 1000,
+  "atk": 2000,
+  "def": 1300,
   "attribute": "WIND",
   "race": "Dragon",
   "effect_hints": [
@@ -1694,7 +1871,9 @@
    "BOOST 1000"
   ],
   "effect_note": "gains half a tributed Dragon's ATK",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1000
  },
  {
   "id": 50263751,
@@ -1702,8 +1881,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2100,
-  "def": 2100,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -1716,7 +1895,9 @@
   "effect_note": "ATK = Level x 300 (2100); Level grows with each kill",
   "stats_fixed": true,
   "effect_idea": "LEVEL UP",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 2100
  },
  {
   "id": 82556058,
@@ -1724,8 +1905,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2800,
-  "def": 2000,
+  "atk": 2100,
+  "def": 1600,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [
@@ -1736,7 +1917,9 @@
    "BOOST 500"
   ],
   "effect_note": "makes Engine Tokens, gains ATK",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 2000
  },
  {
   "id": 63676256,
@@ -1744,8 +1927,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 1000,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -1756,7 +1939,10 @@
    "BOOST 500"
   ],
   "effect_note": "equips to a monster",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0,
+  "owner_reviewed": true
  },
  {
   "id": 60741115,
@@ -1764,7 +1950,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 100,
+  "atk": 700,
   "def": 800,
   "attribute": "DARK",
   "race": "Fiend",
@@ -1776,7 +1962,9 @@
    "HEAL 800"
   ],
   "effect_note": "turns effect damage into LP",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 800
  },
  {
   "id": 15175429,
@@ -1784,8 +1972,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1200,
-  "def": 900,
+  "atk": 1500,
+  "def": 1000,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [
@@ -1797,7 +1985,9 @@
    "HURT OPPONENT 800"
   ],
   "effect_note": "destroys a Spell, 800 damage",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 900
  },
  {
   "id": 43642620,
@@ -1805,8 +1995,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 0,
+  "atk": 1300,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Zombie",
   "effect_hints": [
@@ -1817,7 +2007,9 @@
    "SORROW 1000"
   ],
   "effect_note": "its controller takes its ATK when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1900,
+  "real_def": 0
  },
  {
   "id": 79080761,
@@ -1825,8 +2017,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 1000,
-  "def": 2300,
+  "atk": 1400,
+  "def": 1400,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [
@@ -1837,7 +2029,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys Spells/Traps when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 2300
  },
  {
   "id": 35984222,
@@ -1845,8 +2039,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2200,
-  "def": 800,
+  "atk": 1900,
+  "def": 1200,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -1858,7 +2052,9 @@
   ],
   "effect_note": "you can't summon; revives itself",
   "effect_idea": "REBIRTH",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 800
  },
  {
   "id": 3167573,
@@ -1866,8 +2062,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2800,
-  "def": 2600,
+  "atk": 2100,
+  "def": 1800,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
@@ -1877,7 +2073,9 @@
    "FEEBLE 500"
   ],
   "effect_note": "summons itself, destroyed next turn",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 2600
  },
  {
   "id": 23303072,
@@ -1885,8 +2083,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2400,
-  "def": 0,
+  "atk": 2000,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Dragon",
   "effect_hints": [
@@ -1898,7 +2096,9 @@
   ],
   "effect_note": "ATK = discarded Levels x 300 (2400 here)",
   "stats_fixed": true,
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 0
  },
  {
   "id": 18489208,
@@ -1906,8 +2106,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 200,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "WATER",
   "race": "Plant",
   "effect_hints": [
@@ -1917,7 +2117,9 @@
    "BREAK ALL SPELLS IMMUNITY"
   ],
   "effect_note": "locks 2 Set Spells/Traps",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 200
  },
  {
   "id": 77700347,
@@ -1925,7 +2127,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 0,
+  "atk": 700,
   "def": 800,
   "attribute": "DARK",
   "race": "Fiend",
@@ -1937,7 +2139,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "a monster can't be destroyed from the GY",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 800
  },
  {
   "id": 94079037,
@@ -1946,7 +2150,7 @@
   "kind": "Monster",
   "level": 3,
   "atk": 1000,
-  "def": 1200,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -1957,7 +2161,9 @@
    "IMMUNE"
   ],
   "effect_note": "not destroyed by battle once per turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 1200
  },
  {
   "id": 41158734,
@@ -1965,7 +2171,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
+  "atk": 900,
   "def": 1200,
   "attribute": "LIGHT",
   "race": "Thunder",
@@ -1978,7 +2184,10 @@
   ],
   "effect_note": "Level 5 with a Tuner; searches when destroyed",
   "effect_idea": "LEVEL UP 1",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 1200,
+  "owner_reviewed": true
  },
  {
   "id": 87622767,
@@ -1986,8 +2195,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2200,
-  "def": 1700,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Psychic",
   "effect_hints": [
@@ -1998,7 +2207,9 @@
    "BACKFIRE 800"
   ],
   "effect_note": "pays 800 to get a Psychic back",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1700
  },
  {
   "id": 7025445,
@@ -2006,8 +2217,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2200,
-  "def": 0,
+  "atk": 1800,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [
@@ -2019,7 +2230,9 @@
   ],
   "effect_note": "loses Levels for a discarded monster",
   "effect_idea": "LEVEL DOWN",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2200,
+  "real_def": 0
  },
  {
   "id": 65303664,
@@ -2027,8 +2240,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2600,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -2038,7 +2251,9 @@
    "POWER REDISTRIBUTION 500"
   ],
   "effect_note": "comes out when a Beast falls",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2600,
+  "real_def": 1800
  },
  {
   "id": 79473793,
@@ -2046,8 +2261,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 3000,
-  "def": 2500,
+  "atk": 2300,
+  "def": 2200,
   "attribute": "WATER",
   "race": "Dragon",
   "effect_hints": [
@@ -2058,7 +2273,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "negates targeting Spells/Traps",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2500
  },
  {
   "id": 44341034,
@@ -2066,8 +2283,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Insect",
   "effect_hints": [
@@ -2077,7 +2294,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "revives a Level 3 Tuner",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 28859794,
@@ -2085,8 +2304,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 0,
-  "def": 900,
+  "atk": 700,
+  "def": 800,
   "attribute": "WIND",
   "race": "Winged Beast",
   "effect_hints": [
@@ -2097,7 +2316,9 @@
    "IMMUNE"
   ],
   "effect_note": "not destroyed by battle twice per turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 900
  },
  {
   "id": 95360850,
@@ -2105,8 +2326,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 800,
-  "def": 1600,
+  "atk": 900,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
@@ -2117,7 +2338,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "your monsters survive a battle",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 1600
  },
  {
   "id": 54360049,
@@ -2125,8 +2348,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 0,
+  "atk": 1500,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Spellcaster",
   "effect_hints": [
@@ -2137,7 +2360,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys a Special Summoned monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 0
  },
  {
   "id": 1287123,
@@ -2145,8 +2370,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2200,
-  "def": 800,
+  "atk": 1900,
+  "def": 1200,
   "attribute": "WIND",
   "race": "Winged Beast",
   "effect_hints": [
@@ -2156,7 +2381,9 @@
    "IMMUNE SPELL"
   ],
   "effect_note": "negates effects that destroy Spells/Traps",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 800
  },
  {
   "id": 82841979,
@@ -2164,8 +2391,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2200,
-  "def": 1200,
+  "atk": 1900,
+  "def": 1300,
   "attribute": "DARK",
   "race": "Warrior",
   "effect_hints": [
@@ -2176,7 +2403,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys a Spell/Trap on damage",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1200
  },
  {
   "id": 67757079,
@@ -2184,8 +2413,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2500,
-  "def": 800,
+  "atk": 2000,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -2195,7 +2424,9 @@
    "BOOST ALL BEASTS 500"
   ],
   "effect_note": "king of Moja",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 800
  },
  {
   "id": 65282484,
@@ -2203,7 +2434,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2800,
+  "atk": 1900,
   "def": 1400,
   "attribute": "DARK",
   "race": "Fairy",
@@ -2214,7 +2445,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys a card when summoned",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 1400
  },
  {
   "id": 85431040,
@@ -2222,8 +2455,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 300,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Plant",
   "effect_hints": [
@@ -2234,7 +2467,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "300 damage, summons 2 more",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 300
  },
  {
   "id": 71759912,
@@ -2242,18 +2477,20 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 1200,
-  "def": 100,
+  "atk": 1100,
+  "def": 600,
   "attribute": "WATER",
   "race": "Beast",
   "effect_hints": [
    "boost"
   ],
   "effects": [
-   "BOOST 800"
+   "BOOST 500"
   ],
   "effect_note": "a monster gains 1000 ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 100
  },
  {
   "id": 48568432,
@@ -2261,8 +2498,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 500,
-  "def": 1700,
+  "atk": 800,
+  "def": 1100,
   "attribute": "FIRE",
   "race": "Dragon",
   "effect_hints": [
@@ -2273,7 +2510,9 @@
    "BOOST 500"
   ],
   "effect_note": "equips to a Machine",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 1700
  },
  {
   "id": 94538053,
@@ -2281,8 +2520,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 800,
+  "atk": 1700,
+  "def": 900,
   "attribute": "WIND",
   "race": "Warrior",
   "effect_hints": [
@@ -2294,7 +2533,9 @@
    "FEEBLE 300"
   ],
   "effect_note": "+400 attacking; halved after a win",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 800
  },
  {
   "id": 75675029,
@@ -2302,18 +2543,20 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2000,
-  "def": 0,
+  "atk": 1700,
+  "def": 700,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
    "burn"
   ],
   "effects": [
-   "SHOCK 1000"
+   "SHOCK 900"
   ],
   "effect_note": "1000 damage per Synchro banished",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2000,
+  "real_def": 0
  },
  {
   "id": 70595331,
@@ -2321,8 +2564,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2100,
-  "def": 800,
+  "atk": 1800,
+  "def": 900,
   "attribute": "DARK",
   "race": "Zombie",
   "effect_hints": [
@@ -2333,7 +2576,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "Gemini: summons a Zombie",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2100,
+  "real_def": 800
  },
  {
   "id": 68722455,
@@ -2341,8 +2586,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2800,
-  "def": 2100,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "EARTH",
   "race": "Zombie",
   "effect_hints": [],
@@ -2351,7 +2596,9 @@
    "BACKFIRE 300"
   ],
   "effect_note": "discards to return cards",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 2100
  },
  {
   "id": 47297616,
@@ -2359,8 +2606,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2800,
-  "def": 2400,
+  "atk": 2100,
+  "def": 1700,
   "attribute": "LIGHT",
   "race": "Dragon",
   "effect_hints": [
@@ -2371,7 +2618,9 @@
    "FEEBLE 500"
   ],
   "effect_note": "negates everything, loses 500 each time",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 2400
  },
  {
   "id": 45358284,
@@ -2379,8 +2628,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Insect",
   "effect_hints": [
@@ -2391,7 +2640,9 @@
   ],
   "effect_note": "its Level becomes the total of your monsters",
   "effect_idea": "LEVEL SET",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 53855409,
@@ -2399,7 +2650,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 800,
+  "atk": 900,
   "def": 800,
   "attribute": "DARK",
   "race": "Warrior",
@@ -2410,7 +2661,9 @@
    "BOOST ALL 100"
   ],
   "effect_note": "leaves 2 tokens after a Synchro",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 800
  },
  {
   "id": 59042331,
@@ -2418,8 +2671,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 0,
-  "def": 2100,
+  "atk": 700,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [
@@ -2427,10 +2680,12 @@
    "protect"
   ],
   "effects": [
-   "CRIPPLE 1000"
+   "CRIPPLE 500"
   ],
   "effect_note": "halves an attacker's ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 2100
  },
  {
   "id": 69695704,
@@ -2438,7 +2693,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1700,
+  "atk": 1600,
   "def": 1000,
   "attribute": "DARK",
   "race": "Winged Beast",
@@ -2451,7 +2706,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "+100 per Winged Beast; destroys a Spell/Trap",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 1000
  },
  {
   "id": 41705642,
@@ -2459,8 +2716,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 1900,
-  "def": 1600,
+  "atk": 1800,
+  "def": 1500,
   "attribute": "WATER",
   "race": "Warrior",
   "effect_hints": [
@@ -2470,7 +2727,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "summons a Tuner",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1900,
+  "real_def": 1600
  },
  {
   "id": 17313545,
@@ -2478,7 +2737,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2500,
+  "atk": 2000,
   "def": 1800,
   "attribute": "DARK",
   "race": "Fiend",
@@ -2490,7 +2749,10 @@
    "SHOCK 500"
   ],
   "effect_note": "negates LIGHT monsters, attacks again",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 1800,
+  "owner_reviewed": true
  },
  {
   "id": 64382839,
@@ -2498,8 +2760,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 7,
-  "atk": 2400,
-  "def": 2100,
+  "atk": 2000,
+  "def": 1600,
   "attribute": "DARK",
   "race": "Fairy",
   "effect_hints": [],
@@ -2507,7 +2769,9 @@
    "BOOST ALL 200"
   ],
   "effect_note": "makes tokens when monsters are banished",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 2100
  },
  {
   "id": 5645210,
@@ -2515,8 +2779,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2800,
-  "def": 2400,
+  "atk": 2200,
+  "def": 2200,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [
@@ -2526,7 +2790,9 @@
    "CRIPPLE ALL 500"
   ],
   "effect_note": "non-Fairies lose 500 ATK",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2800,
+  "real_def": 2400
  },
  {
   "id": 94878265,
@@ -2534,8 +2800,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [
@@ -2545,7 +2811,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "gets a Beast back when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 94230224,
@@ -2553,19 +2821,21 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 750,
-  "def": 700,
+  "atk": 900,
+  "def": 800,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
    "burn"
   ],
   "effects": [
-   "HURT OPPONENT 1000",
+   "HURT OPPONENT 800",
    "BACKFIRE 2000"
   ],
   "effect_note": "pays 2000 for 1000 damage",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 750,
+  "real_def": 700
  },
  {
   "id": 83239739,
@@ -2573,8 +2843,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1600,
-  "def": 200,
+  "atk": 1200,
+  "def": 600,
   "attribute": "WATER",
   "race": "Fish",
   "effect_hints": [
@@ -2584,7 +2854,9 @@
    "POWER REDISTRIBUTION 300"
   ],
   "effect_note": "leaves a token",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1600,
+  "real_def": 200
  },
  {
   "id": 72631243,
@@ -2592,8 +2864,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1700,
-  "def": 1200,
+  "atk": 1600,
+  "def": 1100,
   "attribute": "LIGHT",
   "race": "Warrior",
   "effect_hints": [
@@ -2604,7 +2876,9 @@
    "IMMUNE"
   ],
   "effect_note": "Gemini monsters survive effects",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 1200
  },
  {
   "id": 42280216,
@@ -2612,8 +2886,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 1000,
-  "def": 2000,
+  "atk": 1400,
+  "def": 1300,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [
@@ -2624,7 +2898,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "brings back Sun Dragon Inti",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 2000
  },
  {
   "id": 41224658,
@@ -2632,7 +2908,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2400,
+  "atk": 1800,
   "def": 100,
   "attribute": "DARK",
   "race": "Fiend",
@@ -2643,7 +2919,10 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys up to 2 monsters",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 100,
+  "owner_reviewed": true
  },
  {
   "id": 32750510,
@@ -2651,8 +2930,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2500,
-  "def": 2000,
+  "atk": 2000,
+  "def": 1600,
   "attribute": "WATER",
   "race": "Spellcaster",
   "effect_hints": [
@@ -2662,7 +2941,9 @@
    "CRIPPLE ALL 500"
   ],
   "effect_note": "freezes monsters with Ice Counters",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 2000
  },
  {
   "id": 81759748,
@@ -2670,8 +2951,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Insect",
   "effect_hints": [
@@ -2682,7 +2963,9 @@
   ],
   "effect_note": "an Insect's Level +2",
   "effect_idea": "LEVEL UP 2",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 45620686,
@@ -2690,8 +2973,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 700,
-  "def": 300,
+  "atk": 900,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Insect",
   "effect_hints": [
@@ -2702,7 +2985,9 @@
   ],
   "effect_note": "a monster's Level +1",
   "effect_idea": "LEVEL UP 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 300
  },
  {
   "id": 38041940,
@@ -2711,7 +2996,7 @@
   "kind": "Monster",
   "level": 3,
   "atk": 1600,
-  "def": 1200,
+  "def": 1100,
   "attribute": "FIRE",
   "race": "Plant",
   "effect_hints": [
@@ -2721,7 +3006,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "revives a Plant when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 1200
  },
  {
   "id": 84055227,
@@ -2729,8 +3016,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1700,
-  "def": 0,
+  "atk": 1200,
+  "def": 600,
   "attribute": "DARK",
   "race": "Spellcaster",
   "effect_hints": [
@@ -2741,7 +3028,9 @@
    "DRAIN 200"
   ],
   "effect_note": "+200 per monster destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1700,
+  "real_def": 0
  },
  {
   "id": 87148330,
@@ -2749,8 +3038,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2400,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [],
@@ -2758,7 +3047,9 @@
    "BOOST ALL FAIRIES 300"
   ],
   "effect_note": "draws more with Fairies",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1800
  },
  {
   "id": 10097168,
@@ -2766,8 +3057,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2400,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Dragon",
   "effect_hints": [
@@ -2777,7 +3068,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys 2 Set cards",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1800
  },
  {
   "id": 92719314,
@@ -2785,8 +3078,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2300,
-  "def": 3000,
+  "atk": 2000,
+  "def": 1900,
   "attribute": "DARK",
   "race": "Thunder",
   "effect_hints": [
@@ -2796,7 +3089,9 @@
    "RESURRECT DARK MONSTERS"
   ],
   "effect_note": "revives a DARK monster",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2300,
+  "real_def": 3000
  },
  {
   "id": 70054514,
@@ -2804,8 +3099,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 300,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [
@@ -2815,7 +3110,9 @@
    "FAREWELL 300"
   ],
   "effect_note": "draws when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 300
  },
  {
   "id": 59482302,
@@ -2823,8 +3120,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 400,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [
@@ -2834,7 +3131,9 @@
    "SHARED FATE"
   ],
   "effect_note": "destroys 2 cards when destroyed by LIGHT",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 300
  },
  {
   "id": 48742406,
@@ -2842,8 +3141,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 600,
+  "atk": 1500,
+  "def": 900,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [
@@ -2853,7 +3152,9 @@
    "HURT OPPONENT 400"
   ],
   "effect_note": "400 damage per LIGHT monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 600
  },
  {
   "id": 37675138,
@@ -2862,7 +3163,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 200,
+  "def": 800,
   "attribute": "EARTH",
   "race": "Zombie",
   "effect_hints": [
@@ -2873,7 +3174,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys a Spell/Trap when revived",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 200
  },
  {
   "id": 18842395,
@@ -2881,8 +3184,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2200,
-  "def": 0,
+  "atk": 1800,
+  "def": 700,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [],
@@ -2890,7 +3193,9 @@
    "BOOST 300"
   ],
   "effect_note": "no Tribute if the opponent has 2+ monsters",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2200,
+  "real_def": 0
  },
  {
   "id": 15935204,
@@ -2898,8 +3203,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2300,
-  "def": 2000,
+  "atk": 2000,
+  "def": 1600,
   "attribute": "WIND",
   "race": "Psychic",
   "effect_hints": [
@@ -2909,7 +3214,9 @@
    "BOOST ALL PSYCHIC MONSTERS 300"
   ],
   "effect_note": "sends destroyed monsters to the Deck top",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2300,
+  "real_def": 2000
  },
  {
   "id": 97811903,
@@ -2917,19 +3224,21 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2000,
-  "def": 0,
+  "atk": 1900,
+  "def": 1000,
   "attribute": "DARK",
   "race": "Dragon",
   "effect_hints": [
    "destroy"
   ],
   "effects": [
-   "OSMOSIS 1000"
+   "OSMOSIS 600"
   ],
   "effect_note": "ATK = twice the attack target's (2000 here)",
   "stats_fixed": true,
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 0
  },
  {
   "id": 79796561,
@@ -2937,8 +3246,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -2948,7 +3257,9 @@
    "HURT OPPONENT 600"
   ],
   "effect_note": "banishes your Synchro for 600 damage",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 82994509,
@@ -2956,8 +3267,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 400,
-  "def": 500,
+  "atk": 800,
+  "def": 700,
   "attribute": "WIND",
   "race": "Plant",
   "effect_hints": [
@@ -2967,7 +3278,9 @@
    "HEAL OPPONENT 300"
   ],
   "effect_note": "gives the opponent a token",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 500
  },
  {
   "id": 71519605,
@@ -2975,8 +3288,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 800,
+  "atk": 1500,
+  "def": 900,
   "attribute": "WATER",
   "race": "Reptile",
   "effect_hints": [
@@ -2986,7 +3299,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "the only attack target",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 800
  },
  {
   "id": 4694209,
@@ -2995,7 +3310,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 500,
+  "def": 800,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -3007,7 +3322,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "Guard Counter: +300, gives it away to protect",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 500
  },
  {
   "id": 25247218,
@@ -3015,8 +3332,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2100,
-  "def": 0,
+  "atk": 1800,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [],
@@ -3024,7 +3341,9 @@
    "COURAGE 500"
   ],
   "effect_note": "no Tribute when you have no monsters",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2100,
+  "real_def": 0
  },
  {
   "id": 37955049,
@@ -3032,8 +3351,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2200,
-  "def": 2000,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -3043,7 +3362,9 @@
    "BOOST 600"
   ],
   "effect_note": "all monsters attack; +300 per Fiend revealed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 2000
  },
  {
   "id": 52512994,
@@ -3051,8 +3372,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 2000,
-  "def": 1000,
+  "atk": 1900,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Zombie",
   "effect_hints": [
@@ -3064,7 +3385,9 @@
   "effect_note": "shuffles other monsters away when summoned (ATK 2000 here)",
   "stats_fixed": true,
   "effect_idea": "ON SUMMON: ANNIHILATE MONSTERS",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 1000
  },
  {
   "id": 60187739,
@@ -3072,8 +3395,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -3083,7 +3406,9 @@
    "SHARED FATE"
   ],
   "effect_note": "tributes itself to destroy its battle partner",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 31768112,
@@ -3091,18 +3416,20 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 400,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
    "destroy"
   ],
   "effects": [
-   "BOOST 800"
+   "BOOST 500"
   ],
   "effect_note": "equips to a Machine for +1000",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 400
  },
  {
   "id": 63223467,
@@ -3110,8 +3437,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "LIGHT",
   "race": "Thunder",
   "effect_hints": [
@@ -3121,7 +3448,9 @@
    "RESURRECT LIGHT MONSTER"
   ],
   "effect_note": "searches a small LIGHT when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1200
  },
  {
   "id": 13521194,
@@ -3130,7 +3459,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 1200,
+  "def": 1100,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -3141,7 +3470,9 @@
    "SHOCK 400"
   ],
   "effect_note": "Level x 100 damage after a kill",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 1200
  },
  {
   "id": 67964209,
@@ -3149,8 +3480,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2100,
-  "def": 1500,
+  "atk": 1900,
+  "def": 1400,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "effect_hints": [],
@@ -3158,7 +3489,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "returns a Continuous/Field Spell",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1500
  },
  {
   "id": 46237548,
@@ -3166,8 +3499,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2100,
-  "def": 1800,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "FIRE",
   "race": "Warrior",
   "effect_hints": [
@@ -3177,7 +3510,9 @@
    "BOOST 300"
   ],
   "effect_note": "summoned with Normal Monsters",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1800
  },
  {
   "id": 41753322,
@@ -3185,8 +3520,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 8,
-  "atk": 1500,
-  "def": 3000,
+  "atk": 1700,
+  "def": 1900,
   "attribute": "EARTH",
   "race": "Dinosaur",
   "effect_hints": [],
@@ -3194,7 +3529,9 @@
    "HEAL 500"
   ],
   "effect_note": "wall that hides face-down",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1500,
+  "real_def": 3000
  },
  {
   "id": 57421866,
@@ -3202,8 +3539,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 600,
-  "def": 0,
+  "atk": 900,
+  "def": 600,
   "attribute": "DARK",
   "race": "Insect",
   "effect_hints": [],
@@ -3212,7 +3549,9 @@
   ],
   "effect_note": "takes a Level from a big monster to revive",
   "effect_idea": "LEVEL DOWN 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 0
  },
  {
   "id": 55063681,
@@ -3220,8 +3559,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 400,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Spellcaster",
   "effect_hints": [
@@ -3231,7 +3570,9 @@
    "BOOST 400"
   ],
   "effect_note": "a monster gains 400 ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 400
  },
  {
   "id": 98358303,
@@ -3239,8 +3580,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Psychic",
   "effect_hints": [
@@ -3250,7 +3591,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "brings a Psychic when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1200
  },
  {
   "id": 80637190,
@@ -3258,7 +3601,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1500,
+  "atk": 1600,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Insect",
@@ -3270,7 +3613,9 @@
    "RESURRECT INSECT"
   ],
   "effect_note": "revives an Insect after a kill",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1000
  },
  {
   "id": 67211766,
@@ -3278,8 +3623,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2000,
-  "def": 800,
+  "atk": 1700,
+  "def": 900,
   "attribute": "WATER",
   "race": "Reptile",
   "effect_hints": [],
@@ -3287,7 +3632,9 @@
    "SHOCK 500"
   ],
   "effect_note": "untargetable with Spells/Traps out; piercing",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2000,
+  "real_def": 800
  },
  {
   "id": 80513550,
@@ -3295,8 +3642,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 1900,
-  "def": 2600,
+  "atk": 1800,
+  "def": 1800,
   "attribute": "DARK",
   "race": "Dragon",
   "effect_hints": [
@@ -3306,7 +3653,9 @@
    "CRIPPLE ALL 500"
   ],
   "effect_note": "summoned with 3 Continuous Spells",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1900,
+  "real_def": 2600
  },
  {
   "id": 1474910,
@@ -3314,8 +3663,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 500,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "WIND",
   "race": "Insect",
   "effect_hints": [],
@@ -3323,7 +3672,9 @@
    "BOOST ALL INSECTS 300"
   ],
   "effect_note": "tributes with an Insect to draw 2",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 400
  },
  {
   "id": 54248491,
@@ -3331,8 +3682,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 300,
-  "def": 500,
+  "atk": 800,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Insect",
   "effect_hints": [
@@ -3342,7 +3693,9 @@
    "CRIPPLE ALL 300"
   ],
   "effect_note": "destroys Defense monsters",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 500
  },
  {
   "id": 9848939,
@@ -3350,8 +3703,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 1300,
+  "atk": 1300,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
   "effect_hints": [
@@ -3361,7 +3714,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "tributes to destroy",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1300
  },
  {
   "id": 44364207,
@@ -3369,8 +3724,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1000,
-  "def": 1800,
+  "atk": 1400,
+  "def": 1200,
   "attribute": "LIGHT",
   "race": "Machine",
   "effect_hints": [
@@ -3381,7 +3736,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "protects small Machines; searches when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1800
  },
  {
   "id": 14778250,
@@ -3389,8 +3746,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 2000,
-  "def": 1200,
+  "atk": 1700,
+  "def": 1100,
   "attribute": "WIND",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -3398,7 +3755,9 @@
    "BOOST 300"
   ],
   "effect_note": "summons itself by discarding",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2000,
+  "real_def": 1200
  },
  {
   "id": 38837163,
@@ -3406,7 +3765,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 1500,
+  "atk": 1400,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
@@ -3417,7 +3776,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys a monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1000
  },
  {
   "id": 45452224,
@@ -3425,8 +3786,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 400,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "DARK",
   "race": "Beast",
   "effect_hints": [],
@@ -3434,7 +3795,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "revives a Level 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 200
  },
  {
   "id": 30069398,
@@ -3442,8 +3805,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 300,
-  "def": 1200,
+  "atk": 800,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [
@@ -3453,7 +3816,9 @@
    "HURT OPPONENT 300"
   ],
   "effect_note": "gives the opponent a 300 damage token",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 1200
  },
  {
   "id": 42463414,
@@ -3461,18 +3826,20 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1300,
-  "def": 0,
+  "atk": 1100,
+  "def": 600,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "effect_hints": [
    "boost"
   ],
   "effects": [
-   "BOOST ALL WATER MONSTERS 400"
+   "BOOST ALL WATER MONSTERS 300"
   ],
   "effect_note": "Fish, Sea Serpents and Aqua gain 400 ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 0
  },
  {
   "id": 43014054,
@@ -3480,7 +3847,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1000,
+  "atk": 1400,
   "def": 1000,
   "attribute": "DARK",
   "race": "Fiend",
@@ -3489,12 +3856,14 @@
    "boost"
   ],
   "effects": [
-   "BOOST 1000",
+   "BOOST 700",
    "BACKFIRE 1000"
   ],
   "effect_note": "its Synchro gains 2000, you take 2000",
-  "effect_idea": "MATERIAL: BOOST 2000",
-  "rarity": 2
+  "effect_idea": "MATERIAL: BOOST 700",
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1000
  },
  {
   "id": 61864793,
@@ -3503,7 +3872,7 @@
   "kind": "Monster",
   "level": 5,
   "atk": 1600,
-  "def": 2100,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [],
@@ -3511,7 +3880,9 @@
    "CRIPPLE 300"
   ],
   "effect_note": "changes a monster's position",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 2100
  },
  {
   "id": 17021204,
@@ -3519,8 +3890,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2300,
-  "def": 1200,
+  "atk": 1800,
+  "def": 1300,
   "attribute": "DARK",
   "race": "Insect",
   "effect_hints": [],
@@ -3528,7 +3899,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "sends 2 Defense monsters to the GY",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2300,
+  "real_def": 1200
  },
  {
   "id": 47432275,
@@ -3536,8 +3909,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 300,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Fairy",
   "effect_hints": [],
@@ -3546,7 +3919,9 @@
    "HEAL OPPONENT 300"
   ],
   "effect_note": "no battle damage, the opponent gains LP",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 200
  },
  {
   "id": 83392426,
@@ -3554,8 +3929,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 200,
-  "def": 200,
+  "atk": 700,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -3565,7 +3940,10 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "summons Unicycular when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 200,
+  "owner_reviewed": true
  },
  {
   "id": 58807980,
@@ -3573,7 +3951,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1000,
+  "atk": 1400,
   "def": 1000,
   "attribute": "LIGHT",
   "race": "Beast",
@@ -3585,7 +3963,9 @@
   ],
   "effect_note": "its Synchro brings a Beast Tuner",
   "effect_idea": "MATERIAL: RESURRECT MONSTER",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1000
  },
  {
   "id": 52286175,
@@ -3593,8 +3973,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 800,
-  "def": 1800,
+  "atk": 1400,
+  "def": 1200,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [
@@ -3606,7 +3986,9 @@
    "HURT OPPONENT 800"
   ],
   "effect_note": "destroys a Trap, 800 damage",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 800,
+  "real_def": 1800
  },
  {
   "id": 77207191,
@@ -3614,8 +3996,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 1400,
-  "def": 1800,
+  "atk": 1500,
+  "def": 1200,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [],
@@ -3623,7 +4005,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "searches Gazelle",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1800
  },
  {
   "id": 6544078,
@@ -3631,8 +4015,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 2200,
-  "def": 1000,
+  "atk": 1900,
+  "def": 1300,
   "attribute": "WIND",
   "race": "Fairy",
   "effect_hints": [],
@@ -3640,7 +4024,9 @@
    "BOOST 300"
   ],
   "effect_note": "Spirit support",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1000
  },
  {
   "id": 96146814,
@@ -3648,8 +4034,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 500,
   "attribute": "LIGHT",
   "race": "Warrior",
   "effect_hints": [],
@@ -3657,7 +4043,10 @@
    "CRIPPLE 300"
   ],
   "effect_note": "changes a monster's position from the GY",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100,
+  "owner_reviewed": true
  },
  {
   "id": 51047350,
@@ -3666,17 +4055,21 @@
   "kind": "Monster",
   "level": 2,
   "atk": 100,
-  "def": 900,
+  "def": 100,
   "attribute": "LIGHT",
   "race": "Warrior",
   "effect_hints": [
    "revive"
   ],
   "effects": [
-   "BOOST 300"
+   "BREAK IMMUNITY",
+   "DESTROY MONSTER"
   ],
   "effect_note": "summoned by sending your Spell/Trap",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 900,
+  "owner_reviewed": true
  },
  {
   "id": 88032368,
@@ -3685,18 +4078,20 @@
   "kind": "Monster",
   "level": 3,
   "atk": 1000,
-  "def": 500,
+  "def": 700,
   "attribute": "FIRE",
   "race": "Machine",
   "effect_hints": [
    "boost"
   ],
   "effects": [
-   "BOOST 1000",
+   "BOOST 500",
    "SELF-DESTRUCT"
   ],
   "effect_note": "tributes itself, a monster gains 1500",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 500
  },
  {
   "id": 56043447,
@@ -3704,8 +4099,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 500,
-  "def": 1200,
+  "atk": 800,
+  "def": 900,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [
@@ -3716,7 +4111,9 @@
    "CRIPPLE 500"
   ],
   "effect_note": "destroys a monster 3 turns later",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 1200
  },
  {
   "id": 88559132,
@@ -3724,16 +4121,18 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 5,
-  "atk": 1200,
-  "def": 2000,
+  "atk": 1500,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [],
   "effects": [
-   "BOOST 800"
+   "BOOST 700"
   ],
   "effect_note": "gains a tributed Warrior's ATK",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 2000
  },
  {
   "id": 43708640,
@@ -3741,7 +4140,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 1800,
+  "atk": 1700,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
@@ -3750,7 +4149,9 @@
    "RESURRECT BEAST-WARRIOR"
   ],
   "effect_note": "tributes for 2 Beast-Warriors",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 1000
  },
  {
   "id": 27450400,
@@ -3758,8 +4159,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 300,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [],
@@ -3767,7 +4168,9 @@
    "BOOST ALL 100"
   ],
   "effect_note": "makes tokens",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 300
  },
  {
   "id": 50164989,
@@ -3775,8 +4178,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 0,
-  "def": 1000,
+  "atk": 700,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [
@@ -3787,7 +4190,9 @@
   ],
   "effect_note": "revives itself when a Plant Tuner is summoned",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 1000
  },
  {
   "id": 34257001,
@@ -3795,18 +4200,20 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 600,
-  "def": 1200,
+  "atk": 1300,
+  "def": 1100,
   "attribute": "WIND",
   "race": "Warrior",
   "effect_hints": [
    "boost"
   ],
   "effects": [
-   "BOOST 1000"
+   "BOOST 700"
   ],
   "effect_note": "+1200 ATK attacking",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 600,
+  "real_def": 1200
  },
  {
   "id": 59965151,
@@ -3814,8 +4221,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 0,
-  "def": 1900,
+  "atk": 1100,
+  "def": 1300,
   "attribute": "DARK",
   "race": "Warrior",
   "effect_hints": [
@@ -3823,11 +4230,13 @@
    "weaken"
   ],
   "effects": [
-   "REQUIEM 1000"
+   "REQUIEM 900"
   ],
   "effect_note": "takes the attack; a monster loses 1000 when it falls",
   "effect_idea": "GUARDIAN",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 0,
+  "real_def": 1900
  },
  {
   "id": 68087897,
@@ -3836,7 +4245,7 @@
   "kind": "Monster",
   "level": 6,
   "atk": 1800,
-  "def": 2300,
+  "def": 1700,
   "attribute": "WIND",
   "race": "Insect",
   "effect_hints": [],
@@ -3844,7 +4253,9 @@
    "CRIPPLE ALL 200"
   ],
   "effect_note": "one Special Summon per turn",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1800,
+  "real_def": 2300
  },
  {
   "id": 17841097,
@@ -3852,8 +4263,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [],
@@ -3862,7 +4273,9 @@
   ],
   "effect_note": "its Synchro deals piercing damage",
   "effect_idea": "MATERIAL: SHOCK 300",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 70187958,
@@ -3870,8 +4283,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 1100,
-  "def": 300,
+  "atk": 1000,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Beast",
   "effect_hints": [],
@@ -3879,7 +4292,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "revives a small Beast when banished",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1100,
+  "real_def": 300
  },
  {
   "id": 20797524,
@@ -3887,8 +4302,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 300,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [
@@ -3898,7 +4313,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "summons Bicular when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 300
  },
  {
   "id": 93816465,
@@ -3906,8 +4323,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
@@ -3918,7 +4335,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "tributes itself: no battle destruction or damage",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 41442341,
@@ -3926,8 +4345,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 6,
-  "atk": 0,
-  "def": 0,
+  "atk": 1100,
+  "def": 700,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [],
@@ -3936,7 +4355,9 @@
    "BACKFIRE 1000"
   ],
   "effect_note": "pays 2000 LP to revive 2 Fiends",
-  "rarity": 1
+  "rarity": 2,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 57308711,
@@ -3944,8 +4365,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [],
@@ -3953,7 +4374,9 @@
    "BOOST ALL MACHINES 200"
   ],
   "effect_note": "the third brother",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 96553688,
@@ -3961,8 +4384,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 800,
-  "def": 0,
+  "atk": 900,
+  "def": 600,
   "attribute": "FIRE",
   "race": "Plant",
   "effect_hints": [],
@@ -3970,7 +4393,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "sends itself to summon Amaryllis",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 0
  },
  {
   "id": 85060248,
@@ -3978,8 +4403,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 0,
-  "def": 2200,
+  "atk": 700,
+  "def": 1200,
   "attribute": "LIGHT",
   "race": "Psychic",
   "effect_hints": [
@@ -3990,7 +4415,9 @@
    "BACKFIRE 300"
   ],
   "effect_note": "pays 500 a turn; weak monsters can't attack",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 2200
  },
  {
   "id": 37829468,
@@ -3999,7 +4426,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1000,
-  "def": 1000,
+  "def": 900,
   "attribute": "LIGHT",
   "race": "Thunder",
   "effect_hints": [
@@ -4011,7 +4438,9 @@
   ],
   "effect_note": "LIGHT monsters +100 per LIGHT in the GY (ATK 1000 here)",
   "stats_fixed": true,
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 1000
  },
  {
   "id": 19665973,
@@ -4019,7 +4448,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
+  "atk": 100,
   "def": 0,
   "attribute": "DARK",
   "race": "Fiend",
@@ -4028,7 +4457,10 @@
    "IMMUNE"
   ],
   "effect_note": "stops a direct attack and the Battle Phase",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0,
+  "owner_reviewed": true
  },
  {
   "id": 23571046,
@@ -4036,7 +4468,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 800,
+  "atk": 900,
   "def": 800,
   "attribute": "EARTH",
   "race": "Machine",
@@ -4046,7 +4478,9 @@
   ],
   "effect_note": "revives itself next to a Tuner",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 800
  },
  {
   "id": 39703254,
@@ -4054,8 +4488,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1400,
-  "def": 800,
+  "atk": 1500,
+  "def": 900,
   "attribute": "DARK",
   "race": "Plant",
   "effect_hints": [],
@@ -4063,7 +4497,9 @@
    "SPIRIT PROTECTION"
   ],
   "effect_note": "tributes itself when a Plant is targeted",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 800
  },
  {
   "id": 62782218,
@@ -4071,8 +4507,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 2000,
-  "def": 0,
+  "atk": 1700,
+  "def": 700,
   "attribute": "DARK",
   "race": "Zombie",
   "effect_hints": [
@@ -4083,7 +4519,9 @@
    "RESURRECT ZOMBIE"
   ],
   "effect_note": "destroyed after battle; summons Zombies",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2000,
+  "real_def": 0
  },
  {
   "id": 34659866,
@@ -4091,8 +4529,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "effect_hints": [],
@@ -4101,7 +4539,9 @@
   ],
   "effect_note": "draws when used for a Synchro",
   "effect_idea": "MATERIAL: HEAL 300",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 15839054,
@@ -4109,8 +4549,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 800,
-  "def": 600,
+  "atk": 900,
+  "def": 700,
   "attribute": "DARK",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -4119,7 +4559,9 @@
   ],
   "effect_note": "as material, searches Polymerization",
   "effect_idea": "MATERIAL: RESURRECT SPELL",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 600
  },
  {
   "id": 59797187,
@@ -4127,8 +4569,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1350,
-  "def": 1600,
+  "atk": 1500,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [],
@@ -4136,7 +4578,9 @@
    "CRIPPLE 500"
   ],
   "effect_note": "turns its battle partner face-down",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1350,
+  "real_def": 1600
  },
  {
   "id": 74440055,
@@ -4144,18 +4588,22 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 400,
+  "atk": 1400,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [
    "destroy"
   ],
   "effects": [
-   "HEAL OPPONENT 300"
+   "HURT OPPONENT 400",
+   "OSMOSIS 300"
   ],
   "effect_note": "gives the opponent a token after a kill",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 400,
+  "owner_reviewed": true
  },
  {
   "id": 94145021,
@@ -4163,8 +4611,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "WIND",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -4172,7 +4620,9 @@
    "BREAK ALL SPELLS IMMUNITY"
   ],
   "effect_note": "stops searching",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 46291010,
@@ -4180,8 +4630,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 700,
-  "def": 500,
+  "atk": 900,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Psychic",
   "effect_hints": [],
@@ -4190,7 +4640,9 @@
   ],
   "effect_note": "takes a banished Psychic's Level",
   "effect_idea": "LEVEL SET",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 500
  },
  {
   "id": 84824601,
@@ -4198,8 +4650,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1300,
-  "def": 1100,
+  "atk": 1500,
+  "def": 1000,
   "attribute": "WATER",
   "race": "Plant",
   "effect_hints": [],
@@ -4207,7 +4659,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "searches a Plant when sent to the GY",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1300,
+  "real_def": 1100
  },
  {
   "id": 6903857,
@@ -4215,8 +4669,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 0,
+  "atk": 1700,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Warrior",
   "effect_hints": [
@@ -4226,7 +4680,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "destroys a Spell/Trap when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 0
  },
  {
   "id": 14198496,
@@ -4234,8 +4690,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -4243,7 +4699,9 @@
    "HEAL 300"
   ],
   "effect_note": "tributes to draw",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 32391566,
@@ -4251,8 +4709,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 600,
-  "def": 200,
+  "atk": 900,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -4260,7 +4718,9 @@
    "IMMUNE"
   ],
   "effect_note": "no effect damage after a Special Summon",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 200
  },
  {
   "id": 52346240,
@@ -4268,7 +4728,7 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1200,
+  "atk": 1500,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Beast",
@@ -4277,7 +4737,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "revives a Level 1 Beast",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 1000
  },
  {
   "id": 82116191,
@@ -4285,8 +4747,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1850,
-  "def": 700,
+  "atk": 1700,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Plant",
   "effect_hints": [
@@ -4296,7 +4758,9 @@
    "NECRO BOOST 100"
   ],
   "effect_note": "+200 per Plant sent to the GY",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1850,
+  "real_def": 700
  },
  {
   "id": 18964575,
@@ -4304,8 +4768,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "effect_hints": [],
@@ -4313,7 +4777,9 @@
    "IMMUNE"
   ],
   "effect_note": "negates a direct attack",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 25531465,
@@ -4321,8 +4787,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 600,
-  "def": 500,
+  "atk": 900,
+  "def": 700,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -4331,7 +4797,9 @@
   ],
   "effect_note": "as material, returns a Spell to the Deck",
   "effect_idea": "MATERIAL: RESURRECT SPELL",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 500
  },
  {
   "id": 22754505,
@@ -4339,8 +4807,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 1100,
-  "def": 0,
+  "atk": 1000,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [],
@@ -4348,7 +4816,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "summons Medium Piece Golem",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1100,
+  "real_def": 0
  },
  {
   "id": 58324930,
@@ -4356,8 +4826,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 100,
+  "atk": 1400,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Spellcaster",
   "effect_hints": [
@@ -4367,7 +4837,10 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "banishes a card when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 100,
+  "owner_reviewed": true
  },
  {
   "id": 74952447,
@@ -4375,8 +4848,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 1800,
+  "atk": 700,
+  "def": 1100,
   "attribute": "WATER",
   "race": "Aqua",
   "effect_hints": [],
@@ -4384,7 +4857,9 @@
    "CRIPPLE ALL 300"
   ],
   "effect_note": "no 1800+ ATK Special Summons",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 1800
  },
  {
   "id": 44236692,
@@ -4392,8 +4867,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 600,
-  "def": 0,
+  "atk": 900,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [],
@@ -4401,7 +4876,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "tributes itself to revive a Synchron",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 0
  },
  {
   "id": 10802915,
@@ -4410,7 +4887,7 @@
   "kind": "Monster",
   "level": 3,
   "atk": 1000,
-  "def": 600,
+  "def": 700,
   "attribute": "DARK",
   "race": "Fiend",
   "effect_hints": [],
@@ -4418,7 +4895,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "summons a Level 3 Fiend",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 600
  },
  {
   "id": 51987571,
@@ -4427,7 +4906,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1800,
-  "def": 1600,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Rock",
   "effect_hints": [
@@ -4438,7 +4917,9 @@
    "POWER REDISTRIBUTION 300"
   ],
   "effect_note": "no battle damage; tokens when destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1800,
+  "real_def": 1600
  },
  {
   "id": 75198893,
@@ -4447,7 +4928,7 @@
   "kind": "Monster",
   "level": 1,
   "atk": 1000,
-  "def": 0,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Machine",
   "effect_hints": [],
@@ -4456,7 +4937,9 @@
   ],
   "effect_note": "copies a banished monster (ATK 1000 here)",
   "stats_fixed": true,
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 0
  },
  {
   "id": 564541,
@@ -4464,8 +4947,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 400,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Dragon",
   "effect_hints": [],
@@ -4474,7 +4957,9 @@
   ],
   "effect_note": "counts as 2 Tributes; revives itself",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 200
  },
  {
   "id": 20630765,
@@ -4482,8 +4967,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 3,
-  "atk": 800,
-  "def": 1900,
+  "atk": 1400,
+  "def": 1300,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "effect_hints": [],
@@ -4491,7 +4976,9 @@
    "IMMUNE"
   ],
   "effect_note": "counters protect it",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 800,
+  "real_def": 1900
  },
  {
   "id": 74130411,
@@ -4499,8 +4986,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 4,
-  "atk": 1700,
-  "def": 1200,
+  "atk": 1600,
+  "def": 1100,
   "attribute": "LIGHT",
   "race": "Machine",
   "effect_hints": [
@@ -4510,7 +4997,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "searches a Machine when one is destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 1200
  },
  {
   "id": 18235577,
@@ -4518,8 +5007,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "level": 2,
-  "atk": 300,
-  "def": 700,
+  "atk": 800,
+  "def": 800,
   "attribute": "EARTH",
   "race": "Insect",
   "effect_hints": [],
@@ -4528,7 +5017,9 @@
   ],
   "effect_note": "a monster's Level -1",
   "effect_idea": "LEVEL DOWN 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 700
  },
  {
   "id": 19578592,
@@ -4545,12 +5036,13 @@
    "boost"
   ],
   "effects": [
-   "BOOST 1000",
-   "BACKFIRE 500"
+   "BOOST 800",
+   "BACKFIRE 1000"
   ],
   "effect_note": "+1000 ATK, negated, 500 damage a turn",
   "single_use": false,
-  "rarity": 2
+  "rarity": 2,
+  "owner_reviewed": true
  },
  {
   "id": 46967601,
@@ -4696,7 +5188,7 @@
   ],
   "effects": [
    "CRIPPLE 1000",
-   "HURT OPPONENT 500"
+   "HURT OPPONENT 800"
   ],
   "effect_note": "ATK becomes 0, 500 damage a turn",
   "single_use": false,
@@ -4906,11 +5398,12 @@
    "boost"
   ],
   "effects": [
-   "BOOST 300"
+   "BOOST 600"
   ],
   "effect_note": "+300; attack twice",
   "single_use": false,
-  "rarity": 1
+  "rarity": 1,
+  "owner_reviewed": true
  },
  {
   "id": 9999961,
@@ -4926,11 +5419,12 @@
    "boost"
   ],
   "effects": [
-   "BOOST ALL BEASTS 400"
+   "BOOST ALL BEASTS 800"
   ],
   "effect_note": "+200 per banished Beast",
   "single_use": true,
-  "rarity": 2
+  "rarity": 2,
+  "owner_reviewed": true
  },
  {
   "id": 63851864,
@@ -4946,11 +5440,12 @@
    "destroy"
   ],
   "effects": [
-   "BOOST ALL MACHINES 300"
+   "BOOST ALL 300"
   ],
   "effect_note": "draws after a Machine wins",
   "single_use": false,
-  "rarity": 2
+  "rarity": 2,
+  "owner_reviewed": true
  },
  {
   "id": 33900648,
@@ -4971,7 +5466,7 @@
   ],
   "effect_note": "Attribute penalties; 500 LP upkeep",
   "single_use": false,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 98867329,
@@ -5008,7 +5503,7 @@
   ],
   "effects": [
    "CRIPPLE 1500",
-   "HURT OPPONENT 500"
+   "HURT OPPONENT 800"
   ],
   "effect_note": "ATK 100, can't attack, 500 damage a turn",
   "single_use": false,
@@ -5622,7 +6117,7 @@
   ],
   "effect_note": "revives small Psychics, damage per Level",
   "single_use": true,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 52971673,
@@ -5726,7 +6221,7 @@
    "revive"
   ],
   "effects": [
-   "BOOST ALL PLANTS 1000"
+   "BOOST ALL PLANTS 900"
   ],
   "effect_note": "revived Plants gain 1000 ATK",
   "single_use": false,
@@ -5769,11 +6264,13 @@
    "burn"
   ],
   "effects": [
-   "HURT OPPONENT 1000"
+   "HURT OPPONENT 1000",
+   "BREAK IMMUNITY"
   ],
   "effect_note": "damage equal to the destroyed monster's ATK",
   "single_use": true,
-  "rarity": 3
+  "rarity": 3,
+  "owner_reviewed": true
  },
  {
   "id": 47778083,
@@ -5942,7 +6439,7 @@
   ],
   "effects": [
    "DESTROY MONSTER",
-   "HURT OPPONENT 500"
+   "HURT OPPONENT 800"
   ],
   "effect_note": "destroys the attacker of your Psychic",
   "single_use": true,
@@ -6006,11 +6503,12 @@
   ],
   "effects": [
    "SACRIFICE MONSTER",
-   "HURT OPPONENT 1000"
+   "HURT OPPONENT 2500"
   ],
   "effect_note": "tributes a Synchro, damage per position change",
   "single_use": true,
-  "rarity": 3
+  "rarity": 3,
+  "owner_reviewed": true
  },
  {
   "id": 39531794,
@@ -6046,11 +6544,13 @@
    "destroy"
   ],
   "effects": [
-   "RESURRECT MONSTERS"
+   "RESURRECT MONSTERS",
+   "BREAK IMMUNITY"
   ],
   "effect_note": "summons 2 copies of a destroyed wall",
   "single_use": true,
-  "rarity": 1
+  "rarity": 1,
+  "owner_reviewed": true
  },
  {
   "id": 45133463,
@@ -6463,7 +6963,7 @@
   "id": 41392891,
   "name": "Feral Imp",
   "level": 4,
-  "atk": 1300,
+  "atk": 1600,
   "def": 1400,
   "attribute": "DARK",
   "race": "Fiend",
@@ -6476,14 +6976,16 @@
   "group": "Standalone",
   "kind": "Monster",
   "fusion_material": true,
-  "effect_hints": []
+  "effect_hints": [],
+  "real_atk": 1300,
+  "real_def": 1400
  },
  {
   "id": 29802344,
   "name": "Snakeyashi",
   "level": 4,
-  "atk": 1000,
-  "def": 1200,
+  "atk": 1600,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Plant",
   "effects": [
@@ -6495,14 +6997,16 @@
   "group": "Standalone",
   "kind": "Monster",
   "fusion_material": true,
-  "effect_hints": []
+  "effect_hints": [],
+  "real_atk": 1000,
+  "real_def": 1200
  },
  {
   "id": 5818798,
   "name": "Gazelle the King of Mythical Beasts",
   "level": 4,
-  "atk": 1500,
-  "def": 1200,
+  "atk": 1600,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Beast",
   "effects": [
@@ -6513,14 +7017,16 @@
   "group": "Standalone",
   "kind": "Monster",
   "fusion_material": true,
-  "effect_hints": []
+  "effect_hints": [],
+  "real_atk": 1500,
+  "real_def": 1200
  },
  {
   "id": 58843503,
   "name": "Medium Piece Golem",
   "level": 4,
-  "atk": 1600,
-  "def": 0,
+  "atk": 1200,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Rock",
   "effects": [
@@ -6531,6 +7037,8 @@
   "group": "Standalone",
   "kind": "Monster",
   "fusion_material": true,
-  "effect_hints": []
+  "effect_hints": [],
+  "real_atk": 1600,
+  "real_def": 0
  }
 ]

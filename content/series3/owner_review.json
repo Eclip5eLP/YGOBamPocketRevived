@@ -1,0 +1,135 @@
+{
+ "A/D Changer": {
+  "atk": 700,
+  "def": 500
+ },
+ "Accel Synchro Stardust Dragon": {
+  "atk": 2100
+ },
+ "Ambitious Gofer": {
+  "atk": 1800
+ },
+ "Anarchist Monk Ranshin": {
+  "atk": 1400,
+  "def": 700
+ },
+ "Ancient Crimson Ape": {
+  "atk": 1900
+ },
+ "Apocatequil": {
+  "atk": 900
+ },
+ "Arcanite Magician": {
+  "atk": 1400,
+  "effects": [
+   "FEEBLE 400"
+  ]
+ },
+ "Supreme Arcanite Magician": {
+  "atk": 2000
+ },
+ "Arrive in Light": {
+  "effects": [
+   "BOOST ALL DRAGONS 500"
+  ]
+ },
+ "Assault Armor": {
+  "effects": [
+   "BOOST 600"
+  ]
+ },
+ "Assault Synchron": {
+  "def": 500
+ },
+ "Attack Gainer": {
+  "atk": 100,
+  "def": 1200,
+  "effects": [
+   "OSMOSIS 1000"
+  ],
+  "effect_idea": "MATERIAL: OSMOSIS 1000"
+ },
+ "Automatic Laser": {
+  "effects": [
+   "DESTROY MONSTER",
+   "HEAL 800"
+  ]
+ },
+ "Axe of Fools": {
+  "effects": [
+   "BOOST 800",
+   "BACKFIRE 1000"
+  ]
+ },
+ "Barrier Wave": {
+  "effects": [
+   "SACRIFICE MONSTER",
+   "HURT OPPONENT 2500"
+  ]
+ },
+ "Battle Fader": {
+  "atk": 100
+ },
+ "Beast Rage": {
+  "effects": [
+   "BOOST ALL BEASTS 800"
+  ]
+ },
+ "Bicular": {
+  "atk": 700,
+  "def": 700
+ },
+ "Blizzed, Defender of the Ice Barrier": {
+  "atk": 1000,
+  "def": 1100
+ },
+ "Blooming of the Darkest Rose": {
+  "effects": [
+   "HEAL 2500",
+   "IMMUNE"
+  ]
+ },
+ "Blossom Bombardment": {
+  "effects": [
+   "HURT OPPONENT 1000",
+   "BREAK IMMUNITY"
+  ]
+ },
+ "Brain Golem": {
+  "atk": 2000
+ },
+ "Break! Draw!": {
+  "effects": [
+   "BOOST ALL 300"
+  ]
+ },
+ "Broken Blocker": {
+  "effects": [
+   "RESURRECT MONSTERS",
+   "BREAK IMMUNITY"
+  ]
+ },
+ "Buster Blaster": {
+  "atk": 1000,
+  "def": 1200
+ },
+ "Cactus Fighter": {
+  "atk": 1400,
+  "def": 1200,
+  "effects": [
+   "HURT OPPONENT 400",
+   "OSMOSIS 300"
+  ]
+ },
+ "Card Breaker": {
+  "def": 100,
+  "effects": [
+   "BREAK IMMUNITY",
+   "DESTROY MONSTER"
+  ]
+ },
+ "Chain Resonator": {
+  "atk": 800,
+  "def": 800
+ }
+}

@@ -232,3 +232,10 @@ Series 4 needs the same small code as Series 3 (enum value, rarity icons, filter
 - Note [VERIFIED TargetRetreiver.RemoveCardAccordingToLevel]: the level target filter keeps only cards of exactly
   that level, so original keywords like "CRIPPLE ALL LV 6 & More MONSTERS" only hit level 6 (Cryomancer of the Ice
   Barrier got CRIPPLE ALL 300 instead of a new "LV 4 & More" row).
+- 2026-11-02: owner review wave 1 (28 cards) in `content/series3/owner_review.json`; balance pass
+  `tools/series3_balance.py` (re-runnable; real stats kept in real_atk/real_def): monster ATK/LP = Series 2 median of
+  the rarity + 30% of the gap to the real value (-200 ATK for strong removal/protection), min ATK 100 (no more ATK 0
+  cards); effect amounts capped per rarity (Series 1/2 amounts per keyword family), BAM legends at least the common
+  cap; rarity floors for ANNIHILATE MONSTERS (3), SHARED FATE ALL / IMMUNE ALL / BREAK IMMUNITY ALL / RESURRECT
+  MONSTERS (2). Result per rarity (ATK p50 / LP p50): R1 800/600, R2 1500/1100, R3 1900/1500, R4 2200/2100 (Series 2:
+  1000/800, 1600/1000, 1800/1400, 2000/2100). Review notes read: a plain keyword replaces the same keyword or is added.

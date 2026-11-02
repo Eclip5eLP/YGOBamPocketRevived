@@ -5,8 +5,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": true,
@@ -15,7 +15,9 @@
   ],
   "effect_note": "changes an opponent's monster's position as material",
   "effect_idea": "MATERIAL: CRIPPLE ALL 300",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 86784733,
@@ -23,8 +25,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Cyberse",
   "era_print": false,
@@ -33,7 +35,9 @@
   ],
   "effect_note": "banishes itself to save your monsters",
   "effect_idea": "LEVEL UP 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 9742784,
@@ -41,8 +45,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 500,
-  "def": 0,
+  "atk": 800,
+  "def": 600,
   "attribute": "FIRE",
   "race": "Machine",
   "era_print": false,
@@ -51,7 +55,9 @@
   ],
   "effect_note": "fetches a Junk (Warrior), revives itself",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 0
  },
  {
   "id": 39520293,
@@ -59,8 +65,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 400,
-  "def": 100,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -69,7 +75,9 @@
   ],
   "effect_note": "its Synchro can't be destroyed by battle",
   "effect_idea": "MATERIAL: IMMUNE",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 100
  },
  {
   "id": 56897896,
@@ -77,8 +85,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": true,
@@ -87,7 +95,9 @@
   ],
   "effect_note": "other materials count as Level 1",
   "effect_idea": "LEVEL SET 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 67270095,
@@ -95,8 +105,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 500,
+  "atk": 700,
+  "def": 700,
   "attribute": "WIND",
   "race": "Machine",
   "era_print": true,
@@ -105,7 +115,9 @@
    "RAGE 300"
   ],
   "effect_note": "turns the target to defence; summons when you take damage",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 500
  },
  {
   "id": 15310033,
@@ -113,8 +125,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": true,
@@ -122,7 +134,9 @@
    "COURAGE 500"
   ],
   "effect_note": "summons itself when you have no monsters",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 77202120,
@@ -131,7 +145,7 @@
   "kind": "Tuner",
   "level": 2,
   "atk": 700,
-  "def": 0,
+  "def": 500,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": false,
@@ -140,7 +154,10 @@
    "BACKFIRE 700"
   ],
   "effect_note": "summons itself, then you take 700 damage",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 0,
+  "owner_reviewed": true
  },
  {
   "id": 19642774,
@@ -148,8 +165,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 2,
-  "atk": 400,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Machine",
   "era_print": false,
@@ -158,7 +175,9 @@
   ],
   "effect_note": "as material, summons a Level 2 or lower monster",
   "effect_idea": "MATERIAL: RESURRECT MONSTER",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 200
  },
  {
   "id": 25148255,
@@ -166,8 +185,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 2,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -175,7 +194,9 @@
    "RESURRECT WARRIORS"
   ],
   "effect_note": "revives a Junk monster and Synchros with it",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 48421595,
@@ -183,8 +204,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 2,
-  "atk": 200,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": false,
@@ -193,7 +214,9 @@
   ],
   "effect_note": "+2 Levels; as material, summons a Level 1 Plant",
   "effect_idea": "LEVEL UP 2",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 400
  },
  {
   "id": 96182448,
@@ -201,8 +224,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 2,
-  "atk": 300,
-  "def": 100,
+  "atk": 800,
+  "def": 600,
   "attribute": "FIRE",
   "race": "Machine",
   "era_print": true,
@@ -210,7 +233,9 @@
    "BOOST 300"
   ],
   "effect_note": "draws when used for a Nitro Synchro",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 100
  },
  {
   "id": 57458399,
@@ -218,8 +243,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 2,
-  "atk": 700,
-  "def": 100,
+  "atk": 900,
+  "def": 600,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": false,
@@ -228,7 +253,9 @@
   ],
   "effect_note": "comes out when a monster is revived; becomes Level 4",
   "effect_idea": "LEVEL SET 4",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 700,
+  "real_def": 100
  },
  {
   "id": 56286179,
@@ -236,8 +263,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 3,
-  "atk": 800,
-  "def": 300,
+  "atk": 900,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -245,7 +272,9 @@
    "SHOCK 400"
   ],
   "effect_note": "Warriors deal piercing damage",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 300
  },
  {
   "id": 1006081,
@@ -253,8 +282,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1500,
-  "def": 900,
+  "atk": 1600,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -263,7 +292,9 @@
   ],
   "effect_note": "raises or lowers a Junk monster's Level by 1",
   "effect_idea": "LEVEL UP 1",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 900
  },
  {
   "id": 63977008,
@@ -271,8 +302,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1300,
-  "def": 500,
+  "atk": 1100,
+  "def": 700,
   "attribute": "DARK",
   "race": "Warrior",
   "era_print": true,
@@ -280,7 +311,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "revives a Level 2 or lower monster",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 500
  },
  {
   "id": 13021682,
@@ -288,8 +321,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1300,
-  "def": 500,
+  "atk": 1100,
+  "def": 700,
   "attribute": "DARK",
   "race": "Warrior",
   "era_print": false,
@@ -297,7 +330,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "revives itself and a Level 2 or lower monster",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 500
  },
  {
   "id": 83295594,
@@ -305,7 +340,7 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 3,
-  "atk": 600,
+  "atk": 900,
   "def": 800,
   "attribute": "WATER",
   "race": "Machine",
@@ -314,7 +349,9 @@
    "BOOST 400"
   ],
   "effect_note": "Synchro Summons during the opponent's turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 800
  },
  {
   "id": 52840598,
@@ -322,8 +359,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1500,
-  "def": 1100,
+  "atk": 1600,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -332,7 +369,9 @@
   ],
   "effect_note": "its Synchro gains 600 ATK",
   "effect_idea": "MATERIAL: BOOST 600",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1100
  },
  {
   "id": 40348946,
@@ -341,17 +380,19 @@
   "kind": "Tuner",
   "level": 4,
   "atk": 1600,
-  "def": 800,
+  "def": 900,
   "attribute": "LIGHT",
   "race": "Machine",
   "era_print": true,
   "effects": [
-   "BOOST 800",
+   "BOOST 700",
    "FEEBLE 400"
   ],
   "effect_note": "its Dragon Synchro gains 800 ATK, banished at the End Phase",
-  "effect_idea": "MATERIAL: BOOST 800",
-  "rarity": 2
+  "effect_idea": "MATERIAL: BOOST 700",
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 800
  },
  {
   "id": 71971554,
@@ -360,7 +401,7 @@
   "kind": "Tuner",
   "level": 4,
   "atk": 1600,
-  "def": 800,
+  "def": 900,
   "attribute": "LIGHT",
   "race": "Machine",
   "era_print": true,
@@ -369,7 +410,9 @@
   ],
   "effect_note": "Level changes as material and when it attacks",
   "effect_idea": "LEVEL DOWN 2",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 800
  },
  {
   "id": 37799519,
@@ -377,7 +420,7 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1500,
+  "atk": 1600,
   "def": 1000,
   "attribute": "LIGHT",
   "race": "Machine",
@@ -386,7 +429,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "searches a Spell/Trap that mentions Stardust Dragon",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1000
  },
  {
   "id": 20932152,
@@ -394,8 +439,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Tuner",
   "level": 5,
-  "atk": 700,
-  "def": 1400,
+  "atk": 1300,
+  "def": 1100,
   "attribute": "WIND",
   "race": "Machine",
   "era_print": true,
@@ -403,7 +448,9 @@
    "BOOST 700"
   ],
   "effect_note": "summons itself by discarding a monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 700,
+  "real_def": 1400
  },
  {
   "id": 38491199,
@@ -411,8 +458,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 1,
-  "atk": 300,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": false,
@@ -420,7 +467,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "negates and destroys a burn card",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 200
  },
  {
   "id": 80244114,
@@ -428,8 +477,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "era_print": true,
@@ -439,7 +488,9 @@
   ],
   "effect_note": "revives Stardust Dragon when destroyed; protects a Dragon Synchro",
   "effect_idea": "GUARDIAN",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 91262474,
@@ -447,8 +498,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": false,
@@ -456,7 +507,9 @@
    "RESURRECT DRAGONS"
   ],
   "effect_note": "summons up to 2 Level 1 LIGHT Dragons",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 68543408,
@@ -464,8 +517,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": true,
@@ -473,7 +526,9 @@
    "IMMUNE"
   ],
   "effect_note": "not destroyed by battle once per turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 91215724,
@@ -481,8 +536,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 2,
-  "atk": 600,
-  "def": 1200,
+  "atk": 1100,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -491,7 +546,9 @@
   ],
   "effect_note": "your Warrior Synchros can't be targeted",
   "effect_idea": "IMMUNE ALL SYNCHROS",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 600,
+  "real_def": 1200
  },
  {
   "id": 11069680,
@@ -499,8 +556,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 2,
-  "atk": 400,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -509,7 +566,9 @@
   ],
   "effect_note": "as material, revives a Tuner",
   "effect_idea": "MATERIAL: RESURRECT MONSTER",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 200
  },
  {
   "id": 62125438,
@@ -517,8 +576,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 2,
-  "atk": 0,
-  "def": 1000,
+  "atk": 700,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": false,
@@ -526,7 +585,9 @@
    "BOOST ALL MACHINES 300"
   ],
   "effect_note": "extra Synchron summons, makes tokens",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 1000
  },
  {
   "id": 36643046,
@@ -534,8 +595,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 2,
-  "atk": 0,
-  "def": 700,
+  "atk": 700,
+  "def": 800,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -543,7 +604,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "revives a Synchron",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 700
  },
  {
   "id": 68120130,
@@ -551,8 +614,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 3,
-  "atk": 500,
-  "def": 1800,
+  "atk": 800,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -560,7 +623,9 @@
    "HEAL 300"
   ],
   "effect_note": "comes out on a direct attack, gains 300 DEF",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 1800
  },
  {
   "id": 56410040,
@@ -568,8 +633,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 3,
-  "atk": 900,
-  "def": 1500,
+  "atk": 1400,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -577,7 +642,9 @@
    "COURAGE 500"
   ],
   "effect_note": "summons itself when you have no monsters",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 900,
+  "real_def": 1500
  },
  {
   "id": 51855378,
@@ -585,7 +652,7 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
+  "atk": 1700,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
@@ -594,7 +661,9 @@
    "NECRO BOOST 100"
   ],
   "effect_note": "banishes Junk from the GY to gain ATK",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 1000
  },
  {
   "id": 43436049,
@@ -602,7 +671,7 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
+  "atk": 1700,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
@@ -612,7 +681,9 @@
    "SELF-DESTRUCT"
   ],
   "effect_note": "tributes itself to negate all effects",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 1000
  },
  {
   "id": 73218792,
@@ -620,8 +691,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 4,
-  "atk": 100,
-  "def": 2300,
+  "atk": 700,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -630,7 +701,9 @@
   ],
   "effect_note": "searches a Junk card, lowers Levels",
   "effect_idea": "LEVEL DOWN 1",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 2300
  },
  {
   "id": 78922939,
@@ -638,7 +711,7 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 4,
-  "atk": 1500,
+  "atk": 1600,
   "def": 1000,
   "attribute": "EARTH",
   "race": "Warrior",
@@ -647,7 +720,9 @@
    "BOOST 300"
   ],
   "effect_note": "summons itself next to a Junk monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1000
  },
  {
   "id": 63184227,
@@ -655,8 +730,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 4,
-  "atk": 500,
-  "def": 2000,
+  "atk": 800,
+  "def": 1200,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": false,
@@ -664,7 +739,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "revives itself when a monster is tributed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 2000
  },
  {
   "id": 58242947,
@@ -672,8 +749,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 5,
-  "atk": 1000,
-  "def": 2200,
+  "atk": 1400,
+  "def": 1400,
   "attribute": "LIGHT",
   "race": "Warrior",
   "era_print": false,
@@ -681,7 +758,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "copies a Trap from the GY",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 2200
  },
  {
   "id": 3121655,
@@ -689,8 +768,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 5,
-  "atk": 2100,
-  "def": 1800,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": false,
@@ -698,8 +777,10 @@
    "POWER REDISTRIBUTION 800"
   ],
   "effect_note": "from the GY, a Synchro gains 800 ATK",
-  "effect_idea": "BOOST ALL SYNCHROS 800",
-  "rarity": 3
+  "effect_idea": "BOOST ALL SYNCHROS 600",
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1800
  },
  {
   "id": 34492631,
@@ -707,8 +788,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Monster",
   "level": 6,
-  "atk": 2000,
-  "def": 2400,
+  "atk": 1900,
+  "def": 1700,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -716,7 +797,9 @@
    "CRIPPLE ALL LV 6 & More MONSTERS 300"
   ],
   "effect_note": "summons itself against Level 5+ monsters",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 2400
  },
  {
   "id": 50091196,
@@ -724,8 +807,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 2,
-  "atk": 200,
-  "def": 1500,
+  "atk": 1200,
+  "def": 1200,
   "attribute": "LIGHT",
   "race": "Machine",
   "era_print": true,
@@ -733,7 +816,9 @@
    "HEAL 500"
   ],
   "effect_note": "draws a card when Synchro Summoned",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 200,
+  "real_def": 1500
  },
  {
   "id": 37675907,
@@ -741,8 +826,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 5,
-  "atk": 500,
-  "def": 2100,
+  "atk": 1200,
+  "def": 1600,
   "attribute": "DARK",
   "race": "Machine",
   "era_print": false,
@@ -751,7 +836,9 @@
   ],
   "effect_note": "sends Synchrons to the GY to change Level",
   "effect_idea": "LEVEL UP / LEVEL DOWN",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 500,
+  "real_def": 2100
  },
  {
   "id": 37474917,
@@ -759,8 +846,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 5,
-  "atk": 1000,
-  "def": 1500,
+  "atk": 1600,
+  "def": 1400,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -768,7 +855,9 @@
    "HURT OPPONENT 1000"
   ],
   "effect_note": "tributes a Junk for damage equal to its ATK",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1000,
+  "real_def": 1500
  },
  {
   "id": 60800381,
@@ -776,8 +865,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 5,
-  "atk": 2300,
-  "def": 1300,
+  "atk": 2000,
+  "def": 1400,
   "attribute": "DARK",
   "race": "Warrior",
   "era_print": true,
@@ -786,7 +875,9 @@
   ],
   "effect_note": "gains the ATK of your small monsters (per ally)",
   "effect_idea": "ON SYNCHRO: BOOST 300 + (per Level 2 or lower ally)",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2300,
+  "real_def": 1300
  },
  {
   "id": 37993923,
@@ -794,8 +885,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 6,
-  "atk": 1400,
-  "def": 2600,
+  "atk": 1700,
+  "def": 1800,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -804,7 +895,9 @@
    "REQUIEM 500"
   ],
   "effect_note": "changes positions, also when it leaves the field",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1400,
+  "real_def": 2600
  },
  {
   "id": 97792247,
@@ -812,8 +905,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2100,
-  "def": 1200,
+  "atk": 1900,
+  "def": 1300,
   "attribute": "WIND",
   "race": "Warrior",
   "era_print": false,
@@ -822,7 +915,9 @@
    "SHOCK 500"
   ],
   "effect_note": "revives a Junk; piercing damage",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1200
  },
  {
   "id": 64880894,
@@ -830,8 +925,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2000,
-  "def": 1300,
+  "atk": 1900,
+  "def": 1400,
   "attribute": "WIND",
   "race": "Warrior",
   "era_print": false,
@@ -839,7 +934,9 @@
    "CRIPPLE ALL 300"
   ],
   "effect_note": "draws; attacks every Special Summoned monster",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 1300
  },
  {
   "id": 42810973,
@@ -847,8 +944,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2300,
-  "def": 2000,
+  "atk": 1900,
+  "def": 2100,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -856,7 +953,9 @@
    "SNEAK"
   ],
   "effect_note": "banishes a monster until the End Phase",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2300,
+  "real_def": 2000
  },
  {
   "id": 59771339,
@@ -864,8 +963,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2700,
-  "def": 1800,
+  "atk": 2200,
+  "def": 2000,
   "attribute": "WIND",
   "race": "Warrior",
   "era_print": true,
@@ -873,7 +972,9 @@
    "CRIPPLE 800"
   ],
   "effect_note": "a monster loses the ATK of a banished Junk",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2700,
+  "real_def": 1800
  },
  {
   "id": 30983281,
@@ -881,7 +982,7 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2500,
+  "atk": 2100,
   "def": 2000,
   "attribute": "WIND",
   "race": "Dragon",
@@ -891,7 +992,10 @@
    "BOOST 500"
   ],
   "effect_note": "revives a Tuner, becomes Stardust Dragon",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 2000,
+  "owner_reviewed": true
  },
  {
   "id": 74860293,
@@ -899,8 +1003,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2600,
-  "def": 2500,
+  "atk": 2000,
+  "def": 2200,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -910,7 +1014,9 @@
   ],
   "effect_note": "destroys a card per non-Tuner material",
   "effect_idea": "ON SYNCHRO: DESTROY MONSTER (per non-Tuner material)",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2600,
+  "real_def": 2500
  },
  {
   "id": 16327715,
@@ -918,8 +1024,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2900,
-  "def": 2300,
+  "atk": 2300,
+  "def": 2200,
   "attribute": "DARK",
   "race": "Warrior",
   "era_print": false,
@@ -928,7 +1034,9 @@
    "DRAIN 300"
   ],
   "effect_note": "revives small monsters; chains into a Junk Synchro",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2900,
+  "real_def": 2300
  },
  {
   "id": 44508094,
@@ -936,8 +1044,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2500,
-  "def": 2000,
+  "atk": 2000,
+  "def": 2100,
   "attribute": "WIND",
   "race": "Dragon",
   "era_print": true,
@@ -946,7 +1054,9 @@
   ],
   "effect_note": "tributes itself to stop destruction, returns at the End Phase",
   "effect_idea": "GUARDIAN + REBIRTH",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 2000
  },
  {
   "id": 76636978,
@@ -954,8 +1064,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2500,
-  "def": 2000,
+  "atk": 2200,
+  "def": 2100,
   "attribute": "WIND",
   "race": "Dragon",
   "era_print": false,
@@ -964,7 +1074,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "negates responses; revives a Stardust",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 2000
  },
  {
   "id": 83994433,
@@ -972,8 +1084,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 8,
-  "atk": 2500,
-  "def": 2000,
+  "atk": 2200,
+  "def": 2100,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": true,
@@ -981,7 +1093,9 @@
    "IMMUNE"
   ],
   "effect_note": "a card you control can't be destroyed once",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 2000
  },
  {
   "id": 89474727,
@@ -989,8 +1103,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3000,
-  "def": 2500,
+  "atk": 2300,
+  "def": 2200,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": false,
@@ -999,7 +1113,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "unaffected by effects; revives a banished Dragon Synchro",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2500
  },
  {
   "id": 74892653,
@@ -1007,8 +1123,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3000,
-  "def": 2500,
+  "atk": 2100,
+  "def": 2200,
   "attribute": "WIND",
   "race": "Warrior",
   "era_print": false,
@@ -1018,7 +1134,9 @@
   ],
   "effect_note": "negates a Summon and destroys it, returns at the End Phase",
   "effect_idea": "REBIRTH",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2500
  },
  {
   "id": 26268488,
@@ -1026,8 +1144,8 @@
   "group": "Stardust / Junk / Synchron",
   "kind": "Synchro",
   "level": 12,
-  "atk": 4000,
-  "def": 4000,
+  "atk": 2400,
+  "def": 2700,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": true,
@@ -1036,7 +1154,9 @@
    "BREAK IMMUNITY ALL"
   ],
   "effect_note": "your cards survive destruction once; negates monster effects",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 4000,
+  "real_def": 4000
  },
  {
   "id": 365213,
@@ -1050,11 +1170,12 @@
   "race": "Continuous",
   "era_print": false,
   "effects": [
-   "BOOST ALL DRAGONS 300"
+   "BOOST ALL DRAGONS 500"
   ],
   "effect_note": "Stardust support, can't be bounced",
   "single_use": false,
-  "rarity": 2
+  "rarity": 2,
+  "owner_reviewed": true
  },
  {
   "id": 79068663,
@@ -1295,7 +1416,7 @@
   ],
   "effect_note": "revives monsters destroyed this turn",
   "single_use": true,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 20590784,
@@ -1341,7 +1462,7 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 1,
-  "atk": 300,
+  "atk": 800,
   "def": 800,
   "attribute": "LIGHT",
   "race": "Fiend",
@@ -1351,7 +1472,9 @@
   ],
   "effect_note": "discards itself so a Tuner survives battle",
   "effect_idea": "GUARDIAN",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 800
  },
  {
   "id": 13764881,
@@ -1359,8 +1482,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 800,
+  "def": 800,
   "attribute": "LIGHT",
   "race": "Fiend",
   "era_print": true,
@@ -1368,7 +1491,10 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "summons a Resonator while a Synchro is on the field",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100,
+  "owner_reviewed": true
  },
  {
   "id": 60832978,
@@ -1376,8 +1502,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "FIRE",
   "race": "Fiend",
   "era_print": false,
@@ -1385,7 +1511,9 @@
    "BOOST ALL 100"
   ],
   "effect_note": "makes a monster a Tuner",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 40159926,
@@ -1393,8 +1521,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Fiend",
   "era_print": true,
@@ -1403,7 +1531,9 @@
   ],
   "effect_note": "summons itself against Extra Deck monsters, copies their Level",
   "effect_idea": "LEVEL SET",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 77360173,
@@ -1411,8 +1541,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 1,
-  "atk": 100,
-  "def": 100,
+  "atk": 700,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "era_print": true,
@@ -1420,7 +1550,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "summons itself next to a Synchro; fetches a Resonator",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 100
  },
  {
   "id": 34761841,
@@ -1428,8 +1560,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 2,
-  "atk": 800,
-  "def": 300,
+  "atk": 900,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "era_print": false,
@@ -1437,7 +1569,9 @@
    "COURAGE 500"
   ],
   "effect_note": "summons itself when you have no monsters",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 300
  },
  {
   "id": 40583194,
@@ -1445,8 +1579,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 2,
-  "atk": 500,
-  "def": 500,
+  "atk": 800,
+  "def": 700,
   "attribute": "WATER",
   "race": "Fiend",
   "era_print": true,
@@ -1454,7 +1588,9 @@
    "IMMUNE"
   ],
   "effect_note": "your attacker can't be targeted",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 500
  },
  {
   "id": 40975574,
@@ -1462,16 +1598,18 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 2,
-  "atk": 600,
-  "def": 200,
+  "atk": 900,
+  "def": 600,
   "attribute": "FIRE",
   "race": "Fiend",
   "era_print": true,
   "effects": [
-   "HEAL 1000"
+   "HEAL 800"
   ],
   "effect_note": "gains LP equal to a monster's ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 200
  },
  {
   "id": 98396890,
@@ -1479,8 +1617,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 2,
-  "atk": 400,
-  "def": 400,
+  "atk": 800,
+  "def": 700,
   "attribute": "DARK",
   "race": "Fiend",
   "era_print": false,
@@ -1488,7 +1626,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "searches a Red Dragon Archfiend Spell/Trap",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 400
  },
  {
   "id": 77087109,
@@ -1496,8 +1636,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1200,
-  "def": 600,
+  "atk": 1100,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Fiend",
   "era_print": true,
@@ -1505,7 +1645,9 @@
    "IMMUNE"
   ],
   "effect_note": "not destroyed once per turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 600
  },
  {
   "id": 5780210,
@@ -1513,8 +1655,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 3,
-  "atk": 800,
-  "def": 600,
+  "atk": 900,
+  "def": 700,
   "attribute": "WIND",
   "race": "Fiend",
   "era_print": true,
@@ -1522,7 +1664,9 @@
    "BOOST 400"
   ],
   "effect_note": "summons itself next to a Level 8+ Synchro",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 600
  },
  {
   "id": 97021916,
@@ -1530,8 +1674,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1300,
-  "def": 300,
+  "atk": 1100,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "era_print": true,
@@ -1539,7 +1683,9 @@
    "IMMUNE"
   ],
   "effect_note": "not destroyed by battle once per turn",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 300
  },
  {
   "id": 83445539,
@@ -1547,8 +1693,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1300,
-  "def": 300,
+  "atk": 1100,
+  "def": 600,
   "attribute": "DARK",
   "race": "Fiend",
   "era_print": false,
@@ -1556,7 +1702,9 @@
    "BOOST 300"
   ],
   "effect_note": "summons itself, extra Resonator summon",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 300
  },
  {
   "id": 13708425,
@@ -1564,8 +1712,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 3,
-  "atk": 300,
-  "def": 1300,
+  "atk": 800,
+  "def": 1000,
   "attribute": "FIRE",
   "race": "Fiend",
   "era_print": true,
@@ -1574,7 +1722,9 @@
   ],
   "effect_note": "its Synchro gains 300 ATK",
   "effect_idea": "MATERIAL: BOOST 300",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 1300
  },
  {
   "id": 62991792,
@@ -1582,8 +1732,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Tuner",
   "level": 3,
-  "atk": 500,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "FIRE",
   "race": "Fiend",
   "era_print": false,
@@ -1593,7 +1743,9 @@
   ],
   "effect_note": "searches a Fiend; banishes itself to save a card",
   "effect_idea": "GUARDIAN",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 200
  },
  {
   "id": 45313993,
@@ -1601,8 +1753,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Monster",
   "level": 6,
-  "atk": 1400,
-  "def": 2200,
+  "atk": 1500,
+  "def": 1400,
   "attribute": "FIRE",
   "race": "Fiend",
   "era_print": true,
@@ -1610,7 +1762,9 @@
    "RAGE 300"
   ],
   "effect_note": "joins a Resonator summon at half ATK",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 2200
  },
  {
   "id": 77336644,
@@ -1618,8 +1772,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Monster",
   "level": 10,
-  "atk": 3500,
-  "def": 2500,
+  "atk": 2200,
+  "def": 2200,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1629,7 +1783,9 @@
   ],
   "effect_note": "destroys all other monsters after attacking; revives Red Dragon Archfiend",
   "effect_idea": "REBIRTH",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3500,
+  "real_def": 2500
  },
  {
   "id": 66141736,
@@ -1637,8 +1793,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2100,
-  "def": 1600,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": false,
@@ -1647,7 +1803,9 @@
   ],
   "effect_note": "revives a Resonator when Synchro Summoned",
   "effect_idea": "ON SYNCHRO: RESURRECT MONSTER",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1600
  },
  {
   "id": 76547525,
@@ -1655,8 +1813,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2400,
-  "def": 2000,
+  "atk": 1800,
+  "def": 1600,
   "attribute": "FIRE",
   "race": "Dragon",
   "era_print": true,
@@ -1664,7 +1822,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "destroys the strongest monster",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 2000
  },
  {
   "id": 39765958,
@@ -1672,8 +1832,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 8,
-  "atk": 3000,
-  "def": 2000,
+  "atk": 2100,
+  "def": 2100,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1682,7 +1842,9 @@
   ],
   "effect_note": "destroys all other Attack Position monsters",
   "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2000
  },
  {
   "id": 70902743,
@@ -1690,8 +1852,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 8,
-  "atk": 3000,
-  "def": 2000,
+  "atk": 2100,
+  "def": 2100,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1700,7 +1862,9 @@
    "FEEBLE ALL 300"
   ],
   "effect_note": "destroys Defense monsters; destroys your monsters that didn't attack",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2000
  },
  {
   "id": 80666118,
@@ -1708,17 +1872,19 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 8,
-  "atk": 3000,
-  "def": 2500,
+  "atk": 2100,
+  "def": 2200,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
   "effects": [
    "DESTROY MONSTER",
-   "HURT OPPONENT 500"
+   "HURT OPPONENT 800"
   ],
   "effect_note": "destroys weaker Special Summoned monsters, 500 each",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 2500
  },
  {
   "id": 9753964,
@@ -1726,8 +1892,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 9,
-  "atk": 3200,
-  "def": 2500,
+  "atk": 2400,
+  "def": 2200,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1736,7 +1902,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "negates a card; revives a Tuner",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3200,
+  "real_def": 2500
  },
  {
   "id": 36857073,
@@ -1744,8 +1912,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3500,
-  "def": 3000,
+  "atk": 2400,
+  "def": 2400,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1754,7 +1922,9 @@
    "DRAIN 300"
   ],
   "effect_note": "revives Red Dragon Archfiend; summons Tuners on damage",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3500,
+  "real_def": 3000
  },
  {
   "id": 67030233,
@@ -1762,8 +1932,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 10,
-  "atk": 4000,
-  "def": 3000,
+  "atk": 2600,
+  "def": 2400,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1772,7 +1942,9 @@
    "OSMOSIS 1000"
   ],
   "effect_note": "not destroyed by effects; takes a monster's ATK",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 4000,
+  "real_def": 3000
  },
  {
   "id": 16172067,
@@ -1780,8 +1952,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3500,
-  "def": 3000,
+  "atk": 2200,
+  "def": 2400,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1791,7 +1963,9 @@
   ],
   "effect_note": "destroys all other cards; negates and destroys",
   "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3500,
+  "real_def": 3000
  },
  {
   "id": 62242678,
@@ -1799,8 +1973,8 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 12,
-  "atk": 4000,
-  "def": 3500,
+  "atk": 2600,
+  "def": 2500,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -1810,7 +1984,9 @@
   ],
   "effect_note": "locks the opponent when Synchro Summoned",
   "effect_idea": "ON SYNCHRO: BREAK IMMUNITY ALL",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 4000,
+  "real_def": 3500
  },
  {
   "id": 97489701,
@@ -1818,17 +1994,19 @@
   "group": "Red Dragon Archfiend",
   "kind": "Synchro",
   "level": 12,
-  "atk": 3500,
-  "def": 3000,
+  "atk": 2400,
+  "def": 2400,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
   "effects": [
-   "NECRO BOOST 200",
+   "NECRO BOOST 300",
    "IMMUNE"
   ],
   "effect_note": "+500 ATK per Tuner in the GY; not destroyed by effects",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3500,
+  "real_def": 3000
  },
  {
   "id": 59593925,
@@ -1901,7 +2079,7 @@
   ],
   "effect_note": "returns 2 Resonators, searches a Level 4",
   "single_use": true,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 41197012,
@@ -1946,8 +2124,8 @@
   "group": "Black Rose",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1000,
-  "def": 1800,
+  "atk": 1400,
+  "def": 1200,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": false,
@@ -1956,7 +2134,9 @@
   ],
   "effect_note": "as material, summons a Rose Dragon",
   "effect_idea": "MATERIAL: RESURRECT DRAGON",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1800
  },
  {
   "id": 2986553,
@@ -1964,7 +2144,7 @@
   "group": "Black Rose",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1000,
+  "atk": 1200,
   "def": 1000,
   "attribute": "DARK",
   "race": "Warrior",
@@ -1973,7 +2153,9 @@
    "IMMUNE ALL PLANTS"
   ],
   "effect_note": "Plants can't be attacked; summons a Plant",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1000
  },
  {
   "id": 1557341,
@@ -1982,7 +2164,7 @@
   "kind": "Tuner",
   "level": 4,
   "atk": 1600,
-  "def": 600,
+  "def": 900,
   "attribute": "FIRE",
   "race": "Warrior",
   "era_print": true,
@@ -1990,7 +2172,9 @@
    "SHOCK 300"
   ],
   "effect_note": "300 more damage on battle damage",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 600
  },
  {
   "id": 17720747,
@@ -1998,8 +2182,8 @@
   "group": "Black Rose",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1700,
-  "def": 1200,
+  "atk": 1600,
+  "def": 1100,
   "attribute": "DARK",
   "race": "Spellcaster",
   "era_print": true,
@@ -2007,7 +2191,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "draws; destroyed if it's not a monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 1200
  },
  {
   "id": 89252157,
@@ -2015,7 +2201,7 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 1,
-  "atk": 800,
+  "atk": 900,
   "def": 800,
   "attribute": "EARTH",
   "race": "Plant",
@@ -2024,7 +2210,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "banishes itself to summon a Plant",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 800
  },
  {
   "id": 51852507,
@@ -2033,7 +2221,7 @@
   "kind": "Monster",
   "level": 3,
   "atk": 1000,
-  "def": 100,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -2041,7 +2229,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "negates and destroys a Trap",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 100
  },
  {
   "id": 44125452,
@@ -2049,8 +2239,8 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 3,
-  "atk": 600,
-  "def": 1200,
+  "atk": 900,
+  "def": 900,
   "attribute": "WIND",
   "race": "Plant",
   "era_print": true,
@@ -2058,7 +2248,9 @@
    "SOOTHE 300"
   ],
   "effect_note": "summons itself when searched",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 1200
  },
  {
   "id": 75252099,
@@ -2066,8 +2258,8 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 1500,
+  "atk": 1700,
+  "def": 1200,
   "attribute": "WIND",
   "race": "Plant",
   "era_print": true,
@@ -2075,7 +2267,9 @@
    "RESURRECT PLANTS"
   ],
   "effect_note": "summons 2 Plant Tuners when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 1500
  },
  {
   "id": 98884569,
@@ -2084,7 +2278,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 1200,
+  "def": 1100,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": true,
@@ -2092,7 +2286,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "revives Black Rose Dragon or a Plant when destroyed",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 1200
  },
  {
   "id": 12469386,
@@ -2100,8 +2296,8 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 4,
-  "atk": 1300,
-  "def": 1300,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "DARK",
   "race": "Plant",
   "era_print": true,
@@ -2110,7 +2306,9 @@
   ],
   "effect_note": "revives itself when a big Plant is destroyed",
   "effect_idea": "REBIRTH",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1300,
+  "real_def": 1300
  },
  {
   "id": 96385345,
@@ -2118,8 +2316,8 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 200,
+  "atk": 1700,
+  "def": 800,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -2127,7 +2325,9 @@
    "BOOST 400"
   ],
   "effect_note": "tributes itself for a Plant; searches a big Plant",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 200
  },
  {
   "id": 23087070,
@@ -2144,7 +2344,9 @@
    "BOOST ALL PLANTS 200"
   ],
   "effect_note": "counts as 2 Tributes for a Plant",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 1000
  },
  {
   "id": 12213463,
@@ -2152,7 +2354,7 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 4,
-  "atk": 1200,
+  "atk": 1500,
   "def": 1000,
   "attribute": "DARK",
   "race": "Dragon",
@@ -2161,7 +2363,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "summons a Rose Dragon",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 1000
  },
  {
   "id": 41160533,
@@ -2169,8 +2373,8 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 6,
-  "atk": 2200,
-  "def": 1200,
+  "atk": 1900,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Plant",
   "era_print": true,
@@ -2178,7 +2382,9 @@
    "SHOCK 300"
   ],
   "effect_note": "extra attacks, 300 damage per Plant destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1200
  },
  {
   "id": 31986288,
@@ -2186,8 +2392,8 @@
   "group": "Black Rose",
   "kind": "Monster",
   "level": 7,
-  "atk": 0,
-  "def": 1500,
+  "atk": 700,
+  "def": 1000,
   "attribute": "DARK",
   "race": "Plant",
   "era_print": false,
@@ -2195,7 +2401,9 @@
    "POWER REDISTRIBUTION 600"
   ],
   "effect_note": "two 1200 ATK tokens when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 1500
  },
  {
   "id": 53325667,
@@ -2203,8 +2411,8 @@
   "group": "Black Rose",
   "kind": "Synchro",
   "level": 5,
-  "atk": 1600,
-  "def": 2400,
+  "atk": 1700,
+  "def": 1700,
   "attribute": "DARK",
   "race": "Plant",
   "era_print": false,
@@ -2213,7 +2421,9 @@
    "RESURRECT DRAGON"
   ],
   "effect_note": "searches Black Garden; revives a Dragon Synchro",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1600,
+  "real_def": 2400
  },
  {
   "id": 4290468,
@@ -2221,8 +2431,8 @@
   "group": "Black Rose",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2200,
-  "def": 2000,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "WIND",
   "race": "Plant",
   "era_print": true,
@@ -2230,7 +2440,9 @@
    "CRIPPLE 1000"
   ],
   "effect_note": "halves a monster's ATK",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 2000
  },
  {
   "id": 73580471,
@@ -2238,8 +2450,8 @@
   "group": "Black Rose",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2400,
-  "def": 1800,
+  "atk": 1900,
+  "def": 2000,
   "attribute": "FIRE",
   "race": "Dragon",
   "era_print": true,
@@ -2248,7 +2460,9 @@
   ],
   "effect_note": "destroys all cards when Synchro Summoned; ATK to 0",
   "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS + SACRIFICE ALL MONSTERS",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2400,
+  "real_def": 1800
  },
  {
   "id": 33698022,
@@ -2256,8 +2470,8 @@
   "group": "Black Rose",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2400,
-  "def": 1800,
+  "atk": 1900,
+  "def": 2000,
   "attribute": "LIGHT",
   "race": "Dragon",
   "era_print": true,
@@ -2266,7 +2480,9 @@
   ],
   "effect_note": "returns a Special Summoned monster to the hand",
   "effect_idea": "ON SYNCHRO: DESTROY MONSTER",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2400,
+  "real_def": 1800
  },
  {
   "id": 32485271,
@@ -2274,8 +2490,8 @@
   "group": "Black Rose",
   "kind": "Fusion",
   "level": 6,
-  "atk": 2000,
-  "def": 1800,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "DARK",
   "race": "Plant",
   "era_print": false,
@@ -2283,7 +2499,9 @@
    "BOOST ALL PLANTS 300"
   ],
   "effect_note": "no effect (Fusion of Feral Imp + Snakeyashi)",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 1800
  },
  {
   "id": 71645242,
@@ -2297,7 +2515,7 @@
   "race": "Field",
   "era_print": true,
   "effects": [
-   "CRIPPLE ALL 500",
+   "CRIPPLE ALL 400",
    "HEAL OPPONENT 300"
   ],
   "effect_note": "halves summoned monsters' ATK, gives the opponent a token",
@@ -2391,11 +2609,13 @@
   "race": "Normal",
   "era_print": false,
   "effects": [
-   "HEAL 800"
+   "HEAL 2500",
+   "IMMUNE"
   ],
   "effect_note": "summons 800/800 Rose Tokens",
   "single_use": true,
-  "rarity": 3
+  "rarity": 3,
+  "owner_reviewed": true
  },
  {
   "id": 70703416,
@@ -2403,17 +2623,19 @@
   "group": "Ice Barrier",
   "kind": "Tuner",
   "level": 1,
-  "atk": 400,
-  "def": 200,
+  "atk": 800,
+  "def": 600,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "era_print": false,
   "effects": [
-   "CRIPPLE ALL 500"
+   "CRIPPLE ALL 300"
   ],
   "effect_note": "opponent's monsters lose 500 ATK/DEF; copies a Level",
   "effect_idea": "LEVEL SET",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 200
  },
  {
   "id": 23950192,
@@ -2421,8 +2643,8 @@
   "group": "Ice Barrier",
   "kind": "Tuner",
   "level": 2,
-  "atk": 1300,
-  "def": 0,
+  "atk": 1100,
+  "def": 600,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
@@ -2430,7 +2652,9 @@
    "CRIPPLE ALL 300"
   ],
   "effect_note": "Level 4+ monsters can't attack (the game's level filter matches one exact level)",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1300,
+  "real_def": 0
  },
  {
   "id": 90311614,
@@ -2438,7 +2662,7 @@
   "group": "Ice Barrier",
   "kind": "Tuner",
   "level": 2,
-  "atk": 1200,
+  "atk": 1100,
   "def": 800,
   "attribute": "WATER",
   "race": "Aqua",
@@ -2447,7 +2671,9 @@
    "SHOCK 500"
   ],
   "effect_note": "attacks directly next to small monsters",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 800
  },
  {
   "id": 9396662,
@@ -2456,7 +2682,7 @@
   "kind": "Tuner",
   "level": 2,
   "atk": 1000,
-  "def": 400,
+  "def": 700,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": false,
@@ -2465,7 +2691,9 @@
   ],
   "effect_note": "makes tokens and raises its Level",
   "effect_idea": "LEVEL UP",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 400
  },
  {
   "id": 82498947,
@@ -2473,16 +2701,18 @@
   "group": "Ice Barrier",
   "kind": "Tuner",
   "level": 3,
-  "atk": 200,
-  "def": 1600,
+  "atk": 800,
+  "def": 1000,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
   "effects": [
-   "CRIPPLE ALL 400"
+   "CRIPPLE ALL 300"
   ],
   "effect_note": "stronger monsters can't attack",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 200,
+  "real_def": 1600
  },
  {
   "id": 56704140,
@@ -2490,8 +2720,8 @@
   "group": "Ice Barrier",
   "kind": "Tuner",
   "level": 3,
-  "atk": 800,
-  "def": 1200,
+  "atk": 900,
+  "def": 900,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2499,7 +2729,9 @@
    "IMMUNE"
   ],
   "effect_note": "can't be attacked by one Attribute",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 1200
  },
  {
   "id": 32991027,
@@ -2507,8 +2739,8 @@
   "group": "Ice Barrier",
   "kind": "Tuner",
   "level": 6,
-  "atk": 2000,
-  "def": 1200,
+  "atk": 1900,
+  "def": 1300,
   "attribute": "WATER",
   "race": "Winged Beast",
   "era_print": false,
@@ -2516,7 +2748,9 @@
    "BOOST ALL WATER MONSTERS 300"
   ],
   "effect_note": "locks the opponent's GY; Ice Barrier support",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 1200
  },
  {
   "id": 60161788,
@@ -2524,8 +2758,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 1,
-  "atk": 300,
-  "def": 500,
+  "atk": 1000,
+  "def": 1100,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
@@ -2533,7 +2767,10 @@
    "FAREWELL 500"
   ],
   "effect_note": "draws when destroyed by battle",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 300,
+  "real_def": 500,
+  "owner_reviewed": true
  },
  {
   "id": 50088247,
@@ -2542,7 +2779,7 @@
   "kind": "Monster",
   "level": 2,
   "atk": 1000,
-  "def": 400,
+  "def": 700,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
@@ -2550,7 +2787,9 @@
    "RESURRECT WATER MONSTERS"
   ],
   "effect_note": "tributes itself to revive an Ice Barrier",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1000,
+  "real_def": 400
  },
  {
   "id": 27527047,
@@ -2558,8 +2797,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 2,
-  "atk": 100,
-  "def": 1600,
+  "atk": 1000,
+  "def": 1200,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
@@ -2567,7 +2806,9 @@
    "IMMUNE ALL WATER MONSTERS"
   ],
   "effect_note": "Ice Barrier monsters can't be targeted",
-  "rarity": 1
+  "rarity": 2,
+  "real_atk": 100,
+  "real_def": 1600
  },
  {
   "id": 43256007,
@@ -2575,8 +2816,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 2,
-  "atk": 500,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": false,
@@ -2585,7 +2826,9 @@
   ],
   "effect_note": "summons a big Ice Barrier; lowers a Level by 2",
   "effect_idea": "LEVEL DOWN 2",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 500,
+  "real_def": 300
  },
  {
   "id": 38528901,
@@ -2593,8 +2836,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 3,
-  "atk": 1500,
-  "def": 800,
+  "atk": 1400,
+  "def": 900,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2603,7 +2846,9 @@
    "SELF-DESTRUCT"
   ],
   "effect_note": "tributes itself to destroy a WATER monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 800
  },
  {
   "id": 18482591,
@@ -2611,8 +2856,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 3,
-  "atk": 400,
-  "def": 1000,
+  "atk": 800,
+  "def": 900,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2620,7 +2865,9 @@
    "BREAK ALL SPELLS IMMUNITY"
   ],
   "effect_note": "Spells must be Set a turn first",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 1000
  },
  {
   "id": 59546528,
@@ -2628,8 +2875,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1700,
-  "def": 900,
+  "atk": 1600,
+  "def": 1000,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2637,7 +2884,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "returns Set Spells/Traps to the hand",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 900
  },
  {
   "id": 53535814,
@@ -2645,8 +2894,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 900,
+  "atk": 1700,
+  "def": 1000,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": false,
@@ -2654,7 +2903,9 @@
    "BLOODLUST 500"
   ],
   "effect_note": "500 more LP loss when the opponent pays LP",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 900
  },
  {
   "id": 92065772,
@@ -2662,8 +2913,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1300,
-  "def": 1800,
+  "atk": 1500,
+  "def": 1200,
   "attribute": "WATER",
   "race": "Insect",
   "era_print": true,
@@ -2671,7 +2922,9 @@
    "CRIPPLE 300"
   ],
   "effect_note": "blocks a monster zone",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1300,
+  "real_def": 1800
  },
  {
   "id": 20700531,
@@ -2679,7 +2932,7 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1500,
+  "atk": 1600,
   "def": 1000,
   "attribute": "WATER",
   "race": "Warrior",
@@ -2688,7 +2941,9 @@
    "IMMUNE"
   ],
   "effect_note": "not destroyed by battle with 1900+ ATK monsters",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1000
  },
  {
   "id": 18319762,
@@ -2696,7 +2951,7 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1700,
+  "atk": 1600,
   "def": 1000,
   "attribute": "WATER",
   "race": "Spellcaster",
@@ -2705,7 +2960,9 @@
    "RESURRECT WATER MONSTERS"
   ],
   "effect_note": "summons an Ice Barrier Tuner; stops Tribute Summons",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 1000
  },
  {
   "id": 64926005,
@@ -2713,8 +2970,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1800,
-  "def": 1500,
+  "atk": 1700,
+  "def": 1200,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": true,
@@ -2723,7 +2980,9 @@
    "FAREWELL 800"
   ],
   "effect_note": "destroyed and draws when changed to Defense",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 1500
  },
  {
   "id": 44308317,
@@ -2731,8 +2990,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1000,
-  "def": 1800,
+  "atk": 1400,
+  "def": 1200,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": false,
@@ -2740,7 +2999,9 @@
    "CRIPPLE ALL 200"
   ],
   "effect_note": "locks the opponent's positions",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1800
  },
  {
   "id": 73061465,
@@ -2748,8 +3009,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 4,
-  "atk": 1200,
-  "def": 2000,
+  "atk": 1500,
+  "def": 1300,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2757,7 +3018,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "Spells can't be activated",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 2000
  },
  {
   "id": 50032342,
@@ -2766,7 +3029,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 1600,
+  "def": 1200,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2774,7 +3037,9 @@
    "HEAL 500"
   ],
   "effect_note": "sends an Ice Barrier to draw",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 1600
  },
  {
   "id": 81825063,
@@ -2782,8 +3047,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 5,
-  "atk": 2100,
-  "def": 400,
+  "atk": 1900,
+  "def": 1100,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": false,
@@ -2792,7 +3057,9 @@
    "SHOCK 400"
   ],
   "effect_note": "banishes Spells/Traps; extra attacks",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 400
  },
  {
   "id": 41090784,
@@ -2800,8 +3067,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 6,
-  "atk": 1600,
-  "def": 2200,
+  "atk": 1500,
+  "def": 1600,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2809,7 +3076,9 @@
    "IMMUNE ALL WATER MONSTERS"
   ],
   "effect_note": "Ice Barrier monsters survive Spells/Traps",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1600,
+  "real_def": 2200
  },
  {
   "id": 81275309,
@@ -2817,8 +3086,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 6,
-  "atk": 2100,
-  "def": 2300,
+  "atk": 1900,
+  "def": 1700,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": true,
@@ -2826,7 +3095,9 @@
    "BREAK IMMUNITY ALL"
   ],
   "effect_note": "monster effects need a discard or are negated",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 2300
  },
  {
   "id": 53921056,
@@ -2834,8 +3105,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 7,
-  "atk": 2700,
-  "def": 2000,
+  "atk": 2100,
+  "def": 1600,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": true,
@@ -2843,7 +3114,9 @@
    "RESURRECT WATER MONSTERS"
   ],
   "effect_note": "revives an Ice Barrier every End Phase",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2700,
+  "real_def": 2000
  },
  {
   "id": 88494899,
@@ -2851,8 +3124,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 7,
-  "atk": 2200,
-  "def": 1600,
+  "atk": 1900,
+  "def": 1500,
   "attribute": "WATER",
   "race": "Spellcaster",
   "era_print": true,
@@ -2860,7 +3133,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "one Spell/Trap per turn for the opponent",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2200,
+  "real_def": 1600
  },
  {
   "id": 9056100,
@@ -2868,8 +3143,8 @@
   "group": "Ice Barrier",
   "kind": "Monster",
   "level": 8,
-  "atk": 2800,
-  "def": 1000,
+  "atk": 2100,
+  "def": 1300,
   "attribute": "WATER",
   "race": "Warrior",
   "era_print": true,
@@ -2877,7 +3152,9 @@
    "BOOST ALL WATER MONSTERS 300"
   ],
   "effect_note": "extra Ice Barrier summon",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 1000
  },
  {
   "id": 50321796,
@@ -2885,7 +3162,7 @@
   "group": "Ice Barrier",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2300,
+  "atk": 1800,
   "def": 1400,
   "attribute": "WATER",
   "race": "Sea Serpent",
@@ -2895,7 +3172,9 @@
    "BACKFIRE 300"
   ],
   "effect_note": "discards to bounce cards",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2300,
+  "real_def": 1400
  },
  {
   "id": 70583986,
@@ -2903,7 +3182,7 @@
   "group": "Ice Barrier",
   "kind": "Synchro",
   "level": 6,
-  "atk": 2000,
+  "atk": 1900,
   "def": 1400,
   "attribute": "WATER",
   "race": "Beast",
@@ -2912,7 +3191,9 @@
    "BOOST 300 +"
   ],
   "effect_note": "+500 ATK per card it returns",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2000,
+  "real_def": 1400
  },
  {
   "id": 65749035,
@@ -2920,8 +3201,8 @@
   "group": "Ice Barrier",
   "kind": "Synchro",
   "level": 7,
-  "atk": 2500,
-  "def": 1700,
+  "atk": 2000,
+  "def": 2000,
   "attribute": "WATER",
   "race": "Dragon",
   "era_print": true,
@@ -2930,7 +3211,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "discards up to 2 to destroy up to 2",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2500,
+  "real_def": 1700
  },
  {
   "id": 65424481,
@@ -2938,8 +3221,8 @@
   "group": "Ice Barrier",
   "kind": "Synchro",
   "level": 9,
-  "atk": 3000,
-  "def": 1000,
+  "atk": 2100,
+  "def": 1800,
   "attribute": "WATER",
   "race": "Dragon",
   "era_print": false,
@@ -2948,7 +3231,9 @@
   ],
   "effect_note": "banishes 2 cards when Synchro Summoned",
   "effect_idea": "ON SYNCHRO: DESTROY MONSTER + DESTROY SPELL",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3000,
+  "real_def": 1000
  },
  {
   "id": 70980824,
@@ -2956,8 +3241,8 @@
   "group": "Ice Barrier",
   "kind": "Synchro",
   "level": 11,
-  "atk": 2700,
-  "def": 2000,
+  "atk": 2000,
+  "def": 2100,
   "attribute": "WATER",
   "race": "Dragon",
   "era_print": false,
@@ -2967,7 +3252,9 @@
   ],
   "effect_note": "banishes 3 cards when Synchro Summoned; brings back Trishula",
   "effect_idea": "ON SYNCHRO: ANNIHILATE MONSTERS",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2700,
+  "real_def": 2000
  },
  {
   "id": 15661378,
@@ -2975,8 +3262,8 @@
   "group": "Ice Barrier",
   "kind": "Fusion",
   "level": 9,
-  "atk": 2700,
-  "def": 2000,
+  "atk": 2000,
+  "def": 2100,
   "attribute": "WATER",
   "race": "Dragon",
   "era_print": false,
@@ -2986,7 +3273,9 @@
   ],
   "effect_note": "banishes cards when Fusion Summoned",
   "effect_idea": "ON FUSION: DESTROY MONSTER + DESTROY SPELL",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 2700,
+  "real_def": 2000
  },
  {
   "id": 43582229,
@@ -3143,8 +3432,8 @@
   "group": "T.G.",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "era_print": true,
@@ -3152,7 +3441,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "T.G. Synchros from the hand; searches when destroyed",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 94350039,
@@ -3160,16 +3451,18 @@
   "group": "T.G.",
   "kind": "Tuner",
   "level": 1,
-  "atk": 600,
-  "def": 0,
+  "atk": 900,
+  "def": 600,
   "attribute": "DARK",
   "race": "Zombie",
   "era_print": false,
   "effects": [
-   "BOOST 600"
+   "BOOST 500"
   ],
   "effect_note": "summons itself, a T.G. monster loses 1000 ATK",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 0
  },
  {
   "id": 74627016,
@@ -3177,8 +3470,8 @@
   "group": "T.G.",
   "kind": "Tuner",
   "level": 1,
-  "atk": 0,
-  "def": 0,
+  "atk": 700,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Insect",
   "era_print": false,
@@ -3186,7 +3479,9 @@
    "BOOST ALL 100"
   ],
   "effect_note": "leaves a token after a T.G. Synchro",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 0,
+  "real_def": 0
  },
  {
   "id": 1315120,
@@ -3194,8 +3489,8 @@
   "group": "T.G.",
   "kind": "Tuner",
   "level": 2,
-  "atk": 800,
-  "def": 0,
+  "atk": 900,
+  "def": 600,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -3204,7 +3499,9 @@
   ],
   "effect_note": "summons itself when only the opponent has monsters",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 800,
+  "real_def": 0
  },
  {
   "id": 37300735,
@@ -3212,8 +3509,8 @@
   "group": "T.G.",
   "kind": "Tuner",
   "level": 3,
-  "atk": 1400,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "WIND",
   "race": "Winged Beast",
   "era_print": true,
@@ -3222,7 +3519,9 @@
   ],
   "effect_note": "500 damage when used as Synchro material",
   "effect_idea": "MATERIAL: HURT OPPONENT 500",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1200
  },
  {
   "id": 11234702,
@@ -3230,8 +3529,8 @@
   "group": "T.G.",
   "kind": "Tuner",
   "level": 4,
-  "atk": 1300,
-  "def": 500,
+  "atk": 1500,
+  "def": 800,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "era_print": false,
@@ -3240,7 +3539,9 @@
   ],
   "effect_note": "revives a T.G.; changes a Level by 1",
   "effect_idea": "LEVEL UP 1",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1300,
+  "real_def": 500
  },
  {
   "id": 48633301,
@@ -3248,8 +3549,8 @@
   "group": "T.G.",
   "kind": "Monster",
   "level": 1,
-  "atk": 400,
-  "def": 300,
+  "atk": 800,
+  "def": 600,
   "attribute": "WIND",
   "race": "Dinosaur",
   "era_print": false,
@@ -3258,7 +3559,9 @@
   ],
   "effect_note": "summons itself next to a T.G.; searches when destroyed",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 400,
+  "real_def": 300
  },
  {
   "id": 30348744,
@@ -3266,7 +3569,7 @@
   "group": "T.G.",
   "kind": "Monster",
   "level": 1,
-  "atk": 100,
+  "atk": 700,
   "def": 800,
   "attribute": "WATER",
   "race": "Fish",
@@ -3275,7 +3578,9 @@
    "SHOCK 500"
   ],
   "effect_note": "attacks directly",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 100,
+  "real_def": 800
  },
  {
   "id": 77392987,
@@ -3283,8 +3588,8 @@
   "group": "T.G.",
   "kind": "Monster",
   "level": 1,
-  "atk": 600,
-  "def": 600,
+  "atk": 900,
+  "def": 700,
   "attribute": "FIRE",
   "race": "Pyro",
   "era_print": false,
@@ -3292,7 +3597,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "tributes a T.G. to summon another",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 600,
+  "real_def": 600
  },
  {
   "id": 64898834,
@@ -3300,8 +3607,8 @@
   "group": "T.G.",
   "kind": "Monster",
   "level": 2,
-  "atk": 900,
-  "def": 1300,
+  "atk": 1000,
+  "def": 1000,
   "attribute": "EARTH",
   "race": "Dragon",
   "era_print": true,
@@ -3309,7 +3616,9 @@
    "RESURRECT LV 5 & LESS MONSTER"
   ],
   "effect_note": "summons a small T.G. Tuner",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 900,
+  "real_def": 1300
  },
  {
   "id": 66733743,
@@ -3317,8 +3626,8 @@
   "group": "T.G.",
   "kind": "Monster",
   "level": 2,
-  "atk": 1100,
-  "def": 0,
+  "atk": 1000,
+  "def": 600,
   "attribute": "DARK",
   "race": "Zombie",
   "era_print": false,
@@ -3327,7 +3636,9 @@
   ],
   "effect_note": "banishes itself so a T.G. survives",
   "effect_idea": "GUARDIAN",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1100,
+  "real_def": 0
  },
  {
   "id": 293542,
@@ -3335,8 +3646,8 @@
   "group": "T.G.",
   "kind": "Monster",
   "level": 3,
-  "atk": 1200,
-  "def": 0,
+  "atk": 1100,
+  "def": 600,
   "attribute": "DARK",
   "race": "Beast-Warrior",
   "era_print": true,
@@ -3345,7 +3656,9 @@
   ],
   "effect_note": "summons itself after a small Special Summon; searches when destroyed",
   "effect_idea": "REBIRTH",
-  "rarity": 1
+  "rarity": 1,
+  "real_atk": 1200,
+  "real_def": 0
  },
  {
   "id": 36687247,
@@ -3354,7 +3667,7 @@
   "kind": "Monster",
   "level": 4,
   "atk": 1600,
-  "def": 800,
+  "def": 900,
   "attribute": "EARTH",
   "race": "Beast",
   "era_print": true,
@@ -3363,7 +3676,9 @@
   ],
   "effect_note": "+400 ATK when attacking; searches when destroyed",
   "effect_idea": "REBIRTH",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1600,
+  "real_def": 800
  },
  {
   "id": 32480825,
@@ -3371,8 +3686,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 2,
-  "atk": 1800,
-  "def": 0,
+  "atk": 1700,
+  "def": 700,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": false,
@@ -3380,7 +3695,9 @@
    "BOOST 300"
   ],
   "effect_note": "Synchro Summons during the opponent's turn",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1800,
+  "real_def": 0
  },
  {
   "id": 62560742,
@@ -3388,8 +3705,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 2,
-  "atk": 300,
-  "def": 300,
+  "atk": 1200,
+  "def": 800,
   "attribute": "WIND",
   "race": "Insect",
   "era_print": true,
@@ -3397,7 +3714,9 @@
    "RESURRECT MONSTERS"
   ],
   "effect_note": "revives a Synchro's materials",
-  "rarity": 1
+  "rarity": 2,
+  "real_atk": 300,
+  "real_def": 300
  },
  {
   "id": 90953320,
@@ -3405,8 +3724,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 5,
-  "atk": 2400,
-  "def": 1800,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "DARK",
   "race": "Spellcaster",
   "era_print": true,
@@ -3415,7 +3734,9 @@
   ],
   "effect_note": "draws whenever a Synchro is summoned",
   "effect_idea": "ON SYNCHRO SUMMON: HEAL 500",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2400,
+  "real_def": 1800
  },
  {
   "id": 68989420,
@@ -3423,8 +3744,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 5,
-  "atk": 2100,
-  "def": 1900,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "DARK",
   "race": "Dragon",
   "era_print": false,
@@ -3433,7 +3754,9 @@
   ],
   "effect_note": "revives T.G. monsters when Synchro Summoned",
   "effect_idea": "ON SYNCHRO: RESURRECT MONSTERS",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2100,
+  "real_def": 1900
  },
  {
   "id": 24943456,
@@ -3441,8 +3764,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 5,
-  "atk": 2300,
-  "def": 1000,
+  "atk": 2000,
+  "def": 1300,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -3451,7 +3774,9 @@
    "FAREWELL 500"
   ],
   "effect_note": "piercing; draws when destroyed",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2300,
+  "real_def": 1000
  },
  {
   "id": 99937842,
@@ -3459,8 +3784,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 5,
-  "atk": 100,
-  "def": 2200,
+  "atk": 1200,
+  "def": 1400,
   "attribute": "LIGHT",
   "race": "Warrior",
   "era_print": false,
@@ -3468,7 +3793,9 @@
    "SOOTHE 500"
   ],
   "effect_note": "Synchro Summons during the opponent's turn",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 100,
+  "real_def": 2200
  },
  {
   "id": 98558751,
@@ -3476,8 +3803,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 5,
-  "atk": 1900,
-  "def": 0,
+  "atk": 1800,
+  "def": 1000,
   "attribute": "LIGHT",
   "race": "Spellcaster",
   "era_print": true,
@@ -3487,7 +3814,9 @@
   ],
   "effect_note": "destroys a Spell/Trap when Synchro Summoned; draws when destroyed",
   "effect_idea": "ON SYNCHRO: DESTROY SPELL",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 1900,
+  "real_def": 0
  },
  {
   "id": 63180841,
@@ -3495,8 +3824,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3300,
-  "def": 2500,
+  "atk": 2400,
+  "def": 2200,
   "attribute": "WIND",
   "race": "Dragon",
   "era_print": false,
@@ -3505,7 +3834,9 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "negates targeting effects",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3300,
+  "real_def": 2500
  },
  {
   "id": 51447164,
@@ -3513,8 +3844,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 10,
-  "atk": 3300,
-  "def": 2200,
+  "atk": 2200,
+  "def": 2100,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -3523,7 +3854,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "negates Spells/Traps on itself; banishes",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 3300,
+  "real_def": 2200
  },
  {
   "id": 95973569,
@@ -3531,8 +3864,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 12,
-  "atk": 4000,
-  "def": 4000,
+  "atk": 2400,
+  "def": 2700,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": false,
@@ -3541,7 +3874,9 @@
    "IMMUNE"
   ],
   "effect_note": "banishes Extra Deck monsters",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 4000,
+  "real_def": 4000
  },
  {
   "id": 97836203,
@@ -3549,8 +3884,8 @@
   "group": "T.G.",
   "kind": "Synchro",
   "level": 12,
-  "atk": 4000,
-  "def": 4000,
+  "atk": 2400,
+  "def": 2700,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -3559,7 +3894,9 @@
    "IMMUNE"
   ],
   "effect_note": "negates a Summon and destroys it",
-  "rarity": 4
+  "rarity": 4,
+  "real_atk": 4000,
+  "real_def": 4000
  },
  {
   "id": 54573517,
@@ -3595,7 +3932,7 @@
   ],
   "effect_note": "searches 2 T.G. monsters",
   "single_use": true,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 11264180,
@@ -3724,7 +4061,7 @@
   ],
   "effect_note": "shuffles 3 T.G. monsters back, draws 2",
   "single_use": true,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 80925836,
@@ -3732,8 +4069,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 3,
-  "atk": 1700,
-  "def": 800,
+  "atk": 1600,
+  "def": 900,
   "attribute": "WIND",
   "race": "Fiend",
   "era_print": true,
@@ -3742,7 +4079,9 @@
    "CRIPPLE ALL DARK MONSTERS 300"
   ],
   "effect_note": "core upkeep; negates LIGHT and DARK monster effects",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1700,
+  "real_def": 800
  },
  {
   "id": 31692182,
@@ -3750,8 +4089,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 3,
-  "atk": 1000,
-  "def": 1900,
+  "atk": 1400,
+  "def": 1300,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
@@ -3759,7 +4098,9 @@
    "BREAK IMMUNITY ALL"
   ],
   "effect_note": "negates all other monster effects",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1000,
+  "real_def": 1900
  },
  {
   "id": 68809475,
@@ -3767,8 +4108,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 3,
-  "atk": 1200,
-  "def": 2200,
+  "atk": 1500,
+  "def": 1400,
   "attribute": "WIND",
   "race": "Machine",
   "era_print": true,
@@ -3777,7 +4118,9 @@
    "RESURRECT MACHINES"
   ],
   "effect_note": "core upkeep; summons itself when you draw a core",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1200,
+  "real_def": 2200
  },
  {
   "id": 39037517,
@@ -3785,8 +4128,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1500,
+  "atk": 1700,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Insect",
   "era_print": true,
@@ -3795,7 +4138,9 @@
    "CRIPPLE ALL DARK MONSTERS 400"
   ],
   "effect_note": "core upkeep; LIGHT/DARK summons go to Defense",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1500
  },
  {
   "id": 80367387,
@@ -3803,8 +4148,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 2000,
-  "def": 200,
+  "atk": 1700,
+  "def": 800,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -3813,7 +4158,9 @@
    "SHOCK 500"
   ],
   "effect_note": "core upkeep; piercing, attacks again",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2000,
+  "real_def": 200
  },
  {
   "id": 32314730,
@@ -3821,8 +4168,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1300,
+  "atk": 1700,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
   "era_print": true,
@@ -3831,7 +4178,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "core upkeep; gets a core back after a battle win",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1300
  },
  {
   "id": 12435193,
@@ -3839,8 +4188,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1600,
+  "atk": 1700,
+  "def": 1200,
   "attribute": "WIND",
   "race": "Dragon",
   "era_print": true,
@@ -3849,7 +4198,9 @@
    "BREAK IMMUNITY ALL DARK MONSTERS"
   ],
   "effect_note": "core upkeep; no LIGHT/DARK Special Summons",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1600
  },
  {
   "id": 41201555,
@@ -3857,8 +4208,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1300,
+  "atk": 1700,
+  "def": 1100,
   "attribute": "FIRE",
   "race": "Plant",
   "era_print": true,
@@ -3867,7 +4218,9 @@
    "BOOST ALL PLANTS 300"
   ],
   "effect_note": "core upkeep; Plant support",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1300
  },
  {
   "id": 54520292,
@@ -3875,8 +4228,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "WATER",
   "race": "Aqua",
   "era_print": true,
@@ -3885,7 +4238,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "core upkeep; discards to destroy a Special Summoned monster",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1200
  },
  {
   "id": 14309486,
@@ -3893,8 +4248,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Rock",
   "era_print": true,
@@ -3903,7 +4258,9 @@
    "SNEAK"
   ],
   "effect_note": "core upkeep; tributes itself to stop a Summon",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1200
  },
  {
   "id": 19642889,
@@ -3911,8 +4268,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 2100,
-  "def": 1600,
+  "atk": 1800,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Machine",
   "era_print": true,
@@ -3921,7 +4278,9 @@
    "BREAK IMMUNITY"
   ],
   "effect_note": "core upkeep; negates LIGHT/DARK monsters it battles",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2100,
+  "real_def": 1600
  },
  {
   "id": 74576482,
@@ -3929,8 +4288,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1900,
-  "def": 1200,
+  "atk": 1700,
+  "def": 1100,
   "attribute": "WATER",
   "race": "Sea Serpent",
   "era_print": true,
@@ -3939,7 +4298,9 @@
    "DESTROY SPELL"
   ],
   "effect_note": "core upkeep; destroys a face-down card",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1900,
+  "real_def": 1200
  },
  {
   "id": 80839052,
@@ -3947,8 +4308,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1400,
-  "def": 1600,
+  "atk": 1500,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Rock",
   "era_print": false,
@@ -3956,7 +4317,9 @@
    "RESURRECT SPELL"
   ],
   "effect_note": "searches a core",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1600
  },
  {
   "id": 95204084,
@@ -3964,8 +4327,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1500,
-  "def": 1200,
+  "atk": 1400,
+  "def": 1100,
   "attribute": "WIND",
   "race": "Winged Beast",
   "era_print": true,
@@ -3973,7 +4336,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "returns a core to destroy Special Summoned monsters",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1500,
+  "real_def": 1200
  },
  {
   "id": 30936186,
@@ -3981,8 +4346,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 2000,
-  "def": 1500,
+  "atk": 1700,
+  "def": 1200,
   "attribute": "EARTH",
   "race": "Beast-Warrior",
   "era_print": true,
@@ -3991,7 +4356,9 @@
    "RESURRECT MONSTER"
   ],
   "effect_note": "core upkeep; summons a Koa'ki Meiru",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 2000,
+  "real_def": 1500
  },
  {
   "id": 95090813,
@@ -3999,17 +4366,19 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 4,
-  "atk": 1400,
-  "def": 1200,
+  "atk": 1500,
+  "def": 1100,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
   "effects": [
    "FEEBLE 200",
-   "OSMOSIS 500"
+   "OSMOSIS 400"
   ],
   "effect_note": "core upkeep; equips a monster and takes its ATK",
-  "rarity": 2
+  "rarity": 2,
+  "real_atk": 1400,
+  "real_def": 1200
  },
  {
   "id": 5817857,
@@ -4017,8 +4386,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 5,
-  "atk": 2500,
-  "def": 1700,
+  "atk": 2000,
+  "def": 1500,
   "attribute": "EARTH",
   "race": "Zombie",
   "era_print": true,
@@ -4028,7 +4397,9 @@
   ],
   "effect_note": "core upkeep; protects Koa'ki Meiru monsters",
   "effect_idea": "GUARDIAN",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2500,
+  "real_def": 1700
  },
  {
   "id": 10060427,
@@ -4036,8 +4407,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 7,
-  "atk": 2800,
-  "def": 2200,
+  "atk": 1900,
+  "def": 1600,
   "attribute": "EARTH",
   "race": "Warrior",
   "era_print": true,
@@ -4046,7 +4417,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "core upkeep; destroys a monster",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 2800,
+  "real_def": 2200
  },
  {
   "id": 65026212,
@@ -4054,8 +4427,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 8,
-  "atk": 3000,
-  "def": 2500,
+  "atk": 2000,
+  "def": 1700,
   "attribute": "WIND",
   "race": "Dragon",
   "era_print": true,
@@ -4064,7 +4437,9 @@
    "DESTROY MONSTER"
   ],
   "effect_note": "core upkeep; destroys a card each turn",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 3000,
+  "real_def": 2500
  },
  {
   "id": 72258771,
@@ -4072,8 +4447,8 @@
   "group": "Koa'ki Meiru",
   "kind": "Monster",
   "level": 8,
-  "atk": 3000,
-  "def": 2100,
+  "atk": 2200,
+  "def": 1600,
   "attribute": "FIRE",
   "race": "Fiend",
   "era_print": true,
@@ -4082,7 +4457,9 @@
    "DRAIN 400"
   ],
   "effect_note": "core upkeep; not destroyed by effects, draws",
-  "rarity": 3
+  "rarity": 3,
+  "real_atk": 3000,
+  "real_def": 2100
  },
  {
   "id": 59385322,
@@ -4119,7 +4496,7 @@
   ],
   "effect_note": "discards to draw 2",
   "single_use": true,
-  "rarity": 1
+  "rarity": 2
  },
  {
   "id": 36560997,
@@ -4280,11 +4657,13 @@
   "race": "Normal",
   "era_print": true,
   "effects": [
-   "DESTROY MONSTER"
+   "DESTROY MONSTER",
+   "HEAL 800"
   ],
   "effect_note": "destroys a summoned 1000+ ATK monster",
   "single_use": true,
-  "rarity": 2
+  "rarity": 2,
+  "owner_reviewed": true
  },
  {
   "id": 18517177,
