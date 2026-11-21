@@ -171,7 +171,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
 
     def get_client_ip(self) -> str:
         """Extracts real client IP from CF-Connecting-IP header or socket address."""
-        cf_ip = self.headers.get("CF-Connecting-IP")
+        cf_ip = getattr(self, "headers", {}).get("CF-Connecting-IP")
         if cf_ip:
             return cf_ip.strip()
         if self.client_address and len(self.client_address) > 0:
@@ -181,15 +181,16 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
     def log_request(self, code='-', size='-'):
         """Logs every incoming request with resolved client IP and response code."""
         ip = self.get_client_ip()
-        self.server.traffic.count(self.path.split("?")[0], getattr(self, "_traffic_kind", None))
+        path = getattr(self, "path", "").partition("?")[0]
+        self.server.traffic.count(path, getattr(self, "_traffic_kind", None))
         # successful AMF POSTs are already described by the "AMF request" lines
-        quiet = self.path.split("?")[0] in ("/facebook/proxy.html", PVP_PATH) and str(code) == "200"
-        (logger.debug if quiet else logger.info)("[%s] %s %s -> %s (size: %s)", ip, self.command, self.path, code, size)
+        quiet = path in ("/facebook/proxy.html", PVP_PATH) and str(code) == "200"
+        (logger.debug if quiet else logger.info)("[%s] %s %s -> %s (size: %s)", ip, self.command, path, code, size)
 
     def log_error(self, format, *args):
-        """Logs request errors with resolved client IP."""
-        ip = self.get_client_ip()
-        logger.warning("[%s] %s %s -> ERROR: %s", ip, self.command, self.path, format % args)
+        """Log status without echoing parser errors that can contain the request line."""
+        status = args[0] if args and isinstance(args[0], int) else "-"
+        logger.warning("[%s] HTTP request failed (%s)", self.get_client_ip(), status)
 
     def log_message(self, format, *args):
         ip = self.get_client_ip()
@@ -619,7 +620,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
         only_pings = all(getattr(r, "class_alias", "").endswith(".PingRequest") for r in request_objects)
         self._traffic_kind = "ping" if only_pings else "amf"
         log_info = logger.debug if only_pings else logger.info
-        log_info("[%s] AMF request (ExternalId: '%s', %d request objects)", ip, ext_id, len(request_objects))
+        log_info("[%s] AMF request (%d request objects)", ip, len(request_objects))
 
         responses = []
         ctx = {"ip": ip, "ext_id": ext_id, "cookie": self.session_cookie(), "set_cookie": []}
@@ -652,7 +653,7 @@ class BAMServerHandler(http.server.BaseHTTPRequestHandler):
                 logger.debug("[%s] Dispatching PingResponse (gameframe: %s)", ip, gameframe)
                 responses.append(amf3.build_ping_response(gameframe=gameframe))
             else:
-                logger.warning("[%s] Unknown request class: %s with fields: %s", ip, alias, dict(req))
+                logger.warning("[%s] Unknown request class: %s", ip, alias)
                 responses.append(amf3.build_error_response(alias, "Unsupported request", code=1))
 
         if not request_objects:
