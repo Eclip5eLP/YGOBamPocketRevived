@@ -126,7 +126,7 @@ class Game:
     def _session(self, ctx):
         s = self.find_session(ctx["ext_id"], ctx["cookie"])
         if s is None or s.uid is None:
-            self.log.warning("[%s] no logged-in session (ext_id=%r cookie=%r)", ctx["ip"], ctx["ext_id"], ctx["cookie"])
+            self.log.warning("[%s] no logged-in session", ctx["ip"])
         return s if s and s.uid else None
 
     # ---- handlers -------------------------------------------------------------------------
@@ -141,8 +141,8 @@ class Game:
             self.sessions[token] = Session(token, parent_uid)
         if parent_uid is None:
             ctx["set_cookie"].append(f"{COOKIE}={token}; Path=/; HttpOnly")
-        self.log.info("[%s] GetToken -> new session %s (cookie presented: %s, linked uid: %s)",
-                      ctx["ip"], token[:8], bool(ctx["cookie"]), parent_uid)
+        self.log.info("[%s] GetToken -> new session (cookie presented: %s, linked uid: %s)",
+                      ctx["ip"], bool(ctx["cookie"]), parent_uid)
         return amf3.encode_typed_object(C + "player.amf.GetTokenResponse",
                                         {"exception": None, "token": token, "seed": seed})
 
@@ -157,7 +157,7 @@ class Game:
         with self.lock:
             s = self.sessions.get(req.get("token")) or self.sessions.get(ctx["cookie"] or "")
         if s is None:
-            self.log.warning("[%s] Login: unknown session token %r", ctx["ip"], req.get("token"))
+            self.log.warning("[%s] Login: unknown session token", ctx["ip"])
             return amf3.build_error_response(err_alias, "Session expired", code=1)
         if "_" in uid:
             # PvP login: "-1_<uid>" / "frima", trusted only through the linked main session
@@ -174,7 +174,7 @@ class Game:
         with self.lock:
             s.uid = uid
             self._save_sessions()
-        self.log.info("[%s] Login OK: %s (uid %s, session %s, %s)", ctx["ip"], user["username"], uid, s.token[:8],
+        self.log.info("[%s] Login OK: %s (uid %s, %s)", ctx["ip"], user["username"], uid,
                       "pvp" if s.parent_uid else "main")
         return amf3.encode_typed_object(C + "player.amf.LoginResponse",
                                         {"exception": None, "playerId": int(user["id"])})
